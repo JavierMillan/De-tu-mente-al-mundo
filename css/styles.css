@@ -15,6 +15,10 @@ body {
     overflow-x: hidden;
 }
 
+#networkBg {
+    background: radial-gradient(ellipse at center, rgba(22, 51, 132, 0.1) 0%, transparent 70%);
+}
+
 /* Colors CSS Variables for Tailwind compatibility */
 :root {
     --gold-light: #e4cd85;

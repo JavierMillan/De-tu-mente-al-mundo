@@ -1,183 +1,519 @@
 // ===============================================
-// NETWORK ANIMATION - Background Effect
-// Crea la red de nodos animados del héroe
+// NEURAL NETWORK ANIMATION - Advanced Background Effect
+// Crea una red neuronal realista con conexiones dinámicas
 // ===============================================
 
-class NetworkAnimation {
+class NeuralNetworkAnimation {
     constructor(containerId) {
         this.container = document.getElementById(containerId);
-        this.nodes = [];
-        this.lines = [];
-        this.nodeCount = 25;
-        this.lineCount = 12;
+        this.canvas = null;
+        this.ctx = null;
+        this.neurons = [];
+        this.connections = [];
+        this.animationId = null;
+        
+        // Configuración de la red
+        this.config = {
+            neuronCount: this.isMobile() ? 15 : 25,
+            maxConnections: 3,
+            connectionDistance: this.isMobile() ? 120 : 180,
+            neuronSpeed: 0.2,
+            pulseSpeed: 2,
+            colors: {
+                neuron: '#e4cd85',
+                connection: '#e4cd85',
+                pulse: '#ffffff',
+                glow: '#c08a2d'
+            },
+            sizes: {
+                neuron: { min: 2, max: 6 },
+                connection: 1,
+                pulse: 3
+            }
+        };
         
         if (this.container) {
             this.init();
-            this.setupResizeListener();
+            this.setupEventListeners();
         }
     }
     
     init() {
-        this.createNodes();
-        this.createLines();
+        this.createCanvas();
+        this.createNeurons();
+        this.createConnections();
         this.startAnimation();
     }
     
-    createNodes() {
-        // Limpiar nodos existentes
+    createCanvas() {
+        // Crear canvas para mejor rendimiento
+        this.canvas = document.createElement('canvas');
+        this.canvas.style.cssText = `
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            opacity: 0.6;
+        `;
+        
         this.container.innerHTML = '';
-        this.nodes = [];
+        this.container.appendChild(this.canvas);
+        this.ctx = this.canvas.getContext('2d');
         
-        for (let i = 0; i < this.nodeCount; i++) {
-            const node = document.createElement('div');
-            node.className = 'network-node';
+        this.resizeCanvas();
+    }
+    
+    resizeCanvas() {
+        const rect = this.container.getBoundingClientRect();
+        this.canvas.width = rect.width;
+        this.canvas.height = rect.height;
+    }
+    
+    createNeurons() {
+        this.neurons = [];
+        
+        for (let i = 0; i < this.config.neuronCount; i++) {
+            const neuron = {
+                id: i,
+                x: Math.random() * this.canvas.width,
+                y: Math.random() * this.canvas.height,
+                vx: (Math.random() - 0.5) * this.config.neuronSpeed,
+                vy: (Math.random() - 0.5) * this.config.neuronSpeed,
+                size: this.config.sizes.neuron.min + Math.random() * (this.config.sizes.neuron.max - this.config.sizes.neuron.min),
+                activity: Math.random(),
+                activitySpeed: 0.01 + Math.random() * 0.02,
+                pulseTime: Math.random() * Math.PI * 2,
+                connections: [],
+                lastPulse: 0
+            };
             
-            // Posición aleatoria pero centrada (evitar bordes)
-            const x = 15 + Math.random() * 70; // 15% a 85%
-            const y = 15 + Math.random() * 70; // 15% a 85%
-            
-            node.style.left = `${x}%`;
-            node.style.top = `${y}%`;
-            node.style.animationDelay = `${Math.random() * 3}s`;
-            
-            // Diferentes tamaños para variedad
-            const size = 3 + Math.random() * 3;
-            node.style.width = `${size}px`;
-            node.style.height = `${size}px`;
-            
-            this.container.appendChild(node);
-            this.nodes.push({
-                element: node,
-                x: x,
-                y: y,
-                size: size
-            });
+            this.neurons.push(neuron);
         }
     }
     
-    createLines() {
-        for (let i = 0; i < this.lineCount; i++) {
-            const line = document.createElement('div');
-            line.className = 'network-line';
-            
-            // Posición y orientación aleatoria
-            const x = 10 + Math.random() * 80;
-            const y = 10 + Math.random() * 80;
-            const width = 50 + Math.random() * 150;
-            const rotation = Math.random() * 360;
-            
-            line.style.left = `${x}%`;
-            line.style.top = `${y}%`;
-            line.style.width = `${width}px`;
-            line.style.transform = `rotate(${rotation}deg)`;
-            line.style.animationDelay = `${Math.random() * 4}s`;
-            
-            this.container.appendChild(line);
-            this.lines.push(line);
-        }
-    }
-    
-    startAnimation() {
-        // Animación de paralaje suave en scroll
-        let ticking = false;
+    createConnections() {
+        this.connections = [];
         
-        const updateParallax = () => {
-            if (!this.container) return;
+        this.neurons.forEach(neuron => {
+            neuron.connections = [];
             
-            const scrollY = window.pageYOffset;
-            const rate = scrollY * -0.2; // Velocidad de paralaje
+            // Encontrar neuronas cercanas
+            const nearbyNeurons = this.neurons
+                .filter(other => other.id !== neuron.id)
+                .map(other => ({
+                    neuron: other,
+                    distance: this.getDistance(neuron, other)
+                }))
+                .filter(item => item.distance < this.config.connectionDistance)
+                .sort((a, b) => a.distance - b.distance)
+                .slice(0, this.config.maxConnections);
             
-            this.container.style.transform = `translateY(${rate}px)`;
-            ticking = false;
-        };
-        
-        const requestTick = () => {
-            if (!ticking) {
-                requestAnimationFrame(updateParallax);
-                ticking = true;
-            }
-        };
-        
-        window.addEventListener('scroll', requestTick, { passive: true });
-    }
-    
-    setupResizeListener() {
-        let resizeTimeout;
-        
-        window.addEventListener('resize', () => {
-            clearTimeout(resizeTimeout);
-            resizeTimeout = setTimeout(() => {
-                this.init(); // Reinicializar en resize
-            }, 300);
-        });
-    }
-    
-    // Método para agregar interacción con mouse
-    addMouseInteraction() {
-        let mouseX = 0;
-        let mouseY = 0;
-        
-        document.addEventListener('mousemove', (e) => {
-            mouseX = (e.clientX / window.innerWidth) * 100;
-            mouseY = (e.clientY / window.innerHeight) * 100;
-            
-            // Efecto sutil de atracción a los nodos cercanos
-            this.nodes.forEach((node, index) => {
-                const dx = mouseX - node.x;
-                const dy = mouseY - node.y;
-                const distance = Math.sqrt(dx * dx + dy * dy);
+            nearbyNeurons.forEach(({ neuron: other, distance }) => {
+                // Evitar conexiones duplicadas
+                const connectionExists = this.connections.some(conn => 
+                    (conn.from.id === neuron.id && conn.to.id === other.id) ||
+                    (conn.from.id === other.id && conn.to.id === neuron.id)
+                );
                 
-                if (distance < 20) { // Radio de influencia
-                    const force = (20 - distance) / 20;
-                    const offsetX = dx * force * 0.1;
-                    const offsetY = dy * force * 0.1;
+                if (!connectionExists) {
+                    const connection = {
+                        from: neuron,
+                        to: other,
+                        strength: 1 - (distance / this.config.connectionDistance),
+                        pulses: [],
+                        lastActivity: 0
+                    };
                     
-                    node.element.style.transform = `translate(${offsetX}px, ${offsetY}px) scale(${1 + force * 0.3})`;
-                    node.element.style.opacity = 0.7 + (force * 0.3);
-                } else {
-                    node.element.style.transform = 'translate(0px, 0px) scale(1)';
-                    node.element.style.opacity = 0.7;
+                    this.connections.push(connection);
+                    neuron.connections.push(connection);
+                    other.connections.push(connection);
                 }
             });
         });
     }
     
-    // Destructor para limpiar event listeners
+    updateNeurons(deltaTime) {
+        this.neurons.forEach(neuron => {
+            // Movimiento suave
+            neuron.x += neuron.vx;
+            neuron.y += neuron.vy;
+            
+            // Rebote en los bordes con margen
+            const margin = 50;
+            if (neuron.x < margin || neuron.x > this.canvas.width - margin) {
+                neuron.vx *= -1;
+                neuron.x = Math.max(margin, Math.min(this.canvas.width - margin, neuron.x));
+            }
+            if (neuron.y < margin || neuron.y > this.canvas.height - margin) {
+                neuron.vy *= -1;
+                neuron.y = Math.max(margin, Math.min(this.canvas.height - margin, neuron.y));
+            }
+            
+            // Actividad neuronal
+            neuron.activity += neuron.activitySpeed;
+            neuron.pulseTime += 0.1;
+            
+            // Generar pulsos aleatorios
+            if (Math.random() < 0.003 && neuron.connections.length > 0) {
+                this.triggerNeuronPulse(neuron);
+            }
+        });
+    }
+    
+    triggerNeuronPulse(neuron) {
+        neuron.lastPulse = Date.now();
+        
+        // Enviar pulsos por las conexiones
+        neuron.connections.forEach(connection => {
+            if (connection.from.id === neuron.id) {
+                const pulse = {
+                    position: 0,
+                    speed: 0.02 + Math.random() * 0.01,
+                    intensity: 0.5 + Math.random() * 0.5,
+                    startTime: Date.now()
+                };
+                connection.pulses.push(pulse);
+            }
+        });
+    }
+    
+    updateConnections(deltaTime) {
+        this.connections.forEach(connection => {
+            // Actualizar distancia dinámicamente
+            connection.distance = this.getDistance(connection.from, connection.to);
+            connection.strength = Math.max(0, 1 - (connection.distance / this.config.connectionDistance));
+            
+            // Actualizar pulsos
+            connection.pulses = connection.pulses.filter(pulse => {
+                pulse.position += pulse.speed;
+                
+                // Cuando el pulso llega al destino
+                if (pulse.position >= 1) {
+                    // Activar la neurona destino
+                    connection.to.activity = Math.min(1, connection.to.activity + 0.3);
+                    
+                    // Posibilidad de propagar el pulso
+                    if (Math.random() < 0.4) {
+                        setTimeout(() => this.triggerNeuronPulse(connection.to), 100);
+                    }
+                    
+                    return false; // Remover pulso
+                }
+                
+                return pulse.position < 1;
+            });
+        });
+    }
+    
+    render() {
+        // Limpiar canvas
+        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        
+        // Renderizar conexiones
+        this.renderConnections();
+        
+        // Renderizar neuronas
+        this.renderNeurons();
+        
+        // Renderizar pulsos
+        this.renderPulses();
+    }
+    
+    renderConnections() {
+        this.connections.forEach(connection => {
+            if (connection.strength <= 0) return;
+            
+            const opacity = connection.strength * 0.6;
+            const gradient = this.ctx.createLinearGradient(
+                connection.from.x, connection.from.y,
+                connection.to.x, connection.to.y
+            );
+            
+            gradient.addColorStop(0, `rgba(228, 205, 133, ${opacity})`);
+            gradient.addColorStop(0.5, `rgba(228, 205, 133, ${opacity * 0.5})`);
+            gradient.addColorStop(1, `rgba(228, 205, 133, ${opacity})`);
+            
+            this.ctx.beginPath();
+            this.ctx.moveTo(connection.from.x, connection.from.y);
+            this.ctx.lineTo(connection.to.x, connection.to.y);
+            this.ctx.strokeStyle = gradient;
+            this.ctx.lineWidth = this.config.sizes.connection * connection.strength;
+            this.ctx.stroke();
+        });
+    }
+    
+    renderNeurons() {
+        this.neurons.forEach(neuron => {
+            const now = Date.now();
+            const timeSincePulse = now - neuron.lastPulse;
+            const pulseGlow = Math.max(0, 1 - (timeSincePulse / 1000)) * 0.5;
+            
+            // Actividad base + glow por pulso
+            const activity = Math.sin(neuron.activity) * 0.3 + 0.7 + pulseGlow;
+            const size = neuron.size * (0.8 + activity * 0.4);
+            const opacity = 0.6 + activity * 0.4;
+            
+            // Glow exterior
+            const glowGradient = this.ctx.createRadialGradient(
+                neuron.x, neuron.y, 0,
+                neuron.x, neuron.y, size * 3
+            );
+            glowGradient.addColorStop(0, `rgba(228, 205, 133, ${opacity * 0.8})`);
+            glowGradient.addColorStop(0.3, `rgba(228, 205, 133, ${opacity * 0.3})`);
+            glowGradient.addColorStop(1, 'rgba(228, 205, 133, 0)');
+            
+            this.ctx.beginPath();
+            this.ctx.arc(neuron.x, neuron.y, size * 3, 0, Math.PI * 2);
+            this.ctx.fillStyle = glowGradient;
+            this.ctx.fill();
+            
+            // Núcleo de la neurona
+            const coreGradient = this.ctx.createRadialGradient(
+                neuron.x, neuron.y, 0,
+                neuron.x, neuron.y, size
+            );
+            coreGradient.addColorStop(0, `rgba(255, 255, 255, ${opacity})`);
+            coreGradient.addColorStop(0.5, `rgba(228, 205, 133, ${opacity})`);
+            coreGradient.addColorStop(1, `rgba(192, 138, 45, ${opacity * 0.8})`);
+            
+            this.ctx.beginPath();
+            this.ctx.arc(neuron.x, neuron.y, size, 0, Math.PI * 2);
+            this.ctx.fillStyle = coreGradient;
+            this.ctx.fill();
+            
+            // Borde brillante
+            this.ctx.beginPath();
+            this.ctx.arc(neuron.x, neuron.y, size, 0, Math.PI * 2);
+            this.ctx.strokeStyle = `rgba(255, 255, 255, ${opacity * 0.5})`;
+            this.ctx.lineWidth = 1;
+            this.ctx.stroke();
+        });
+    }
+    
+    renderPulses() {
+        this.connections.forEach(connection => {
+            connection.pulses.forEach(pulse => {
+                const x = connection.from.x + (connection.to.x - connection.from.x) * pulse.position;
+                const y = connection.from.y + (connection.to.y - connection.from.y) * pulse.position;
+                
+                // Efecto de estela
+                const trailLength = 0.1;
+                const trailStart = Math.max(0, pulse.position - trailLength);
+                
+                for (let i = 0; i < 5; i++) {
+                    const trailPos = trailStart + (pulse.position - trailStart) * (i / 4);
+                    const trailX = connection.from.x + (connection.to.x - connection.from.x) * trailPos;
+                    const trailY = connection.from.y + (connection.to.y - connection.from.y) * trailPos;
+                    const trailOpacity = pulse.intensity * (i / 4) * 0.3;
+                    
+                    this.ctx.beginPath();
+                    this.ctx.arc(trailX, trailY, this.config.sizes.pulse * (i / 4), 0, Math.PI * 2);
+                    this.ctx.fillStyle = `rgba(255, 255, 255, ${trailOpacity})`;
+                    this.ctx.fill();
+                }
+                
+                // Pulso principal
+                const pulseGradient = this.ctx.createRadialGradient(
+                    x, y, 0,
+                    x, y, this.config.sizes.pulse * 2
+                );
+                pulseGradient.addColorStop(0, `rgba(255, 255, 255, ${pulse.intensity})`);
+                pulseGradient.addColorStop(0.5, `rgba(228, 205, 133, ${pulse.intensity * 0.7})`);
+                pulseGradient.addColorStop(1, 'rgba(228, 205, 133, 0)');
+                
+                this.ctx.beginPath();
+                this.ctx.arc(x, y, this.config.sizes.pulse * 2, 0, Math.PI * 2);
+                this.ctx.fillStyle = pulseGradient;
+                this.ctx.fill();
+                
+                // Núcleo brillante
+                this.ctx.beginPath();
+                this.ctx.arc(x, y, this.config.sizes.pulse, 0, Math.PI * 2);
+                this.ctx.fillStyle = `rgba(255, 255, 255, ${pulse.intensity})`;
+                this.ctx.fill();
+            });
+        });
+    }
+    
+    animate() {
+        const deltaTime = 16; // ~60 FPS
+        
+        this.updateNeurons(deltaTime);
+        this.updateConnections(deltaTime);
+        this.render();
+        
+        this.animationId = requestAnimationFrame(() => this.animate());
+    }
+    
+    startAnimation() {
+        this.animate();
+        
+        // Regenerar conexiones periódicamente
+        setInterval(() => {
+            this.createConnections();
+        }, 10000);
+        
+        // Pulsos aleatorios para mantener actividad
+        setInterval(() => {
+            if (Math.random() < 0.3) {
+                const randomNeuron = this.neurons[Math.floor(Math.random() * this.neurons.length)];
+                this.triggerNeuronPulse(randomNeuron);
+            }
+        }, 2000);
+    }
+    
+    setupEventListeners() {
+        // Redimensionar canvas
+        const resizeObserver = new ResizeObserver(() => {
+            this.resizeCanvas();
+            this.createConnections(); // Recalcular conexiones
+        });
+        resizeObserver.observe(this.container);
+        
+        // Interacción con mouse
+        if (!this.isMobile()) {
+            this.setupMouseInteraction();
+        }
+        
+        // Pausar animación cuando no está visible
+        this.setupVisibilityControl();
+    }
+    
+    setupMouseInteraction() {
+        let mouseX = 0;
+        let mouseY = 0;
+        let isMouseNear = false;
+        
+        this.container.addEventListener('mousemove', (e) => {
+            const rect = this.container.getBoundingClientRect();
+            mouseX = e.clientX - rect.left;
+            mouseY = e.clientY - rect.top;
+            isMouseNear = true;
+            
+            // Activar neuronas cercanas al mouse
+            this.neurons.forEach(neuron => {
+                const distance = Math.sqrt(
+                    Math.pow(mouseX - neuron.x, 2) + Math.pow(mouseY - neuron.y, 2)
+                );
+                
+                if (distance < 100) {
+                    neuron.activity = Math.min(1, neuron.activity + 0.05);
+                    
+                    // Activar pulsos ocasionalmente
+                    if (Math.random() < 0.02) {
+                        this.triggerNeuronPulse(neuron);
+                    }
+                }
+            });
+        });
+        
+        this.container.addEventListener('mouseleave', () => {
+            isMouseNear = false;
+        });
+    }
+    
+    setupVisibilityControl() {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    if (!this.animationId) {
+                        this.startAnimation();
+                    }
+                } else {
+                    if (this.animationId) {
+                        cancelAnimationFrame(this.animationId);
+                        this.animationId = null;
+                    }
+                }
+            });
+        }, { threshold: 0.1 });
+        
+        observer.observe(this.container);
+    }
+    
+    // Métodos auxiliares
+    getDistance(neuron1, neuron2) {
+        return Math.sqrt(
+            Math.pow(neuron2.x - neuron1.x, 2) + 
+            Math.pow(neuron2.y - neuron1.y, 2)
+        );
+    }
+    
+    isMobile() {
+        return window.innerWidth < 768;
+    }
+    
+    // Controles públicos
+    increaseActivity() {
+        this.neurons.forEach(neuron => {
+            neuron.activity = Math.min(1, neuron.activity + 0.2);
+        });
+        
+        // Disparar varios pulsos
+        for (let i = 0; i < 3; i++) {
+            setTimeout(() => {
+                const randomNeuron = this.neurons[Math.floor(Math.random() * this.neurons.length)];
+                this.triggerNeuronPulse(randomNeuron);
+            }, i * 200);
+        }
+    }
+    
+    setIntensity(intensity) {
+        this.config.neuronSpeed = 0.2 * intensity;
+        this.config.pulseSpeed = 2 * intensity;
+        
+        this.neurons.forEach(neuron => {
+            neuron.activitySpeed = (0.01 + Math.random() * 0.02) * intensity;
+        });
+    }
+    
     destroy() {
+        if (this.animationId) {
+            cancelAnimationFrame(this.animationId);
+        }
         if (this.container) {
             this.container.innerHTML = '';
         }
-        // Los event listeners se limpian automáticamente cuando se remueve el DOM
     }
 }
 
-// Inicialización automática cuando carga el DOM
+// Inicialización automática
 document.addEventListener('DOMContentLoaded', () => {
-    // Crear animación de red para el héroe
-    const heroNetwork = new NetworkAnimation('networkBg');
+    const heroNetwork = new NeuralNetworkAnimation('networkBg');
     
-    // Agregar interacción con mouse en dispositivos de escritorio
-    if (window.innerWidth > 768) {
-        heroNetwork.addMouseInteraction();
-    }
+    // Controlar intensidad basada en scroll
+    let lastScrollY = 0;
+    const handleScroll = () => {
+        const scrollY = window.pageYOffset;
+        const scrollSpeed = Math.abs(scrollY - lastScrollY);
+        
+        if (scrollSpeed > 5) {
+            heroNetwork.increaseActivity();
+        }
+        
+        lastScrollY = scrollY;
+    };
     
-    // Exponer globalmente para uso en otros scripts si es necesario
-    window.NetworkAnimation = NetworkAnimation;
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    
+    // Aumentar actividad en elementos importantes
+    document.addEventListener('click', (e) => {
+        if (e.target.matches('.glass-button-gold, .cta-button')) {
+            heroNetwork.increaseActivity();
+        }
+    });
+    
+    // Exponer globalmente
+    window.NeuralNetworkAnimation = NeuralNetworkAnimation;
+    window.heroNetwork = heroNetwork;
 });
 
-// Optimización para dispositivos móviles
-if ('ontouchstart' in window) {
-    // Reducir cantidad de nodos en móviles para mejor rendimiento
-    document.addEventListener('DOMContentLoaded', () => {
-        const style = document.createElement('style');
-        style.textContent = `
-            .network-node {
-                animation-duration: 4s !important;
-            }
-            .network-line {
-                animation-duration: 6s !important;
-            }
-        `;
-        document.head.appendChild(style);
+// Optimizaciones para rendimiento
+if ('requestIdleCallback' in window) {
+    // Usar tiempo idle para optimizaciones no críticas
+    requestIdleCallback(() => {
+        console.log('🧠 Neural network optimized for performance');
     });
 }
