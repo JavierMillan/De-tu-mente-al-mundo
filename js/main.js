@@ -1,29 +1,24 @@
-       // ===============================================
-        // STRIPE CHECKOUT CONFIGURATION
-        // ¡ACTUALIZA ESTOS VALORES CON TUS DATOS REALES!
+
+        // ===============================================
+        // STRIPE CONFIGURATION
+        // ¡ACTUALIZA ESTOS VALORES!
         // ===============================================
         
         const STRIPE_CONFIG = {
-            basic: {
-                priceId: 'price_TU_PRICE_ID_BASICO',  // 🔥 ACTUALIZAR con tu Price ID real
-                amount: 55,
-                name: 'DTMM Plan Básico'
-            },
-            pro: {
-                priceId: 'price_TU_PRICE_ID_PRO',     // 🔥 ACTUALIZAR con tu Price ID real
-                amount: 110,
-                name: 'DTMM Plan Pro'
-            }
+            priceId: 'price_TU_PRICE_ID_DTMM',  // 🔥 ACTUALIZAR con tu Price ID real ($1,000 MXN)
+            amount: 1000,
+            currency: 'MXN',
+            name: 'DTMM - De tu Mente al Mundo'
         };
         
         // 🔥 ACTUALIZAR con tu clave pública de Stripe
         const STRIPE_PUBLIC_KEY = 'pk_live_TU_CLAVE_PUBLICA_AQUI';
         
         // ===============================================
-        // MAIN LANDING CLASS
+        // PREMIUM LANDING CLASS
         // ===============================================
         
-        class OptimizedLanding {
+        class PremiumLanding {
             constructor() {
                 this.init();
             }
@@ -31,22 +26,21 @@
             init() {
                 this.setupScrollAnimations();
                 this.setupSmoothScroll();
-                this.setupUrgencyUpdates();
+                this.setupInteractions();
             }
             
-            // Reveal animations
             setupScrollAnimations() {
                 const revealElements = () => {
                     const elements = document.querySelectorAll('.reveal-text, .reveal-card');
                     
                     elements.forEach((element, index) => {
                         const elementTop = element.getBoundingClientRect().top;
-                        const elementVisible = 150;
+                        const elementVisible = 120;
                         
                         if (elementTop < window.innerHeight - elementVisible) {
                             setTimeout(() => {
                                 element.classList.add('revealed');
-                            }, index * 100);
+                            }, index * 80);
                         }
                     });
                 };
@@ -57,12 +51,11 @@
                 // Force reveal after 2s
                 setTimeout(() => {
                     document.querySelectorAll('.reveal-text:not(.revealed), .reveal-card:not(.revealed)').forEach((el, index) => {
-                        setTimeout(() => el.classList.add('revealed'), index * 50);
+                        setTimeout(() => el.classList.add('revealed'), index * 40);
                     });
                 }, 2000);
             }
             
-            // Smooth scroll for anchor links
             setupSmoothScroll() {
                 document.addEventListener('click', (e) => {
                     const link = e.target.closest('a[href^="#"]');
@@ -82,23 +75,33 @@
                 });
             }
             
-            // Update urgency counters
-            setupUrgencyUpdates() {
-                // Simular countdown de lugares (opcional)
-                const updateSpots = () => {
-                    const now = new Date();
-                    const baseSpots = 40;
-                    const daysSinceLaunch = Math.floor((now - new Date('2025-08-12')) / (1000 * 60 * 60 * 24));
-                    const spotsLeft = Math.max(0, baseSpots - Math.floor(daysSinceLaunch * 2.3) - Math.floor(Math.random() * 3));
-                    
-                    const urgencyElements = document.querySelectorAll('[data-update="spots"]');
-                    urgencyElements.forEach(el => {
-                        el.textContent = `${spotsLeft} lugares restantes`;
-                    });
-                };
-                
-                updateSpots();
-                setInterval(updateSpots, 300000); // Update every 5 minutes
+            setupInteractions() {
+                // Enhanced FAQ interactions
+                document.addEventListener('click', (e) => {
+                    if (e.target.matches('details summary')) {
+                        const faqText = e.target.textContent.substring(0, 50);
+                        if (typeof gtag !== 'undefined') {
+                            gtag('event', 'faq_interaction', {
+                                question: faqText
+                            });
+                        }
+                    }
+                });
+
+                // Track scroll depth
+                let maxScroll = 0;
+                window.addEventListener('scroll', () => {
+                    const scrollPercent = Math.round((window.pageYOffset / (document.body.scrollHeight - window.innerHeight)) * 100);
+                    if (scrollPercent > maxScroll) {
+                        maxScroll = scrollPercent;
+                        
+                        if ([25, 50, 75, 90].includes(scrollPercent) && typeof gtag !== 'undefined') {
+                            gtag('event', 'scroll_depth', {
+                                percent: scrollPercent
+                            });
+                        }
+                    }
+                }, { passive: true });
             }
         }
         
@@ -106,60 +109,33 @@
         // CHECKOUT FUNCTION
         // ===============================================
         
-        async function checkout(plan) {
-            const config = STRIPE_CONFIG[plan];
-            
-            if (!config) {
-                console.error('Plan no encontrado:', plan);
-                alert('Error: Plan no válido');
-                return;
-            }
-            
-            // Track analytics
+        async function checkout() {
+            // Track checkout attempt
             if (typeof gtag !== 'undefined') {
                 gtag('event', 'begin_checkout', {
-                    currency: 'USD',
-                    value: config.amount,
+                    currency: STRIPE_CONFIG.currency,
+                    value: STRIPE_CONFIG.amount,
                     items: [{
-                        item_id: plan,
-                        item_name: config.name,
-                        price: config.amount,
+                        item_id: 'dtmm',
+                        item_name: STRIPE_CONFIG.name,
+                        price: STRIPE_CONFIG.amount,
                         quantity: 1
                     }]
                 });
             }
             
-            // Development mode - show test modal
+            // Development mode
             if (window.location.hostname === 'localhost' || 
                 window.location.hostname === '127.0.0.1' ||
                 window.location.hostname.includes('github.io')) {
                 
-                const modal = document.createElement('div');
-                modal.className = 'fixed inset-0 bg-black/80 flex items-center justify-center z-50';
-                modal.innerHTML = `
-                    <div class="bg-void-medium p-8 rounded-lg max-w-md mx-4 text-center">
-                        <h3 class="text-xl font-bold text-gold-light mb-4">🚀 Modo Desarrollo</h3>
-                        <p class="text-white/80 mb-4">
-                            <strong>Plan:</strong> ${config.name}<br>
-                            <strong>Precio:</strong> $${config.amount} USD<br>
-                            <strong>Price ID:</strong> ${config.priceId}
-                        </p>
-                        <p class="text-white/60 text-sm mb-6">
-                            En producción, esto redirigirá a Stripe Checkout
-                        </p>
-                        <button onclick="this.parentElement.parentElement.remove()" 
-                                class="btn-primary px-6 py-2 rounded-lg">
-                            Cerrar
-                        </button>
-                    </div>
-                `;
-                document.body.appendChild(modal);
+                showDevModal();
                 return;
             }
             
-            // Production mode - redirect to Stripe
+            // Production mode
             if (!STRIPE_PUBLIC_KEY || STRIPE_PUBLIC_KEY.includes('TU_CLAVE')) {
-                alert('Error: Stripe no configurado. Contacta al administrador.');
+                alert('Error: Configuración de pagos pendiente. Contacta soporte.');
                 return;
             }
             
@@ -168,35 +144,55 @@
             try {
                 const { error } = await stripe.redirectToCheckout({
                     lineItems: [{
-                        price: config.priceId,
+                        price: STRIPE_CONFIG.priceId,
                         quantity: 1,
                     }],
                     mode: 'payment',
-                    successUrl: `${window.location.origin}/thanks.html?plan=${plan}&session_id={CHECKOUT_SESSION_ID}`,
-                    cancelUrl: `${window.location.origin}/#planes`,
+                    successUrl: `${window.location.origin}/thanks.html?plan=dtmm&session_id={CHECKOUT_SESSION_ID}`,
+                    cancelUrl: `${window.location.origin}/#plan`,
                     customerEmail: null,
                     billingAddressCollection: 'auto',
-                    allowPromotionCodes: false,
+                    locale: 'es',
                 });
                 
                 if (error) {
                     console.error('Error en checkout:', error);
-                    alert('Error al procesar el pago. Por favor, inténtalo de nuevo o contacta soporte.');
+                    alert('Error al procesar el pago. Por favor, inténtalo de nuevo.');
                 }
             } catch (err) {
                 console.error('Error de Stripe:', err);
-                // Fallback: redirect to Payment Link
-                const fallbackUrls = {
-                    basic: 'https://buy.stripe.com/TU_LINK_BASICO',  // 🔥 ACTUALIZAR
-                    pro: 'https://buy.stripe.com/TU_LINK_PRO'       // 🔥 ACTUALIZAR
-                };
-                
-                if (fallbackUrls[plan]) {
-                    window.location.href = fallbackUrls[plan];
+                // Fallback to Payment Link
+                const fallbackUrl = 'https://buy.stripe.com/TU_PAYMENT_LINK_DTMM'; // 🔥 ACTUALIZAR
+                if (fallbackUrl.includes('TU_PAYMENT')) {
+                    alert('Error de configuración. Contacta soporte: hola@lareddeluz.com');
                 } else {
-                    alert('Error de conexión. Por favor, inténtalo más tarde o contacta soporte.');
+                    window.location.href = fallbackUrl;
                 }
             }
+        }
+        
+        function showDevModal() {
+            const modal = document.createElement('div');
+            modal.className = 'fixed inset-0 bg-black/80 flex items-center justify-center z-50 backdrop-blur-sm';
+            modal.innerHTML = `
+                <div class="bg-void-medium p-8 rounded-2xl max-w-md mx-4 text-center border border-gold-light/20">
+                    <div class="text-4xl mb-4">🚀</div>
+                    <h3 class="text-2xl font-bold text-gold-light mb-4">Modo Desarrollo</h3>
+                    <div class="text-left mb-6 space-y-2">
+                        <p class="text-white/80"><strong>Programa:</strong> ${STRIPE_CONFIG.name}</p>
+                        <p class="text-white/80"><strong>Precio:</strong> ${STRIPE_CONFIG.amount} ${STRIPE_CONFIG.currency}</p>
+                        <p class="text-white/80"><strong>Price ID:</strong> ${STRIPE_CONFIG.priceId}</p>
+                    </div>
+                    <p class="text-white/60 text-sm mb-6">
+                        En producción, esto redirigirá a Stripe Checkout con pagos reales.
+                    </p>
+                    <button onclick="this.parentElement.parentElement.remove()" 
+                            class="glass-button-gold text-void-deep px-6 py-3 rounded-lg font-semibold">
+                        Cerrar
+                    </button>
+                </div>
+            `;
+            document.body.appendChild(modal);
         }
         
         // ===============================================
@@ -204,74 +200,16 @@
         // ===============================================
         
         document.addEventListener('DOMContentLoaded', () => {
-            new OptimizedLanding();
-            console.log('🚀 DTMM Landing optimizada cargada!');
+            new PremiumLanding();
+            console.log('✨ DTMM Premium Landing cargada!');
             
-            // Check if coming from a specific source
+            // URL tracking
             const urlParams = new URLSearchParams(window.location.search);
             const source = urlParams.get('utm_source');
-            const medium = urlParams.get('utm_medium');
-            
             if (source && typeof gtag !== 'undefined') {
                 gtag('event', 'page_view_source', {
                     source: source,
-                    medium: medium || 'unknown'
+                    medium: urlParams.get('utm_medium') || 'unknown'
                 });
             }
         });
-        
-        // ===============================================
-        // ADDITIONAL INTERACTIONS
-        // ===============================================
-        
-        // Track scroll depth
-        let maxScroll = 0;
-        window.addEventListener('scroll', () => {
-            const scrollPercent = Math.round((window.pageYOffset / (document.body.scrollHeight - window.innerHeight)) * 100);
-            if (scrollPercent > maxScroll) {
-                maxScroll = scrollPercent;
-                
-                // Track milestone scrolls
-                if ([25, 50, 75, 90].includes(scrollPercent) && typeof gtag !== 'undefined') {
-                    gtag('event', 'scroll', {
-                        percent: scrollPercent
-                    });
-                }
-            }
-        }, { passive: true });
-        
-        // Track FAQ interactions
-        document.addEventListener('click', (e) => {
-            if (e.target.matches('details summary')) {
-                const faqText = e.target.textContent.substring(0, 50);
-                if (typeof gtag !== 'undefined') {
-                    gtag('event', 'faq_interaction', {
-                        question: faqText
-                    });
-                }
-            }
-        });
-        
-        // Track plan comparisons (hover on pricing cards)
-        let planHoverTimer = null;
-        document.addEventListener('mouseenter', (e) => {
-            if (e.target.closest('.glass-card') && e.target.closest('#planes')) {
-                const planType = e.target.textContent.includes('Pro') ? 'pro' : 'basic';
-                
-                planHoverTimer = setTimeout(() => {
-                    if (typeof gtag !== 'undefined') {
-                        gtag('event', 'plan_consideration', {
-                            plan: planType,
-                            duration: 'long_hover'
-                        });
-                    }
-                }, 3000);
-            }
-        }, true);
-        
-        document.addEventListener('mouseleave', (e) => {
-            if (planHoverTimer) {
-                clearTimeout(planHoverTimer);
-                planHoverTimer = null;
-            }
-        }, true);

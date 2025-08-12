@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DTMM — Publica tu web en 72h sin dependencias</title>
-    <meta name="description" content="Bootcamp práctico para lanzar tu web en 72h con IA, Git y GitHub Pages. Sin WordPress, sin plugins, sin mensualidades. Hosting gratuito para siempre.">
+    <title>DTMM — Publica tu web en 72h | La Red de Luz</title>
+    <meta name="description" content="Conecta con otros nodos, aprende HTML + CSS + JavaScript con IA, y publica tu web en 72h con hosting gratuito para siempre. $1,000 MXN.">
     
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -44,343 +44,583 @@
     
     <!-- Hero Section -->
     <section class="relative min-h-screen flex items-center justify-center overflow-hidden">
-        <!-- Background Network - Solo en Hero -->
+        <!-- Background Network -->
         <div id="networkBg" class="absolute inset-0 z-0"></div>
         
         <!-- Hero Content -->
-        <div class="relative z-10 text-center max-w-4xl mx-auto px-4">
-            <!-- Badge con urgencia -->
-            <div class="inline-flex items-center px-4 py-2 rounded-full bg-gold-light/10 backdrop-blur-sm border border-gold-light/20 mb-6 animate-fadeInUp">
-                <span class="text-sm font-medium text-gold-light">🚀 Solo 40 estudiantes • 23 lugares restantes • Cierra 16 agosto</span>
+        <div class="relative z-10 text-center max-w-5xl mx-auto px-4">
+            <!-- Network Badge -->
+            <div class="inline-flex items-center px-6 py-3 rounded-full bg-gold-light/10 backdrop-blur-sm border border-gold-light/20 mb-8 animate-fadeInUp">
+                <span class="text-sm font-medium text-gold-light">✨ Únete a la Red • Solo 40 nodos • 18-22 Agosto</span>
             </div>
             
-            <!-- Title -->
-            <h1 class="font-playfair text-5xl md:text-7xl font-bold leading-tight mb-6 animate-fadeInUp" style="animation-delay: 0.3s">
-                Publica tu <span class="text-gold-light glow-text">web</span><br>
-                en <span class="text-gold-light glow-text">72 horas</span>
+            <!-- Main Title -->
+            <h1 class="font-playfair text-6xl md:text-8xl font-bold leading-tight mb-8 animate-fadeInUp" style="animation-delay: 0.3s">
+                Tu <span class="text-gold-light glow-text">mente</span><br>
+                conecta con el <span class="text-gold-light glow-text">mundo</span>
             </h1>
             
             <!-- Subtitle -->
-            <p class="text-xl md:text-2xl mb-6 text-white/80 max-w-2xl mx-auto animate-fadeInUp" style="animation-delay: 0.6s">
-                Sin WordPress. Sin plugins. Sin mensualidades.<br>Con hosting gratuito para siempre.
+            <p class="text-2xl md:text-3xl mb-6 text-white/90 max-w-3xl mx-auto animate-fadeInUp leading-relaxed" style="animation-delay: 0.6s">
+                Publica tu web en 72h con IA como asistente
             </p>
 
-            <!-- Tech Stack Preview -->
-            <div class="bg-gold-light/10 rounded-lg p-4 max-w-2xl mx-auto mb-8 animate-fadeInUp" style="animation-delay: 0.7s">
-                <p class="text-gold-light text-sm font-medium">
-                    ✅ HTML + CSS + JavaScript • ✅ GitHub Pages (hosting $0) • ✅ IA como asistente
-                </p>
+            <!-- Value Proposition -->
+            <div class="glass-card-premium p-8 max-w-3xl mx-auto mb-10 animate-fadeInUp" style="animation-delay: 0.8s">
+                <div class="grid md:grid-cols-3 gap-6 text-center">
+                    <div>
+                        <div class="text-2xl font-bold text-gold-light mb-2">$0</div>
+                        <p class="text-white/80 text-sm">Hosting para siempre<br>GitHub Pages</p>
+                    </div>
+                    <div>
+                        <div class="text-2xl font-bold text-gold-light mb-2">72h</div>
+                        <p class="text-white/80 text-sm">De idea a web<br>funcionando online</p>
+                    </div>
+                    <div>
+                        <div class="text-2xl font-bold text-gold-light mb-2">∞</div>
+                        <p class="text-white/80 text-sm">Webs ilimitadas<br>Habilidad permanente</p>
+                    </div>
+                </div>
             </div>
             
             <!-- CTA -->
-            <a href="#planes" class="inline-block glass-button-gold text-white font-semibold px-8 py-4 rounded-full text-lg transition-all duration-300 transform hover:scale-105 animate-fadeInUp" style="animation-delay: 0.9s">
-                Ver planes desde $55 USD
-            </a>
+            <button onclick="checkout()" class="glass-button-gold text-gold-light font-bold px-12 py-5 rounded-full text-xl transition-all duration-300 transform hover:scale-105 animate-fadeInUp mb-6" style="animation-delay: 1.0s">
+                Conectar con la red • $1,000 MXN
+            </button>
             
-            <!-- Quick Info -->
-            <p class="text-white/60 text-sm mt-6 animate-fadeInUp" style="animation-delay: 1.2s">
-                18-22 Agosto • Comunidad activa • Mentoría incluida
+            <!-- Social Proof -->
+            <p class="text-white/60 text-sm animate-fadeInUp" style="animation-delay: 1.2s">
+                🌱 Primer grupo fundacional • Experiencia única • Sin testimonios falsos
             </p>
         </div>
     </section>
 
-    <!-- Why DTMM Section -->
-    <section class="py-20 bg-gradient-to-b from-void-deep to-void-medium">
-        <div class="max-w-4xl mx-auto px-4 text-center">
-            <h2 class="font-playfair text-3xl md:text-4xl font-bold mb-4 reveal-text">
-                ¿Por qué <span class="text-gold-light">De tu Mente al Mundo</span>?
+    <!-- Network Philosophy -->
+    <section class="py-24 bg-gradient-to-b from-void-deep via-void-medium to-deep-blue">
+        <div class="max-w-6xl mx-auto px-4 text-center">
+            <h2 class="font-playfair text-5xl font-bold mb-8 reveal-text">
+                La <span class="text-gold-light">Red de Luz</span>
             </h2>
-            <p class="text-white/70 mb-6 max-w-2xl mx-auto reveal-text">
-                Una página básica en México cuesta ~$3,000 MXN. Por solo $1,000 MXN adquieres la habilidad de crear infinitas webs.
-            </p>
-            <p class="text-gold-light text-sm font-medium mb-12 reveal-text">
-                ✨ Te enseñamos a apalancarte de la IA y tecnología moderna para crear sin límites
+            <p class="text-xl text-white/80 max-w-3xl mx-auto mb-16 reveal-text leading-relaxed">
+                Un nodo solo puede brillar, pero cuando se conecta con otros, ilumina todo a su alrededor. 
+                Yo no puedo llegar a todos, pero juntos podemos rodear el mundo con nuestra red.
             </p>
             
-            <div class="grid md:grid-cols-3 gap-8">
-                <div class="glass-card p-6 reveal-card">
-                    <div class="text-4xl mb-4">🧠</div>
-                    <h3 class="font-bold text-gold-light mb-3">Habilidad permanente</h3>
-                    <p class="text-white/80 text-sm">No pagas por cada web. Aprendes una vez, creas para siempre. Tu conocimiento no caduca.</p>
+            <div class="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+                <div class="glass-card-hover text-center reveal-card">
+                    <div class="text-5xl mb-6">💡</div>
+                    <h3 class="text-xl font-bold text-gold-light mb-4">Eres un nodo</h3>
+                    <p class="text-white/80">Tienes una luz única que el mundo necesita ver. Tu web es tu forma de brillar y conectar con quienes te necesitan.</p>
                 </div>
                 
-                <div class="glass-card p-6 reveal-card">
+                <div class="glass-card-hover text-center reveal-card">
+                    <div class="text-5xl mb-6">🤝</div>
+                    <h3 class="text-xl font-bold text-gold-light mb-4">Conectamos juntos</h3>
+                    <p class="text-white/80">En comunidad aprendemos más rápido. Compartimos conocimiento, resolvemos dudas y crecemos como red.</p>
+                </div>
+                
+                <div class="glass-card-hover text-center reveal-card">
+                    <div class="text-5xl mb-6">🌍</div>
+                    <h3 class="text-xl font-bold text-gold-light mb-4">Iluminamos el mundo</h3>
+                    <p class="text-white/80">Cada web que publicas inspira a otros nodos. Juntos creamos una red que rodea el mundo con luz y conocimiento.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why DTMM -->
+    <section class="py-24 bg-deep-blue">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="font-playfair text-5xl font-bold mb-6 reveal-text">
+                    ¿Por qué <span class="text-gold-light">De tu Mente al Mundo</span>?
+                </h2>
+                <p class="text-xl text-white/80 max-w-3xl mx-auto reveal-text">
+                    Los sitios pre-armados te limitan a templates rígidos. Por el precio de una página básica ($3,000 MXN), 
+                    adquieres la habilidad de crear infinitas webs únicas.
+                </p>
+            </div>
+            
+            <!-- Comparison -->
+            <div class="grid lg:grid-cols-2 gap-12 max-w-5xl mx-auto">
+                <div class="glass-card p-8 border-red-500/20 reveal-card">
+                    <h3 class="text-2xl font-bold text-red-300 mb-6 text-center">❌ Sitios pre-armados</h3>
+                    <div class="space-y-4">
+                        <div class="flex justify-between items-center">
+                            <span class="text-white/80">Página básica</span>
+                            <span class="text-red-300 font-bold">$3,000 MXN</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="text-white/80">Cada cambio</span>
+                            <span class="text-red-300 font-bold">$500-1,000 MXN</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="text-white/80">Hosting mensual</span>
+                            <span class="text-red-300 font-bold">$200-500 MXN</span>
+                        </div>
+                        <hr class="border-red-500/20">
+                        <div class="flex justify-between items-center text-lg">
+                            <span class="font-semibold">Total primer año</span>
+                            <span class="text-red-300 font-bold">~$15,000 MXN</span>
+                        </div>
+                        <div class="mt-6 space-y-2 text-sm text-white/60">
+                            <p>• Templates limitados y rígidos</p>
+                            <p>• Dependes del proveedor</p>
+                            <p>• Sin control del código</p>
+                            <p>• Costos recurrentes</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="glass-card p-8 border-gold-light/30 reveal-card">
+                    <h3 class="text-2xl font-bold text-gold-light mb-6 text-center">✅ Con DTMM</h3>
+                    <div class="space-y-4">
+                        <div class="flex justify-between items-center">
+                            <span class="text-white/80">Curso completo</span>
+                            <span class="text-gold-light font-bold">$1,000 MXN</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="text-white/80">Cambios futuros</span>
+                            <span class="text-gold-light font-bold">$0 MXN</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="text-white/80">Hosting GitHub</span>
+                            <span class="text-gold-light font-bold">$0 MXN</span>
+                        </div>
+                        <hr class="border-gold-light/20">
+                        <div class="flex justify-between items-center text-lg">
+                            <span class="font-semibold">Total para siempre</span>
+                            <span class="text-gold-light font-bold">$1,000 MXN</span>
+                        </div>
+                        <div class="mt-6 space-y-2 text-sm text-white/80">
+                            <p>• Diseños únicos e ilimitados</p>
+                            <p>• Control total del código</p>
+                            <p>• Habilidad permanente</p>
+                            <p>• IA como asistente 24/7</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-center mt-16">
+                <div class="glass-card-premium p-8 max-w-2xl mx-auto reveal-card">
+                    <h3 class="text-2xl font-bold text-gold-light mb-4">💡 Ahorro total</h3>
+                    <p class="text-3xl font-bold mb-2">$14,000 MXN solo en el primer año</p>
+                    <p class="text-white/80">+ Habilidad para crear webs ilimitadas de por vida</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- What You Learn -->
+    <section class="py-24 bg-gradient-to-b from-deep-blue to-void-medium">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="font-playfair text-5xl font-bold mb-6 reveal-text">
+                    Qué <span class="text-gold-light">aprenderás</span>
+                </h2>
+                <p class="text-xl text-white/80 max-w-3xl mx-auto reveal-text">
+                    4 días intensivos para dominar las tecnologías que usan los profesionales, 
+                    potenciadas con IA moderna.
+                </p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto mb-16">
+                <div class="glass-card text-center reveal-card">
+                    <div class="text-4xl mb-4">📝</div>
+                    <h3 class="text-lg font-bold text-gold-light mb-3">HTML5 Moderno</h3>
+                    <p class="text-white/80 text-sm">Estructura semántica, SEO-friendly, accesible y optimizada para motores de búsqueda.</p>
+                </div>
+                
+                <div class="glass-card text-center reveal-card">
+                    <div class="text-4xl mb-4">🎨</div>
+                    <h3 class="text-lg font-bold text-gold-light mb-3">CSS3 Avanzado</h3>
+                    <p class="text-white/80 text-sm">Flexbox, Grid, animaciones, responsive design y efectos visuales modernos.</p>
+                </div>
+                
+                <div class="glass-card text-center reveal-card">
+                    <div class="text-4xl mb-4">⚡</div>
+                    <h3 class="text-lg font-bold text-gold-light mb-3">JavaScript Esencial</h3>
+                    <p class="text-white/80 text-sm">Interactividad, formularios, APIs y funcionalidades dinámicas para tu web.</p>
+                </div>
+                
+                <div class="glass-card text-center reveal-card">
                     <div class="text-4xl mb-4">🤖</div>
-                    <h3 class="font-bold text-gold-light mb-3">IA como asistente</h3>
-                    <p class="text-white/80 text-sm">Te enseñamos a usar ChatGPT, Claude y herramientas modernas para acelerar tu desarrollo x10.</p>
-                </div>
-                
-                <div class="glass-card p-6 reveal-card">
-                    <div class="text-4xl mb-4">🚀</div>
-                    <h3 class="font-bold text-gold-light mb-3">Tecnología avanzada</h3>
-                    <p class="text-white/80 text-sm">Git, GitHub, HTML5, CSS3, JavaScript moderno. Herramientas que usan los profesionales.</p>
+                    <h3 class="text-lg font-bold text-gold-light mb-3">IA como Asistente</h3>
+                    <p class="text-white/80 text-sm">ChatGPT, Claude y herramientas que aceleran tu desarrollo x10.</p>
                 </div>
             </div>
-            
-            <!-- Price Comparison -->
-            <div class="mt-16 max-w-3xl mx-auto">
-                <div class="glass-card p-8 reveal-card">
-                    <h3 class="text-xl font-bold text-gold-light mb-6">💰 Comparación de inversión</h3>
-                    <div class="grid md:grid-cols-2 gap-8 text-left">
-                        <div class="bg-red-900/20 border border-red-400/20 rounded-lg p-6">
-                            <h4 class="font-semibold text-red-300 mb-3">❌ Método tradicional</h4>
-                            <ul class="text-white/80 text-sm space-y-2">
-                                <li>• Página básica: $3,000 MXN</li>
-                                <li>• Cambios: $500-1,000 MXN c/u</li>
-                                <li>• Hosting: $200-500 MXN/mes</li>
-                                <li>• Mantenimiento: $1,000+ MXN/mes</li>
-                                <li>• <strong class="text-red-300">Total año 1: ~$15,000 MXN</strong></li>
-                            </ul>
+
+            <!-- Timeline -->
+            <div class="max-w-4xl mx-auto">
+                <h3 class="text-3xl font-bold text-center mb-12 reveal-text">Programa de 4 días</h3>
+                <div class="space-y-8">
+                    <div class="glass-card p-6 reveal-card">
+                        <div class="flex items-center mb-4">
+                            <div class="w-12 h-12 bg-gold-light/20 rounded-full flex items-center justify-center mr-4">
+                                <span class="text-gold-light font-bold">1</span>
+                            </div>
+                            <div>
+                                <h4 class="text-xl font-bold text-gold-light">Día 1: Fundamentos + Mensaje</h4>
+                                <p class="text-white/60 text-sm">Lunes 18 Agosto</p>
+                            </div>
                         </div>
-                        <div class="bg-green-900/20 border border-green-400/20 rounded-lg p-6">
-                            <h4 class="font-semibold text-green-300 mb-3">✅ Con DTMM</h4>
-                            <ul class="text-white/80 text-sm space-y-2">
-                                <li>• Curso completo: $1,000 MXN</li>
-                                <li>• Cambios: Los haces tú (gratis)</li>
-                                <li>• Hosting: $0 MXN/mes (GitHub)</li>
-                                <li>• Mantenimiento: Tú decides</li>
-                                <li>• <strong class="text-green-300">Total año 1: $1,000 MXN</strong></li>
-                            </ul>
-                        </div>
+                        <p class="text-white/80">HTML básico, estructura de tu mensaje, definición de tu audiencia y configuración del entorno de desarrollo.</p>
                     </div>
-                    <div class="mt-6 pt-6 border-t border-gold-light/20">
-                        <p class="text-gold-light text-center font-medium">
-                            💡 Ahorro de $14,000 MXN solo en el primer año + habilidad para toda la vida
-                        </p>
+                    
+                    <div class="glass-card p-6 reveal-card">
+                        <div class="flex items-center mb-4">
+                            <div class="w-12 h-12 bg-gold-light/20 rounded-full flex items-center justify-center mr-4">
+                                <span class="text-gold-light font-bold">2</span>
+                            </div>
+                            <div>
+                                <h4 class="text-xl font-bold text-gold-light">Día 2: Diseño + Construcción</h4>
+                                <p class="text-white/60 text-sm">Martes 19 Agosto</p>
+                            </div>
+                        </div>
+                        <p class="text-white/80">CSS avanzado, layouts responsive, tu primera web completa + Q&A en vivo para resolver dudas.</p>
+                    </div>
+                    
+                    <div class="glass-card p-6 reveal-card">
+                        <div class="flex items-center mb-4">
+                            <div class="w-12 h-12 bg-gold-light/20 rounded-full flex items-center justify-center mr-4">
+                                <span class="text-gold-light font-bold">3</span>
+                            </div>
+                            <div>
+                                <h4 class="text-xl font-bold text-gold-light">Día 3: Publicación + Git</h4>
+                                <p class="text-white/60 text-sm">Miércoles 20 Agosto</p>
+                            </div>
+                        </div>
+                        <p class="text-white/80">Git, GitHub, despliegue en GitHub Pages. Tu web estará online y accesible desde cualquier parte del mundo.</p>
+                    </div>
+                    
+                    <div class="glass-card p-6 reveal-card">
+                        <div class="flex items-center mb-4">
+                            <div class="w-12 h-12 bg-gold-light/20 rounded-full flex items-center justify-center mr-4">
+                                <span class="text-gold-light font-bold">4</span>
+                            </div>
+                            <div>
+                                <h4 class="text-xl font-bold text-gold-light">Día 4: Optimización + Futuro</h4>
+                                <p class="text-white/60 text-sm">Jueves 21 Agosto</p>
+                            </div>
+                        </div>
+                        <p class="text-white/80">SEO, Analytics, formularios de contacto, plan de crecimiento + Q&A final de cierre.</p>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- What's Included -->
-    <section id="incluye" class="py-20 bg-void-medium">
-        <div class="max-w-4xl mx-auto px-4">
-            <h2 class="font-playfair text-4xl font-bold text-center mb-16 reveal-text">
-                Qué <span class="text-gold-light">incluye</span>
-            </h2>
+    <!-- Community & Includes -->
+    <section class="py-24 bg-void-medium">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="font-playfair text-5xl font-bold mb-6 reveal-text">
+                    Tu <span class="text-gold-light">comunidad</span> te espera
+                </h2>
+                <p class="text-xl text-white/80 max-w-3xl mx-auto reveal-text">
+                    No aprenderás solo. Serás parte de una red de nodos que se apoyan, comparten y crecen juntos.
+                </p>
+            </div>
             
-            <div class="grid md:grid-cols-2 gap-8">
-                <div class="glass-card p-6 reveal-card">
-                    <h3 class="text-xl font-semibold mb-4 text-gold-light">📚 Contenido Completo</h3>
-                    <ul class="feature-list space-y-2 text-white/80">
-                        <li>4 días de entrenamiento intensivo (18-22 agosto)</li>
-                        <li>2 PDFs: HTML básico + Layouts responsive</li>
-                        <li>5 plantillas web listas para personalizar</li>
-                        <li>Curso: HTML, CSS y JavaScript esencial</li>
-                        <li>Git en VSCode + despliegue GitHub Pages</li>
-                        <li>GPT especializado para desarrollo web</li>
-                    </ul>
+            <div class="grid lg:grid-cols-2 gap-12 max-w-5xl mx-auto">
+                <!-- Community -->
+                <div class="space-y-8">
+                    <div class="glass-card p-6 reveal-card">
+                        <div class="flex items-center mb-4">
+                            <div class="text-3xl mr-4">💬</div>
+                            <div>
+                                <h3 class="text-xl font-bold text-gold-light">WhatsApp Privado</h3>
+                                <p class="text-white/60 text-sm">Acceso inmediato</p>
+                            </div>
+                        </div>
+                        <p class="text-white/80">Grupo exclusivo para dudas rápidas, networking directo y updates importantes del programa.</p>
+                    </div>
+                    
+                    <div class="glass-card p-6 reveal-card">
+                        <div class="flex items-center mb-4">
+                            <div class="text-3xl mr-4">🎮</div>
+                            <div>
+                                <h3 class="text-xl font-bold text-gold-light">Discord Organizado</h3>
+                                <p class="text-white/60 text-sm">Servidor estructurado</p>
+                            </div>
+                        </div>
+                        <p class="text-white/80">Canales especializados: #recursos, #proyectos, #dudas-técnicas, #retos-semanales y espacio para transmisiones.</p>
+                    </div>
+                    
+                    <div class="glass-card p-6 reveal-card">
+                        <div class="flex items-center mb-4">
+                            <div class="text-3xl mr-4">🎯</div>
+                            <div>
+                                <h3 class="text-xl font-bold text-gold-light">Soporte Continuo</h3>
+                                <p class="text-white/60 text-sm">Durante y después</p>
+                            </div>
+                        </div>
+                        <p class="text-white/80">2 Q&A en vivo durante el programa + comunidad activa post-bootcamp para seguir creciendo juntos.</p>
+                    </div>
                 </div>
                 
-                <div class="glass-card p-6 reveal-card">
-                    <h3 class="text-xl font-semibold mb-4 text-gold-light">🌐 Comunidad y Soporte</h3>
-                    <ul class="feature-list space-y-2 text-white/80">
-                        <li>Comunidad WhatsApp exclusiva (acceso inmediato)</li>
-                        <li>Discord con canales: #dudas #recursos #proyectos</li>
-                        <li>2 sesiones Q&A en vivo (20 y 22 agosto)</li>
-                        <li>Soporte técnico durante el bootcamp</li>
-                        <li>Grabaciones disponibles 90 días</li>
-                        <li>Retos semanales post-programa</li>
-                    </ul>
+                <!-- Resources -->
+                <div class="space-y-8">
+                    <div class="glass-card p-6 reveal-card">
+                        <div class="flex items-center mb-4">
+                            <div class="text-3xl mr-4">📚</div>
+                            <div>
+                                <h3 class="text-xl font-bold text-gold-light">Recursos Completos</h3>
+                                <p class="text-white/60 text-sm">PDFs + Plantillas</p>
+                            </div>
+                        </div>
+                        <p class="text-white/80">2 PDFs técnicos, 5 plantillas profesionales y prompts especializados de IA para desarrollo web.</p>
+                    </div>
+                    
+                    <div class="glass-card p-6 reveal-card">
+                        <div class="flex items-center mb-4">
+                            <div class="text-3xl mr-4">🎥</div>
+                            <div>
+                                <h3 class="text-xl font-bold text-gold-light">Acceso Extendido</h3>
+                                <p class="text-white/60 text-sm">90 días de grabaciones</p>
+                            </div>
+                        </div>
+                        <p class="text-white/80">Todas las sesiones grabadas disponibles por 3 meses. Aprende a tu ritmo, repasa cuando necesites.</p>
+                    </div>
+                    
+                    <div class="glass-card p-6 reveal-card">
+                        <div class="flex items-center mb-4">
+                            <div class="text-3xl mr-4">🛡️</div>
+                            <div>
+                                <h3 class="text-xl font-bold text-gold-light">Garantía Total</h3>
+                                <p class="text-white/60 text-sm">7 días sin preguntas</p>
+                            </div>
+                        </div>
+                        <p class="text-white/80">Si no es para ti, pides reembolso en los primeros 7 días y listo. Sin complicaciones.</p>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Results Guarantee -->
-    <section class="py-20 bg-gradient-to-b from-void-medium to-deep-blue">
+    <!-- Single Plan Pricing -->
+    <section id="plan" class="py-24 bg-gradient-to-b from-void-medium to-deep-blue">
         <div class="max-w-4xl mx-auto px-4 text-center">
-            <h2 class="font-playfair text-4xl font-bold mb-8 reveal-text">
-                Tu web <span class="text-gold-light">funcionando</span> en 72h
+            <h2 class="font-playfair text-5xl font-bold mb-8 reveal-text">
+                Únete a <span class="text-gold-light">la red</span>
             </h2>
+            <p class="text-xl text-white/80 mb-16 reveal-text">
+                Un solo plan, una sola decisión. Todo incluido para tu transformación digital.
+            </p>
             
-            <div class="glass-card p-8 max-w-2xl mx-auto reveal-card">
-                <h3 class="text-xl font-semibold mb-6 text-gold-light">✅ Resultados garantizados:</h3>
-                <div class="grid md:grid-cols-2 gap-6 text-left">
-                    <ul class="feature-list space-y-3 text-white/80">
-                        <li>Tu web profesional en tu-nombre.github.io</li>
-                        <li>Formulario de contacto funcionando 24/7</li>
-                        <li>Repositorio Git configurado correctamente</li>
-                        <li>SEO básico implementado</li>
-                    </ul>
-                    <ul class="feature-list space-y-3 text-white/80">
-                        <li>Google Analytics conectado</li>
-                        <li>Plan de contenido personalizado</li>
-                        <li>Roadmap de mejoras próximas</li>
-                        <li>Checklist para los siguientes 30 días</li>
-                    </ul>
-                </div>
-                
-                <div class="mt-6 pt-6 border-t border-gold-light/20">
-                    <p class="text-white/70 text-sm">
-                        <strong class="text-gold-light">Mi compromiso:</strong> Si al día 7 no tienes estos resultados, trabajo contigo 1:1 hasta lograrlo.
+            <!-- Single Plan Card -->
+            <div class="max-w-lg mx-auto">
+                <div class="glass-card-premium p-10 text-center reveal-card border-2 border-gold-light/30 relative">
+                    <div class="absolute -top-6 left-1/2 transform -translate-x-1/2 bg-gold-light text-black px-6 py-2 rounded-full font-bold">
+                        GRUPO FUNDACIONAL
+                    </div>
+                    
+                    <div class="text-6xl mb-6">🌟</div>
+                    <h3 class="text-3xl font-bold mb-4">De tu Mente al Mundo</h3>
+                    <div class="text-5xl font-bold text-gold-light mb-2">$1,000</div>
+                    <div class="text-xl text-gold-light/80 mb-8">MXN • Pago único</div>
+                    
+                    <div class="text-left space-y-4 mb-10">
+                        <div class="flex items-center">
+                            <div class="w-6 h-6 bg-gold-light/20 rounded-full flex items-center justify-center mr-3">
+                                <span class="text-gold-light text-xs">✓</span>
+                            </div>
+                            <span class="text-white/90">Bootcamp completo (4 días intensivos)</span>
+                        </div>
+                        <div class="flex items-center">
+                            <div class="w-6 h-6 bg-gold-light/20 rounded-full flex items-center justify-center mr-3">
+                                <span class="text-gold-light text-xs">✓</span>
+                            </div>
+                            <span class="text-white/90">Comunidad WhatsApp + Discord exclusiva</span>
+                        </div>
+                        <div class="flex items-center">
+                            <div class="w-6 h-6 bg-gold-light/20 rounded-full flex items-center justify-center mr-3">
+                                <span class="text-gold-light text-xs">✓</span>
+                            </div>
+                            <span class="text-white/90">5 plantillas profesionales + recursos IA</span>
+                        </div>
+                        <div class="flex items-center">
+                            <div class="w-6 h-6 bg-gold-light/20 rounded-full flex items-center justify-center mr-3">
+                                <span class="text-gold-light text-xs">✓</span>
+                            </div>
+                            <span class="text-white/90">2 sesiones Q&A en vivo con grabación</span>
+                        </div>
+                        <div class="flex items-center">
+                            <div class="w-6 h-6 bg-gold-light/20 rounded-full flex items-center justify-center mr-3">
+                                <span class="text-gold-light text-xs">✓</span>
+                            </div>
+                            <span class="text-white/90">Acceso a grabaciones por 90 días</span>
+                        </div>
+                        <div class="flex items-center">
+                            <div class="w-6 h-6 bg-gold-light/20 rounded-full flex items-center justify-center mr-3">
+                                <span class="text-gold-light text-xs">✓</span>
+                            </div>
+                            <span class="text-white/90">Hosting gratuito para siempre (GitHub Pages)</span>
+                        </div>
+                        <div class="flex items-center">
+                            <div class="w-6 h-6 bg-gold-light/20 rounded-full flex items-center justify-center mr-3">
+                                <span class="text-gold-light text-xs">✓</span>
+                            </div>
+                            <span class="text-white/90">Garantía 7 días sin preguntas</span>
+                        </div>
+                    </div>
+                    
+                    <button onclick="checkout()" class="glass-button-gold text-gold-light font-bold px-10 py-4 rounded-full text-lg w-full mb-6 transition-all duration-300 transform hover:scale-105">
+                        Conectar con la red • $1,000 MXN
+                    </button>
+                    
+                    <p class="text-white/60 text-sm">
+                        💳 Pago seguro con Stripe • 🌍 Acepta todas las tarjetas<br>
+                        🚀 Solo 40 nodos en este primer grupo
                     </p>
                 </div>
             </div>
-        </div>
-    </section>
-
-    <!-- Pricing -->
-    <section id="planes" class="py-20 bg-deep-blue">
-        <div class="max-w-4xl mx-auto px-4">
-            <h2 class="font-playfair text-4xl font-bold text-center mb-8 reveal-text">
-                Elige tu <span class="text-gold-light">plan</span>
-            </h2>
-            <p class="text-center text-white/70 mb-16 reveal-text">
-                Ambos planes incluyen el programa completo. El Pro añade mentoría personal.
-            </p>
             
-            <div class="grid md:grid-cols-2 gap-8 max-w-3xl mx-auto">
-                <!-- Plan Básico -->
-                <div class="glass-card p-8 text-center reveal-card">
-                    <div class="text-4xl mb-4">🚀</div>
-                    <h3 class="text-2xl font-bold mb-2">Plan Básico</h3>
-                    <div class="text-3xl font-bold text-gold-light mb-1">$55 USD</div>
-                    <div class="text-sm text-gold-light/70 mb-1">~$1,000 MXN</div>
-                    <div class="text-sm text-white/60 mb-6">Todo lo esencial para lanzar</div>
-                    
-                    <ul class="feature-list text-left space-y-2 mb-8 text-white/80">
-                        <li>Bootcamp completo (4 días intensivos)</li>
-                        <li>Comunidad WhatsApp + Discord</li>
-                        <li>5 plantillas + recursos IA</li>
-                        <li>2 sesiones Q&A en vivo</li>
-                        <li>Grabaciones por 90 días</li>
-                        <li>Soporte técnico en la comunidad</li>
-                        <li>Garantía 7 días</li>
-                    </ul>
-                    
-                    <button onclick="checkout('basic')" class="btn-primary w-full py-3 rounded-lg">
-                        Asegurar mi lugar ($55)
-                    </button>
-                    <p class="text-white/50 text-xs mt-3">Pago único • Sin recurrencias</p>
-                </div>
-                
-                <!-- Plan Pro -->
-                <div class="glass-card p-8 text-center border-2 border-gold-light/30 relative reveal-card transform scale-105">
-                    <div class="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-gold-light text-void-deep px-4 py-1 rounded-full text-sm font-bold">
-                        MÁS POPULAR
+            <!-- Value reminder -->
+            <div class="mt-16 max-w-2xl mx-auto">
+                <div class="glass-card p-6 reveal-card">
+                    <h3 class="text-xl font-bold text-gold-light mb-3">💡 Valor total del programa</h3>
+                    <div class="grid grid-cols-2 gap-4 text-sm">
+                        <div class="text-left">
+                            <p class="text-white/60">Bootcamp intensivo</p>
+                            <p class="text-white/60">Recursos y plantillas</p>
+                            <p class="text-white/60">Comunidad exclusiva</p>
+                            <p class="text-white/60">Soporte 90 días</p>
+                        </div>
+                        <div class="text-right">
+                            <p class="text-gold-light">$2,500 MXN</p>
+                            <p class="text-gold-light">$800 MXN</p>
+                            <p class="text-gold-light">$1,200 MXN</p>
+                            <p class="text-gold-light">$500 MXN</p>
+                        </div>
                     </div>
-                    
-                    <div class="text-4xl mb-4">⭐</div>
-                    <h3 class="text-2xl font-bold mb-2">Plan Pro</h3>
-                    <div class="text-3xl font-bold text-gold-light mb-1">$110 USD</div>
-                    <div class="text-sm text-gold-light/70 mb-1">~$2,000 MXN</div>
-                    <div class="text-sm text-white/60 mb-6">Con mentoría personal</div>
-                    
-                    <ul class="feature-list text-left space-y-2 mb-8 text-white/80">
-                        <li>Todo del Plan Básico</li>
-                        <li>1 sesión mentoría 1:1 (45min) vía Zoom</li>
-                        <li>Clase extra: Conectar dominio personalizado</li>
-                        <li>Pack plantillas PRO + prompts IA avanzados</li>
-                        <li>Soporte prioritario en Discord</li>
-                        <li>Acceso anticipado a futuros cursos</li>
-                        <li>Garantía extendida 14 días</li>
-                    </ul>
-                    
-                    <button onclick="checkout('pro')" class="btn-primary w-full py-3 rounded-lg">
-                        Elegir Pro + mentoría ($110)
-                    </button>
-                    <p class="text-white/50 text-xs mt-3">Pago único • Valor total: $250+</p>
+                    <hr class="border-gold-light/20 my-4">
+                    <div class="flex justify-between items-center">
+                        <span class="font-bold">Valor total</span>
+                        <span class="text-gold-light font-bold text-lg">$5,000 MXN</span>
+                    </div>
+                    <p class="text-center text-gold-light font-bold text-lg mt-2">Tu precio: $1,000 MXN (80% descuento)</p>
                 </div>
-            </div>
-            
-            <div class="text-center mt-8">
-                <p class="text-white/60 text-sm">
-                    💳 Pago seguro con Stripe • 🛡️ Garantía sin preguntas • 🌍 Acepta tarjetas internacionales
-                </p>
-            </div>
-        </div>
-    </section>
-
-    <!-- Social Proof Preview -->
-    <section class="py-16 bg-void-deep">
-        <div class="max-w-3xl mx-auto px-4 text-center">
-            <h3 class="font-playfair text-2xl font-bold mb-8 reveal-text">
-                <span class="text-gold-light">Primer grupo</span> • Sin testimonios falsos
-            </h3>
-            
-            <div class="glass-card p-6 reveal-card">
-                <p class="text-white/80 mb-4">
-                    Este es el primer grupo de DTMM. No hay testimonios previos porque preferimos ser honestos contigo.
-                </p>
-                <p class="text-gold-light text-sm font-medium">
-                    Serás parte de los primeros en vivir esta experiencia y ayudar a crear algo único.
-                </p>
             </div>
         </div>
     </section>
 
     <!-- FAQ -->
-    <section class="py-20 bg-gradient-to-b from-void-deep to-void-medium">
-        <div class="max-w-3xl mx-auto px-4">
-            <h2 class="font-playfair text-4xl font-bold text-center mb-12 reveal-text">
+    <section class="py-24 bg-deep-blue">
+        <div class="max-w-4xl mx-auto px-4">
+            <h2 class="font-playfair text-5xl font-bold text-center mb-16 reveal-text">
                 Preguntas <span class="text-gold-light">frecuentes</span>
             </h2>
             
-            <div class="space-y-6">
-                <details class="glass-card p-6 cursor-pointer reveal-card">
-                    <summary class="font-semibold text-white text-lg">¿Necesito saber programar?</summary>
-                    <p class="text-white/80 mt-3">Para nada. Partimos de cero absoluto y usamos herramientas visuales + IA para simplificar todo. Si sabes usar Word, puedes hacer esto.</p>
+            <div class="space-y-6 max-w-3xl mx-auto">
+                <details class="glass-card p-6 cursor-pointer reveal-card group">
+                    <summary class="font-semibold text-white text-lg flex justify-between items-center">
+                        ¿Necesito saber programar?
+                        <span class="text-gold-light group-open:rotate-180 transition-transform">↓</span>
+                    </summary>
+                    <p class="text-white/80 mt-4 leading-relaxed">Para nada. Partimos de cero absoluto y usamos herramientas visuales + IA para simplificar todo. Si sabes usar Word y navegar en internet, puedes hacer esto perfectamente.</p>
                 </details>
                 
-                <details class="glass-card p-6 cursor-pointer reveal-card">
-                    <summary class="font-semibold text-white text-lg">¿Qué software necesito instalar?</summary>
-                    <p class="text-white/80 mt-3">Solo VSCode (editor gratuito) y una cuenta de GitHub (también gratuita). Te guío paso a paso en la instalación el primer día.</p>
+                <details class="glass-card p-6 cursor-pointer reveal-card group">
+                    <summary class="font-semibold text-white text-lg flex justify-between items-center">
+                        ¿Qué software necesito?
+                        <span class="text-gold-light group-open:rotate-180 transition-transform">↓</span>
+                    </summary>
+                    <p class="text-white/80 mt-4 leading-relaxed">Solo VSCode (editor gratuito) y una cuenta de GitHub (también gratuita). Te guío paso a paso en la instalación el primer día. Todo es gratuito y funciona en Windows, Mac y Linux.</p>
                 </details>
                 
-                <details class="glass-card p-6 cursor-pointer reveal-card">
-                    <summary class="font-semibold text-white text-lg">¿Incluye hosting y dominio?</summary>
-                    <p class="text-white/80 mt-3">El hosting es gratuito para siempre con GitHub Pages (tu-nombre.github.io). El dominio personalizado se compra aparte (~$12-15/año) y en el Plan Pro te enseño a conectarlo.</p>
+                <details class="glass-card p-6 cursor-pointer reveal-card group">
+                    <summary class="font-semibold text-white text-lg flex justify-between items-center">
+                        ¿Incluye hosting y dominio?
+                        <span class="text-gold-light group-open:rotate-180 transition-transform">↓</span>
+                    </summary>
+                    <p class="text-white/80 mt-4 leading-relaxed">El hosting es gratuito para siempre con GitHub Pages (tu-nombre.github.io). Tu web estará online 24/7 sin costo. El dominio personalizado (.com) se compra aparte (~$300 MXN/año) y es opcional.</p>
                 </details>
                 
-                <details class="glass-card p-6 cursor-pointer reveal-card">
-                    <summary class="font-semibold text-white text-lg">¿Si no puedo asistir en vivo?</summary>
-                    <p class="text-white/80 mt-3">Todas las sesiones quedan grabadas con acceso por 90 días. Puedes aprender a tu ritmo y hacer preguntas en la comunidad.</p>
+                <details class="glass-card p-6 cursor-pointer reveal-card group">
+                    <summary class="font-semibold text-white text-lg flex justify-between items-center">
+                        ¿Si no puedo asistir en vivo?
+                        <span class="text-gold-light group-open:rotate-180 transition-transform">↓</span>
+                    </summary>
+                    <p class="text-white/80 mt-4 leading-relaxed">Todas las sesiones quedan grabadas en alta calidad con acceso por 90 días. Puedes aprender a tu ritmo, pausar, repetir y hacer preguntas en la comunidad cuando necesites.</p>
                 </details>
                 
-                <details class="glass-card p-6 cursor-pointer reveal-card">
-                    <summary class="font-semibold text-white text-lg">¿Qué diferencia hay entre los planes?</summary>
-                    <p class="text-white/80 mt-3">El Plan Básico tiene todo para crear tu web. El Pro añade una mentoría 1:1 de 45min conmigo, clase de dominio personalizado, plantillas premium y soporte prioritario.</p>
+                <details class="glass-card p-6 cursor-pointer reveal-card group">
+                    <summary class="font-semibold text-white text-lg flex justify-between items-center">
+                        ¿Hay garantía de reembolso?
+                        <span class="text-gold-light group-open:rotate-180 transition-transform">↓</span>
+                    </summary>
+                    <p class="text-white/80 mt-4 leading-relaxed">Sí, tienes 7 días completos desde la compra para pedir reembolso sin preguntas. Si no es para ti, simplemente envías un email y listo. Sin complicaciones ni letra pequeña.</p>
                 </details>
                 
-                <details class="glass-card p-6 cursor-pointer reveal-card">
-                    <summary class="font-semibold text-white text-lg">¿Hay garantía?</summary>
-                    <p class="text-white/80 mt-3">Sí. Plan Básico: 7 días sin preguntas. Plan Pro: 14 días. Si no es para ti, pides reembolso y listo.</p>
+                <details class="glass-card p-6 cursor-pointer reveal-card group">
+                    <summary class="font-semibold text-white text-lg flex justify-between items-center">
+                        ¿Por qué es el primer grupo?
+                        <span class="text-gold-light group-open:rotate-180 transition-transform">↓</span>
+                    </summary>
+                    <p class="text-white/80 mt-4 leading-relaxed">Prefiero ser honesto. Este es el primer grupo de DTMM, no hay testimonios previos. Serás parte de algo único: ayudar a crear una comunidad desde cero y vivir una experiencia que nunca se repetirá igual.</p>
                 </details>
             </div>
         </div>
     </section>
 
-    <!-- Guarantee Section -->
-    <section class="py-16 bg-void-medium">
-        <div class="max-w-3xl mx-auto px-4 text-center">
-            <div class="glass-card p-8 reveal-card">
-                <h3 class="text-2xl font-bold text-gold-light mb-6">🛡️ Garantía transparente</h3>
-                <div class="grid md:grid-cols-2 gap-8 text-left">
+    <!-- Transparent Guarantee -->
+    <section class="py-20 bg-void-medium">
+        <div class="max-w-4xl mx-auto px-4 text-center">
+            <div class="glass-card-premium p-8 reveal-card">
+                <h3 class="text-3xl font-bold text-gold-light mb-6">🛡️ Mi compromiso contigo</h3>
+                <div class="grid md:grid-cols-2 gap-8 text-left max-w-3xl mx-auto">
                     <div>
-                        <h4 class="font-semibold text-white mb-3">✅ Lo que SÍ garantizo:</h4>
-                        <ul class="text-white/80 text-sm space-y-2">
-                            <li>• Contenido completo y actualizado del bootcamp</li>
-                            <li>• Comunidad activa durante y después del programa</li>
-                            <li>• Soporte técnico para dudas de código</li>
-                            <li>• Tu web funcionando online en 7 días máximo</li>
+                        <h4 class="font-bold text-white mb-4 text-lg">✅ Lo que SÍ garantizo:</h4>
+                        <ul class="space-y-3 text-white/80">
+                            <li class="flex items-start">
+                                <span class="text-gold-light mr-2 mt-1">•</span>
+                                <span>Contenido completo y actualizado del programa</span>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-gold-light mr-2 mt-1">•</span>
+                                <span>Comunidad activa durante y después del bootcamp</span>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-gold-light mr-2 mt-1">•</span>
+                                <span>Soporte técnico para dudas de código</span>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-gold-light mr-2 mt-1">•</span>
+                                <span>Tu web funcionando online en máximo 7 días</span>
+                            </li>
                         </ul>
                     </div>
                     <div>
-                        <h4 class="font-semibold text-white mb-3">⚠️ Lo que NO garantizo:</h4>
-                        <ul class="text-white/80 text-sm space-y-2">
-                            <li>• Resultados económicos específicos</li>
-                            <li>• Que conseguirás clientes automáticamente</li>
-                            <li>• Ganancias por tener una web online</li>
-                            <li>• Éxito sin implementar lo enseñado</li>
+                        <h4 class="font-bold text-white mb-4 text-lg">⚠️ Lo que NO garantizo:</h4>
+                        <ul class="space-y-3 text-white/80">
+                            <li class="flex items-start">
+                                <span class="text-red-300 mr-2 mt-1">•</span>
+                                <span>Resultados económicos específicos</span>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-red-300 mr-2 mt-1">•</span>
+                                <span>Que conseguirás clientes automáticamente</span>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-red-300 mr-2 mt-1">•</span>
+                                <span>Ganancias por tener una web online</span>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-red-300 mr-2 mt-1">•</span>
+                                <span>Éxito sin implementar lo enseñado</span>
+                            </li>
                         </ul>
                     </div>
                 </div>
-                <div class="mt-6 pt-6 border-t border-gold-light/20">
-                    <p class="text-white/70 text-sm">
+                <div class="mt-8 pt-6 border-t border-gold-light/20">
+                    <p class="text-white/70">
                         Los resultados económicos dependen de tu implementación, mercado local, esfuerzo en marketing y factores externos.
-                        <a href="garantias.html" target="_blank" class="text-gold-light hover:underline ml-1">Ver política completa →</a>
+                        <a href="garantias.html" target="_blank" class="text-gold-light hover:underline ml-2">Ver política completa →</a>
+                    </p>
+                    <p class="text-white/60 text-sm mt-4">
+                        ¿Dudas? <a href="https://wa.me/521234567890?text=Necesito%20ayuda%20con%20DTMM" target="_blank" class="text-gold-light hover:underline">Contáctanos por WhatsApp</a>
                     </p>
                 </div>
             </div>
@@ -388,62 +628,308 @@
     </section>
 
     <!-- Final CTA -->
-    <section class="py-20 bg-deep-blue">
-        <div class="max-w-3xl mx-auto px-4 text-center">
-            <h2 class="font-playfair text-4xl font-bold mb-6 reveal-text">
-                Tu web en <span class="text-gold-light glow-text">72 horas</span>
+    <section class="py-24 bg-gradient-to-b from-void-medium to-void-deep">
+        <div class="max-w-4xl mx-auto px-4 text-center">
+            <h2 class="font-playfair text-6xl font-bold mb-8 reveal-text">
+                El mundo necesita <span class="text-gold-light glow-text">tu luz</span>
             </h2>
-            <p class="text-xl mb-4 text-white/80 reveal-text">
-                Programa: 18-22 Agosto • Solo 40 estudiantes • 23 lugares restantes
+            <p class="text-2xl mb-6 text-white/90 max-w-2xl mx-auto reveal-text leading-relaxed">
+                18-22 Agosto • Solo 40 nodos • Experiencia única
             </p>
-            <p class="text-white/60 mb-8 reveal-text">
-                🌱 Primer grupo • Experiencia única • Comunidad desde cero
+            <p class="text-white/70 mb-12 reveal-text">
+                🌱 Grupo fundacional • Sin testimonios falsos • Construimos juntos desde cero
             </p>
             
-            <div class="flex flex-col sm:flex-row gap-4 justify-center reveal-text">
-                <button onclick="checkout('basic')" class="btn-primary px-8 py-4 rounded-full text-lg">
-                    Plan Básico - $55
-                </button>
-                <button onclick="checkout('pro')" class="btn-primary px-8 py-4 rounded-full text-lg bg-gradient-to-r from-gold-light to-gold-dark">
-                    Plan Pro - $110
-                </button>
-            </div>
+            <button onclick="checkout()" class="glass-button-gold text-gold-light font-bold px-16 py-6 rounded-full text-2xl transition-all duration-300 transform hover:scale-105 reveal-text mb-8">
+                Conectar con la red • $1,000 MXN
+            </button>
             
-            <p class="text-white/50 text-xs mt-6">
-                Cierre de inscripciones: 16 de agosto a las 11:59 PM (México)
+            <p class="text-white/50 text-sm reveal-text">
+                Cierre de inscripciones: 17 de agosto a las 11:59 PM (México)
             </p>
         </div>
     </section>
 
     <!-- Footer -->
-    <footer class="py-12 bg-void-deep border-t border-gold-light/20">
-        <div class="max-w-4xl mx-auto px-4 text-center">
-            <div class="mb-6">
-                <h3 class="font-bold text-lg text-gold-light mb-2">La Red de Luz</h3>
-                <p class="text-white/60 text-sm max-w-md mx-auto">
-                    Conectando mentes brillantes con el mundo digital.
+    <footer class="py-16 bg-void-deep border-t border-gold-light/10">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="text-center mb-12">
+                <a href="https://lareddeluz.com" target="_blank" class="inline-block hover:scale-105 transition-transform">
+                    <h3 class="font-playfair text-2xl font-bold text-gold-light mb-4">La Red de Luz</h3>
+                </a>
+                <p class="text-white/60 max-w-md mx-auto leading-relaxed">
+                    Donde cada nodo brilla para recordar a otros que ellos también pueden iluminar el mundo.
                 </p>
             </div>
             
-            <div class="flex flex-wrap justify-center gap-6 text-sm text-white/60 mb-6">
-                <a href="terminos.html" target="_blank" class="hover:text-gold-light">Términos y condiciones</a>
-                <a href="garantias.html" target="_blank" class="hover:text-gold-light">Política de garantías</a>
-                <a href="mailto:hola@lareddeluz.com" class="hover:text-gold-light">Contacto</a>
+            <!-- Redes sociales -->
+            <div class="flex justify-center gap-6 mb-8">
+                <a href="https://instagram.com/lareddeluz" target="_blank" rel="noopener" 
+                   class="w-12 h-12 bg-gold-light/10 hover:bg-gold-light/20 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110">
+                    <svg class="w-6 h-6 text-gold-light" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                    </svg>
+                </a>
+                
+                <a href="https://tiktok.com/@lareddeluz" target="_blank" rel="noopener"
+                   class="w-12 h-12 bg-gold-light/10 hover:bg-gold-light/20 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110">
+                    <svg class="w-5 h-5 text-gold-light" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-.88-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/>
+                    </svg>
+                </a>
+                
+                <a href="https://youtube.com/@lareddeluz" target="_blank" rel="noopener"
+                   class="w-12 h-12 bg-gold-light/10 hover:bg-gold-light/20 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110">
+                    <svg class="w-6 h-6 text-gold-light" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                    </svg>
+                </a>
+                
+                <a href="https://wa.me/521234567890?text=Necesito%20ayuda%20con%20DTMM" target="_blank" rel="noopener"
+                   class="w-12 h-12 bg-gold-light/10 hover:bg-gold-light/20 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110">
+                    <svg class="w-6 h-6 text-gold-light" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.465 3.63"/>
+                    </svg>
+                </a>
             </div>
             
-            <p class="text-white/40 text-xs">
-                &copy; 2025 La Red de Luz. Los resultados pueden variar según la implementación personal.
-            </p>
+            <div class="flex flex-wrap justify-center gap-8 text-sm text-white/60 mb-8">
+                <a href="https://lareddeluz.com" target="_blank" class="hover:text-gold-light transition-colors">Sitio principal</a>
+                <a href="terminos.html" target="_blank" class="hover:text-gold-light transition-colors">Términos y condiciones</a>
+                <a href="garantias.html" target="_blank" class="hover:text-gold-light transition-colors">Política de garantías</a>
+                <a href="https://wa.me/521234567890?text=Necesito%20ayuda%20con%20DTMM" target="_blank" class="hover:text-gold-light transition-colors">Contacto</a>
+            </div>
+            
+            <div class="text-center">
+                <p class="text-white/40 text-xs">
+                    &copy; 2025 La Red de Luz. Los resultados pueden variar según la implementación personal.
+                </p>
+            </div>
         </div>
     </footer>
 
     <!-- JavaScript -->
     
-    <!-- 1. Network Animation (Solo Hero) -->
+    <!-- Network Animation -->
     <script src="js/network.js"></script>
     
-    <!-- 2. Main Functions -->
-    <script src="js/main.js"></script>
+    <!-- Main Functionality -->
+    <script>
+        // ===============================================
+        // STRIPE CONFIGURATION
+        // ¡ACTUALIZA ESTOS VALORES!
+        // ===============================================
+        
+        const STRIPE_CONFIG = {
+            priceId: 'price_TU_PRICE_ID_DTMM',  // 🔥 ACTUALIZAR con tu Price ID real ($1,000 MXN)
+            amount: 1000,
+            currency: 'MXN',
+            name: 'DTMM - De tu Mente al Mundo'
+        };
+        
+        // 🔥 ACTUALIZAR con tu clave pública de Stripe
+        const STRIPE_PUBLIC_KEY = 'pk_live_TU_CLAVE_PUBLICA_AQUI';
+        
+        // ===============================================
+        // PREMIUM LANDING CLASS
+        // ===============================================
+        
+        class PremiumLanding {
+            constructor() {
+                this.init();
+            }
+            
+            init() {
+                this.setupScrollAnimations();
+                this.setupSmoothScroll();
+                this.setupInteractions();
+            }
+            
+            setupScrollAnimations() {
+                const revealElements = () => {
+                    const elements = document.querySelectorAll('.reveal-text, .reveal-card');
+                    
+                    elements.forEach((element, index) => {
+                        const elementTop = element.getBoundingClientRect().top;
+                        const elementVisible = 120;
+                        
+                        if (elementTop < window.innerHeight - elementVisible) {
+                            setTimeout(() => {
+                                element.classList.add('revealed');
+                            }, index * 80);
+                        }
+                    });
+                };
+                
+                revealElements();
+                window.addEventListener('scroll', revealElements, { passive: true });
+                
+                // Force reveal after 2s
+                setTimeout(() => {
+                    document.querySelectorAll('.reveal-text:not(.revealed), .reveal-card:not(.revealed)').forEach((el, index) => {
+                        setTimeout(() => el.classList.add('revealed'), index * 40);
+                    });
+                }, 2000);
+            }
+            
+            setupSmoothScroll() {
+                document.addEventListener('click', (e) => {
+                    const link = e.target.closest('a[href^="#"]');
+                    if (link) {
+                        const href = link.getAttribute('href');
+                        if (href && href.length > 1) {
+                            e.preventDefault();
+                            const element = document.querySelector(href);
+                            if (element) {
+                                element.scrollIntoView({
+                                    behavior: 'smooth',
+                                    block: 'start'
+                                });
+                            }
+                        }
+                    }
+                });
+            }
+            
+            setupInteractions() {
+                // Enhanced FAQ interactions
+                document.addEventListener('click', (e) => {
+                    if (e.target.matches('details summary')) {
+                        const faqText = e.target.textContent.substring(0, 50);
+                        if (typeof gtag !== 'undefined') {
+                            gtag('event', 'faq_interaction', {
+                                question: faqText
+                            });
+                        }
+                    }
+                });
+
+                // Track scroll depth
+                let maxScroll = 0;
+                window.addEventListener('scroll', () => {
+                    const scrollPercent = Math.round((window.pageYOffset / (document.body.scrollHeight - window.innerHeight)) * 100);
+                    if (scrollPercent > maxScroll) {
+                        maxScroll = scrollPercent;
+                        
+                        if ([25, 50, 75, 90].includes(scrollPercent) && typeof gtag !== 'undefined') {
+                            gtag('event', 'scroll_depth', {
+                                percent: scrollPercent
+                            });
+                        }
+                    }
+                }, { passive: true });
+            }
+        }
+        
+        // ===============================================
+        // CHECKOUT FUNCTION
+        // ===============================================
+        
+        async function checkout() {
+            // Track checkout attempt
+            if (typeof gtag !== 'undefined') {
+                gtag('event', 'begin_checkout', {
+                    currency: STRIPE_CONFIG.currency,
+                    value: STRIPE_CONFIG.amount,
+                    items: [{
+                        item_id: 'dtmm',
+                        item_name: STRIPE_CONFIG.name,
+                        price: STRIPE_CONFIG.amount,
+                        quantity: 1
+                    }]
+                });
+            }
+            
+            // Development mode
+            if (window.location.hostname === 'localhost' || 
+                window.location.hostname === '127.0.0.1' ||
+                window.location.hostname.includes('github.io')) {
+                
+                showDevModal();
+                return;
+            }
+            
+            // Production mode
+            if (!STRIPE_PUBLIC_KEY || STRIPE_PUBLIC_KEY.includes('TU_CLAVE')) {
+                alert('Error: Configuración de pagos pendiente. Contacta soporte.');
+                return;
+            }
+            
+            const stripe = Stripe(STRIPE_PUBLIC_KEY);
+            
+            try {
+                const { error } = await stripe.redirectToCheckout({
+                    lineItems: [{
+                        price: STRIPE_CONFIG.priceId,
+                        quantity: 1,
+                    }],
+                    mode: 'payment',
+                    successUrl: `${window.location.origin}/thanks.html?plan=dtmm&session_id={CHECKOUT_SESSION_ID}`,
+                    cancelUrl: `${window.location.origin}/#plan`,
+                    customerEmail: null,
+                    billingAddressCollection: 'auto',
+                    locale: 'es',
+                });
+                
+                if (error) {
+                    console.error('Error en checkout:', error);
+                    alert('Error al procesar el pago. Por favor, inténtalo de nuevo.');
+                }
+            } catch (err) {
+                console.error('Error de Stripe:', err);
+                // Fallback to Payment Link
+                const fallbackUrl = 'https://buy.stripe.com/TU_PAYMENT_LINK_DTMM'; // 🔥 ACTUALIZAR
+                if (fallbackUrl.includes('TU_PAYMENT')) {
+                    alert('Error de configuración. Contacta soporte: hola@lareddeluz.com');
+                } else {
+                    window.location.href = fallbackUrl;
+                }
+            }
+        }
+        
+        function showDevModal() {
+            const modal = document.createElement('div');
+            modal.className = 'fixed inset-0 bg-black/80 flex items-center justify-center z-50 backdrop-blur-sm';
+            modal.innerHTML = `
+                <div class="bg-void-medium p-8 rounded-2xl max-w-md mx-4 text-center border border-gold-light/20">
+                    <div class="text-4xl mb-4">🚀</div>
+                    <h3 class="text-2xl font-bold text-gold-light mb-4">Modo Desarrollo</h3>
+                    <div class="text-left mb-6 space-y-2">
+                        <p class="text-white/80"><strong>Programa:</strong> ${STRIPE_CONFIG.name}</p>
+                        <p class="text-white/80"><strong>Precio:</strong> ${STRIPE_CONFIG.amount} ${STRIPE_CONFIG.currency}</p>
+                        <p class="text-white/80"><strong>Price ID:</strong> ${STRIPE_CONFIG.priceId}</p>
+                    </div>
+                    <p class="text-white/60 text-sm mb-6">
+                        En producción, esto redirigirá a Stripe Checkout con pagos reales.
+                    </p>
+                    <button onclick="this.parentElement.parentElement.remove()" 
+                            class="glass-button-gold text-gold-light px-6 py-3 rounded-lg font-semibold">
+                        Cerrar
+                    </button>
+                </div>
+            `;
+            document.body.appendChild(modal);
+        }
+        
+        // ===============================================
+        // INITIALIZATION
+        // ===============================================
+        
+        document.addEventListener('DOMContentLoaded', () => {
+            new PremiumLanding();
+            console.log('✨ DTMM Premium Landing cargada!');
+            
+            // URL tracking
+            const urlParams = new URLSearchParams(window.location.search);
+            const source = urlParams.get('utm_source');
+            if (source && typeof gtag !== 'undefined') {
+                gtag('event', 'page_view_source', {
+                    source: source,
+                    medium: urlParams.get('utm_medium') || 'unknown'
+                });
+            }
+        });
+    </script>
     
     <!-- Stripe.js -->
     <script src="https://js.stripe.com/v3/"></script>
@@ -456,22 +942,6 @@
         function gtag(){dataLayer.push(arguments);}
         gtag('js', new Date());
         gtag('config', 'GA_MEASUREMENT_ID');
-    </script>
-    -->
-    
-    <!-- Facebook Pixel (Opcional) -->
-    <!--
-    <script>
-        !function(f,b,e,v,n,t,s)
-        {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-        n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-        if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-        n.queue=[];t=b.createElement(e);t.async=!0;
-        t.src=v;s=b.getElementsByTagName(e)[0];
-        s.parentNode.insertBefore(t,s)}(window, document,'script',
-        'https://connect.facebook.net/en_US/fbevents.js');
-        fbq('init', 'TU_PIXEL_ID');
-        fbq('track', 'PageView');
     </script>
     -->
 </body>
