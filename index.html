@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>De tu mente al mundo - Bootcamp Web Profesional | La Red de Luz</title>
-    <meta name="description" content="Aprende a crear tu página web profesional en 5 días con HTML, CSS, JavaScript y IA. Sin dependencias, con hosting gratuito para siempre.">
+    <title>DTMM — Publica tu web en 72h con IA</title>
+    <meta name="description" content="Bootcamp práctico para lanzar tu web en 72h con IA, Git y GitHub Pages. Sin dependencias, hosting gratuito para siempre.">
     
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -30,644 +30,253 @@
                         'void': {
                             deep: '#0d0b16',
                             medium: '#232a3d'
-                        },
-                        'light-birth': '#f9f4e3'
+                        }
                     }
                 }
             }
         }
     </script>
     
-    <!-- Styles -->
+    <!-- CSS Styles -->
     <link rel="stylesheet" href="css/styles.css">
 </head>
 <body class="font-inter bg-void-deep text-white overflow-x-hidden">
     
     <!-- Hero Section -->
     <section class="relative min-h-screen flex items-center justify-center overflow-hidden">
-        <!-- Background Network -->
+        <!-- Background Network - Solo en Hero -->
         <div id="networkBg" class="absolute inset-0 z-0"></div>
         
         <!-- Hero Content -->
         <div class="relative z-10 text-center max-w-4xl mx-auto px-4">
             <!-- Badge -->
-            <div class="inline-flex items-center px-4 py-2 rounded-full bg-gold-light/10 backdrop-blur-sm border border-gold-light/20 mb-6 ">
-                <span class="text-sm font-medium text-gold-light">🌱 Primera generación de nodos • Sin testimonios, con resultados reales</span>
+            <div class="inline-flex items-center px-4 py-2 rounded-full bg-gold-light/10 backdrop-blur-sm border border-gold-light/20 mb-6 animate-fadeInUp">
+                <span class="text-sm font-medium text-gold-light">🚀 Grupo: 18-22 Agosto • 40 lugares disponibles</span>
             </div>
             
-            <!-- Main Title -->
-            <h1 class="font-playfair text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold leading-tight mb-6 " style="animation-delay: 0.3s">
-                De tu <span class="text-gold-light glow-text">mente</span><br>
-                al <span class="text-gold-light glow-text">mundo</span>
+            <!-- Title -->
+            <h1 class="font-playfair text-5xl md:text-7xl font-bold leading-tight mb-6 animate-fadeInUp" style="animation-delay: 0.3s">
+                Publica tu <span class="text-gold-light glow-text">web</span><br>
+                en <span class="text-gold-light glow-text">72 horas</span>
             </h1>
             
             <!-- Subtitle -->
-            <p class="text-lg sm:text-xl md:text-2xl mb-6 opacity-90 max-w-3xl mx-auto  text-light-birth" style="animation-delay: 0.6s">
-                Tu presencia digital profesional en 5 días intensivos
+            <p class="text-xl md:text-2xl mb-8 text-white/80 max-w-2xl mx-auto animate-fadeInUp" style="animation-delay: 0.6s">
+                Sin dependencias. Sin mensualidades. Con hosting gratuito para siempre.
             </p>
             
-            <!-- Description -->
-            <p class="text-base sm:text-lg mb-8 opacity-80 max-w-2xl mx-auto " style="animation-delay: 0.9s">
-                Sin dependencias. Sin mensualidades. Con hosting gratuito para siempre.<br>
-                <span class="text-gold-light font-medium">Apalancándote de la IA y herramientas modernas.</span>
-            </p>
-            
-            <!-- CTA Button -->
-            <a href="#descubrir" class="inline-block glass-button-gold text-white font-semibold px-8 py-4 rounded-full text-lg transition-all duration-300 transform hover:scale-105 " style="animation-delay: 1.2s">
-                Descubre tu plan perfecto
+            <!-- CTA -->
+            <a href="#planes" class="inline-block glass-button-gold text-white font-semibold px-8 py-4 rounded-full text-lg transition-all duration-300 transform hover:scale-105 animate-fadeInUp" style="animation-delay: 0.9s">
+                Ver planes → $47 USD
             </a>
             
-            <!-- Social Proof -->
-            <div class="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4 text-sm opacity-75 " style="animation-delay: 1.5s">
-                <div class="flex items-center gap-2">
-                    <span>Primera generación de nodos ya creando</span>
-                </div>
-                <div class="hidden sm:block w-px h-4 bg-white/30"></div>
-                <span>⏰ Descuento del 30% por 48 horas</span>
-            </div>
-        </div>
-        
-    </section>
-
-    <!-- Problem Section -->
-    <section id="problema" class="py-20 lg:py-32 bg-gradient-to-b from-void-deep to-void-medium">
-        <div class="max-w-6xl mx-auto px-4">
-            <div class="text-center mb-16">
-                <h2 class="font-playfair text-3xl sm:text-4xl lg:text-5xl font-bold mb-6 reveal-text">
-                    ¿Cuánto tiempo más vas a <span class="text-gold-light">esperar</span>?
-                </h2>
-                <p class="text-lg sm:text-xl text-white/80 max-w-3xl mx-auto reveal-text">
-                    Tu mensaje merece ser escuchado. Tu servicio merece ser encontrado.<br>
-                    Pero mientras esperas, otros toman tu lugar.
-                </p>
-            </div>
-            
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- Problem 1 -->
-                <div class="glass-card border-l-4 border-red-400 reveal-card">
-                    <div class="flex items-start">
-                        <div class="flex-shrink-0">
-                            <span class="text-3xl">😤</span>
-                        </div>
-                        <div class="ml-4">
-                            <h3 class="text-lg font-semibold text-red-300 mb-2">
-                                Prisionero de plataformas
-                            </h3>
-                            <p class="text-white/70">
-                                Facebook, Instagram, marketplace... controlan tu negocio. Un algoritmo decide si existes o no.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Problem 2 -->
-                <div class="glass-card border-l-4 border-red-400 reveal-card">
-                    <div class="flex items-start">
-                        <div class="flex-shrink-0">
-                            <span class="text-3xl">💸</span>
-                        </div>
-                        <div class="ml-4">
-                            <h3 class="text-lg font-semibold text-red-300 mb-2">
-                                Sangrado de oportunidades
-                            </h3>
-                            <p class="text-white/70">
-                                Cada día sin presencia profesional, tus clientes van con quien SÍ se ve confiable y establecido.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Problem 3 -->
-                <div class="glass-card border-l-4 border-red-400 reveal-card">
-                    <div class="flex items-start">
-                        <div class="flex-shrink-0">
-                            <span class="text-3xl">⏰</span>
-                        </div>
-                        <div class="ml-4">
-                            <h3 class="text-lg font-semibold text-red-300 mb-2">
-                                La excusa perpetua
-                            </h3>
-                            <p class="text-white/70">
-                                "Algún día contrataré a alguien"... mientras $15,000 pesos se quedan en tu mente, no en tu cuenta.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <!-- Quick Info -->
+            <p class="text-white/60 text-sm mt-6 animate-fadeInUp" style="animation-delay: 1.2s">
+                HTML + CSS + JS + IA • GitHub Pages • Comunidad activa
+            </p>
         </div>
     </section>
 
-    <!-- Transformation Section -->
-    <section class="py-20 bg-gradient-to-b from-void-medium to-deep-blue">
-        <div class="max-w-6xl mx-auto px-4">
-            <div class="text-center mb-16">
-                <h2 class="font-playfair text-3xl sm:text-4xl font-bold mb-6 reveal-text">
-                    Tu transformación en <span class="text-gold-light">5 días</span>
-                </h2>
-                <p class="text-lg text-white/80 max-w-3xl mx-auto reveal-text">
-                    No más excusas. No más dependencias. Solo tú, las herramientas correctas,<br>
-                    y tu presencia digital profesional naciendo al mundo.
-                </p>
-            </div>
-            
-            <div class="grid md:grid-cols-5 gap-6 lg:gap-8">
-                <!-- Day 1 -->
-                <div class="text-center glass-card-hover reveal-card">
-                    <div class="w-16 h-16 bg-gold-light/20 rounded-full flex items-center justify-center mx-auto mb-4 border border-gold-light/30">
-                        <span class="text-2xl">⚡</span>
-                    </div>
-                    <h3 class="font-semibold text-gold-light mb-2">Día 1: Cimientos</h3>
-                    <p class="text-white/70 text-sm">Tu espacio de trabajo, extensiones esenciales y HTML</p>
-                </div>
-                
-                <!-- Day 2 -->
-                <div class="text-center glass-card-hover reveal-card">
-                    <div class="w-16 h-16 bg-gold-light/20 rounded-full flex items-center justify-center mx-auto mb-4 border border-gold-light/30">
-                        <span class="text-2xl">🎨</span>
-                    </div>
-                    <h3 class="font-semibold text-gold-light mb-2">Día 2: Identidad</h3>
-                    <p class="text-white/70 text-sm">CSS, JavaScript básico y layouts que impactan</p>
-                </div>
-                
-                <!-- Day 3 -->
-                <div class="text-center glass-card-hover reveal-card">
-                    <div class="w-16 h-16 bg-gold-light/20 rounded-full flex items-center justify-center mx-auto mb-4 border border-gold-light/30">
-                        <span class="text-2xl">⚙️</span>
-                    </div>
-                    <h3 class="font-semibold text-gold-light mb-2">Día 3: Frameworks</h3>
-                    <p class="text-white/70 text-sm">Ahorra tiempo apalancándote de trabajo que ya existe</p>
-                </div>
-                
-                <!-- Day 4 -->
-                <div class="text-center glass-card-hover reveal-card">
-                    <div class="w-16 h-16 bg-gold-light/20 rounded-full flex items-center justify-center mx-auto mb-4 border border-gold-light/30">
-                        <span class="text-2xl">🚀</span>
-                    </div>
-                    <h3 class="font-semibold text-gold-light mb-2">Día 4: Lanzamiento</h3>
-                    <p class="text-white/70 text-sm">GitHub Pages: hosting gratuito y profesional + Control de versiones</p>
-                </div>
-                
-                <!-- Day 5 -->
-                <div class="text-center glass-card-hover reveal-card">
-                    <div class="w-16 h-16 bg-gold-light/20 rounded-full flex items-center justify-center mx-auto mb-4 border border-gold-light/30">
-                        <span class="text-2xl">💎</span>
-                    </div>
-                    <h3 class="font-semibold text-gold-light mb-2">Día 5: Dominio</h3>
-                    <p class="text-white/70 text-sm">Tu dominio personalizado (paquetes avanzados)</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Smart Form Section -->
-    <section id="descubrir" class="py-20 bg-gradient-to-b from-deep-blue to-void-medium">
+    <!-- What's Included -->
+    <section id="incluye" class="py-20 bg-gradient-to-b from-void-deep to-void-medium">
         <div class="max-w-4xl mx-auto px-4">
-            <div class="text-center mb-12">
-                <h2 class="font-playfair text-3xl sm:text-4xl font-bold mb-6 reveal-text">
-                    Encuentra tu <span class="text-gold-light">camino perfecto</span>
-                </h2>
-                <p class="text-lg text-white/80 max-w-2xl mx-auto reveal-text">
-                    5 preguntas que revelarán el paquete diseñado exactamente para tu situación y objetivos
-                </p>
-            </div>
+            <h2 class="font-playfair text-4xl font-bold text-center mb-16 reveal-text">
+                Qué <span class="text-gold-light">incluye</span>
+            </h2>
             
-            <!-- Form Container -->
-            <div class="max-w-2xl mx-auto">
-                <div class="glass-card-premium overflow-hidden reveal-card">
-                    <!-- Progress Bar -->
-                    <div class="bg-void-deep/50 px-6 py-4 border-b border-gold-light/20">
-                        <div class="flex items-center justify-between text-sm text-white/70 mb-2">
-                            <span>Pregunta <span id="currentQuestion">1</span> de 5</span>
-                            <span><span id="progressPercent">20</span>%</span>
-                        </div>
-                        <div class="w-full bg-void-deep/70 rounded-full h-2">
-                            <div id="progressBar" class="bg-gradient-to-r from-gold-light to-gold-dark h-2 rounded-full transition-all duration-500" style="width: 20%"></div>
-                        </div>
-                    </div>
-                    
-                    <!-- Form Content -->
-                    <div class="p-6 sm:p-8">
-                        <form id="qualificationForm">
-                            <!-- Questions will be inserted by JavaScript -->
-                        </form>
-                    </div>
+            <div class="grid md:grid-cols-2 gap-8">
+                <div class="glass-card p-6 reveal-card">
+                    <h3 class="text-xl font-semibold mb-4 text-gold-light">📚 Contenido Completo</h3>
+                    <ul class="feature-list space-y-2 text-white/80">
+                        <li>4 días de entrenamiento intensivo</li>
+                        <li>2 PDFs: HTML básico + Layouts</li>
+                        <li>5 plantillas web listas para usar</li>
+                        <li>Curso: HTML, CSS y JavaScript esencial</li>
+                        <li>Git en VSCode + GitHub Pages</li>
+                        <li>GPT especializado para desarrollo web</li>
+                    </ul>
+                </div>
+                
+                <div class="glass-card p-6 reveal-card">
+                    <h3 class="text-xl font-semibold mb-4 text-gold-light">🌐 Comunidad y Soporte</h3>
+                    <ul class="feature-list space-y-2 text-white/80">
+                        <li>Comunidad WhatsApp exclusiva</li>
+                        <li>Discord con canales especializados</li>
+                        <li>2 sesiones Q&A en vivo</li>
+                        <li>Soporte técnico durante el bootcamp</li>
+                        <li>Grabaciones por 60 días</li>
+                        <li>Acceso a recursos premium</li>
+                    </ul>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Resources Section -->
-    <section class="py-20 bg-gradient-to-b from-void-deep to-deep-blue">
-        <div class="max-w-6xl mx-auto px-4">
-            <div class="text-center mb-16">
-                <h2 class="font-playfair text-3xl sm:text-4xl font-bold mb-6 text-white reveal-text">
-                    Recursos que <span class="text-gold-light">potencian</span> tu aprendizaje
-                </h2>
-                <p class="text-lg text-white/80 max-w-3xl mx-auto reveal-text">
-                    No solo aprenderás, tendrás herramientas concretas para acelerar tu transformación digital
-                </p>
-            </div>
-            
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- Ebook 1 -->
-                <div class="glass-card-hover reveal-card text-center">
-                    <div class="w-16 h-16 bg-gold-light/20 rounded-full flex items-center justify-center mx-auto mb-4 border border-gold-light/30">
-                        <span class="text-2xl">📚</span>
-                    </div>
-                    <h3 class="font-semibold text-white mb-3">Ebook: Fundamentos Web</h3>
-                    <p class="text-white/70 text-sm mb-4">Tu guía completa para entender cómo funciona la web por dentro. Desde HTML básico hasta conceptos avanzados.</p>
-                    <div class="inline-block bg-deep-blue/30 text-gold-light px-3 py-1 rounded-full text-xs font-medium">
-                        Incluido en todos los planes
-                    </div>
-                </div>
-                
-                <!-- Ebook 2 -->
-                <div class="glass-card-hover reveal-card text-center">
-                    <div class="w-16 h-16 bg-gold-light/20 rounded-full flex items-center justify-center mx-auto mb-4 border border-gold-light/30">
-                        <span class="text-2xl">🎨</span>
-                    </div>
-                    <h3 class="font-semibold text-white mb-3">Ebook: Layouts CSS</h3>
-                    <p class="text-white/70 text-sm mb-4">Domina el arte de crear layouts profesionales. Grid, Flexbox y técnicas modernas de diseño responsivo.</p>
-                    <div class="inline-block bg-deep-blue/30 text-gold-light px-3 py-1 rounded-full text-xs font-medium">
-                        Incluido en todos los planes
-                    </div>
-                </div>
-                
-                <!-- Templates -->
-                <div class="glass-card-hover reveal-card text-center">
-                    <div class="w-16 h-16 bg-gold-light/20 rounded-full flex items-center justify-center mx-auto mb-4 border border-gold-light/30">
-                        <span class="text-2xl">🗂️</span>
-                    </div>
-                    <h3 class="font-semibold text-white mb-3">5 Proyectos HTML</h3>
-                    <p class="text-white/70 text-sm mb-4">Diferentes layouts y estilos CSS listos para personalizar. Tu punto de partida para crear sitios únicos.</p>
-                    <div class="inline-block bg-deep-blue/30 text-gold-light px-3 py-1 rounded-full text-xs font-medium">
-                        Incluido en todos los planes
-                    </div>
-                </div>
-                
-                <!-- GPT -->
-                <div class="glass-card-hover reveal-card text-center">
-                    <div class="w-16 h-16 bg-gold-light/20 rounded-full flex items-center justify-center mx-auto mb-4 border border-gold-light/30">
-                        <span class="text-2xl">🤖</span>
-                    </div>
-                    <h3 class="font-semibold text-white mb-3">GPT Especializado</h3>
-                    <p class="text-white/70 text-sm mb-4">Asistente de IA entrenado específicamente para el curso. Prompts perfectos y resolución de dudas 24/7.</p>
-                    <div class="inline-block bg-gold-light/20 text-gold-light px-3 py-1 rounded-full text-xs font-medium">
-                        Plan Emprendedor y Profesional
-                    </div>
-                </div>
-                
-                <!-- Mentoría -->
-                <div class="glass-card-hover reveal-card text-center">
-                    <div class="w-16 h-16 bg-gold-light/20 rounded-full flex items-center justify-center mx-auto mb-4 border border-gold-light/30">
-                        <span class="text-2xl">🎯</span>
-                    </div>
-                    <h3 class="font-semibold text-white mb-3">Mentoría 1:1</h3>
-                    <p class="text-white/70 text-sm mb-4">Sesión personalizada conmigo para revisar tu proyecto, resolver dudas específicas y acelerar tu progreso.</p>
-                    <div class="inline-block bg-gold-light/30 text-void-deep px-3 py-1 rounded-full text-xs font-bold">
-                        Solo Plan Profesional
-                    </div>
-                </div>
-                
-                <!-- Dominio -->
-                <div class="glass-card-hover reveal-card text-center">
-                    <div class="w-16 h-16 bg-gold-light/20 rounded-full flex items-center justify-center mx-auto mb-4 border border-gold-light/30">
-                        <span class="text-2xl">🌐</span>
-                    </div>
-                    <h3 class="font-semibold text-white mb-3">Día 5: Dominio</h3>
-                    <p class="text-white/70 text-sm mb-4">Configuración completa de tu dominio personalizado. De ejemplo.github.io a tuempresa.com en minutos.</p>
-                    <div class="inline-block bg-gold-light/30 text-void-deep px-3 py-1 rounded-full text-xs font-bold">
-                        Solo Plan Profesional
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Commitment Section -->
-    <section class="py-20 bg-gradient-to-b from-deep-blue to-gold-light/10">
+    <!-- Results -->
+    <section class="py-20 bg-void-medium">
         <div class="max-w-4xl mx-auto px-4 text-center">
-            <div class="glass-card-premium reveal-card">
-                <div class="mt-2 w-20 h-20 bg-gold-light/20 rounded-full flex items-center justify-center mx-auto mb-6 border-2 border-gold-light/40">
-                    <span class="text-3xl">🌱</span>
+            <h2 class="font-playfair text-4xl font-bold mb-8 reveal-text">
+                Tu web <span class="text-gold-light">funcionando</span> en 72h
+            </h2>
+            
+            <div class="glass-card p-8 max-w-2xl mx-auto reveal-card">
+                <h3 class="text-xl font-semibold mb-6 text-gold-light">✅ Resultados garantizados:</h3>
+                <div class="grid md:grid-cols-2 gap-6 text-left">
+                    <ul class="feature-list space-y-3 text-white/80">
+                        <li>Sitio web publicado (ejemplo.github.io)</li>
+                        <li>Formulario de contacto funcionando</li>
+                        <li>Repositorio Git configurado</li>
+                        <li>SEO básico implementado</li>
+                    </ul>
+                    <ul class="feature-list space-y-3 text-white/80">
+                        <li>Google Analytics configurado</li>
+                        <li>Plan de contenido definido</li>
+                        <li>Roadmap de mejoras</li>
+                        <li>Próximos pasos claros</li>
+                    </ul>
                 </div>
                 
-                <h2 class="font-playfair text-2xl sm:text-3xl font-bold text-white mb-4">
-                    Mi compromiso <span class="text-gold-light">contigo</span>
-                </h2>
-                
-                <p class="text-lg text-white/80 mb-6 max-w-2xl mx-auto">
-                    Como esta es nuestra <strong class="text-gold-light">primera generación</strong>, mi compromiso es crear una comunidad donde cada nodo pueda brillar y conectar con otros.
-                </p>
-                
-                <div class="bg-gold-light/10 border border-gold-light/20 rounded-xl p-6 mb-6">
-                    <h3 class="text-xl font-bold text-gold-light mb-4">🤝 Mi compromiso es con el conocimiento:</h3>
-                    
-                    <div class="grid md:grid-cols-2 gap-6 text-left">
-                        <div>
-                            <h4 class="font-semibold text-white mb-2">📚 Enseñanza completa</h4>
-                            <p class="text-white/70 text-sm">Te doy todas las herramientas y conocimientos para crear tu presencia digital profesional.</p>
-                        </div>
-                        
-                        <div>
-                            <h4 class="font-semibold text-white mb-2">🏗️ Comunidad activa</h4>
-                            <p class="text-white/70 text-sm">Creo retos, comparto recursos y mantengo una red donde todos podamos aprender juntos.</p>
-                        </div>
-                        
-                        <div>
-                            <h4 class="font-semibold text-white mb-2">🎯 Soporte técnico</h4>
-                            <p class="text-white/70 text-sm">Resuelvo dudas sobre código, diseño y implementación técnica durante todo el programa.</p>
-                        </div>
-                        
-                        <div>
-                            <h4 class="font-semibold text-white mb-2">🌐 Conexiones reales</h4>
-                            <p class="text-white/70 text-sm">Facilito que los nodos se conecten entre sí, creando una red de apoyo genuina.</p>
-                        </div>
-                    </div>
-                    
-                    <div class="bg-void-deep/30 rounded-lg p-4 mt-6">
-                        <p class="text-white/70 text-sm text-center">
-                            <strong class="text-gold-light">Importante:</strong> Mi responsabilidad es el conocimiento y la comunidad. Los resultados económicos dependen de cómo implementes lo aprendido, tu mercado local, y tu esfuerzo personal.
-                        </p>
-                    </div>
-                </div>
-                
-                <div class="bg-gold-light/5 border border-gold-light/10 rounded-lg p-6">
-                    <h3 class="text-lg font-bold text-gold-light mb-2">✨ Garantía de satisfacción</h3>
-                    <p class="text-white/80 text-sm">
-                        Si en los primeros 7 días sientes que el contenido no cumple con lo prometido, te devuelvo tu inversión completa. Sin preguntas, sin complicaciones.
-                    </p>
-                    <p class="text-white/60 text-xs mt-3">
-                        Después de 7 días, tu compromiso es con el aprendizaje y el mío es con darte el mejor contenido y comunidad posible.
+                <div class="mt-6 pt-6 border-t border-gold-light/20">
+                    <p class="text-white/70 text-sm">
+                        <strong class="text-gold-light">Compromiso:</strong> Si al día 7 no tienes estos resultados, te ayudo personalmente hasta lograrlo.
                     </p>
                 </div>
             </div>
         </div>
     </section>
-    <section class="py-20 bg-gradient-to-b from-void-medium to-void-deep" id="preguntas">
+
+    <!-- Pricing -->
+    <section id="planes" class="py-20 bg-gradient-to-b from-void-medium to-void-deep">
         <div class="max-w-4xl mx-auto px-4">
-            <h2 class="font-playfair text-3xl font-bold text-white text-center mb-12 reveal-text">
-                Preguntas que <span class="text-gold-light">iluminan dudas</span>
+            <h2 class="font-playfair text-4xl font-bold text-center mb-16 reveal-text">
+                Elige tu <span class="text-gold-light">plan</span>
+            </h2>
+            
+            <div class="grid md:grid-cols-2 gap-8 max-w-3xl mx-auto">
+                <!-- Plan Básico -->
+                <div class="glass-card p-8 text-center reveal-card">
+                    <div class="text-4xl mb-4">🚀</div>
+                    <h3 class="text-2xl font-bold mb-2">Plan Básico</h3>
+                    <div class="text-3xl font-bold text-gold-light mb-4">$47 USD</div>
+                    <p class="text-white/70 mb-6">Todo lo esencial para lanzar tu web</p>
+                    
+                    <ul class="feature-list text-left space-y-2 mb-8 text-white/80">
+                        <li>Bootcamp completo (4 días)</li>
+                        <li>Comunidad WhatsApp + Discord</li>
+                        <li>Plantillas y recursos</li>
+                        <li>2 Q&A en vivo</li>
+                        <li>Grabaciones por 60 días</li>
+                        <li>Soporte técnico</li>
+                    </ul>
+                    
+                    <button onclick="checkout('basic')" class="btn-primary w-full py-3 rounded-lg">
+                        Comenzar ahora
+                    </button>
+                </div>
+                
+                <!-- Plan Pro -->
+                <div class="glass-card p-8 text-center border-2 border-gold-light/30 relative reveal-card">
+                    <div class="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-gold-light text-void-deep px-4 py-1 rounded-full text-sm font-bold">
+                        MÁS POPULAR
+                    </div>
+                    
+                    <div class="text-4xl mb-4">⭐</div>
+                    <h3 class="text-2xl font-bold mb-2">Plan Pro</h3>
+                    <div class="text-3xl font-bold text-gold-light mb-4">$97 USD</div>
+                    <p class="text-white/70 mb-6">Incluye mentoría y recursos premium</p>
+                    
+                    <ul class="feature-list text-left space-y-2 mb-8 text-white/80">
+                        <li>Todo del Plan Básico</li>
+                        <li>1 sesión de mentoría 1:1 (45min)</li>
+                        <li>Clase: Conecta tu dominio</li>
+                        <li>Pack plantillas PRO + prompts IA</li>
+                        <li>Soporte prioritario en la comunidad</li>
+                        <li>Acceso a futuros cursos</li>
+                    </ul>
+                    
+                    <button onclick="checkout('pro')" class="btn-primary w-full py-3 rounded-lg">
+                        Elegir Pro
+                    </button>
+                </div>
+            </div>
+            
+            <div class="text-center mt-8">
+                <p class="text-white/60 text-sm">
+                    💳 Pago seguro con Stripe • 🛡️ Garantía 7 días • 🌍 Acepta tarjetas internacionales
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="py-20 bg-void-deep">
+        <div class="max-w-3xl mx-auto px-4">
+            <h2 class="font-playfair text-4xl font-bold text-center mb-12 reveal-text">
+                Preguntas <span class="text-gold-light">frecuentes</span>
             </h2>
             
             <div class="space-y-6">
-                <div class="glass-card reveal-card">
-                    <h3 class="font-semibold text-white mb-3">¿Necesito experiencia previa en programación?</h3>
-                    <p class="text-white/80">Para nada. El bootcamp está diseñado para almas que nunca han tocado código. Usaremos herramientas de IA que simplifican todo el proceso, como si tuvieras un mentor digital.</p>
-                </div>
+                <details class="glass-card p-6 cursor-pointer reveal-card">
+                    <summary class="font-semibold text-white text-lg">¿Necesito saber programar?</summary>
+                    <p class="text-white/80 mt-3">No, partimos de cero. Usamos herramientas visuales y IA para simplificar todo el proceso.</p>
+                </details>
                 
-                <div class="glass-card reveal-card">
-                    <h3 class="font-semibold text-white mb-3">¿Qué pasa si no puedo asistir en vivo?</h3>
-                    <p class="text-white/80">Todas las sesiones quedan grabadas y tienes acceso por 1 año completo. Además, la comunidad en Discord te ayudará con cualquier duda. Tu ritmo, tu tiempo.</p>
-                </div>
+                <details class="glass-card p-6 cursor-pointer reveal-card">
+                    <summary class="font-semibold text-white text-lg">¿Qué software necesito?</summary>
+                    <p class="text-white/80 mt-3">Solo VSCode (gratis), cuenta de GitHub (gratis) y un navegador. Te guío en la instalación.</p>
+                </details>
                 
-                <div class="glass-card reveal-card">
-                    <h3 class="font-semibold text-white mb-3">¿Realmente es hosting gratuito para siempre?</h3>
-                    <p class="text-white/80">Sí, GitHub Pages es completamente gratuito para siempre. Solo pagarías si quieres un dominio personalizado, pero eso es opcional y te enseñamos cómo hacerlo en el Día 5.</p>
-                </div>
+                <details class="glass-card p-6 cursor-pointer reveal-card">
+                    <summary class="font-semibold text-white text-lg">¿Incluye alojamiento web y dominio?</summary>
+                    <p class="text-white/80 mt-3">El alojamiento web es gratuito para siempre con GitHub Pages. El dominio personalizado se compra aparte (aprox $12-15 USD/año).</p>
+                </details>
                 
-                <div class="glass-card reveal-card">
-                    <h3 class="font-semibold text-white mb-3">¿Qué incluye la garantía del Plan Profesional?</h3>
-                    <p class="text-white/80">Si no recuperas $5,000 MXN en los primeros 90 días aplicando lo aprendido, te damos una sesión extra de mentoría 1:1 para revisar tu estrategia y asegurar tu éxito.</p>
-                </div>
+                <details class="glass-card p-6 cursor-pointer reveal-card">
+                    <summary class="font-semibold text-white text-lg">¿Qué pasa si no puedo asistir en vivo?</summary>
+                    <p class="text-white/80 mt-3">Todas las sesiones quedan grabadas con acceso por 60 días. Aprende a tu ritmo.</p>
+                </details>
                 
-                <div class="glass-card reveal-card">
-                    <h3 class="font-semibold text-white mb-3">¿Cómo funciona el proceso de pago?</h3>
-                    <p class="text-white/80">Utilizamos Gumroad, una plataforma segura y confiable para procesar pagos. Puedes pagar con tarjeta de crédito, débito o PayPal desde cualquier país. Recibirás acceso inmediato después del pago.</p>
-                </div>
+                <details class="glass-card p-6 cursor-pointer reveal-card">
+                    <summary class="font-semibold text-white text-lg">¿Hay garantía de devolución?</summary>
+                    <p class="text-white/80 mt-3">Reembolso 100% en los primeros 7 días. Después, crédito válido por 60 días para futuros cursos.</p>
+                </details>
+                
+                <details class="glass-card p-6 cursor-pointer reveal-card">
+                    <summary class="font-semibold text-white text-lg">¿Cuál es la diferencia entre planes?</summary>
+                    <p class="text-white/80 mt-3">El Plan Pro incluye mentoría 1:1, clase de dominio, plantillas premium y soporte prioritario. El Básico tiene todo lo esencial.</p>
+                </details>
             </div>
         </div>
     </section>
 
-    <!-- Results Modal -->
-    <div id="resultsSection" class="hidden fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 z-50">
-        <div class="glass-card-premium max-w-2xl w-full max-h-[90vh] overflow-y-auto">
-            <div id="resultsContent" class="p-6 sm:p-8">
-                <!-- Results will be inserted by JavaScript -->
-            </div>
-        </div>
-    </div>
-
-    <!-- Packages Preview -->
-    <section class="py-20 bg-gradient-to-b from-void-medium to-light-birth/10">
-        <div class="max-w-6xl mx-auto px-4">
-            <div class="text-center mb-16">
-                <h2 class="font-playfair text-3xl sm:text-4xl font-bold mb-6 text-white reveal-text">
-                    Elige tu nivel de <span class="text-gold-light">transformación</span>
-                </h2>
-                <p class="text-lg text-white/80 max-w-3xl mx-auto reveal-text">
-                    Cada plan incluye los recursos perfectos para tu nivel actual.<br>
-                    <span class="text-gold-light font-medium">30% de descuento por tiempo limitado.</span>
-                </p>
-            </div>
-            
-    <!-- Packages Preview -->
-    <section class="py-20 bg-gradient-to-b from-void-medium to-light-birth/10">
-        <div class="max-w-6xl mx-auto px-4">
-            <div class="text-center mb-16">
-                <h2 class="font-playfair text-3xl sm:text-4xl font-bold mb-6 text-white reveal-text">
-                    Elige tu nivel de <span class="text-gold-light">transformación</span>
-                </h2>
-                <p class="text-lg text-white/80 max-w-3xl mx-auto reveal-text">
-                    Cada plan incluye los recursos perfectos para tu nivel actual.<br>
-                    <span class="text-gold-light font-medium">30% de descuento por tiempo limitado.</span>
-                </p>
-            </div>
-            
-            <div class="grid md:grid-cols-3 gap-8">
-                <!-- Plan Fundador -->
-                <div class="package-card reveal-card">
-                    <div class="text-center mb-6">
-                        <div class="inline-block bg-deep-blue/30 text-gold-light px-3 py-1 rounded-full text-xs font-semibold mb-3">
-                            ESENCIAL
-                        </div>
-                        <div class="text-4xl mb-3">🥉</div>
-                        <h3 class="text-xl font-bold text-white mb-2">Plan Fundador</h3>
-                        <div class="flex items-center justify-center gap-2 mb-2">
-                            <span class="text-2xl font-bold text-gold-light">$47 USD</span>
-                            <span class="text-lg text-white/40 line-through">$67 USD</span>
-                        </div>
-                        <span class="badge-discount">30% OFF</span>
+    <!-- Guarantee -->
+    <section class="py-16 bg-gradient-to-b from-void-deep to-void-medium">
+        <div class="max-w-3xl mx-auto px-4 text-center">
+            <div class="glass-card p-8 reveal-card">
+                <h3 class="text-2xl font-bold text-gold-light mb-4">🛡️ Garantía transparente</h3>
+                <div class="grid md:grid-cols-2 gap-8 text-left">
+                    <div>
+                        <h4 class="font-semibold text-white mb-3">✅ Lo que SÍ garantizo:</h4>
+                        <ul class="text-white/80 text-sm space-y-2">
+                            <li>• Contenido completo y actualizado</li>
+                            <li>• Comunidad activa por 60 días</li>
+                            <li>• Soporte técnico durante el bootcamp</li>
+                            <li>• Tu web funcionando en 7 días</li>
+                        </ul>
                     </div>
-                    
-                    <ul class="feature-list mb-8 min-h-[240px]">
-                        <li>5 sesiones en vivo (15 hrs de formación)</li>
-                        <li>Acceso a grabaciones por 1 año completo</li>
-                        <li>Hosting gratuito en GitHub Pages</li>
-                        <li>2 Ebooks: Fundamentos Web + Layouts CSS</li>
-                        <li>5 templates HTML/CSS listos para usar</li>
-                        <li>Material didáctico descargable</li>
-                    </ul>
-                    
-                    <button class="w-full glass-button-gold text-white font-semibold py-3 px-6 rounded-lg transition-all duration-300 hover:scale-105">
-                        Elegir Plan Fundador
-                    </button>
-                    
-                    <p class="text-white/60 text-xs mt-3 text-center">
-                        <a href="terminos.html" target="_blank" class="text-gold-light hover:underline">Ver términos</a> • 
-                        <a href="garantias.html" target="_blank" class="text-gold-light hover:underline">Garantías</a>
-                    </p>
-                </div>
-
-                <!-- Plan Emprendedor (Popular) -->
-                <div class="package-card package-popular reveal-card">
-                    <div class="badge-popular">MÁS POPULAR</div>
-                    
-                    <div class="text-center mb-6">
-                        <div class="text-4xl mb-3">🥈</div>
-                        <h3 class="text-xl font-bold text-white mb-2">Plan Emprendedor</h3>
-                        <div class="flex items-center justify-center gap-2 mb-2">
-                            <span class="text-2xl font-bold text-gold-light">$97 USD</span>
-                            <span class="text-lg text-white/40 line-through">$139 USD</span>
-                        </div>
-                        <span class="badge-discount">30% OFF</span>
+                    <div>
+                        <h4 class="font-semibold text-white mb-3">⚠️ Lo que NO garantizo:</h4>
+                        <ul class="text-white/80 text-sm space-y-2">
+                            <li>• Resultados económicos específicos</li>
+                            <li>• Que conseguirás clientes automáticamente</li>
+                            <li>• Ganancias por implementar lo aprendido</li>
+                            <li>• Éxito sin implementación activa</li>
+                        </ul>
                     </div>
-                    
-                    <ul class="feature-list mb-8 min-h-[240px]">
-                        <li>Todo lo del Plan Fundador</li>
-                        <li>GPT especializado en prompts del curso</li>
-                        <li>Certificado digital verificable</li>
-                        <li>Comunidad privada Discord premium</li>
-                        <li>2 sesiones Q&A grupales adicionales</li>
-                        <li>Soporte prioritario en la comunidad</li>
-                        <li>Recursos premium descargables</li>
-                    </ul>
-                    
-                    <button class="w-full glass-button-gold text-white font-semibold py-3 px-6 rounded-lg transition-all duration-300 hover:scale-105">
-                        Elegir Plan Emprendedor
-                    </button>
-                    
-                    <p class="text-white/60 text-xs mt-3 text-center">
-                        <a href="terminos.html" target="_blank" class="text-gold-light hover:underline">Ver términos</a> • 
-                        <a href="garantias.html" target="_blank" class="text-gold-light hover:underline">Garantías</a>
-                    </p>
                 </div>
-
-                <!-- Plan Profesional -->
-                <div class="package-card reveal-card">
-                    <div class="text-center mb-6">
-                        <div class="inline-block bg-gold-light/30 text-void-deep px-3 py-1 rounded-full text-xs font-bold mb-3">
-                            PREMIUM
-                        </div>
-                        <div class="text-4xl mb-3">🥇</div>
-                        <h3 class="text-xl font-bold text-white mb-2">Plan Profesional</h3>
-                        <div class="flex items-center justify-center gap-2 mb-2">
-                            <span class="text-2xl font-bold text-gold-light">$297 USD</span>
-                            <span class="text-lg text-white/40 line-through">$425 USD</span>
-                        </div>
-                        <span class="badge-discount">30% OFF</span>
-                    </div>
-                    
-                    <ul class="feature-list mb-8 min-h-[240px]">
-                        <li>Todo lo del Plan Emprendedor</li>
-                        <li>Mentoría grupal mensual por 1 año</li>
-                        <li>1 sesión 1:1 personalizada (45 min)</li>
-                        <li>Día 5 INCLUIDO: Configuración dominio</li>
-                        <li>Biblioteca de recursos premium</li>
-                        <li>Acceso prioritario a futuros cursos</li>
-                        <li>⭐ Sesiones 1:1 para dudas técnicas específicas</li>
-                    </ul>
-                    
-                    <button class="w-full glass-button-gold text-white font-semibold py-3 px-6 rounded-lg transition-all duration-300 hover:scale-105">
-                        Elegir Plan Profesional
-                    </button>
-                    
-                    <p class="text-white/60 text-xs mt-3 text-center">
-                        <a href="terminos.html" target="_blank" class="text-gold-light hover:underline">Ver términos</a> • 
-                        <a href="garantias.html" target="_blank" class="text-gold-light hover:underline">Garantías</a>
-                    </p>
-                </div>
-            </div>
-            
-            <!-- Additional info -->
-            <div class="text-center mt-12">
-                <p class="text-white/60 text-sm mb-4">
-                    ⏰ El descuento del 30% es válido solo por <strong class="text-gold-light">48 horas</strong> desde la masterclass
-                </p>
-                <p class="text-white/60 text-xs">
-                    Todos los precios están en USD. Puedes pagar con tarjeta de cualquier país.
-                </p>
-            </div>
-        </div>
-    </section>
-        </div>
-    </section>
-
-    <!-- Social Proof -->
-    <section class="py-20 bg-gradient-to-b from-light-birth/10 to-void-deep">
-        <div class="max-w-4xl mx-auto px-4 text-center">
-            <h2 class="font-playfair text-3xl font-bold mb-12 reveal-text">
-                Los primeros <span class="text-gold-light">nodos</span> ya brillan
-            </h2>
-            
-            <p class="text-lg text-white/80 mb-12 max-w-2xl mx-auto reveal-text">
-                Esta es la <strong class="text-gold-light">primera generación</strong> de La Red de Luz. 
-                Somos pioneros creando nuestras presencias digitales juntos. 
-                <span class="text-gold-light">Yo también estoy aprendiendo</span> en este viaje contigo.
-            </p>
-            
-            <div class="grid md:grid-cols-3 gap-8 mb-12">
-                <!-- Ejemplo 1 - Lumiku -->
-                <div class="glass-card reveal-card">
-                    <div class="mb-4">
-                        <div class="w-12 h-12 bg-gold-light/20 rounded-full flex items-center justify-center mx-auto mb-3 border border-gold-light/30">
-                            <span class="font-semibold text-gold-light">L</span>
-                        </div>
-                        <h3 class="font-semibold text-white mb-2">Lumiku Psico Infantil</h3>
-                        <a href="https://lumikupsicoinfantil.com/" target="_blank" rel="noopener" class="text-gold-light text-sm hover:underline">
-                            lumikupsicoinfantil.com
-                        </a>
-                    </div>
-                    <p class="text-white/80 italic text-sm">
-                        "Psicología infantil con presencia digital profesional. Creada con las mismas técnicas que aprenderás."
-                    </p>
-                </div>
-                
-                <!-- Ejemplo 2 - La Red de Luz -->
-                <div class="glass-card reveal-card">
-                    <div class="mb-4">
-                        <div class="w-12 h-12 bg-gold-light/20 rounded-full flex items-center justify-center mx-auto mb-3 border border-gold-light/30">
-                            <span class="font-semibold text-gold-light">R</span>
-                        </div>
-                        <h3 class="font-semibold text-white mb-2">La Red de Luz</h3>
-                        <a href="https://lareddeluz.com/" target="_blank" rel="noopener" class="text-gold-light text-sm hover:underline">
-                            lareddeluz.com
-                        </a>
-                    </div>
-                    <p class="text-white/80 italic text-sm">
-                        "El hogar digital de nuestra comunidad. HTML, CSS y JavaScript puro, sin dependencias."
-                    </p>
-                </div>
-                
-                <!-- Ejemplo 3 - Javier Millán -->
-                <div class="glass-card reveal-card">
-                    <div class="mb-4">
-                        <div class="w-12 h-12 bg-gold-light/20 rounded-full flex items-center justify-center mx-auto mb-3 border border-gold-light/30">
-                            <span class="font-semibold text-gold-light">J</span>
-                        </div>
-                        <h3 class="font-semibold text-white mb-2">Javier Millán</h3>
-                        <a href="https://javiermillanv.com/" target="_blank" rel="noopener" class="text-gold-light text-sm hover:underline">
-                            javiermillanv.com
-                        </a>
-                    </div>
-                    <p class="text-white/80 italic text-sm">
-                        "Presencia personal auténtica. Cada línea de código creada con propósito y conexión humana."
-                    </p>
-                </div>
-            </div>
-            
-            <div class="p-2 glass-card-premium max-w-3xl mx-auto reveal-text">
-                <div class="text-center">
-                    <h3 class="text-xl font-bold text-gold-light mb-4">
-                        🌱 Somos la primera generación
-                    </h3>
-                    <p class="text-white/80 mb-4">
-                        No tengo cientos de testimonios porque <strong class="text-gold-light">estamos empezando juntos</strong>. 
-                        Lo que sí tengo son resultados reales: estas páginas web funcionando, trayendo clientes y conectando almas.
-                    </p>
+                <div class="mt-6 pt-6 border-t border-gold-light/20">
                     <p class="text-white/70 text-sm">
-                        Cada una creada con HTML, CSS y JavaScript. Sin WordPress, sin mensualidades, sin dependencias. 
-                        <span class="text-gold-light">Exactamente lo que aprenderás en el bootcamp.</span>
+                        Los resultados dependen de tu implementación, mercado local y esfuerzo personal.
                     </p>
                 </div>
             </div>
@@ -675,75 +284,213 @@
     </section>
 
     <!-- Final CTA -->
-    <section class="py-20 bg-gradient-to-b from-void-deep to-deep-blue relative overflow-hidden">
-        <!-- Background Effect -->
-        <div class="absolute inset-0 opacity-30">
-            <div class="absolute inset-0" style="background-image: radial-gradient(circle at 20% 50%, rgba(228,205,133,0.1) 0%, transparent 50%), radial-gradient(circle at 80% 50%, rgba(228,205,133,0.1) 0%, transparent 50%);"></div>
-        </div>
-        
-        <div class="relative z-10 max-w-4xl mx-auto px-4 text-center">
-            <h2 class="font-playfair text-3xl sm:text-4xl font-bold mb-6 reveal-text">
-                Tu <span class="text-gold-light glow-text">momento</span> es ahora
+    <section class="py-20 bg-void-medium">
+        <div class="max-w-3xl mx-auto px-4 text-center">
+            <h2 class="font-playfair text-4xl font-bold mb-6 reveal-text">
+                Tu web en <span class="text-gold-light glow-text">72 horas</span>
             </h2>
-            <p class="text-xl mb-8 text-white/90 reveal-text">
-                El descuento del 30% termina en 48 horas.<br>
-                No dejes que tu luz siga oculta en la oscuridad digital.
+            <p class="text-xl mb-8 text-white/80 reveal-text">
+                Grupo: 18-22 Agosto • Solo 40 lugares disponibles
             </p>
             
-            <div class="flex flex-col sm:flex-row gap-4 justify-center items-center reveal-text">
-                <a href="#descubrir" class="glass-button-gold text-white font-bold py-4 px-8 rounded-full text-lg">
-                    Descubrir mi plan perfecto
-                </a>
-                <span class="text-sm text-white/60">⏰ Solo 48 horas restantes</span>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center reveal-text">
+                <button onclick="checkout('basic')" class="btn-primary px-8 py-4 rounded-full text-lg">
+                    Plan Básico - $47
+                </button>
+                <button onclick="checkout('pro')" class="btn-primary px-8 py-4 rounded-full text-lg">
+                    Plan Pro - $97
+                </button>
             </div>
             
-            <!-- Network nodes decoration -->
-            <div class="mt-12 flex justify-center space-x-4">
-                <div class="w-3 h-3 bg-gold-light/50 rounded-full animate-pulse"></div>
-                <div class="w-2 h-2 bg-white/30 rounded-full animate-pulse" style="animation-delay: 0.5s"></div>
-                <div class="w-3 h-3 bg-gold-light/50 rounded-full animate-pulse" style="animation-delay: 1s"></div>
-            </div>
+            <p class="text-white/60 text-sm mt-6">
+                🌱 Primer grupo • Sin testimonios falsos, con resultados reales
+            </p>
         </div>
     </section>
 
     <!-- Footer -->
-    <footer class="bg-void-deep py-12 border-t border-gold-light/20">
-        <div class="max-w-6xl mx-auto px-4">
-            <div class="grid md:grid-cols-3 gap-6">
-                <div>
-                    <h3 class="font-bold text-lg mb-4 text-gold-light">La Red de Luz</h3>
-                    <p class="text-white/60 text-sm">Conectando mentes brillantes con el mundo digital. Tu luz interior merece ser vista.</p>
-                </div>
-                
-                <div>
-                    <h4 class="font-semibold mb-4 text-white">Bootcamp</h4>
-                    <ul class="space-y-2 text-sm text-white/60">
-                        <li><a href="#descubrir" class="hover:text-gold-light transition-colors">Encuentra tu plan</a></li>
-                        <li><a href="#" class="hover:text-gold-light transition-colors">Recursos</a></li>
-                        <li><a href="#preguntas" class="hover:text-gold-light transition-colors">FAQ</a></li>
-                    </ul>
-                </div>
-
-                <div>
-                    <h4 class="font-semibold mb-4 text-white">Legal</h4>
-                    <ul class="space-y-2 text-sm text-white/60">
-                        <li><a href="terminos.html" target="_blank" class="hover:text-gold-light transition-colors">Términos y Condiciones</a></li>
-                        <li><a href="garantias.html" target="_blank" class="hover:text-gold-light transition-colors">Política de Garantías</a></li>
-                        <li><a href="mailto:hola@lareddeluz.com" class="hover:text-gold-light transition-colors">Contacto</a></li>
-                    </ul>
-                </div>
+    <footer class="py-12 bg-void-deep border-t border-gold-light/20">
+        <div class="max-w-4xl mx-auto px-4 text-center">
+            <div class="mb-6">
+                <h3 class="font-bold text-lg text-gold-light mb-2">La Red de Luz</h3>
+                <p class="text-white/60 text-sm max-w-md mx-auto">
+                    Conectando mentes brillantes con el mundo digital.
+                </p>
             </div>
             
-            <div class="border-t border-white/10 mt-8 pt-8 text-center text-sm text-white/60">
-                <p>&copy; 2025 La Red de Luz. Todos los derechos reservados.</p>
-                <p class="mt-1">Los resultados pueden variar según la implementación individual. Tu éxito depende de tu acción.</p>
+            <div class="flex flex-wrap justify-center gap-6 text-sm text-white/60 mb-6">
+                <a href="terminos.html" target="_blank" class="hover:text-gold-light">Términos</a>
+                <a href="garantias.html" target="_blank" class="hover:text-gold-light">Garantías</a>
+                <a href="mailto:hola@lareddeluz.com" class="hover:text-gold-light">Contacto</a>
             </div>
+            
+            <p class="text-white/40 text-xs">
+                &copy; 2025 La Red de Luz. Los resultados pueden variar según la implementación.
+            </p>
         </div>
     </footer>
 
-    <!-- Scripts -->
+    <!-- JavaScript -->
+    
+    <!-- 1. Network Animation (Solo Hero) -->
     <script src="js/network.js"></script>
-    <script src="js/form.js"></script>
-    <script src="js/main.js"></script>
+    
+    <!-- 2. Main Functions (Simplificado) -->
+    <script>
+        // ===============================================
+        // SIMPLIFIED MAIN SCRIPT
+        // Solo funciones esenciales
+        // ===============================================
+        
+        class MinimalLanding {
+            constructor() {
+                this.init();
+            }
+            
+            init() {
+                this.setupScrollAnimations();
+                this.setupSmoothScroll();
+            }
+            
+            // Reveal animations simplificadas
+            setupScrollAnimations() {
+                const revealElements = () => {
+                    const elements = document.querySelectorAll('.reveal-text, .reveal-card');
+                    
+                    elements.forEach((element, index) => {
+                        const elementTop = element.getBoundingClientRect().top;
+                        const elementVisible = 150;
+                        
+                        if (elementTop < window.innerHeight - elementVisible) {
+                            setTimeout(() => {
+                                element.classList.add('revealed');
+                            }, index * 100);
+                        }
+                    });
+                };
+                
+                revealElements();
+                window.addEventListener('scroll', revealElements, { passive: true });
+                
+                // Fallback reveal after 2s
+                setTimeout(() => {
+                    document.querySelectorAll('.reveal-text:not(.revealed), .reveal-card:not(.revealed)').forEach((el, index) => {
+                        setTimeout(() => el.classList.add('revealed'), index * 50);
+                    });
+                }, 2000);
+            }
+            
+            // Smooth scroll para anchors
+            setupSmoothScroll() {
+                document.addEventListener('click', (e) => {
+                    const link = e.target.closest('a[href^="#"]');
+                    if (link) {
+                        const href = link.getAttribute('href');
+                        if (href && href.length > 1) {
+                            e.preventDefault();
+                            const element = document.querySelector(href);
+                            if (element) {
+                                element.scrollIntoView({
+                                    behavior: 'smooth',
+                                    block: 'start'
+                                });
+                            }
+                        }
+                    }
+                });
+            }
+        }
+        
+        // ===============================================
+        // STRIPE CHECKOUT
+        // ===============================================
+        
+        const STRIPE_CONFIG = {
+            basic: {
+                priceId: 'price_XXXXXXXX', // Tu Price ID de Stripe
+                amount: 47
+            },
+            pro: {
+                priceId: 'price_YYYYYYYY', // Tu Price ID de Stripe
+                amount: 97
+            }
+        };
+        
+        async function checkout(plan) {
+            const config = STRIPE_CONFIG[plan];
+            
+            if (!config) {
+                console.error('Plan no encontrado:', plan);
+                return;
+            }
+            
+            // Track click
+            if (typeof gtag !== 'undefined') {
+                gtag('event', 'begin_checkout', {
+                    currency: 'USD',
+                    value: config.amount,
+                    items: [{
+                        item_id: plan,
+                        item_name: `DTMM ${plan}`,
+                        price: config.amount,
+                        quantity: 1
+                    }]
+                });
+            }
+            
+            // En desarrollo local
+            if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+                alert(`Checkout para: ${plan}\nPrecio: $${config.amount} USD\nPrice ID: ${config.priceId}\n\n¡En producción redirigirá a Stripe!`);
+                return;
+            }
+            
+            // En producción - redirigir a Stripe Checkout
+            const stripe = Stripe('pk_live_TU_PUBLISHABLE_KEY'); // Tu clave pública
+            
+            try {
+                const { error } = await stripe.redirectToCheckout({
+                    lineItems: [{
+                        price: config.priceId,
+                        quantity: 1,
+                    }],
+                    mode: 'payment',
+                    successUrl: `${window.location.origin}/gracias?plan=${plan}`,
+                    cancelUrl: `${window.location.origin}/#planes`,
+                });
+                
+                if (error) {
+                    console.error('Error:', error);
+                    alert('Error al procesar el pago. Inténtalo de nuevo.');
+                }
+            } catch (err) {
+                console.error('Stripe error:', err);
+                // Fallback: redirect a URL directa de Stripe
+                window.location.href = `https://buy.stripe.com/TU_PAYMENT_LINK_${plan.toUpperCase()}`;
+            }
+        }
+        
+        // ===============================================
+        // INITIALIZATION
+        // ===============================================
+        
+        document.addEventListener('DOMContentLoaded', () => {
+            new MinimalLanding();
+            console.log('🚀 DTMM Minimal Landing loaded!');
+        });
+    </script>
+    
+    <!-- Stripe.js -->
+    <script src="https://js.stripe.com/v3/"></script>
+    
+    <!-- Analytics (Opcional) -->
+    <!-- 
+    <script async src="https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'GA_MEASUREMENT_ID');
+    </script>
+    -->
 </body>
 </html>

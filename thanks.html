@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>¡Bienvenido a La Red de Luz! - DTMM</title>
+    <meta name="description" content="Tu lugar está asegurado. Únete a la comunidad y prepárate para transformar tu presencia digital.">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'inter': ['Inter', 'sans-serif'],
+                        'playfair': ['Playfair Display', 'serif'],
+                    },
+                    colors: {
+                        'gold': {
+                            light: '#e4cd85',
+                            dark: '#c08a2d'
+                        },
+                        'deep-blue': '#163384',
+                        'void': {
+                            deep: '#0d0b16',
+                            medium: '#232a3d'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- CSS Styles -->
+    <link rel="stylesheet" href="css/styles.css">
+    
+    <!-- Prevent indexing -->
+    <meta name="robots" content="noindex, nofollow">
+</head>
+<body class="font-inter bg-void-deep text-white overflow-x-hidden">
+    
+    <!-- Thank You Hero -->
+    <section class="relative min-h-screen flex items-center justify-center overflow-hidden">
+        <!-- Subtle background animation -->
+        <div class="absolute inset-0 bg-gradient-to-b from-void-deep via-void-medium to-deep-blue"></div>
+        
+        <!-- Floating particles -->
+        <div class="absolute inset-0 overflow-hidden">
+            <div class="absolute top-1/4 left-1/4 w-2 h-2 bg-gold-light/30 rounded-full animate-ping"></div>
+            <div class="absolute top-3/4 right-1/4 w-3 h-3 bg-gold-light/20 rounded-full animate-pulse" style="animation-delay: 1s"></div>
+            <div class="absolute top-1/2 left-3/4 w-1 h-1 bg-gold-light/40 rounded-full animate-bounce" style="animation-delay: 2s"></div>
+        </div>
+        
+        <!-- Main Content -->
+        <div class="relative z-10 text-center max-w-4xl mx-auto px-4">
+            <!-- Success Icon -->
+            <div class="w-24 h-24 bg-gradient-to-br from-gold-light to-gold-dark rounded-full flex items-center justify-center mx-auto mb-8 animate-fadeInUp">
+                <svg class="w-12 h-12 text-void-deep" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                </svg>
+            </div>
+            
+            <!-- Title -->
+            <h1 class="font-playfair text-4xl md:text-6xl font-bold mb-6 animate-fadeInUp" style="animation-delay: 0.3s">
+                ¡Bienvenido a <span class="text-gold-light glow-text">La Red de Luz</span>!
+            </h1>
+            
+            <!-- Subtitle -->
+            <p class="text-xl md:text-2xl mb-8 text-white/80 max-w-2xl mx-auto animate-fadeInUp" style="animation-delay: 0.6s">
+                Tu lugar está asegurado. Ahora conectemos para transformar tu presencia digital juntos.
+            </p>
+            
+            <!-- Plan confirmation -->
+            <div id="planConfirmation" class="glass-card p-6 max-w-md mx-auto mb-8 animate-fadeInUp" style="animation-delay: 0.9s">
+                <h3 class="font-semibold text-gold-light mb-2">✅ Plan confirmado</h3>
+                <p class="text-white/80 text-sm" id="planDetails">Revisa tu email para todos los detalles</p>
+            </div>
+            
+            <!-- Next Steps -->
+            <p class="text-white/70 mb-8 animate-fadeInUp" style="animation-delay: 1.2s">
+                <span class="text-gold-light font-medium">Próximos pasos:</span> Únete a la comunidad y guarda las fechas importantes
+            </p>
+        </div>
+    </section>
+
+    <!-- Community Join Section -->
+    <section class="py-20 bg-gradient-to-b from-deep-blue to-void-medium">
+        <div class="max-w-4xl mx-auto px-4">
+            <h2 class="font-playfair text-3xl font-bold text-center mb-4 reveal-text">
+                Únete a la <span class="text-gold-light">comunidad</span>
+            </h2>
+            <p class="text-center text-white/70 mb-12 reveal-text">
+                Aquí es donde empezará tu transformación. Conecta con otros estudiantes de la red.
+            </p>
+            
+            <div class="grid md:grid-cols-2 gap-8">
+                <!-- WhatsApp -->
+                <div class="glass-card p-8 text-center reveal-card group hover:border-green-500/30 transition-all duration-300">
+                    <div class="w-20 h-20 bg-green-500/20 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:bg-green-500/30 transition-colors">
+                        <svg class="w-10 h-10 text-green-400" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.465 3.63"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4">Grupo WhatsApp</h3>
+                    <p class="text-white/70 mb-6 text-sm">
+                        Grupo privado para estudiantes. Dudas rápidas, actualizaciones importantes y networking directo.
+                    </p>
+                    <a href="https://chat.whatsapp.com/TU_ENLACE_GRUPO" target="_blank" rel="noopener" class="btn-primary block text-center py-3 rounded-lg group-hover:scale-105 transition-transform">
+                        Unirme a WhatsApp
+                    </a>
+                    <p class="text-white/50 text-xs mt-3">Enlace directo al grupo</p>
+                </div>
+                
+                <!-- Discord -->
+                <div class="glass-card p-8 text-center reveal-card group hover:border-purple-500/30 transition-all duration-300">
+                    <div class="w-20 h-20 bg-purple-500/20 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:bg-purple-500/30 transition-colors">
+                        <svg class="w-10 h-10 text-purple-400" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M20.317 4.3698a19.7913 19.7913 0 00-4.8851-1.5152.0741.0741 0 00-.0785.0371c-.211.3753-.4447.8648-.6083 1.2495-1.8447-.2762-3.68-.2762-5.4868 0-.1636-.3933-.4058-.8742-.6177-1.2495a.077.077 0 00-.0785-.037 19.7363 19.7363 0 00-4.8852 1.515.0699.0699 0 00-.0321.0277C.5334 9.0458-.319 13.5799.0992 18.0578a.0824.0824 0 00.0312.0561c2.0528 1.5076 4.0413 2.4228 5.9929 3.0294a.0777.0777 0 00.0842-.0276c.4616-.6304.8731-1.2952 1.226-1.9942a.076.076 0 00-.0416-.1057c-.6528-.2476-1.2743-.5495-1.8722-.8923a.077.077 0 01-.0076-.1277c.1258-.0943.2517-.1923.3718-.2914a.0743.0743 0 01.0776-.0105c3.9278 1.7933 8.18 1.7933 12.0614 0a.0739.0739 0 01.0785.0095c.1202.099.246.1981.3728.2924a.077.077 0 01-.0066.1276 12.2986 12.2986 0 01-1.873.8914.0766.0766 0 00-.0407.1067c.3604.698.7719 1.3628 1.225 1.9932a.076.076 0 00.0842.0286c1.961-.6067 3.9495-1.5219 6.0023-3.0294a.077.077 0 00.0313-.0552c.5004-5.177-.8382-9.6739-3.5485-13.6604a.061.061 0 00-.0312-.0286zM8.02 15.3312c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9555-2.4189 2.157-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419-.0190 1.3332-.9555 2.4189-2.1569 2.4189zm7.9748 0c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9554-2.4189 2.1569-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.9460 2.4189-2.1568 2.4189Z"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4">Servidor Discord</h3>
+                    <p class="text-white/70 mb-6 text-sm">
+                        Servidor organizado con canales por temas: #recursos, #dudas, #proyectos, retos semanales y transmisiones en vivo.
+                    </p>
+                    <a href="https://discord.gg/TU_CODIGO_SERVIDOR" target="_blank" rel="noopener" class="btn-primary block text-center py-3 rounded-lg group-hover:scale-105 transition-transform">
+                        Entrar a Discord
+                    </a>
+                    <p class="text-white/50 text-xs mt-3">Acceso inmediato al servidor</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Important Dates -->
+    <section class="py-20 bg-void-medium">
+        <div class="max-w-4xl mx-auto px-4">
+            <h2 class="font-playfair text-3xl font-bold text-center mb-12 reveal-text">
+                Fechas <span class="text-gold-light">importantes</span>
+            </h2>
+            
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Start Date -->
+                <div class="glass-card p-6 text-center reveal-card">
+                    <div class="w-16 h-16 bg-gold-light/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <span class="text-2xl">🚀</span>
+                    </div>
+                    <h3 class="font-bold text-gold-light mb-2">Inicio del Programa</h3>
+                    <p class="text-2xl font-bold mb-2">18 de Agosto</p>
+                    <p class="text-white/70 text-sm">Lunes • 10:00 AM (Zona Centro México)</p>
+                    <p class="text-white/60 text-xs mt-2">¡Día 1: Fundamentos!</p>
+                </div>
+                
+                <!-- Mid Point -->
+                <div class="glass-card p-6 text-center reveal-card">
+                    <div class="w-16 h-16 bg-gold-light/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <span class="text-2xl">🎯</span>
+                    </div>
+                    <h3 class="font-bold text-gold-light mb-2">Primera Sesión Q&A</h3>
+                    <p class="text-2xl font-bold mb-2">20 de Agosto</p>
+                    <p class="text-white/70 text-sm">Miércoles • 8:00 PM (Zona Centro México)</p>
+                    <p class="text-white/60 text-xs mt-2">Resuelve dudas en vivo</p>
+                </div>
+                
+                <!-- End Date -->
+                <div class="glass-card p-6 text-center reveal-card">
+                    <div class="w-16 h-16 bg-gold-light/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <span class="text-2xl">🎉</span>
+                    </div>
+                    <h3 class="font-bold text-gold-light mb-2">¡Web Online!</h3>
+                    <p class="text-2xl font-bold mb-2">22 de Agosto</p>
+                    <p class="text-white/70 text-sm">Viernes • Tu web publicada</p>
+                    <p class="text-white/60 text-xs mt-2">¡72 horas cumplidas!</p>
+                </div>
+            </div>
+            
+            <!-- Calendar reminder -->
+            <div class="text-center mt-12">
+                <div class="glass-card p-6 max-w-md mx-auto reveal-card">
+                    <h3 class="font-semibold text-gold-light mb-3">📅 Guarda las fechas</h3>
+                    <p class="text-white/80 text-sm mb-4">
+                        Agrega estos eventos a tu calendario para no perderte ninguna sesión.
+                    </p>
+                    <button onclick="addToCalendar()" class="btn-secondary px-6 py-2 rounded-lg text-sm">
+                        Agregar al calendario
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Next Steps -->
+    <section class="py-20 bg-gradient-to-b from-void-medium to-void-deep">
+        <div class="max-w-3xl mx-auto px-4 text-center">
+            <h2 class="font-playfair text-3xl font-bold mb-8 reveal-text">
+                Qué hacer <span class="text-gold-light">ahora</span>
+            </h2>
+            
+            <div class="space-y-6">
+                <!-- Step 1 -->
+                <div class="glass-card p-6 text-left reveal-card">
+                    <div class="flex items-start">
+                        <div class="w-8 h-8 bg-gold-light/20 rounded-full flex items-center justify-center mr-4 mt-1">
+                            <span class="text-gold-light font-bold">1</span>
+                        </div>
+                        <div>
+                            <h3 class="font-semibold text-white mb-2">Revisa tu email</h3>
+                            <p class="text-white/70 text-sm">Recibirás un email con todos los detalles, enlaces de acceso y preparación previa.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Step 2 -->
+                <div class="glass-card p-6 text-left reveal-card">
+                    <div class="flex items-start">
+                        <div class="w-8 h-8 bg-gold-light/20 rounded-full flex items-center justify-center mr-4 mt-1">
+                            <span class="text-gold-light font-bold">2</span>
+                        </div>
+                        <div>
+                            <h3 class="font-semibold text-white mb-2">Únete a las comunidades</h3>
+                            <p class="text-white/70 text-sm">WhatsApp para dudas rápidas y Discord para recursos, retos y networking.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Step 3 -->
+                <div class="glass-card p-6 text-left reveal-card">
+                    <div class="flex items-start">
+                        <div class="w-8 h-8 bg-gold-light/20 rounded-full flex items-center justify-center mr-4 mt-1">
+                            <span class="text-gold-light font-bold">3</span>
+                        </div>
+                        <div>
+                            <h3 class="font-semibold text-white mb-2">Prepara tu entorno</h3>
+                            <p class="text-white/70 text-sm">Instala VSCode y crea tu cuenta de GitHub. Te enviaremos una guía detallada.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Step 4 -->
+                <div class="glass-card p-6 text-left reveal-card">
+                    <div class="flex items-start">
+                        <div class="w-8 h-8 bg-gold-light/20 rounded-full flex items-center justify-center mr-4 mt-1">
+                            <span class="text-gold-light font-bold">4</span>
+                        </div>
+                        <div>
+                            <h3 class="font-semibold text-white mb-2">¡A transformar!</h3>
+                            <p class="text-white/70 text-sm">El 18 de agosto empezamos. En 72 horas tendrás tu web funcionando y online.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Support -->
+    <section class="py-16 bg-void-deep">
+        <div class="max-w-2xl mx-auto px-4 text-center">
+            <h3 class="text-xl font-bold text-gold-light mb-4 reveal-text">¿Necesitas ayuda?</h3>
+            <p class="text-white/80 mb-6 reveal-text">
+                Si tienes alguna duda sobre tu compra, el proceso o necesitas soporte técnico:
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center reveal-text">
+                <a href="mailto:hola@lareddeluz.com" class="btn-secondary px-6 py-3 rounded-lg">
+                    📧 Email de soporte
+                </a>
+                <a href="https://wa.me/521234567890?text=Hola,%20necesito%20ayuda%20con%20mi%20compra%20de%20DTMM" target="_blank" class="btn-secondary px-6 py-3 rounded-lg">
+                    💬 WhatsApp directo
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-8 bg-void-deep border-t border-gold-light/20">
+        <div class="max-w-4xl mx-auto px-4 text-center">
+            <p class="text-white/60 text-sm mb-4">
+                Gracias por confiar en La Red de Luz para tu transformación digital.
+            </p>
+            <div class="flex justify-center gap-6 text-sm text-white/60">
+                <a href="index.html" class="hover:text-gold-light">Página principal</a>
+                <a href="terminos.html" target="_blank" class="hover:text-gold-light">Términos</a>
+                <a href="garantias.html" target="_blank" class="hover:text-gold-light">Garantías</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        // ===============================================
+        // THANK YOU PAGE FUNCTIONALITY
+        // ===============================================
+        
+        class ThankYouPage {
+            constructor() {
+                this.init();
+            }
+            
+            init() {
+                this.setupAnimations();
+                this.detectPlan();
+                this.trackConversion();
+            }
+            
+            // Simple reveal animations
+            setupAnimations() {
+                const revealElements = () => {
+                    const elements = document.querySelectorAll('.reveal-text, .reveal-card');
+                    
+                    elements.forEach((element, index) => {
+                        const elementTop = element.getBoundingClientRect().top;
+                        const elementVisible = 150;
+                        
+                        if (elementTop < window.innerHeight - elementVisible) {
+                            setTimeout(() => {
+                                element.classList.add('revealed');
+                            }, index * 100);
+                        }
+                    });
+                };
+                
+                revealElements();
+                window.addEventListener('scroll', revealElements, { passive: true });
+                
+                // Force reveal after 2s
+                setTimeout(() => {
+                    document.querySelectorAll('.reveal-text:not(.revealed), .reveal-card:not(.revealed)').forEach((el, index) => {
+                        setTimeout(() => el.classList.add('revealed'), index * 50);
+                    });
+                }, 2000);
+            }
+            
+            // Detect plan from URL params
+            detectPlan() {
+                const urlParams = new URLSearchParams(window.location.search);
+                const plan = urlParams.get('plan');
+                const sessionId = urlParams.get('session_id');
+                
+                if (plan) {
+                    const planDetails = {
+                        basic: {
+                            name: 'Plan Básico',
+                            price: '$47 USD',
+                            icon: '🚀'
+                        },
+                        pro: {
+                            name: 'Plan Pro',
+                            price: '$97 USD',
+                            icon: '⭐'
+                        }
+                    };
+                    
+                    const selectedPlan = planDetails[plan];
+                    if (selectedPlan) {
+                        document.getElementById('planDetails').innerHTML = `
+                            <div class="flex items-center justify-center gap-2">
+                                <span class="text-lg">${selectedPlan.icon}</span>
+                                <span class="font-medium">${selectedPlan.name}</span>
+                                <span class="text-gold-light">${selectedPlan.price}</span>
+                            </div>
+                        `;
+                    }
+                    
+                    // Store plan for analytics
+                    this.selectedPlan = plan;
+                }
+            }
+            
+            // Track conversion for analytics
+            trackConversion() {
+                if (typeof gtag !== 'undefined' && this.selectedPlan) {
+                    const planValues = { basic: 47, pro: 97 };
+                    
+                    gtag('event', 'purchase', {
+                        transaction_id: Date.now().toString(),
+                        value: planValues[this.selectedPlan],
+                        currency: 'USD',
+                        items: [{
+                            item_id: this.selectedPlan,
+                            item_name: `DTMM ${this.selectedPlan}`,
+                            category: 'bootcamp',
+                            quantity: 1,
+                            price: planValues[this.selectedPlan]
+                        }]
+                    });
+                }
+                
+                // Facebook Pixel conversion (if available)
+                if (typeof fbq !== 'undefined') {
+                    fbq('track', 'Purchase', {
+                        value: this.selectedPlan === 'basic' ? 47 : 97,
+                        currency: 'USD'
+                    });
+                }
+            }
+        }
+        
+        // Add to calendar function
+        function addToCalendar() {
+            const startDate = '20250818T160000Z'; // 18 Agosto 2025, 10:00 AM Mexico City (UTC-6 = +6 hours)
+            const endDate = '20250822T230000Z';   // 22 Agosto 2025, 5:00 PM Mexico City
+            
+            const calendarUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=DTMM%20Programa%20-%20De%20tu%20mente%20al%20mundo&dates=${startDate}/${endDate}&details=Programa%20intensivo%20para%20crear%20tu%20página%20web%20en%2072%20horas.%20Incluye%20sesiones%20en%20vivo%2C%20Q%26A%20y%20acceso%20a%20la%20comunidad.&location=Online%20-%20La%20Red%20de%20Luz&ctz=America/Mexico_City`;
+            
+            window.open(calendarUrl, '_blank');
+        }
+        
+        // Initialize on DOM ready
+        document.addEventListener('DOMContentLoaded', () => {
+            new ThankYouPage();
+            console.log('✅ Página de gracias cargada!');
+        });
+        
+        // Track link clicks
+        document.addEventListener('click', (e) => {
+            if (e.target.matches('a[href*="whatsapp"], a[href*="discord"]')) {
+                const platform = e.target.href.includes('whatsapp') ? 'whatsapp' : 'discord';
+                
+                if (typeof gtag !== 'undefined') {
+                    gtag('event', 'join_community', {
+                        platform: platform,
+                        source: 'thank_you_page'
+                    });
+                }
+            }
+        });
+    </script>
+</body>
+</html>
