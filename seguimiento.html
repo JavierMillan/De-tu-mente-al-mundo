@@ -1,0 +1,835 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seguimiento DTMM - La Red de Luz</title>
+    <meta name="description" content="Continúa tu transformación digital con hosting gratuito y mentorías 1:1 personalizadas.">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'inter': ['Inter', 'sans-serif'],
+                        'playfair': ['Playfair Display', 'serif'],
+                    },
+                    colors: {
+                        'violet': {
+                            light: '#856bd5',
+                            dark: '#6b46c1'
+                        },
+                        'cyan': {
+                            light: '#77bce2',
+                            dark: '#0891b2'
+                        },
+                        'indigo-deep': '#1e2772',
+                        'void': {
+                            deep: '#0d0b16',
+                            medium: '#232a3d'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- CSS Styles -->
+    <style>
+        .glass-card {
+            background: rgba(30, 39, 114, 0.15);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(133, 107, 213, 0.2);
+            border-radius: 20px;
+            padding: 2rem;
+            transition: all 0.4s cubic-bezier(0.4, 1.4, 0.6, 1);
+        }
+        
+        .glass-card:hover {
+            background: rgba(30, 39, 114, 0.25);
+            border-color: rgba(133, 107, 213, 0.3);
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px rgba(133, 107, 213, 0.15);
+        }
+        
+        .glass-card-premium {
+            background: rgba(30, 39, 114, 0.2);
+            backdrop-filter: blur(24px);
+            border: 1.5px solid rgba(133, 107, 213, 0.25);
+            border-radius: 24px;
+            box-shadow: 0 8px 32px rgba(30, 39, 114, 0.2);
+        }
+        
+        .glass-button-violet {
+            background: linear-gradient(135deg, rgba(133, 107, 213, 0.2) 0%, rgba(30, 39, 114, 0.1) 100%);
+            backdrop-filter: blur(20px);
+            border: 1.5px solid rgba(133, 107, 213, 0.4);
+            box-shadow: 0 8px 32px rgba(133, 107, 213, 0.15);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .glass-button-violet:hover {
+            background: linear-gradient(135deg, rgba(133, 107, 213, 0.3) 0%, rgba(30, 39, 114, 0.2) 100%);
+            box-shadow: 0 12px 40px rgba(133, 107, 213, 0.25);
+            border-color: rgba(133, 107, 213, 0.6);
+            transform: translateY(-2px);
+        }
+        
+        .glass-button-cyan {
+            background: linear-gradient(135deg, rgba(119, 188, 226, 0.2) 0%, rgba(30, 39, 114, 0.1) 100%);
+            backdrop-filter: blur(20px);
+            border: 1.5px solid rgba(119, 188, 226, 0.4);
+            box-shadow: 0 8px 32px rgba(119, 188, 226, 0.15);
+            transition: all 0.3s ease;
+        }
+        
+        .glass-button-cyan:hover {
+            background: linear-gradient(135deg, rgba(119, 188, 226, 0.3) 0%, rgba(30, 39, 114, 0.2) 100%);
+            box-shadow: 0 12px 40px rgba(119, 188, 226, 0.25);
+            border-color: rgba(119, 188, 226, 0.6);
+            transform: translateY(-2px);
+        }
+        
+        .popular-badge {
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(135deg, #856bd5 0%, #6b46c1 100%);
+            color: white;
+            padding: 0.5rem 1.5rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            box-shadow: 0 4px 20px rgba(133, 107, 213, 0.3);
+        }
+        
+        .upcoming-badge {
+            background: linear-gradient(135deg, #77bce2 0%, #0891b2 100%);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            box-shadow: 0 2px 10px rgba(119, 188, 226, 0.3);
+        }
+        
+        .glow-text {
+            text-shadow: 0 0 20px rgba(133, 107, 213, 0.5),
+                         0 0 40px rgba(133, 107, 213, 0.3),
+                         0 0 60px rgba(133, 107, 213, 0.1);
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .animate-fadeInUp {
+            animation: fadeInUp 1s ease-out forwards;
+            opacity: 0;
+        }
+        
+        .reveal-text, .reveal-card {
+            opacity: 1 !important;
+            transform: translateY(0) !important;
+            transition: all 0.8s cubic-bezier(0.4, 1.4, 0.6, 1);
+        }
+        
+        .reveal-text.revealed, .reveal-card.revealed {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+    
+    <!-- Prevent indexing for private content -->
+    <meta name="robots" content="noindex, nofollow">
+</head>
+<body class="font-inter bg-void-deep text-white overflow-x-hidden">
+    
+    <!-- Header -->
+    <header class="py-6 bg-void-deep border-b border-violet-light/10">
+        <div class="max-w-6xl mx-auto px-4 flex items-center justify-between">
+            <div class="flex items-center">
+                <a href="index.html" class="font-playfair text-2xl font-bold text-violet-light">
+                    La Red de Luz
+                </a>
+                <span class="ml-4 text-white/60 text-sm">• Seguimiento DTMM</span>
+            </div>
+            <div class="text-sm text-white/60">
+                Bienvenido de vuelta, nodo ✨
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="py-20 bg-gradient-to-b from-void-deep to-void-medium">
+        <div class="max-w-5xl mx-auto px-4 text-center">
+            <div class="inline-flex items-center px-6 py-3 rounded-full bg-violet-light/10 backdrop-blur-sm border border-violet-light/20 mb-8 animate-fadeInUp">
+                <span class="text-sm font-medium text-violet-light">🎉 ¡Felicidades por completar DTMM!</span>
+            </div>
+            
+            <h1 class="font-playfair text-5xl md:text-6xl font-bold leading-tight mb-8 animate-fadeInUp" style="animation-delay: 0.3s">
+                Continúa tu <span class="text-violet-light glow-text">evolución</span>
+            </h1>
+            
+            <p class="text-xl md:text-2xl mb-12 text-white/80 max-w-3xl mx-auto animate-fadeInUp leading-relaxed" style="animation-delay: 0.6s">
+                Tu web está online, pero esto es solo el comienzo. Lleva tu presencia digital al siguiente nivel.
+            </p>
+        </div>
+    </section>
+
+    <!-- Progress Summary -->
+    <section class="py-16 bg-void-medium">
+        <div class="max-w-4xl mx-auto px-4">
+            <h2 class="font-playfair text-3xl font-bold text-center mb-12 reveal-text">
+                Tu <span class="text-cyan-light">progreso</span> hasta ahora
+            </h2>
+            
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="glass-card text-center reveal-card">
+                    <div class="text-4xl mb-4">✅</div>
+                    <h3 class="text-lg font-bold text-violet-light mb-2">Bootcamp Completado</h3>
+                    <p class="text-white/70 text-sm">5 días intensivos de HTML, CSS, JavaScript y herramientas de IA</p>
+                </div>
+                
+                <div class="glass-card text-center reveal-card">
+                    <div class="text-4xl mb-4">🌐</div>
+                    <h3 class="text-lg font-bold text-cyan-light mb-2">Web Publicada</h3>
+                    <p class="text-white/70 text-sm">Tu sitio está online en GitHub Pages, accesible desde cualquier parte del mundo</p>
+                </div>
+                
+                <div class="glass-card text-center reveal-card">
+                    <div class="text-4xl mb-4">🚀</div>
+                    <h3 class="text-lg font-bold text-violet-light mb-2">Habilidades Adquiridas</h3>
+                    <p class="text-white/70 text-sm">Conocimiento permanente para crear webs ilimitadas</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Free Hosting Class -->
+    <section class="py-20 bg-gradient-to-b from-void-medium to-indigo-deep">
+        <div class="max-w-4xl mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="font-playfair text-4xl font-bold mb-6 reveal-text">
+                    Clase de <span class="text-cyan-light">Hosting Gratuito</span>
+                </h2>
+                <p class="text-xl text-white/80 max-w-2xl mx-auto reveal-text">
+                    Aprende a configurar hosting profesional sin costo adicional y optimizar tu web para el mundo real.
+                </p>
+            </div>
+            
+            <div class="max-w-2xl mx-auto">
+                <div class="glass-card-premium p-8 text-center reveal-card relative">
+                    <div class="upcoming-badge absolute top-4 right-4">
+                        Próximamente
+                    </div>
+                    
+                    <div class="text-5xl mb-6">🏠</div>
+                    <h3 class="text-2xl font-bold mb-4">Hosting Profesional Gratuito</h3>
+                    <div class="text-3xl font-bold text-cyan-light mb-2">GRATIS</div>
+                    <div class="text-sm text-cyan-light/80 mb-6">Para todos los graduados de DTMM</div>
+                    
+                    <div class="text-left space-y-4 mb-8">
+                        <div class="flex items-center">
+                            <div class="w-6 h-6 bg-cyan-light/20 rounded-full flex items-center justify-center mr-3">
+                                <span class="text-cyan-light text-xs">✓</span>
+                            </div>
+                            <span class="text-white/90">Configuración de hosting alternativo gratuito</span>
+                        </div>
+                        <div class="flex items-center">
+                            <div class="w-6 h-6 bg-cyan-light/20 rounded-full flex items-center justify-center mr-3">
+                                <span class="text-cyan-light text-xs">✓</span>
+                            </div>
+                            <span class="text-white/90">Dominio personalizado paso a paso</span>
+                        </div>
+                        <div class="flex items-center">
+                            <div class="w-6 h-6 bg-cyan-light/20 rounded-full flex items-center justify-center mr-3">
+                                <span class="text-cyan-light text-xs">✓</span>
+                            </div>
+                            <span class="text-white/90">Optimización para velocidad y SEO</span>
+                        </div>
+                        <div class="flex items-center">
+                            <div class="w-6 h-6 bg-cyan-light/20 rounded-full flex items-center justify-center mr-3">
+                                <span class="text-cyan-light text-xs">✓</span>
+                            </div>
+                            <span class="text-white/90">Certificados SSL y seguridad web</span>
+                        </div>
+                        <div class="flex items-center">
+                            <div class="w-6 h-6 bg-cyan-light/20 rounded-full flex items-center justify-center mr-3">
+                                <span class="text-cyan-light text-xs">✓</span>
+                            </div>
+                            <span class="text-white/90">Sesión Q&A en vivo incluida</span>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-cyan-light/10 border border-cyan-light/20 rounded-lg p-4 mb-6">
+                        <h4 class="font-bold text-cyan-light mb-2">📅 Fecha por confirmar</h4>
+                        <p class="text-white/80 text-sm">
+                            La fecha se anunciará en la comunidad basándose en la disponibilidad del grupo. 
+                            Recibirás notificación por WhatsApp y Discord.
+                        </p>
+                    </div>
+                    
+                    <button disabled class="w-full py-4 rounded-lg font-bold text-white/60 bg-gray-600 cursor-not-allowed mb-4">
+                        Se anunciará fecha próximamente
+                    </button>
+                    
+                    <p class="text-white/60 text-sm">
+                        💬 Mantente atento a los anuncios en la comunidad
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 1:1 Mentoring Plans -->
+    <section class="py-20 bg-indigo-deep">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="font-playfair text-4xl font-bold mb-6 reveal-text">
+                    Mentorías <span class="text-violet-light">1:1</span> Personalizadas
+                </h2>
+                <p class="text-xl text-white/80 max-w-3xl mx-auto reveal-text">
+                    Lleva tu proyecto al siguiente nivel con sesiones individuales enfocadas en tus necesidades específicas.
+                </p>
+            </div>
+            
+            <div class="grid lg:grid-cols-2 gap-12 max-w-5xl mx-auto">
+                <!-- Single Session -->
+                <div class="glass-card-premium p-8 text-center reveal-card relative">
+                    <div class="text-5xl mb-6">🎯</div>
+                    <h3 class="text-2xl font-bold mb-4">Mentoría Individual</h3>
+                    <div class="text-4xl font-bold text-violet-light mb-2">$500</div>
+                    <div class="text-lg text-violet-light/80 mb-8">MXN • 1 sesión de 90 minutos</div>
+                    
+                    <div class="text-left space-y-4 mb-8">
+                        <div class="flex items-start">
+                            <div class="w-6 h-6 bg-violet-light/20 rounded-full flex items-center justify-center mr-3 mt-1">
+                                <span class="text-violet-light text-xs">✓</span>
+                            </div>
+                            <span class="text-white/90">Sesión 1:1 de 90 minutos por videollamada</span>
+                        </div>
+                        <div class="flex items-start">
+                            <div class="w-6 h-6 bg-violet-light/20 rounded-full flex items-center justify-center mr-3 mt-1">
+                                <span class="text-violet-light text-xs">✓</span>
+                            </div>
+                            <span class="text-white/90">Revisión completa de tu proyecto web</span>
+                        </div>
+                        <div class="flex items-start">
+                            <div class="w-6 h-6 bg-violet-light/20 rounded-full flex items-center justify-center mr-3 mt-1">
+                                <span class="text-violet-light text-xs">✓</span>
+                            </div>
+                            <span class="text-white/90">Optimización de código y performance</span>
+                        </div>
+                        <div class="flex items-start">
+                            <div class="w-6 h-6 bg-violet-light/20 rounded-full flex items-center justify-center mr-3 mt-1">
+                                <span class="text-violet-light text-xs">✓</span>
+                            </div>
+                            <span class="text-white/90">Estrategias para mejorar tu presencia online</span>
+                        </div>
+                        <div class="flex items-start">
+                            <div class="w-6 h-6 bg-violet-light/20 rounded-full flex items-center justify-center mr-3 mt-1">
+                                <span class="text-violet-light text-xs">✓</span>
+                            </div>
+                            <span class="text-white/90">Plan de acción personalizado</span>
+                        </div>
+                        <div class="flex items-start">
+                            <div class="w-6 h-6 bg-violet-light/20 rounded-full flex items-center justify-center mr-3 mt-1">
+                                <span class="text-violet-light text-xs">✓</span>
+                            </div>
+                            <span class="text-white/90">Grabación de la sesión incluida</span>
+                        </div>
+                    </div>
+                    
+                    <button onclick="checkout('single')" class="glass-button-violet text-violet-light font-bold px-8 py-4 rounded-lg text-lg w-full mb-4 transition-all duration-300">
+                        Reservar Mentoría • $500 MXN
+                    </button>
+                    
+                    <p class="text-white/60 text-sm">
+                        ⚡ Ideal para resolver dudas específicas y obtener feedback directo
+                    </p>
+                </div>
+                
+                <!-- Triple Pack -->
+                <div class="glass-card-premium p-8 text-center reveal-card relative border-2 border-violet-light/40">
+                    <div class="popular-badge">
+                        MÁS POPULAR
+                    </div>
+                    
+                    <div class="text-5xl mb-6">🚀</div>
+                    <h3 class="text-2xl font-bold mb-4">Paquete de 3 Mentorías</h3>
+                    <div class="flex items-center justify-center gap-3 mb-2">
+                        <span class="text-2xl text-white/60 line-through">$1,500</span>
+                        <span class="text-4xl font-bold text-violet-light">$1,100</span>
+                    </div>
+                    <div class="text-lg text-violet-light/80 mb-2">MXN • 3 sesiones de 90 minutos</div>
+                    <div class="inline-block bg-green-500/20 text-green-400 px-3 py-1 rounded-full text-sm font-medium mb-8">
+                        Ahorras $400 MXN
+                    </div>
+                    
+                    <div class="text-left space-y-4 mb-8">
+                        <div class="flex items-start">
+                            <div class="w-6 h-6 bg-violet-light/20 rounded-full flex items-center justify-center mr-3 mt-1">
+                                <span class="text-violet-light text-xs">✓</span>
+                            </div>
+                            <span class="text-white/90">3 sesiones 1:1 de 90 minutos cada una</span>
+                        </div>
+                        <div class="flex items-start">
+                            <div class="w-6 h-6 bg-violet-light/20 rounded-full flex items-center justify-center mr-3 mt-1">
+                                <span class="text-violet-light text-xs">✓</span>
+                            </div>
+                            <span class="text-white/90">Seguimiento continuo de tu progreso</span>
+                        </div>
+                        <div class="flex items-start">
+                            <div class="w-6 h-6 bg-violet-light/20 rounded-full flex items-center justify-center mr-3 mt-1">
+                                <span class="text-violet-light text-xs">✓</span>
+                            </div>
+                            <span class="text-white/90">Desarrollo de múltiples proyectos web</span>
+                        </div>
+                        <div class="flex items-start">
+                            <div class="w-6 h-6 bg-violet-light/20 rounded-full flex items-center justify-center mr-3 mt-1">
+                                <span class="text-violet-light text-xs">✓</span>
+                            </div>
+                            <span class="text-white/90">Estrategia completa de presencia digital</span>
+                        </div>
+                        <div class="flex items-start">
+                            <div class="w-6 h-6 bg-violet-light/20 rounded-full flex items-center justify-center mr-3 mt-1">
+                                <span class="text-violet-light text-xs">✓</span>
+                            </div>
+                            <span class="text-white/90">Soporte vía WhatsApp entre sesiones</span>
+                        </div>
+                        <div class="flex items-start">
+                            <div class="w-6 h-6 bg-violet-light/20 rounded-full flex items-center justify-center mr-3 mt-1">
+                                <span class="text-violet-light text-xs">✓</span>
+                            </div>
+                            <span class="text-white/90">Todas las sesiones grabadas</span>
+                        </div>
+                        <div class="flex items-start">
+                            <div class="w-6 h-6 bg-violet-light/20 rounded-full flex items-center justify-center mr-3 mt-1">
+                                <span class="text-violet-light text-xs">✓</span>
+                            </div>
+                            <span class="text-white/90">Flexibilidad para agendar según tu ritmo</span>
+                        </div>
+                    </div>
+                    
+                    <button onclick="checkout('triple')" class="glass-button-violet text-violet-light font-bold px-8 py-4 rounded-lg text-lg w-full mb-4 transition-all duration-300">
+                        Reservar Paquete • $1,100 MXN
+                    </button>
+                    
+                    <p class="text-white/60 text-sm">
+                        🎯 Perfecto para un acompañamiento completo y resultados profesionales
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- What's Included in Mentoring -->
+    <section class="py-20 bg-gradient-to-b from-indigo-deep to-void-medium">
+        <div class="max-w-4xl mx-auto px-4">
+            <h2 class="font-playfair text-3xl font-bold text-center mb-12 reveal-text">
+                Qué incluyen las <span class="text-cyan-light">mentorías</span>
+            </h2>
+            
+            <div class="grid md:grid-cols-2 gap-8">
+                <div class="space-y-6">
+                    <div class="glass-card p-6 reveal-card">
+                        <div class="flex items-center mb-4">
+                            <div class="text-3xl mr-4">🔍</div>
+                            <h3 class="text-lg font-bold text-violet-light">Auditoría Completa</h3>
+                        </div>
+                        <p class="text-white/80 text-sm">Revisión detallada de tu código, diseño, UX/UI y performance para identificar oportunidades de mejora.</p>
+                    </div>
+                    
+                    <div class="glass-card p-6 reveal-card">
+                        <div class="flex items-center mb-4">
+                            <div class="text-3xl mr-4">⚡</div>
+                            <h3 class="text-lg font-bold text-cyan-light">Optimización Técnica</h3>
+                        </div>
+                        <p class="text-white/80 text-sm">Mejoras en velocidad de carga, SEO técnico, responsive design y mejores prácticas de desarrollo.</p>
+                    </div>
+                    
+                    <div class="glass-card p-6 reveal-card">
+                        <div class="flex items-center mb-4">
+                            <div class="text-3xl mr-4">🎨</div>
+                            <h3 class="text-lg font-bold text-violet-light">Diseño y UX</h3>
+                        </div>
+                        <p class="text-white/80 text-sm">Refinamiento visual, mejora de la experiencia de usuario y coherencia en la identidad visual.</p>
+                    </div>
+                </div>
+                
+                <div class="space-y-6">
+                    <div class="glass-card p-6 reveal-card">
+                        <div class="flex items-center mb-4">
+                            <div class="text-3xl mr-4">📈</div>
+                            <h3 class="text-lg font-bold text-cyan-light">Estrategia Digital</h3>
+                        </div>
+                        <p class="text-white/80 text-sm">Plan personalizado para hacer crecer tu presencia online y conectar con tu audiencia objetivo.</p>
+                    </div>
+                    
+                    <div class="glass-card p-6 reveal-card">
+                        <div class="flex items-center mb-4">
+                            <div class="text-3xl mr-4">🚀</div>
+                            <h3 class="text-lg font-bold text-violet-light">Nuevas Funcionalidades</h3>
+                        </div>
+                        <p class="text-white/80 text-sm">Implementación de nuevas características: formularios, animaciones, integraciones y más.</p>
+                    </div>
+                    
+                    <div class="glass-card p-6 reveal-card">
+                        <div class="flex items-center mb-4">
+                            <div class="text-3xl mr-4">🤖</div>
+                            <h3 class="text-lg font-bold text-cyan-light">IA Avanzada</h3>
+                        </div>
+                        <p class="text-white/80 text-sm">Técnicas avanzadas con IA para acelerar tu desarrollo y automatizar tareas repetitivas.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="py-20 bg-void-medium">
+        <div class="max-w-4xl mx-auto px-4">
+            <h2 class="font-playfair text-3xl font-bold text-center mb-12 reveal-text">
+                Preguntas <span class="text-violet-light">frecuentes</span>
+            </h2>
+            
+            <div class="space-y-6 max-w-3xl mx-auto">
+                <details class="glass-card p-6 cursor-pointer reveal-card group">
+                    <summary class="font-semibold text-white text-lg flex justify-between items-center">
+                        ¿Cuándo puedo agendar mi mentoría?
+                        <span class="text-violet-light group-open:rotate-180 transition-transform">↓</span>
+                    </summary>
+                    <p class="text-white/80 mt-4 leading-relaxed">Después de tu compra, recibirás un enlace para agendar tu sesión según tu disponibilidad. Ofrecemos horarios flexibles de lunes a viernes, incluyendo opciones vespertinas.</p>
+                </details>
+                
+                <details class="glass-card p-6 cursor-pointer reveal-card group">
+                    <summary class="font-semibold text-white text-lg flex justify-between items-center">
+                        ¿Qué pasa si no puedo asistir a una sesión agendada?
+                        <span class="text-violet-light group-open:rotate-180 transition-transform">↓</span>
+                    </summary>
+                    <p class="text-white/80 mt-4 leading-relaxed">Puedes reprogramar tu sesión con al menos 24 horas de anticipación sin costo adicional. Si cancelas con menos tiempo, se cobrará el 50% del valor de la sesión.</p>
+                </details>
+                
+                <details class="glass-card p-6 cursor-pointer reveal-card group">
+                    <summary class="font-semibold text-white text-lg flex justify-between items-center">
+                        ¿Las mentorías tienen garantía?
+                        <span class="text-violet-light group-open:rotate-180 transition-transform">↓</span>
+                    </summary>
+                    <p class="text-white/80 mt-4 leading-relaxed">Sí, si no estás satisfecho con tu primera sesión, te reembolsamos el 100% sin preguntas. Para el paquete de 3, la garantía aplica después de la primera sesión.</p>
+                </details>
+                
+                <details class="glass-card p-6 cursor-pointer reveal-card group">
+                    <summary class="font-semibold text-white text-lg flex justify-between items-center">
+                        ¿Puedo comprar más mentorías después?
+                        <span class="text-violet-light group-open:rotate-180 transition-transform">↓</span>
+                    </summary>
+                    <p class="text-white/80 mt-4 leading-relaxed">Por supuesto. Como graduado de DTMM, siempre tendrás acceso a estas mentorías con los mismos precios especiales. También notificaremos sobre nuevos servicios.</p>
+                </details>
+                
+                <details class="glass-card p-6 cursor-pointer reveal-card group">
+                    <summary class="font-semibold text-white text-lg flex justify-between items-center">
+                        ¿Qué plataforma usamos para las videollamadas?
+                        <span class="text-violet-light group-open:rotate-180 transition-transform">↓</span>
+                    </summary>
+                    <p class="text-white/80 mt-4 leading-relaxed">Utilizamos Google Meet para máxima compatibilidad. Solo necesitas un navegador web y una conexión a internet estable. Te compartiremos el enlace 24 horas antes.</p>
+                </details>
+            </div>
+        </div>
+    </section>
+
+    <!-- Community Support -->
+    <section class="py-20 bg-gradient-to-b from-void-medium to-void-deep">
+        <div class="max-w-4xl mx-auto px-4 text-center">
+            <h2 class="font-playfair text-3xl font-bold mb-8 reveal-text">
+                Tu <span class="text-cyan-light">comunidad</span> sigue aquí
+            </h2>
+            <p class="text-xl text-white/80 mb-12 reveal-text">
+                Recuerda que siempre puedes compartir tus avances y hacer preguntas en nuestros grupos exclusivos.
+            </p>
+            
+            <div class="grid md:grid-cols-2 gap-8 max-w-2xl mx-auto">
+                <a href="https://chat.whatsapp.com/TU_ENLACE_GRUPO" target="_blank" rel="noopener" 
+                   class="glass-card p-6 text-center hover:scale-105 transition-transform reveal-card">
+                    <div class="w-16 h-16 bg-green-500/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <svg class="w-8 h-8 text-green-400" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.465 3.63"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-lg font-bold mb-2">Grupo WhatsApp</h3>
+                    <p class="text-white/70 text-sm">Dudas rápidas y networking</p>
+                </a>
+                
+                <a href="https://discord.gg/TU_CODIGO_SERVIDOR" target="_blank" rel="noopener"
+                   class="glass-card p-6 text-center hover:scale-105 transition-transform reveal-card">
+                    <div class="w-16 h-16 bg-purple-500/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <svg class="w-8 h-8 text-purple-400" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M20.317 4.3698a19.7913 19.7913 0 00-4.8851-1.5152.0741.0741 0 00-.0785.0371c-.211.3753-.4447.8648-.6083 1.2495-1.8447-.2762-3.68-.2762-5.4868 0-.1636-.3933-.4058-.8742-.6177-1.2495a.077.077 0 00-.0785-.037 19.7363 19.7363 0 00-4.8852 1.515.0699.0699 0 00-.0321.0277C.5334 9.0458-.319 13.5799.0992 18.0578a.0824.0824 0 00.0312.0561c2.0528 1.5076 4.0413 2.4228 5.9929 3.0294a.0777.0777 0 00.0842-.0276c.4616-.6304.8731-1.2952 1.226-1.9942a.076.076 0 00-.0416-.1057c-.6528-.2476-1.2743-.5495-1.8722-.8923a.077.077 0 01-.0076-.1277c.1258-.0943.2517-.1923.3718-.2914a.0743.0743 0 01.0776-.0105c3.9278 1.7933 8.18 1.7933 12.0614 0a.0739.0739 0 01.0785.0095c.1202.099.246.1981.3728.2924a.077.077 0 01-.0066.1276 12.2986 12.2986 0 01-1.873.8914.0766.0766 0 00-.0407.1067c.3604.698.7719 1.3628 1.225 1.9932a.076.076 0 00.0842.0286c1.961-.6067 3.9495-1.5219 6.0023-3.0294a.077.077 0 00.0313-.0552c.5004-5.177-.8382-9.6739-3.5485-13.6604a.061.061 0 00-.0312-.0286zM8.02 15.3312c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9555-2.4189 2.157-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419-.0190 1.3332-.9555 2.4189-2.1569 2.4189zm7.9748 0c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9554-2.4189 2.1569-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.9460 2.4189-2.1568 2.4189Z"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-lg font-bold mb-2">Discord</h3>
+                    <p class="text-white/70 text-sm">Recursos y proyectos</p>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-16 bg-void-deep border-t border-violet-light/10">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="text-center mb-12">
+                <h3 class="font-playfair text-2xl font-bold text-violet-light mb-4">La Red de Luz</h3>
+                <p class="text-white/60 max-w-md mx-auto leading-relaxed">
+                    Cada nodo que crece ilumina el camino para otros. Gracias por ser parte de nuestra red.
+                </p>
+            </div>
+            
+            <div class="flex flex-wrap justify-center gap-8 text-sm text-white/60 mb-8">
+                <a href="index.html" class="hover:text-violet-light transition-colors">Página principal</a>
+                <a href="terminos.html" target="_blank" class="hover:text-cyan-light transition-colors">Términos</a>
+                <a href="garantias.html" target="_blank" class="hover:text-violet-light transition-colors">Garantías</a>
+                <a href="https://wa.me/521234567890?text=Necesito%20ayuda%20con%20mentorías%20DTMM" target="_blank" class="hover:text-cyan-light transition-colors">Soporte</a>
+            </div>
+            
+            <div class="text-center">
+                <p class="text-white/40 text-xs">
+                    &copy; 2025 La Red de Luz. Continúa creciendo con nosotros.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        // ===============================================
+        // STRIPE CONFIGURATION FOR MENTORING
+        // ¡ACTUALIZA ESTOS VALORES!
+        // ===============================================
+        
+        const MENTORING_CONFIG = {
+            single: {
+                priceId: 'price_TU_PRICE_ID_SINGLE_MENTORIA',  // 🔥 ACTUALIZAR con tu Price ID ($500 MXN)
+                amount: 500,
+                currency: 'MXN',
+                name: 'Mentoría 1:1 Individual'
+            },
+            triple: {
+                priceId: 'price_TU_PRICE_ID_TRIPLE_MENTORIA',  // 🔥 ACTUALIZAR con tu Price ID ($1,100 MXN)
+                amount: 1100,
+                currency: 'MXN',
+                name: 'Paquete 3 Mentorías 1:1'
+            }
+        };
+        
+        // 🔥 ACTUALIZAR con tu clave pública de Stripe
+        const STRIPE_PUBLIC_KEY = 'pk_live_TU_CLAVE_PUBLICA_AQUI';
+        
+        // ===============================================
+        // FOLLOW UP PAGE CLASS
+        // ===============================================
+        
+        class FollowUpPage {
+            constructor() {
+                this.init();
+            }
+            
+            init() {
+                this.setupScrollAnimations();
+                this.trackPageView();
+            }
+            
+            setupScrollAnimations() {
+                const revealElements = () => {
+                    const elements = document.querySelectorAll('.reveal-text, .reveal-card');
+                    
+                    elements.forEach((element, index) => {
+                        const elementTop = element.getBoundingClientRect().top;
+                        const elementVisible = 120;
+                        
+                        if (elementTop < window.innerHeight - elementVisible) {
+                            setTimeout(() => {
+                                element.classList.add('revealed');
+                            }, index * 80);
+                        }
+                    });
+                };
+                
+                revealElements();
+                window.addEventListener('scroll', revealElements, { passive: true });
+                
+                // Force reveal after 2s
+                setTimeout(() => {
+                    document.querySelectorAll('.reveal-text:not(.revealed), .reveal-card:not(.revealed)').forEach((el, index) => {
+                        setTimeout(() => el.classList.add('revealed'), index * 40);
+                    });
+                }, 2000);
+            }
+            
+            trackPageView() {
+                if (typeof gtag !== 'undefined') {
+                    gtag('event', 'page_view', {
+                        page_title: 'DTMM Follow Up',
+                        page_location: window.location.href,
+                        user_type: 'dtmm_graduate'
+                    });
+                }
+            }
+        }
+        
+        // ===============================================
+        // CHECKOUT FUNCTION FOR MENTORING
+        // ===============================================
+        
+        async function checkout(plan) {
+            const config = MENTORING_CONFIG[plan];
+            
+            if (!config) {
+                alert('Plan no encontrado. Por favor, contacta soporte.');
+                return;
+            }
+            
+            // Track checkout attempt
+            if (typeof gtag !== 'undefined') {
+                gtag('event', 'begin_checkout', {
+                    currency: config.currency,
+                    value: config.amount,
+                    items: [{
+                        item_id: plan,
+                        item_name: config.name,
+                        price: config.amount,
+                        quantity: 1
+                    }]
+                });
+            }
+            
+            // Development mode
+            if (window.location.hostname === 'localhost' || 
+                window.location.hostname === '127.0.0.1' ||
+                window.location.hostname.includes('github.io')) {
+                
+                showDevModal(config);
+                return;
+            }
+            
+            // Production mode
+            if (!STRIPE_PUBLIC_KEY || STRIPE_PUBLIC_KEY.includes('TU_CLAVE')) {
+                alert('Error: Configuración de pagos pendiente. Contacta soporte.');
+                return;
+            }
+            
+            const stripe = Stripe(STRIPE_PUBLIC_KEY);
+            
+            try {
+                const { error } = await stripe.redirectToCheckout({
+                    lineItems: [{
+                        price: config.priceId,
+                        quantity: 1,
+                    }],
+                    mode: 'payment',
+                    successUrl: `${window.location.origin}/mentoring-thanks.html?plan=${plan}&session_id={CHECKOUT_SESSION_ID}`,
+                    cancelUrl: `${window.location.origin}/seguimiento.html`,
+                    customerEmail: null,
+                    billingAddressCollection: 'auto',
+                    locale: 'es',
+                });
+                
+                if (error) {
+                    console.error('Error en checkout:', error);
+                    alert('Error al procesar el pago. Por favor, inténtalo de nuevo.');
+                }
+            } catch (err) {
+                console.error('Error de Stripe:', err);
+                // Fallback to contact
+                alert('Error temporal. Contacta por WhatsApp para procesar tu pedido: https://wa.me/521234567890');
+            }
+        }
+        
+        function showDevModal(config) {
+            const modal = document.createElement('div');
+            modal.className = 'fixed inset-0 bg-black/80 flex items-center justify-center z-50 backdrop-blur-sm';
+            modal.innerHTML = `
+                <div class="bg-void-medium p-8 rounded-2xl max-w-md mx-4 text-center border border-violet-light/20">
+                    <div class="text-4xl mb-4">🧠</div>
+                    <h3 class="text-2xl font-bold text-violet-light mb-4">Mentoría DTMM</h3>
+                    <div class="text-left mb-6 space-y-2">
+                        <p class="text-white/80"><strong>Servicio:</strong> ${config.name}</p>
+                        <p class="text-white/80"><strong>Precio:</strong> ${config.amount} ${config.currency}</p>
+                        <p class="text-white/80"><strong>Price ID:</strong> ${MENTORING_CONFIG[Object.keys(MENTORING_CONFIG).find(k => MENTORING_CONFIG[k] === config)].priceId}</p>
+                    </div>
+                    <p class="text-white/60 text-sm mb-6">
+                        En producción, esto redirigirá a Stripe Checkout con pagos reales.
+                    </p>
+                    <div class="flex gap-3">
+                        <button onclick="this.parentElement.parentElement.parentElement.remove()" 
+                                class="flex-1 bg-gradient-to-r from-violet-light to-cyan-light text-white px-4 py-3 rounded-lg font-semibold">
+                            Cerrar
+                        </button>
+                        <a href="https://wa.me/521234567890?text=Quiero%20info%20sobre%20mentorías%20DTMM" target="_blank"
+                           class="flex-1 bg-green-600 text-white px-4 py-3 rounded-lg font-semibold text-center">
+                            WhatsApp
+                        </a>
+                    </div>
+                </div>
+            `;
+            document.body.appendChild(modal);
+        }
+        
+        // ===============================================
+        // INITIALIZATION
+        // ===============================================
+        
+        document.addEventListener('DOMContentLoaded', () => {
+            new FollowUpPage();
+            console.log('✨ Página de seguimiento DTMM cargada!');
+        });
+        
+        // Track mentoring interest
+        document.addEventListener('click', (e) => {
+            if (e.target.matches('[onclick*="checkout"]')) {
+                const plan = e.target.getAttribute('onclick').match(/checkout\('(\w+)'\)/)?.[1];
+                
+                if (typeof gtag !== 'undefined' && plan) {
+                    gtag('event', 'mentoring_interest', {
+                        plan_type: plan,
+                        source: 'follow_up_page'
+                    });
+                }
+            }
+            
+            // Track community clicks
+            if (e.target.closest('a[href*="whatsapp"], a[href*="discord"]')) {
+                const platform = e.target.closest('a').href.includes('whatsapp') ? 'whatsapp' : 'discord';
+                
+                if (typeof gtag !== 'undefined') {
+                    gtag('event', 'community_click', {
+                        platform: platform,
+                        source: 'follow_up_page'
+                    });
+                }
+            }
+        });
+    </script>
+    
+    <!-- Stripe.js -->
+    <script src="https://js.stripe.com/v3/"></script>
+</body>
+</html>

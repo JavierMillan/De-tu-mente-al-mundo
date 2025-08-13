@@ -10,6 +10,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="shortcut icon" href="assets/cuadrado.png" type="image/x-icon">
     
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -22,11 +23,15 @@
                         'playfair': ['Playfair Display', 'serif'],
                     },
                     colors: {
-                        'gold': {
-                            light: '#e4cd85',
-                            dark: '#c08a2d'
+                        'violet': {
+                            light: '#856bd5',
+                            dark: '#6b46c1'
                         },
-                        'deep-blue': '#163384',
+                        'cyan': {
+                            light: '#77bce2',
+                            dark: '#0891b2'
+                        },
+                        'indigo-deep': '#1e2772',
                         'void': {
                             deep: '#0d0b16',
                             medium: '#232a3d'
@@ -38,7 +43,106 @@
     </script>
     
     <!-- CSS Styles -->
-    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        /* Inline styles for the new color palette */
+        #networkBg {
+            background: radial-gradient(ellipse at center, rgba(30, 39, 114, 0.1) 0%, transparent 70%);
+        }
+        
+        .glass-card {
+            background: rgba(30, 39, 114, 0.15);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(133, 107, 213, 0.2);
+            border-radius: 20px;
+            padding: 2rem;
+            transition: all 0.4s cubic-bezier(0.4, 1.4, 0.6, 1);
+        }
+        
+        .glass-card:hover {
+            background: rgba(30, 39, 114, 0.25);
+            border-color: rgba(133, 107, 213, 0.3);
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px rgba(133, 107, 213, 0.15);
+        }
+        
+        .glass-card-premium {
+            background: rgba(30, 39, 114, 0.2);
+            backdrop-filter: blur(24px);
+            border: 1.5px solid rgba(133, 107, 213, 0.25);
+            border-radius: 24px;
+            box-shadow: 0 8px 32px rgba(30, 39, 114, 0.2);
+        }
+        
+        .glass-card-hover {
+            background: rgba(133, 107, 213, 0.1);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(133, 107, 213, 0.2);
+            border-radius: 16px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+        }
+        
+        .glass-card-hover:hover {
+            background: rgba(133, 107, 213, 0.15);
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 15px 35px rgba(133, 107, 213, 0.2);
+        }
+        
+        .glass-button-violet {
+            background: linear-gradient(135deg, rgba(133, 107, 213, 0.2) 0%, rgba(30, 39, 114, 0.1) 100%);
+            backdrop-filter: blur(20px);
+            border: 1.5px solid rgba(133, 107, 213, 0.4);
+            box-shadow: 0 8px 32px rgba(133, 107, 213, 0.15);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .glass-button-violet:hover {
+            background: linear-gradient(135deg, rgba(133, 107, 213, 0.3) 0%, rgba(30, 39, 114, 0.2) 100%);
+            box-shadow: 0 12px 40px rgba(133, 107, 213, 0.25);
+            border-color: rgba(133, 107, 213, 0.6);
+        }
+        
+        .glow-text {
+            text-shadow: 0 0 20px rgba(133, 107, 213, 0.5),
+                         0 0 40px rgba(133, 107, 213, 0.3),
+                         0 0 60px rgba(133, 107, 213, 0.1);
+        }
+        
+        .glow-text-cyan {
+            text-shadow: 0 0 20px rgba(119, 188, 226, 0.5),
+                         0 0 40px rgba(119, 188, 226, 0.3),
+                         0 0 60px rgba(119, 188, 226, 0.1);
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .animate-fadeInUp {
+            animation: fadeInUp 1s ease-out forwards;
+            opacity: 0;
+        }
+        
+        .reveal-text, .reveal-card {
+            opacity: 1 !important;
+            transform: translateY(0) !important;
+            transition: all 0.8s cubic-bezier(0.4, 1.4, 0.6, 1);
+        }
+        
+        .reveal-text.revealed, .reveal-card.revealed {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
 </head>
 <body class="font-inter bg-void-deep text-white overflow-x-hidden">
     
@@ -50,14 +154,14 @@
         <!-- Hero Content -->
         <div class="relative z-10 text-center max-w-5xl mx-auto px-4">
             <!-- Network Badge -->
-            <div class="inline-flex items-center px-6 py-3 rounded-full bg-gold-light/10 backdrop-blur-sm border border-gold-light/20 mb-8 animate-fadeInUp">
-                <span class="text-sm font-medium text-gold-light">✨ Únete a la Red • Solo 40 nodos • 18-22 Agosto</span>
+            <div class="inline-flex items-center px-6 py-3 rounded-full bg-violet-light/10 backdrop-blur-sm border border-violet-light/20 mb-8 animate-fadeInUp">
+                <span class="text-sm font-medium text-violet-light">✨ Únete a la Red • Solo 40 nodos • 25-29 Agosto</span>
             </div>
             
             <!-- Main Title -->
             <h1 class="font-playfair text-6xl md:text-8xl font-bold leading-tight mb-8 animate-fadeInUp" style="animation-delay: 0.3s">
-                Tu <span class="text-gold-light glow-text">mente</span><br>
-                conecta con el <span class="text-gold-light glow-text">mundo</span>
+                Tu <span class="text-violet-light glow-text">mente</span><br>
+                conecta con el <span class="text-cyan-light glow-text-cyan">mundo</span>
             </h1>
             
             <!-- Subtitle -->
@@ -69,22 +173,22 @@
             <div class="glass-card-premium p-8 max-w-3xl mx-auto mb-10 animate-fadeInUp" style="animation-delay: 0.8s">
                 <div class="grid md:grid-cols-3 gap-6 text-center">
                     <div>
-                        <div class="text-2xl font-bold text-gold-light mb-2">$0</div>
+                        <div class="text-2xl font-bold text-violet-light mb-2">$0</div>
                         <p class="text-white/80 text-sm">Hosting para siempre<br>GitHub Pages</p>
                     </div>
                     <div>
-                        <div class="text-2xl font-bold text-gold-light mb-2">72h</div>
+                        <div class="text-2xl font-bold text-cyan-light mb-2">72h</div>
                         <p class="text-white/80 text-sm">De idea a web<br>funcionando online</p>
                     </div>
                     <div>
-                        <div class="text-2xl font-bold text-gold-light mb-2">∞</div>
+                        <div class="text-2xl font-bold text-violet-light mb-2">∞</div>
                         <p class="text-white/80 text-sm">Webs ilimitadas<br>Habilidad permanente</p>
                     </div>
                 </div>
             </div>
             
             <!-- CTA -->
-            <button onclick="checkout()" class="glass-button-gold text-gold-light font-bold px-12 py-5 rounded-full text-xl transition-all duration-300 transform hover:scale-105 animate-fadeInUp mb-6" style="animation-delay: 1.0s">
+            <button onclick="checkout()" class="glass-button-violet text-violet-light font-bold px-12 py-5 rounded-full text-xl transition-all duration-300 transform hover:scale-105 animate-fadeInUp mb-6" style="animation-delay: 1.0s">
                 Conectar con la red • $1,000 MXN
             </button>
             
@@ -96,10 +200,10 @@
     </section>
 
     <!-- Network Philosophy -->
-    <section class="py-24 bg-gradient-to-b from-void-deep via-void-medium to-deep-blue">
+    <section class="py-24 bg-gradient-to-b from-void-deep via-void-medium to-indigo-deep">
         <div class="max-w-6xl mx-auto px-4 text-center">
             <h2 class="font-playfair text-5xl font-bold mb-8 reveal-text">
-                La <span class="text-gold-light">Red de Luz</span>
+                La <span class="text-violet-light">Red de Luz</span>
             </h2>
             <p class="text-xl text-white/80 max-w-3xl mx-auto mb-16 reveal-text leading-relaxed">
                 Un nodo solo puede brillar, pero cuando se conecta con otros, ilumina todo a su alrededor. 
@@ -109,19 +213,19 @@
             <div class="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
                 <div class="glass-card-hover text-center reveal-card">
                     <div class="text-5xl mb-6">💡</div>
-                    <h3 class="text-xl font-bold text-gold-light mb-4">Eres un nodo</h3>
+                    <h3 class="text-xl font-bold text-violet-light mb-4">Eres un nodo</h3>
                     <p class="text-white/80">Tienes una luz única que el mundo necesita ver. Tu web es tu forma de brillar y conectar con quienes te necesitan.</p>
                 </div>
                 
                 <div class="glass-card-hover text-center reveal-card">
                     <div class="text-5xl mb-6">🤝</div>
-                    <h3 class="text-xl font-bold text-gold-light mb-4">Conectamos juntos</h3>
+                    <h3 class="text-xl font-bold text-cyan-light mb-4">Conectamos juntos</h3>
                     <p class="text-white/80">En comunidad aprendemos más rápido. Compartimos conocimiento, resolvemos dudas y crecemos como red.</p>
                 </div>
                 
                 <div class="glass-card-hover text-center reveal-card">
                     <div class="text-5xl mb-6">🌍</div>
-                    <h3 class="text-xl font-bold text-gold-light mb-4">Iluminamos el mundo</h3>
+                    <h3 class="text-xl font-bold text-violet-light mb-4">Iluminamos el mundo</h3>
                     <p class="text-white/80">Cada web que publicas inspira a otros nodos. Juntos creamos una red que rodea el mundo con luz y conocimiento.</p>
                 </div>
             </div>
@@ -129,11 +233,11 @@
     </section>
 
     <!-- Why DTMM -->
-    <section class="py-24 bg-deep-blue">
+    <section class="py-24 bg-indigo-deep">
         <div class="max-w-6xl mx-auto px-4">
             <div class="text-center mb-16">
                 <h2 class="font-playfair text-5xl font-bold mb-6 reveal-text">
-                    ¿Por qué <span class="text-gold-light">De tu Mente al Mundo</span>?
+                    ¿Por qué <span class="text-violet-light">De tu Mente al Mundo</span>?
                 </h2>
                 <p class="text-xl text-white/80 max-w-3xl mx-auto reveal-text">
                     Los sitios pre-armados te limitan a templates rígidos. Por el precio de una página básica ($3,000 MXN), 
@@ -172,25 +276,25 @@
                     </div>
                 </div>
                 
-                <div class="glass-card p-8 border-gold-light/30 reveal-card">
-                    <h3 class="text-2xl font-bold text-gold-light mb-6 text-center">✅ Con DTMM</h3>
+                <div class="glass-card p-8 border-violet-light/30 reveal-card">
+                    <h3 class="text-2xl font-bold text-violet-light mb-6 text-center">✅ Con DTMM</h3>
                     <div class="space-y-4">
                         <div class="flex justify-between items-center">
                             <span class="text-white/80">Curso completo</span>
-                            <span class="text-gold-light font-bold">$1,000 MXN</span>
+                            <span class="text-violet-light font-bold">$1,000 MXN</span>
                         </div>
                         <div class="flex justify-between items-center">
                             <span class="text-white/80">Cambios futuros</span>
-                            <span class="text-gold-light font-bold">$0 MXN</span>
+                            <span class="text-violet-light font-bold">$0 MXN</span>
                         </div>
                         <div class="flex justify-between items-center">
                             <span class="text-white/80">Hosting GitHub</span>
-                            <span class="text-gold-light font-bold">$0 MXN</span>
+                            <span class="text-violet-light font-bold">$0 MXN</span>
                         </div>
-                        <hr class="border-gold-light/20">
+                        <hr class="border-violet-light/20">
                         <div class="flex justify-between items-center text-lg">
                             <span class="font-semibold">Total para siempre</span>
-                            <span class="text-gold-light font-bold">$1,000 MXN</span>
+                            <span class="text-violet-light font-bold">$1,000 MXN</span>
                         </div>
                         <div class="mt-6 space-y-2 text-sm text-white/80">
                             <p>• Diseños únicos e ilimitados</p>
@@ -204,7 +308,7 @@
 
             <div class="text-center mt-16">
                 <div class="glass-card-premium p-8 max-w-2xl mx-auto reveal-card">
-                    <h3 class="text-2xl font-bold text-gold-light mb-4">💡 Ahorro total</h3>
+                    <h3 class="text-2xl font-bold text-violet-light mb-4">💡 Ahorro total</h3>
                     <p class="text-3xl font-bold mb-2">$14,000 MXN solo en el primer año</p>
                     <p class="text-white/80">+ Habilidad para crear webs ilimitadas de por vida</p>
                 </div>
@@ -213,14 +317,14 @@
     </section>
 
     <!-- What You Learn -->
-    <section class="py-24 bg-gradient-to-b from-deep-blue to-void-medium">
+    <section class="py-24 bg-gradient-to-b from-indigo-deep to-void-medium">
         <div class="max-w-6xl mx-auto px-4">
             <div class="text-center mb-16">
                 <h2 class="font-playfair text-5xl font-bold mb-6 reveal-text">
-                    Qué <span class="text-gold-light">aprenderás</span>
+                    Qué <span class="text-violet-light">aprenderás</span>
                 </h2>
                 <p class="text-xl text-white/80 max-w-3xl mx-auto reveal-text">
-                    4 días intensivos para dominar las tecnologías que usan los profesionales, 
+                    5 días intensivos para dominar las tecnologías que usan los profesionales, 
                     potenciadas con IA moderna.
                 </p>
             </div>
@@ -228,41 +332,41 @@
             <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto mb-16">
                 <div class="glass-card text-center reveal-card">
                     <div class="text-4xl mb-4">📝</div>
-                    <h3 class="text-lg font-bold text-gold-light mb-3">HTML5 Moderno</h3>
+                    <h3 class="text-lg font-bold text-violet-light mb-3">HTML5 Moderno</h3>
                     <p class="text-white/80 text-sm">Estructura semántica, SEO-friendly, accesible y optimizada para motores de búsqueda.</p>
                 </div>
                 
                 <div class="glass-card text-center reveal-card">
                     <div class="text-4xl mb-4">🎨</div>
-                    <h3 class="text-lg font-bold text-gold-light mb-3">CSS3 Avanzado</h3>
+                    <h3 class="text-lg font-bold text-cyan-light mb-3">CSS3 Avanzado</h3>
                     <p class="text-white/80 text-sm">Flexbox, Grid, animaciones, responsive design y efectos visuales modernos.</p>
                 </div>
                 
                 <div class="glass-card text-center reveal-card">
                     <div class="text-4xl mb-4">⚡</div>
-                    <h3 class="text-lg font-bold text-gold-light mb-3">JavaScript Esencial</h3>
+                    <h3 class="text-lg font-bold text-violet-light mb-3">JavaScript Esencial</h3>
                     <p class="text-white/80 text-sm">Interactividad, formularios, APIs y funcionalidades dinámicas para tu web.</p>
                 </div>
                 
                 <div class="glass-card text-center reveal-card">
                     <div class="text-4xl mb-4">🤖</div>
-                    <h3 class="text-lg font-bold text-gold-light mb-3">IA como Asistente</h3>
+                    <h3 class="text-lg font-bold text-cyan-light mb-3">IA como Asistente</h3>
                     <p class="text-white/80 text-sm">ChatGPT, Claude y herramientas que aceleran tu desarrollo x10.</p>
                 </div>
             </div>
 
             <!-- Timeline -->
             <div class="max-w-4xl mx-auto">
-                <h3 class="text-3xl font-bold text-center mb-12 reveal-text">Programa de 4 días</h3>
+                <h3 class="text-3xl font-bold text-center mb-12 reveal-text">Programa de 5 días</h3>
                 <div class="space-y-8">
                     <div class="glass-card p-6 reveal-card">
                         <div class="flex items-center mb-4">
-                            <div class="w-12 h-12 bg-gold-light/20 rounded-full flex items-center justify-center mr-4">
-                                <span class="text-gold-light font-bold">1</span>
+                            <div class="w-12 h-12 bg-violet-light/20 rounded-full flex items-center justify-center mr-4">
+                                <span class="text-violet-light font-bold">1</span>
                             </div>
                             <div>
-                                <h4 class="text-xl font-bold text-gold-light">Día 1: Fundamentos + Mensaje</h4>
-                                <p class="text-white/60 text-sm">Lunes 18 Agosto</p>
+                                <h4 class="text-xl font-bold text-violet-light">Día 1: Fundamentos + Mensaje</h4>
+                                <p class="text-white/60 text-sm">Lunes 25 Agosto</p>
                             </div>
                         </div>
                         <p class="text-white/80">HTML básico, estructura de tu mensaje, definición de tu audiencia y configuración del entorno de desarrollo.</p>
@@ -270,12 +374,12 @@
                     
                     <div class="glass-card p-6 reveal-card">
                         <div class="flex items-center mb-4">
-                            <div class="w-12 h-12 bg-gold-light/20 rounded-full flex items-center justify-center mr-4">
-                                <span class="text-gold-light font-bold">2</span>
+                            <div class="w-12 h-12 bg-cyan-light/20 rounded-full flex items-center justify-center mr-4">
+                                <span class="text-cyan-light font-bold">2</span>
                             </div>
                             <div>
-                                <h4 class="text-xl font-bold text-gold-light">Día 2: Diseño + Construcción</h4>
-                                <p class="text-white/60 text-sm">Martes 19 Agosto</p>
+                                <h4 class="text-xl font-bold text-cyan-light">Día 2: Diseño + Construcción</h4>
+                                <p class="text-white/60 text-sm">Martes 26 Agosto</p>
                             </div>
                         </div>
                         <p class="text-white/80">CSS avanzado, layouts responsive, tu primera web completa + Q&A en vivo para resolver dudas.</p>
@@ -283,12 +387,12 @@
                     
                     <div class="glass-card p-6 reveal-card">
                         <div class="flex items-center mb-4">
-                            <div class="w-12 h-12 bg-gold-light/20 rounded-full flex items-center justify-center mr-4">
-                                <span class="text-gold-light font-bold">3</span>
+                            <div class="w-12 h-12 bg-violet-light/20 rounded-full flex items-center justify-center mr-4">
+                                <span class="text-violet-light font-bold">3</span>
                             </div>
                             <div>
-                                <h4 class="text-xl font-bold text-gold-light">Día 3: Publicación + Git</h4>
-                                <p class="text-white/60 text-sm">Miércoles 20 Agosto</p>
+                                <h4 class="text-xl font-bold text-violet-light">Día 3: Publicación + Git</h4>
+                                <p class="text-white/60 text-sm">Miércoles 27 Agosto</p>
                             </div>
                         </div>
                         <p class="text-white/80">Git, GitHub, despliegue en GitHub Pages. Tu web estará online y accesible desde cualquier parte del mundo.</p>
@@ -296,15 +400,28 @@
                     
                     <div class="glass-card p-6 reveal-card">
                         <div class="flex items-center mb-4">
-                            <div class="w-12 h-12 bg-gold-light/20 rounded-full flex items-center justify-center mr-4">
-                                <span class="text-gold-light font-bold">4</span>
+                            <div class="w-12 h-12 bg-cyan-light/20 rounded-full flex items-center justify-center mr-4">
+                                <span class="text-cyan-light font-bold">4</span>
                             </div>
                             <div>
-                                <h4 class="text-xl font-bold text-gold-light">Día 4: Optimización + Futuro</h4>
-                                <p class="text-white/60 text-sm">Jueves 21 Agosto</p>
+                                <h4 class="text-xl font-bold text-cyan-light">Día 4: Optimización + Interactividad</h4>
+                                <p class="text-white/60 text-sm">Jueves 28 Agosto</p>
                             </div>
                         </div>
-                        <p class="text-white/80">SEO, Analytics, formularios de contacto, plan de crecimiento + Q&A final de cierre.</p>
+                        <p class="text-white/80">SEO, Analytics, formularios de contacto, JavaScript para interactividad + Q&A técnica.</p>
+                    </div>
+
+                    <div class="glass-card p-6 reveal-card">
+                        <div class="flex items-center mb-4">
+                            <div class="w-12 h-12 bg-violet-light/20 rounded-full flex items-center justify-center mr-4">
+                                <span class="text-violet-light font-bold">5</span>
+                            </div>
+                            <div>
+                                <h4 class="text-xl font-bold text-violet-light">Día 5: Perfeccionamiento + Futuro</h4>
+                                <p class="text-white/60 text-sm">Viernes 29 Agosto</p>
+                            </div>
+                        </div>
+                        <p class="text-white/80">Pulir detalles, plan de crecimiento, networking con la red + Q&A final de cierre y celebración.</p>
                     </div>
                 </div>
             </div>
@@ -316,7 +433,7 @@
         <div class="max-w-6xl mx-auto px-4">
             <div class="text-center mb-16">
                 <h2 class="font-playfair text-5xl font-bold mb-6 reveal-text">
-                    Tu <span class="text-gold-light">comunidad</span> te espera
+                    Tu <span class="text-violet-light">comunidad</span> te espera
                 </h2>
                 <p class="text-xl text-white/80 max-w-3xl mx-auto reveal-text">
                     No aprenderás solo. Serás parte de una red de nodos que se apoyan, comparten y crecen juntos.
@@ -330,7 +447,7 @@
                         <div class="flex items-center mb-4">
                             <div class="text-3xl mr-4">💬</div>
                             <div>
-                                <h3 class="text-xl font-bold text-gold-light">WhatsApp Privado</h3>
+                                <h3 class="text-xl font-bold text-violet-light">WhatsApp Privado</h3>
                                 <p class="text-white/60 text-sm">Acceso inmediato</p>
                             </div>
                         </div>
@@ -341,7 +458,7 @@
                         <div class="flex items-center mb-4">
                             <div class="text-3xl mr-4">🎮</div>
                             <div>
-                                <h3 class="text-xl font-bold text-gold-light">Discord Organizado</h3>
+                                <h3 class="text-xl font-bold text-cyan-light">Discord Organizado</h3>
                                 <p class="text-white/60 text-sm">Servidor estructurado</p>
                             </div>
                         </div>
@@ -352,7 +469,7 @@
                         <div class="flex items-center mb-4">
                             <div class="text-3xl mr-4">🎯</div>
                             <div>
-                                <h3 class="text-xl font-bold text-gold-light">Soporte Continuo</h3>
+                                <h3 class="text-xl font-bold text-violet-light">Soporte Continuo</h3>
                                 <p class="text-white/60 text-sm">Durante y después</p>
                             </div>
                         </div>
@@ -366,7 +483,7 @@
                         <div class="flex items-center mb-4">
                             <div class="text-3xl mr-4">📚</div>
                             <div>
-                                <h3 class="text-xl font-bold text-gold-light">Recursos Completos</h3>
+                                <h3 class="text-xl font-bold text-cyan-light">Recursos Completos</h3>
                                 <p class="text-white/60 text-sm">PDFs + Plantillas</p>
                             </div>
                         </div>
@@ -377,7 +494,7 @@
                         <div class="flex items-center mb-4">
                             <div class="text-3xl mr-4">🎥</div>
                             <div>
-                                <h3 class="text-xl font-bold text-gold-light">Acceso Extendido</h3>
+                                <h3 class="text-xl font-bold text-violet-light">Acceso Extendido</h3>
                                 <p class="text-white/60 text-sm">90 días de grabaciones</p>
                             </div>
                         </div>
@@ -388,7 +505,7 @@
                         <div class="flex items-center mb-4">
                             <div class="text-3xl mr-4">🛡️</div>
                             <div>
-                                <h3 class="text-xl font-bold text-gold-light">Garantía Total</h3>
+                                <h3 class="text-xl font-bold text-cyan-light">Garantía Total</h3>
                                 <p class="text-white/60 text-sm">7 días sin preguntas</p>
                             </div>
                         </div>
@@ -400,10 +517,10 @@
     </section>
 
     <!-- Single Plan Pricing -->
-    <section id="plan" class="py-24 bg-gradient-to-b from-void-medium to-deep-blue">
+    <section id="plan" class="py-24 bg-gradient-to-b from-void-medium to-indigo-deep">
         <div class="max-w-4xl mx-auto px-4 text-center">
             <h2 class="font-playfair text-5xl font-bold mb-8 reveal-text">
-                Únete a <span class="text-gold-light">la red</span>
+                Únete a <span class="text-violet-light">la red</span>
             </h2>
             <p class="text-xl text-white/80 mb-16 reveal-text">
                 Un solo plan, una sola decisión. Todo incluido para tu transformación digital.
@@ -411,62 +528,62 @@
             
             <!-- Single Plan Card -->
             <div class="max-w-lg mx-auto">
-                <div class="glass-card-premium p-10 text-center reveal-card border-2 border-gold-light/30 relative">
-                    <div class="absolute -top-6 left-1/2 transform -translate-x-1/2 bg-gold-light text-black px-6 py-2 rounded-full font-bold">
+                <div class="glass-card-premium p-10 text-center reveal-card border-2 border-violet-light/30 relative">
+                    <div class="absolute -top-6 left-1/2 transform -translate-x-1/2 bg-gradient-to-r from-violet-light to-cyan-light text-white px-6 py-2 rounded-full font-bold">
                         GRUPO FUNDACIONAL
                     </div>
                     
                     <div class="text-6xl mb-6">🌟</div>
                     <h3 class="text-3xl font-bold mb-4">De tu Mente al Mundo</h3>
-                    <div class="text-5xl font-bold text-gold-light mb-2">$1,000</div>
-                    <div class="text-xl text-gold-light/80 mb-8">MXN • Pago único</div>
+                    <div class="text-5xl font-bold text-violet-light mb-2">$1,000</div>
+                    <div class="text-xl text-violet-light/80 mb-8">MXN • Pago único</div>
                     
                     <div class="text-left space-y-4 mb-10">
                         <div class="flex items-center">
-                            <div class="w-6 h-6 bg-gold-light/20 rounded-full flex items-center justify-center mr-3">
-                                <span class="text-gold-light text-xs">✓</span>
+                            <div class="w-6 h-6 bg-violet-light/20 rounded-full flex items-center justify-center mr-3">
+                                <span class="text-violet-light text-xs">✓</span>
                             </div>
-                            <span class="text-white/90">Bootcamp completo (4 días intensivos)</span>
+                            <span class="text-white/90">Bootcamp completo (5 días intensivos)</span>
                         </div>
                         <div class="flex items-center">
-                            <div class="w-6 h-6 bg-gold-light/20 rounded-full flex items-center justify-center mr-3">
-                                <span class="text-gold-light text-xs">✓</span>
+                            <div class="w-6 h-6 bg-cyan-light/20 rounded-full flex items-center justify-center mr-3">
+                                <span class="text-cyan-light text-xs">✓</span>
                             </div>
                             <span class="text-white/90">Comunidad WhatsApp + Discord exclusiva</span>
                         </div>
                         <div class="flex items-center">
-                            <div class="w-6 h-6 bg-gold-light/20 rounded-full flex items-center justify-center mr-3">
-                                <span class="text-gold-light text-xs">✓</span>
+                            <div class="w-6 h-6 bg-violet-light/20 rounded-full flex items-center justify-center mr-3">
+                                <span class="text-violet-light text-xs">✓</span>
                             </div>
                             <span class="text-white/90">5 plantillas profesionales + recursos IA</span>
                         </div>
                         <div class="flex items-center">
-                            <div class="w-6 h-6 bg-gold-light/20 rounded-full flex items-center justify-center mr-3">
-                                <span class="text-gold-light text-xs">✓</span>
+                            <div class="w-6 h-6 bg-cyan-light/20 rounded-full flex items-center justify-center mr-3">
+                                <span class="text-cyan-light text-xs">✓</span>
                             </div>
                             <span class="text-white/90">2 sesiones Q&A en vivo con grabación</span>
                         </div>
                         <div class="flex items-center">
-                            <div class="w-6 h-6 bg-gold-light/20 rounded-full flex items-center justify-center mr-3">
-                                <span class="text-gold-light text-xs">✓</span>
+                            <div class="w-6 h-6 bg-violet-light/20 rounded-full flex items-center justify-center mr-3">
+                                <span class="text-violet-light text-xs">✓</span>
                             </div>
                             <span class="text-white/90">Acceso a grabaciones por 90 días</span>
                         </div>
                         <div class="flex items-center">
-                            <div class="w-6 h-6 bg-gold-light/20 rounded-full flex items-center justify-center mr-3">
-                                <span class="text-gold-light text-xs">✓</span>
+                            <div class="w-6 h-6 bg-cyan-light/20 rounded-full flex items-center justify-center mr-3">
+                                <span class="text-cyan-light text-xs">✓</span>
                             </div>
                             <span class="text-white/90">Hosting gratuito para siempre (GitHub Pages)</span>
                         </div>
                         <div class="flex items-center">
-                            <div class="w-6 h-6 bg-gold-light/20 rounded-full flex items-center justify-center mr-3">
-                                <span class="text-gold-light text-xs">✓</span>
+                            <div class="w-6 h-6 bg-violet-light/20 rounded-full flex items-center justify-center mr-3">
+                                <span class="text-violet-light text-xs">✓</span>
                             </div>
                             <span class="text-white/90">Garantía 7 días sin preguntas</span>
                         </div>
                     </div>
                     
-                    <button onclick="checkout()" class="glass-button-gold text-gold-light font-bold px-10 py-4 rounded-full text-lg w-full mb-6 transition-all duration-300 transform hover:scale-105">
+                    <button onclick="checkout()" class="glass-button-violet text-violet-light font-bold px-10 py-4 rounded-full text-lg w-full mb-6 transition-all duration-300 transform hover:scale-105">
                         Conectar con la red • $1,000 MXN
                     </button>
                     
@@ -480,7 +597,7 @@
             <!-- Value reminder -->
             <div class="mt-16 max-w-2xl mx-auto">
                 <div class="glass-card p-6 reveal-card">
-                    <h3 class="text-xl font-bold text-gold-light mb-3">💡 Valor total del programa</h3>
+                    <h3 class="text-xl font-bold text-violet-light mb-3">💡 Valor total del programa</h3>
                     <div class="grid grid-cols-2 gap-4 text-sm">
                         <div class="text-left">
                             <p class="text-white/60">Bootcamp intensivo</p>
@@ -489,43 +606,43 @@
                             <p class="text-white/60">Soporte 90 días</p>
                         </div>
                         <div class="text-right">
-                            <p class="text-gold-light">$2,500 MXN</p>
-                            <p class="text-gold-light">$800 MXN</p>
-                            <p class="text-gold-light">$1,200 MXN</p>
-                            <p class="text-gold-light">$500 MXN</p>
+                            <p class="text-violet-light">$2,500 MXN</p>
+                            <p class="text-cyan-light">$800 MXN</p>
+                            <p class="text-violet-light">$1,200 MXN</p>
+                            <p class="text-cyan-light">$500 MXN</p>
                         </div>
                     </div>
-                    <hr class="border-gold-light/20 my-4">
+                    <hr class="border-violet-light/20 my-4">
                     <div class="flex justify-between items-center">
                         <span class="font-bold">Valor total</span>
-                        <span class="text-gold-light font-bold text-lg">$5,000 MXN</span>
+                        <span class="text-violet-light font-bold text-lg">$5,000 MXN</span>
                     </div>
-                    <p class="text-center text-gold-light font-bold text-lg mt-2">Tu precio: $1,000 MXN (80% descuento)</p>
+                    <p class="text-center text-violet-light font-bold text-lg mt-2">Tu precio: $1,000 MXN (80% descuento)</p>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- FAQ -->
-    <section class="py-24 bg-deep-blue">
+    <section class="py-24 bg-indigo-deep">
         <div class="max-w-4xl mx-auto px-4">
             <h2 class="font-playfair text-5xl font-bold text-center mb-16 reveal-text">
-                Preguntas <span class="text-gold-light">frecuentes</span>
+                Preguntas <span class="text-violet-light">frecuentes</span>
             </h2>
             
             <div class="space-y-6 max-w-3xl mx-auto">
                 <details class="glass-card p-6 cursor-pointer reveal-card group">
                     <summary class="font-semibold text-white text-lg flex justify-between items-center">
                         ¿Necesito saber programar?
-                        <span class="text-gold-light group-open:rotate-180 transition-transform">↓</span>
+                        <span class="text-violet-light group-open:rotate-180 transition-transform">↓</span>
                     </summary>
-                    <p class="text-white/80 mt-4 leading-relaxed">Para nada. Partimos de cero absoluto y usamos herramientas visuales + IA para simplificar todo. Si sabes usar Word y navegar en internet, puedes hacer esto perfectamente.</p>
+                    <p class="text-white/80 mt-4 leading-relaxed">Para nada. Si sabes como utilizar tu ordenador es suficiente. Usaremos herramientas visuales + IA para simplificar todo. Si sabes usar Word, administrar archivos y navegar en internet, puedes hacer esto perfectamente.</p>
                 </details>
                 
                 <details class="glass-card p-6 cursor-pointer reveal-card group">
                     <summary class="font-semibold text-white text-lg flex justify-between items-center">
                         ¿Qué software necesito?
-                        <span class="text-gold-light group-open:rotate-180 transition-transform">↓</span>
+                        <span class="text-violet-light group-open:rotate-180 transition-transform">↓</span>
                     </summary>
                     <p class="text-white/80 mt-4 leading-relaxed">Solo VSCode (editor gratuito) y una cuenta de GitHub (también gratuita). Te guío paso a paso en la instalación el primer día. Todo es gratuito y funciona en Windows, Mac y Linux.</p>
                 </details>
@@ -533,7 +650,7 @@
                 <details class="glass-card p-6 cursor-pointer reveal-card group">
                     <summary class="font-semibold text-white text-lg flex justify-between items-center">
                         ¿Incluye hosting y dominio?
-                        <span class="text-gold-light group-open:rotate-180 transition-transform">↓</span>
+                        <span class="text-violet-light group-open:rotate-180 transition-transform">↓</span>
                     </summary>
                     <p class="text-white/80 mt-4 leading-relaxed">El hosting es gratuito para siempre con GitHub Pages (tu-nombre.github.io). Tu web estará online 24/7 sin costo. El dominio personalizado (.com) se compra aparte (~$300 MXN/año) y es opcional.</p>
                 </details>
@@ -541,7 +658,7 @@
                 <details class="glass-card p-6 cursor-pointer reveal-card group">
                     <summary class="font-semibold text-white text-lg flex justify-between items-center">
                         ¿Si no puedo asistir en vivo?
-                        <span class="text-gold-light group-open:rotate-180 transition-transform">↓</span>
+                        <span class="text-violet-light group-open:rotate-180 transition-transform">↓</span>
                     </summary>
                     <p class="text-white/80 mt-4 leading-relaxed">Todas las sesiones quedan grabadas en alta calidad con acceso por 90 días. Puedes aprender a tu ritmo, pausar, repetir y hacer preguntas en la comunidad cuando necesites.</p>
                 </details>
@@ -549,7 +666,7 @@
                 <details class="glass-card p-6 cursor-pointer reveal-card group">
                     <summary class="font-semibold text-white text-lg flex justify-between items-center">
                         ¿Hay garantía de reembolso?
-                        <span class="text-gold-light group-open:rotate-180 transition-transform">↓</span>
+                        <span class="text-violet-light group-open:rotate-180 transition-transform">↓</span>
                     </summary>
                     <p class="text-white/80 mt-4 leading-relaxed">Sí, tienes 7 días completos desde la compra para pedir reembolso sin preguntas. Si no es para ti, simplemente envías un email y listo. Sin complicaciones ni letra pequeña.</p>
                 </details>
@@ -557,7 +674,7 @@
                 <details class="glass-card p-6 cursor-pointer reveal-card group">
                     <summary class="font-semibold text-white text-lg flex justify-between items-center">
                         ¿Por qué es el primer grupo?
-                        <span class="text-gold-light group-open:rotate-180 transition-transform">↓</span>
+                        <span class="text-violet-light group-open:rotate-180 transition-transform">↓</span>
                     </summary>
                     <p class="text-white/80 mt-4 leading-relaxed">Prefiero ser honesto. Este es el primer grupo de DTMM, no hay testimonios previos. Serás parte de algo único: ayudar a crear una comunidad desde cero y vivir una experiencia que nunca se repetirá igual.</p>
                 </details>
@@ -569,25 +686,25 @@
     <section class="py-20 bg-void-medium">
         <div class="max-w-4xl mx-auto px-4 text-center">
             <div class="glass-card-premium p-8 reveal-card">
-                <h3 class="text-3xl font-bold text-gold-light mb-6">🛡️ Mi compromiso contigo</h3>
+                <h3 class="text-3xl font-bold text-violet-light mb-6">🛡️ Mi compromiso contigo</h3>
                 <div class="grid md:grid-cols-2 gap-8 text-left max-w-3xl mx-auto">
                     <div>
                         <h4 class="font-bold text-white mb-4 text-lg">✅ Lo que SÍ garantizo:</h4>
                         <ul class="space-y-3 text-white/80">
                             <li class="flex items-start">
-                                <span class="text-gold-light mr-2 mt-1">•</span>
+                                <span class="text-violet-light mr-2 mt-1">•</span>
                                 <span>Contenido completo y actualizado del programa</span>
                             </li>
                             <li class="flex items-start">
-                                <span class="text-gold-light mr-2 mt-1">•</span>
+                                <span class="text-cyan-light mr-2 mt-1">•</span>
                                 <span>Comunidad activa durante y después del bootcamp</span>
                             </li>
                             <li class="flex items-start">
-                                <span class="text-gold-light mr-2 mt-1">•</span>
+                                <span class="text-violet-light mr-2 mt-1">•</span>
                                 <span>Soporte técnico para dudas de código</span>
                             </li>
                             <li class="flex items-start">
-                                <span class="text-gold-light mr-2 mt-1">•</span>
+                                <span class="text-cyan-light mr-2 mt-1">•</span>
                                 <span>Tu web funcionando online en máximo 7 días</span>
                             </li>
                         </ul>
@@ -605,7 +722,7 @@
                             </li>
                             <li class="flex items-start">
                                 <span class="text-red-300 mr-2 mt-1">•</span>
-                                <span>Ganancias por tener una web online</span>
+                                <span>Ganancias por implementar lo aprendido</span>
                             </li>
                             <li class="flex items-start">
                                 <span class="text-red-300 mr-2 mt-1">•</span>
@@ -614,13 +731,13 @@
                         </ul>
                     </div>
                 </div>
-                <div class="mt-8 pt-6 border-t border-gold-light/20">
+                <div class="mt-8 pt-6 border-t border-violet-light/20">
                     <p class="text-white/70">
                         Los resultados económicos dependen de tu implementación, mercado local, esfuerzo en marketing y factores externos.
-                        <a href="garantias.html" target="_blank" class="text-gold-light hover:underline ml-2">Ver política completa →</a>
+                        <a href="garantias.html" target="_blank" class="text-violet-light hover:underline ml-2">Ver política completa →</a>
                     </p>
                     <p class="text-white/60 text-sm mt-4">
-                        ¿Dudas? <a href="https://wa.me/521234567890?text=Necesito%20ayuda%20con%20DTMM" target="_blank" class="text-gold-light hover:underline">Contáctanos por WhatsApp</a>
+                        ¿Dudas? <a href="https://wa.me/521234567890?text=Necesito%20ayuda%20con%20DTMM" target="_blank" class="text-cyan-light hover:underline">Contáctanos por WhatsApp</a>
                     </p>
                 </div>
             </div>
@@ -631,31 +748,31 @@
     <section class="py-24 bg-gradient-to-b from-void-medium to-void-deep">
         <div class="max-w-4xl mx-auto px-4 text-center">
             <h2 class="font-playfair text-6xl font-bold mb-8 reveal-text">
-                El mundo necesita <span class="text-gold-light glow-text">tu luz</span>
+                El mundo necesita <span class="text-violet-light glow-text">tu luz</span>
             </h2>
             <p class="text-2xl mb-6 text-white/90 max-w-2xl mx-auto reveal-text leading-relaxed">
-                18-22 Agosto • Solo 40 nodos • Experiencia única
+                25-29 Agosto • Solo 40 nodos • Experiencia única
             </p>
             <p class="text-white/70 mb-12 reveal-text">
                 🌱 Grupo fundacional • Sin testimonios falsos • Construimos juntos desde cero
             </p>
             
-            <button onclick="checkout()" class="glass-button-gold text-gold-light font-bold px-16 py-6 rounded-full text-2xl transition-all duration-300 transform hover:scale-105 reveal-text mb-8">
+            <button onclick="checkout()" class="glass-button-violet text-violet-light font-bold px-16 py-6 rounded-full text-2xl transition-all duration-300 transform hover:scale-105 reveal-text mb-8">
                 Conectar con la red • $1,000 MXN
             </button>
             
             <p class="text-white/50 text-sm reveal-text">
-                Cierre de inscripciones: 17 de agosto a las 11:59 PM (México)
+                Cierre de inscripciones: 24 de agosto a las 11:59 PM (México)
             </p>
         </div>
     </section>
 
     <!-- Footer -->
-    <footer class="py-16 bg-void-deep border-t border-gold-light/10">
+    <footer class="py-16 bg-void-deep border-t border-violet-light/10">
         <div class="max-w-6xl mx-auto px-4">
             <div class="text-center mb-12">
                 <a href="https://lareddeluz.com" target="_blank" class="inline-block hover:scale-105 transition-transform">
-                    <h3 class="font-playfair text-2xl font-bold text-gold-light mb-4">La Red de Luz</h3>
+                    <h3 class="font-playfair text-2xl font-bold text-violet-light mb-4">La Red de Luz</h3>
                 </a>
                 <p class="text-white/60 max-w-md mx-auto leading-relaxed">
                     Donde cada nodo brilla para recordar a otros que ellos también pueden iluminar el mundo.
@@ -665,39 +782,39 @@
             <!-- Redes sociales -->
             <div class="flex justify-center gap-6 mb-8">
                 <a href="https://instagram.com/lareddeluz" target="_blank" rel="noopener" 
-                   class="w-12 h-12 bg-gold-light/10 hover:bg-gold-light/20 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110">
-                    <svg class="w-6 h-6 text-gold-light" fill="currentColor" viewBox="0 0 24 24">
+                   class="w-12 h-12 bg-violet-light/10 hover:bg-violet-light/20 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110">
+                    <svg class="w-6 h-6 text-violet-light" fill="currentColor" viewBox="0 0 24 24">
                         <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
                     </svg>
                 </a>
                 
                 <a href="https://tiktok.com/@lareddeluz" target="_blank" rel="noopener"
-                   class="w-12 h-12 bg-gold-light/10 hover:bg-gold-light/20 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110">
-                    <svg class="w-5 h-5 text-gold-light" fill="currentColor" viewBox="0 0 24 24">
+                   class="w-12 h-12 bg-cyan-light/10 hover:bg-cyan-light/20 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110">
+                    <svg class="w-5 h-5 text-cyan-light" fill="currentColor" viewBox="0 0 24 24">
                         <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-.88-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/>
                     </svg>
                 </a>
                 
                 <a href="https://youtube.com/@lareddeluz" target="_blank" rel="noopener"
-                   class="w-12 h-12 bg-gold-light/10 hover:bg-gold-light/20 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110">
-                    <svg class="w-6 h-6 text-gold-light" fill="currentColor" viewBox="0 0 24 24">
+                   class="w-12 h-12 bg-violet-light/10 hover:bg-violet-light/20 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110">
+                    <svg class="w-6 h-6 text-violet-light" fill="currentColor" viewBox="0 0 24 24">
                         <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
                     </svg>
                 </a>
                 
                 <a href="https://wa.me/521234567890?text=Necesito%20ayuda%20con%20DTMM" target="_blank" rel="noopener"
-                   class="w-12 h-12 bg-gold-light/10 hover:bg-gold-light/20 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110">
-                    <svg class="w-6 h-6 text-gold-light" fill="currentColor" viewBox="0 0 24 24">
+                   class="w-12 h-12 bg-cyan-light/10 hover:bg-cyan-light/20 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110">
+                    <svg class="w-6 h-6 text-cyan-light" fill="currentColor" viewBox="0 0 24 24">
                         <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.465 3.63"/>
                     </svg>
                 </a>
             </div>
             
             <div class="flex flex-wrap justify-center gap-8 text-sm text-white/60 mb-8">
-                <a href="https://lareddeluz.com" target="_blank" class="hover:text-gold-light transition-colors">Sitio principal</a>
-                <a href="terminos.html" target="_blank" class="hover:text-gold-light transition-colors">Términos y condiciones</a>
-                <a href="garantias.html" target="_blank" class="hover:text-gold-light transition-colors">Política de garantías</a>
-                <a href="https://wa.me/521234567890?text=Necesito%20ayuda%20con%20DTMM" target="_blank" class="hover:text-gold-light transition-colors">Contacto</a>
+                <a href="https://lareddeluz.com" target="_blank" class="hover:text-violet-light transition-colors">Sitio principal</a>
+                <a href="terminos.html" target="_blank" class="hover:text-cyan-light transition-colors">Términos y condiciones</a>
+                <a href="garantias.html" target="_blank" class="hover:text-violet-light transition-colors">Política de garantías</a>
+                <a href="https://wa.me/521234567890?text=Necesito%20ayuda%20con%20DTMM" target="_blank" class="hover:text-cyan-light transition-colors">Contacto</a>
             </div>
             
             <div class="text-center">
@@ -709,29 +826,135 @@
     </footer>
 
     <!-- JavaScript -->
-    
-    <!-- Network Animation -->
-    <script src="js/network.js"></script>
-    
-    <!-- Main Functionality -->
     <script>
         // ===============================================
-        // STRIPE CONFIGURATION
-        // ¡ACTUALIZA ESTOS VALORES!
+        // NETWORK ANIMATION WITH NEW COLORS
         // ===============================================
         
-        const STRIPE_CONFIG = {
-            priceId: 'price_TU_PRICE_ID_DTMM',  // 🔥 ACTUALIZAR con tu Price ID real ($1,000 MXN)
-            amount: 1000,
-            currency: 'MXN',
-            name: 'DTMM - De tu Mente al Mundo'
-        };
-        
-        // 🔥 ACTUALIZAR con tu clave pública de Stripe
-        const STRIPE_PUBLIC_KEY = 'pk_live_TU_CLAVE_PUBLICA_AQUI';
+        class NeuralNetworkAnimation {
+            constructor(containerId) {
+                this.container = document.getElementById(containerId);
+                this.canvas = null;
+                this.ctx = null;
+                this.neurons = [];
+                this.connections = [];
+                this.animationId = null;
+                
+                this.config = {
+                    neuronCount: this.isMobile() ? 15 : 25,
+                    maxConnections: 3,
+                    connectionDistance: this.isMobile() ? 120 : 180,
+                    neuronSpeed: 0.2,
+                    pulseSpeed: 2,
+                    colors: {
+                        neuron: '#856bd5',
+                        connection: '#856bd5',
+                        pulse: '#77bce2',
+                        glow: '#6b46c1'
+                    }
+                };
+                
+                if (this.container) {
+                    this.init();
+                }
+            }
+            
+            init() {
+                this.createCanvas();
+                this.createNeurons();
+                this.startAnimation();
+            }
+            
+            createCanvas() {
+                this.canvas = document.createElement('canvas');
+                this.canvas.style.cssText = `
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    pointer-events: none;
+                    opacity: 0.6;
+                `;
+                
+                this.container.innerHTML = '';
+                this.container.appendChild(this.canvas);
+                this.ctx = this.canvas.getContext('2d');
+                this.resizeCanvas();
+            }
+            
+            resizeCanvas() {
+                const rect = this.container.getBoundingClientRect();
+                this.canvas.width = rect.width;
+                this.canvas.height = rect.height;
+            }
+            
+            createNeurons() {
+                this.neurons = [];
+                for (let i = 0; i < this.config.neuronCount; i++) {
+                    this.neurons.push({
+                        x: Math.random() * this.canvas.width,
+                        y: Math.random() * this.canvas.height,
+                        vx: (Math.random() - 0.5) * this.config.neuronSpeed,
+                        vy: (Math.random() - 0.5) * this.config.neuronSpeed,
+                        size: 2 + Math.random() * 4,
+                        activity: Math.random()
+                    });
+                }
+            }
+            
+            animate() {
+                this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+                
+                // Update and draw neurons
+                this.neurons.forEach(neuron => {
+                    neuron.x += neuron.vx;
+                    neuron.y += neuron.vy;
+                    
+                    if (neuron.x < 0 || neuron.x > this.canvas.width) neuron.vx *= -1;
+                    if (neuron.y < 0 || neuron.y > this.canvas.height) neuron.vy *= -1;
+                    
+                    neuron.activity += 0.01;
+                    
+                    const opacity = 0.6 + Math.sin(neuron.activity) * 0.4;
+                    this.ctx.beginPath();
+                    this.ctx.arc(neuron.x, neuron.y, neuron.size, 0, Math.PI * 2);
+                    this.ctx.fillStyle = `rgba(133, 107, 213, ${opacity})`;
+                    this.ctx.fill();
+                });
+                
+                // Draw connections
+                for (let i = 0; i < this.neurons.length; i++) {
+                    for (let j = i + 1; j < this.neurons.length; j++) {
+                        const dx = this.neurons[i].x - this.neurons[j].x;
+                        const dy = this.neurons[i].y - this.neurons[j].y;
+                        const distance = Math.sqrt(dx * dx + dy * dy);
+                        
+                        if (distance < this.config.connectionDistance) {
+                            const opacity = (1 - distance / this.config.connectionDistance) * 0.3;
+                            this.ctx.beginPath();
+                            this.ctx.moveTo(this.neurons[i].x, this.neurons[i].y);
+                            this.ctx.lineTo(this.neurons[j].x, this.neurons[j].y);
+                            this.ctx.strokeStyle = `rgba(133, 107, 213, ${opacity})`;
+                            this.ctx.stroke();
+                        }
+                    }
+                }
+                
+                this.animationId = requestAnimationFrame(() => this.animate());
+            }
+            
+            startAnimation() {
+                this.animate();
+            }
+            
+            isMobile() {
+                return window.innerWidth < 768;
+            }
+        }
         
         // ===============================================
-        // PREMIUM LANDING CLASS
+        // MAIN FUNCTIONALITY
         // ===============================================
         
         class PremiumLanding {
@@ -742,7 +965,6 @@
             init() {
                 this.setupScrollAnimations();
                 this.setupSmoothScroll();
-                this.setupInteractions();
             }
             
             setupScrollAnimations() {
@@ -764,7 +986,6 @@
                 revealElements();
                 window.addEventListener('scroll', revealElements, { passive: true });
                 
-                // Force reveal after 2s
                 setTimeout(() => {
                     document.querySelectorAll('.reveal-text:not(.revealed), .reveal-card:not(.revealed)').forEach((el, index) => {
                         setTimeout(() => el.classList.add('revealed'), index * 40);
@@ -790,120 +1011,30 @@
                     }
                 });
             }
-            
-            setupInteractions() {
-                // Enhanced FAQ interactions
-                document.addEventListener('click', (e) => {
-                    if (e.target.matches('details summary')) {
-                        const faqText = e.target.textContent.substring(0, 50);
-                        if (typeof gtag !== 'undefined') {
-                            gtag('event', 'faq_interaction', {
-                                question: faqText
-                            });
-                        }
-                    }
-                });
-
-                // Track scroll depth
-                let maxScroll = 0;
-                window.addEventListener('scroll', () => {
-                    const scrollPercent = Math.round((window.pageYOffset / (document.body.scrollHeight - window.innerHeight)) * 100);
-                    if (scrollPercent > maxScroll) {
-                        maxScroll = scrollPercent;
-                        
-                        if ([25, 50, 75, 90].includes(scrollPercent) && typeof gtag !== 'undefined') {
-                            gtag('event', 'scroll_depth', {
-                                percent: scrollPercent
-                            });
-                        }
-                    }
-                }, { passive: true });
-            }
         }
         
         // ===============================================
         // CHECKOUT FUNCTION
         // ===============================================
         
-        async function checkout() {
-            // Track checkout attempt
-            if (typeof gtag !== 'undefined') {
-                gtag('event', 'begin_checkout', {
-                    currency: STRIPE_CONFIG.currency,
-                    value: STRIPE_CONFIG.amount,
-                    items: [{
-                        item_id: 'dtmm',
-                        item_name: STRIPE_CONFIG.name,
-                        price: STRIPE_CONFIG.amount,
-                        quantity: 1
-                    }]
-                });
-            }
-            
-            // Development mode
-            if (window.location.hostname === 'localhost' || 
-                window.location.hostname === '127.0.0.1' ||
-                window.location.hostname.includes('github.io')) {
-                
-                showDevModal();
-                return;
-            }
-            
-            // Production mode
-            if (!STRIPE_PUBLIC_KEY || STRIPE_PUBLIC_KEY.includes('TU_CLAVE')) {
-                alert('Error: Configuración de pagos pendiente. Contacta soporte.');
-                return;
-            }
-            
-            const stripe = Stripe(STRIPE_PUBLIC_KEY);
-            
-            try {
-                const { error } = await stripe.redirectToCheckout({
-                    lineItems: [{
-                        price: STRIPE_CONFIG.priceId,
-                        quantity: 1,
-                    }],
-                    mode: 'payment',
-                    successUrl: `${window.location.origin}/thanks.html?plan=dtmm&session_id={CHECKOUT_SESSION_ID}`,
-                    cancelUrl: `${window.location.origin}/#plan`,
-                    customerEmail: null,
-                    billingAddressCollection: 'auto',
-                    locale: 'es',
-                });
-                
-                if (error) {
-                    console.error('Error en checkout:', error);
-                    alert('Error al procesar el pago. Por favor, inténtalo de nuevo.');
-                }
-            } catch (err) {
-                console.error('Error de Stripe:', err);
-                // Fallback to Payment Link
-                const fallbackUrl = 'https://buy.stripe.com/TU_PAYMENT_LINK_DTMM'; // 🔥 ACTUALIZAR
-                if (fallbackUrl.includes('TU_PAYMENT')) {
-                    alert('Error de configuración. Contacta soporte: hola@lareddeluz.com');
-                } else {
-                    window.location.href = fallbackUrl;
-                }
-            }
-        }
-        
-        function showDevModal() {
+        function checkout() {
+            // Mostrar modal de desarrollo
             const modal = document.createElement('div');
             modal.className = 'fixed inset-0 bg-black/80 flex items-center justify-center z-50 backdrop-blur-sm';
             modal.innerHTML = `
-                <div class="bg-void-medium p-8 rounded-2xl max-w-md mx-4 text-center border border-gold-light/20">
+                <div class="bg-void-medium p-8 rounded-2xl max-w-md mx-4 text-center border border-violet-light/20">
                     <div class="text-4xl mb-4">🚀</div>
-                    <h3 class="text-2xl font-bold text-gold-light mb-4">Modo Desarrollo</h3>
+                    <h3 class="text-2xl font-bold text-violet-light mb-4">DTMM Bootcamp</h3>
                     <div class="text-left mb-6 space-y-2">
-                        <p class="text-white/80"><strong>Programa:</strong> ${STRIPE_CONFIG.name}</p>
-                        <p class="text-white/80"><strong>Precio:</strong> ${STRIPE_CONFIG.amount} ${STRIPE_CONFIG.currency}</p>
-                        <p class="text-white/80"><strong>Price ID:</strong> ${STRIPE_CONFIG.priceId}</p>
+                        <p class="text-white/80"><strong>Fechas:</strong> 25-29 Agosto 2025</p>
+                        <p class="text-white/80"><strong>Precio:</strong> $1,000 MXN</p>
+                        <p class="text-white/80"><strong>Modalidad:</strong> Online con comunidad</p>
                     </div>
                     <p class="text-white/60 text-sm mb-6">
                         En producción, esto redirigirá a Stripe Checkout con pagos reales.
                     </p>
                     <button onclick="this.parentElement.parentElement.remove()" 
-                            class="glass-button-gold text-gold-light px-6 py-3 rounded-lg font-semibold">
+                            class="bg-gradient-to-r from-violet-light to-cyan-light text-white px-6 py-3 rounded-lg font-semibold">
                         Cerrar
                     </button>
                 </div>
@@ -917,32 +1048,9 @@
         
         document.addEventListener('DOMContentLoaded', () => {
             new PremiumLanding();
-            console.log('✨ DTMM Premium Landing cargada!');
-            
-            // URL tracking
-            const urlParams = new URLSearchParams(window.location.search);
-            const source = urlParams.get('utm_source');
-            if (source && typeof gtag !== 'undefined') {
-                gtag('event', 'page_view_source', {
-                    source: source,
-                    medium: urlParams.get('utm_medium') || 'unknown'
-                });
-            }
+            new NeuralNetworkAnimation('networkBg');
+            console.log('✨ DTMM Premium Landing cargada con nueva paleta!');
         });
     </script>
-    
-    <!-- Stripe.js -->
-    <script src="https://js.stripe.com/v3/"></script>
-    
-    <!-- Analytics (Descomentar cuando tengas los IDs) -->
-    <!-- 
-    <script async src="https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', 'GA_MEASUREMENT_ID');
-    </script>
-    -->
 </body>
 </html>
