@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Javier Millán — De tu mente al mundo</title>
+    <meta name="description" content="Ingeniero de software con una década construyendo sistemas. Te ayudo a convertir tu mensaje en un embudo que atrae y precalifica a las personas correctas. Colaboremos.">
+    <meta name="theme-color" content="#08080a">
+
+    <meta property="og:title" content="Javier Millán — De tu mente al mundo">
+    <meta property="og:description" content="Un ingeniero que construye sistemas. Te ayudo a que tu voz llegue a las personas correctas.">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="assets/imgs/profile.png">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="css/styles.css">
+
+    <script>
+        tailwind.config = { theme: { extend: {
+            fontFamily: { sans: ['Inter','system-ui','sans-serif'], display: ['Fraunces','serif'] },
+            colors: { ink: '#f5f3ef', bg: '#08080a', accent: '#e8c87a' },
+        } } };
+    </script>
+</head>
+<body class="grain">
+
+    <!-- ============ PRELOADER ============ -->
+    <div id="preloader">
+        <div class="pre-line"><span>De tu mente al mundo</span></div>
+        <div class="pre-bar"><i></i></div>
+        <div class="pre-count">000</div>
+    </div>
+
+    <!-- ============ CURSOR ============ -->
+    <div class="cursor" aria-hidden="true"></div>
+    <div class="cursor-dot" aria-hidden="true"></div>
+
+    <!-- ============ HILO DE LUZ + CAPÍTULO ============ -->
+    <div class="thread" aria-hidden="true">
+        <div class="thread-track"></div>
+        <div class="thread-fill"></div>
+        <div class="thread-head"></div>
+    </div>
+    <div class="chapter-tag" aria-hidden="true"><b>00</b>&nbsp;&nbsp;Inicio</div>
+
+    <!-- ============ NAVBAR ============ -->
+    <header class="nav" id="nav">
+        <div class="container-page nav-inner">
+            <a href="#inicio" class="nav-logo">Javier <span>Millán</span></a>
+            <nav class="nav-links">
+                <a href="#scene-problema" class="nav-link">El problema</a>
+                <a href="#historia" class="nav-link">Mi historia</a>
+                <a href="#plan" class="nav-link">El plan</a>
+                <a href="#sistema" class="nav-link">El sistema</a>
+                <a href="#comunidad" class="nav-link">La Red de Luz</a>
+                <span class="magnetic"><a href="#colaboremos" class="btn btn-primary" style="--pad-y:0.6rem;--pad-x:1.25rem;font-size:0.84rem;">Colaboremos</a></span>
+            </nav>
+            <button class="menu-btn" id="menu-btn" aria-label="Abrir menú" aria-expanded="false" aria-controls="mobile-menu">
+                <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24"><path stroke-linecap="round" d="M4 7h16M4 12h16M4 17h16"/></svg>
+            </button>
+        </div>
+    </header>
+    <nav class="mobile-menu" id="mobile-menu" aria-label="Menú móvil">
+        <a href="#scene-problema">El problema</a>
+        <a href="#historia">Mi historia</a>
+        <a href="#plan">El plan</a>
+        <a href="#sistema">El sistema</a>
+        <a href="#para-quien">Para quién es</a>
+        <a href="#equipo">El equipo</a>
+        <a href="#comunidad">La Red de Luz</a>
+        <a href="#colaboremos">Colaboremos</a>
+    </nav>
+
+    <main>
+
+        <!-- ============ HERO ============ -->
+        <section class="hero" id="inicio" data-chapter="Inicio" data-num="00">
+            <div class="glow-amber" style="width:620px;height:620px;top:-160px;right:-160px;"></div>
+            <div class="container-page" style="z-index:2;">
+                <p class="eyebrow reveal hero-in">Marca personal · Sistemas · IA aplicada</p>
+                <h1 class="hero-title" style="margin-top:1.4rem;">
+                    <span class="line-mask"><span class="line-inner hero-mega">De tu mente</span></span>
+                    <span class="line-mask"><span class="line-inner hero-mega accent-gradient">al mundo.</span></span>
+                </h1>
+                <p class="hero-sub text-soft text-pretty reveal hero-in" style="margin-top:2rem;">
+                    Tu voz merece llegar a las personas correctas. Hoy no lo hace —
+                    y no es tu culpa. Déjame mostrarte por qué, y cómo lo cambiamos.
+                </p>
+                <div class="reveal hero-in" style="display:flex; flex-wrap:wrap; gap:0.9rem; margin-top:2.4rem;">
+                    <span class="magnetic">
+                        <a href="#colaboremos" class="btn btn-primary">Colaboremos
+                            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.7" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+                    </span>
+                    <a href="#scene-problema" class="btn btn-ghost">Baja y te cuento</a>
+                </div>
+                <div class="reveal hero-in" style="display:flex; flex-wrap:wrap; gap:0.5rem; margin-top:2.6rem;">
+                    <span class="tag">Ingeniero de software</span>
+                    <span class="tag">~10 años construyendo sistemas</span>
+                    <span class="tag">Guadalajara, MX</span>
+                </div>
+            </div>
+            <div class="scroll-hint" aria-hidden="true"><span>Scroll</span><span class="bar"></span></div>
+        </section>
+
+        <!-- ============ 01 · EL PROBLEMA (escena anclada) ============ -->
+        <section class="scene" id="scene-problema" data-chapter="El problema" data-num="01">
+            <div class="scene-pin">
+                <div class="container-page" style="width:100%;">
+                    <div class="scene-beat active">
+                        <div>
+                            <p class="beat-label text-mute">Lo que te dicen</p>
+                            <p class="beat-line" style="margin-top:1rem; max-width:18ch;">«Crea contenido. Construye tu marca personal.»</p>
+                        </div>
+                    </div>
+                    <div class="scene-beat">
+                        <div>
+                            <p class="beat-label accent">Lo que nadie te dice</p>
+                            <p class="beat-line" style="margin-top:1rem; max-width:22ch;">Que para eso necesitas <span class="accent">psicología, ventas, storytelling, marketing</span> y hasta un poco de IA. Tú. Solo.</p>
+                        </div>
+                    </div>
+                    <div class="scene-beat">
+                        <div>
+                            <p class="beat-label text-mute">El resultado</p>
+                            <p class="beat-line" style="margin-top:1rem; max-width:20ch;">Sigues invisible. Compitiendo por precio en grupos de Facebook.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- gancho hacia el siguiente capítulo -->
+            <div class="container-page section" style="padding-block: clamp(4rem,10vh,7rem);">
+                <p class="font-display split-words text-balance" style="font-size:clamp(1.6rem,4vw,2.8rem); max-width:24ch;">
+                    Publicar tus servicios no te diferencia. Conectar, sí. ¿Y quién te enseña a conectar?
+                </p>
+            </div>
+        </section>
+
+        <hr class="hairline">
+
+        <!-- ============ 02 · MI HISTORIA ============ -->
+        <section class="section" id="historia" data-chapter="Mi historia" data-num="02">
+            <div class="container-page">
+                <div class="grid lg:grid-cols-12 gap-12 items-center">
+                    <div class="lg:col-span-5 reveal">
+                        <div class="media media-4x5 media-tint" data-parallax="-8" style="max-width:420px;">
+                            <img src="assets/imgs/aprendiendo.jpg" alt="Javier Millán">
+                        </div>
+                    </div>
+                    <div class="lg:col-span-7">
+                        <p class="eyebrow reveal">Mi historia · Por qué confiar en mí</p>
+                        <h2 class="font-display split-words" style="font-size:clamp(2rem,4.8vw,3.4rem); margin-top:1rem; max-width:16ch;">
+                            No soy un gurú. Soy un ingeniero que ya pasó por ahí.
+                        </h2>
+                        <div class="reveal text-soft text-pretty" style="font-size:1.12rem; display:grid; gap:1.3rem; max-width:60ch; margin-top:1.6rem;">
+                            <p>Llevo cerca de <span class="text-ink">una década construyendo sistemas, integraciones y automatización a nivel empresarial</span>. Eso lo sé hacer, y con rigor.</p>
+                            <p>Lo demás lo aprendí a las malas: emprendí y fracasé. Sé lo que es ser invisible para los clientes. Me quemé creando contenido a diario sin estrategia, gastando una cantidad absurda de dinero, tiempo y energía.</p>
+                            <p>Por eso no vengo a venderte humo viral. Te cuento esto solo para ganarme el derecho a guiarte: <span class="text-ink">ya recorrí el camino que tú estás empezando.</span></p>
+                        </div>
+                        <blockquote class="pull accent reveal" style="font-size:clamp(1.3rem,3vw,1.8rem); margin-top:2rem; max-width:24ch;">
+                            "Soy humano como tú. La cago. Pero sé que voy a cumplir mi propósito."
+                        </blockquote>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <hr class="hairline">
+
+        <!-- ============ 03 · EL PLAN (scroll horizontal) ============ -->
+        <section class="h-scroll" id="plan" data-chapter="El plan" data-num="03">
+            <div class="h-pin">
+                <div class="h-track">
+                    <div class="h-intro">
+                        <p class="eyebrow">El plan</p>
+                        <h2 class="font-display" style="font-size:clamp(2rem,4.8vw,3.4rem); margin-top:1rem;">Tres pasos.<br>Sin tecnicismos.</h2>
+                        <p class="text-soft text-pretty" style="margin-top:1.2rem; max-width:32ch;">No necesitas dominar seis disciplinas. Necesitas un orden claro — y que la tecnología cargue el peso por ti.</p>
+                        <p class="text-mute" style="margin-top:1.5rem; font-size:0.8rem; letter-spacing:0.2em; text-transform:uppercase;">Desliza →</p>
+                    </div>
+
+                    <div class="h-panel"><div class="plan-card">
+                        <p class="big-n">01</p>
+                        <h3 class="font-display" style="font-size:1.7rem; margin-top:0.8rem;">Conecta con tu audiencia</h3>
+                        <p class="text-soft text-pretty" style="margin-top:0.9rem;">Que te conozcan y confíen: tu historia, tu porqué y el problema real que resuelves — aunque tu cliente ni lo haya notado todavía.</p>
+                    </div></div>
+
+                    <div class="h-panel"><div class="plan-card">
+                        <p class="big-n">02</p>
+                        <h3 class="font-display" style="font-size:1.7rem; margin-top:0.8rem;">Recibe WhatsApps más rápido</h3>
+                        <p class="text-soft text-pretty" style="margin-top:0.9rem;">Comunica cómo los beneficias y cómo les ahorras tiempo, para que te escriba la gente correcta — no para pelear por precio con todos.</p>
+                    </div></div>
+
+                    <div class="h-panel"><div class="plan-card">
+                        <p class="big-n">03</p>
+                        <h3 class="font-display" style="font-size:1.7rem; margin-top:0.8rem;">Monta un embudo con IA</h3>
+                        <p class="text-soft text-pretty" style="margin-top:0.9rem;">Un sistema, apoyado en tecnología actual, que precalifica tus prospectos por ti — sin herramientas caras y sin vivir pegado al teléfono.</p>
+                    </div></div>
+                </div>
+            </div>
+        </section>
+
+        <hr class="hairline">
+
+        <!-- ============ 04 · PARA QUIÉN ============ -->
+        <section class="section" id="para-quien" data-chapter="Para quién es" data-num="04">
+            <div class="container-page">
+                <p class="eyebrow reveal">¿Te suena?</p>
+                <h2 class="font-display split-words" style="font-size:clamp(2rem,4.8vw,3.4rem); margin-top:1rem; max-width:18ch;">Quizá te reconozcas en una de estas dos.</h2>
+                <div class="grid md:grid-cols-2 gap-5" style="margin-top:2.6rem;">
+                    <article class="glass-container reveal" style="padding:2.4rem;">
+                        <p class="num-index" style="margin-bottom:1.2rem;">A</p>
+                        <h3 class="font-display" style="font-size:1.7rem;">Tienes un negocio y quieres crecer</h3>
+                        <p class="text-soft text-pretty" style="margin-top:1rem;">Ya haces algo bien, pero dependes del boca a boca y de competir en grupos. Quieres que tu presencia online te traiga clientes mejores, no solo más baratos.</p>
+                    </article>
+                    <article class="glass-container reveal" style="padding:2.4rem;">
+                        <p class="num-index" style="margin-bottom:1.2rem;">B</p>
+                        <h3 class="font-display" style="font-size:1.7rem;">Estás en ceros y buscas por dónde empezar</h3>
+                        <p class="text-soft text-pretty" style="margin-top:1rem;">Tienes una idea, una voz, un propósito que aún no toma forma. Necesitas los pasos básicos y a alguien honesto que te diga qué sí funciona y qué no.</p>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <hr class="hairline">
+
+        <!-- ============ 05 · EL SISTEMA / EMBUDO ============ -->
+        <section class="section" id="sistema" data-chapter="El sistema" data-num="05" style="overflow:hidden;">
+            <div class="glow-amber" style="width:520px;height:520px;top:10%;left:-180px;"></div>
+            <div class="container-page" style="z-index:2;">
+                <div class="grid lg:grid-cols-12 gap-12">
+                    <div class="lg:col-span-6">
+                        <p class="eyebrow reveal">El sistema · Aquí soy ingeniero</p>
+                        <h2 class="font-display split-words" style="font-size:clamp(2rem,4.8vw,3.4rem); margin-top:1rem; max-width:16ch;">No es magia. Es un embudo bien diseñado.</h2>
+                        <div class="reveal text-soft text-pretty" style="font-size:1.12rem; display:grid; gap:1.2rem; max-width:54ch; margin-top:1.4rem;">
+                            <p>La calidad de los leads que recibes depende de <span class="text-ink">qué tan completo y bien diseñado esté tu embudo.</span> Ahí es donde una década construyendo sistemas se vuelve tu ventaja.</p>
+                            <p>Yo lo armo para que, de todos los que entran, solo lleguen a tu WhatsApp los que de verdad encajan. La tecnología hace el filtro; tú solo conversas y cierras.</p>
+                        </div>
+
+                        <div style="margin-top:2rem;">
+                            <div class="sys-step"><span class="s-n">1</span><div><h4 style="font-weight:600;">Entran todos</h4><p class="text-soft" style="font-size:0.95rem;">Tu mensaje y tus anuncios atraen gente al embudo.</p></div></div>
+                            <div class="sys-step"><span class="s-n">2</span><div><h4 style="font-weight:600;">El embudo filtra</h4><p class="text-soft" style="font-size:0.95rem;">Contenido, automatización e IA descartan a quien no encaja. Mejor diseño = mejores leads.</p></div></div>
+                            <div class="sys-step"><span class="s-n">3</span><div><h4 style="font-weight:600;">Salen pocos, pero listos</h4><p class="text-soft" style="font-size:0.95rem;">Prospectos precalificados llegan a tu WhatsApp, listos para hablar.</p></div></div>
+                        </div>
+                    </div>
+
+                    <div class="lg:col-span-6">
+                        <div class="sys-media">
+                            <div class="funnel-wrap" id="funnel">
+                                <div class="funnel"><div class="funnel-liquid"></div></div>
+                                <div class="funnel-particles"></div>
+                                <div class="funnel-stage s-top" style="top:7%;"><small>Entran todos</small></div>
+                                <div class="funnel-out"><small class="accent">Listos para hablar</small></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CTA en el pico de deseo (uso medido) -->
+                <div class="reveal" style="text-align:center; margin-top:3.5rem;">
+                    <p class="font-display text-balance" style="font-size:clamp(1.4rem,3vw,2rem); max-width:26ch; margin-inline:auto;">Imagina abrir WhatsApp y que solo te escriba gente lista para comprar.</p>
+                    <div class="magnetic" style="margin-top:1.6rem;">
+                        <a href="#colaboremos" class="btn btn-primary">Quiero ese embudo — Colaboremos
+                            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.7" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <hr class="hairline">
+
+        <!-- ============ 06 · LO QUE ESTÁ EN JUEGO (stakes) ============ -->
+        <section class="section" id="stakes" data-chapter="En juego" data-num="06">
+            <div class="container-page">
+                <div class="reveal" style="text-align:center; max-width:30ch; margin-inline:auto;">
+                    <p class="eyebrow">Lo que está en juego</p>
+                    <h2 class="font-display split-words" style="font-size:clamp(2rem,4.8vw,3.4rem); margin-top:1rem;">Dos caminos. Tú eliges.</h2>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-5" style="margin-top:3rem;">
+                    <!-- Fracaso -->
+                    <article class="card stake-fail" style="padding:clamp(1.8rem,4vw,2.6rem);">
+                        <p class="text-mute" style="font-size:0.78rem; letter-spacing:0.25em; text-transform:uppercase;">Si te quedas donde estás</p>
+                        <h3 class="font-display" style="font-size:1.6rem; margin-top:0.8rem; color:var(--ink-soft);">El camino de hoy</h3>
+                        <ul style="margin-top:1.4rem; display:grid; gap:1rem;">
+                            <li class="text-soft" style="display:flex; gap:0.7rem;"><span class="text-mute">—</span> Sigues invisible para los clientes que te necesitan.</li>
+                            <li class="text-soft" style="display:flex; gap:0.7rem;"><span class="text-mute">—</span> Te quemas creando contenido a diario, sin estrategia.</li>
+                            <li class="text-soft" style="display:flex; gap:0.7rem;"><span class="text-mute">—</span> Compites por precio en grupos de Facebook y estados de WhatsApp.</li>
+                            <li class="text-soft" style="display:flex; gap:0.7rem;"><span class="text-mute">—</span> Tu mensaje —el que podría cambiar vidas— se queda en tu cabeza.</li>
+                        </ul>
+                    </article>
+                    <!-- Éxito -->
+                    <article class="glass-container stake-win" style="padding:clamp(1.8rem,4vw,2.6rem); border-color:rgba(232,200,122,0.28);">
+                        <p class="accent" style="font-size:0.78rem; letter-spacing:0.25em; text-transform:uppercase;">Si das el paso</p>
+                        <h3 class="font-display accent-gradient" style="font-size:1.6rem; margin-top:0.8rem;">El camino conmigo</h3>
+                        <ul style="margin-top:1.4rem; display:grid; gap:1rem;">
+                            <li style="display:flex; gap:0.7rem;"><span class="accent">→</span> Tu voz llega a miles. Te encuentran las personas correctas.</li>
+                            <li style="display:flex; gap:0.7rem;"><span class="accent">→</span> Un embudo trabaja por ti mientras vives tu vida.</li>
+                            <li style="display:flex; gap:0.7rem;"><span class="accent">→</span> Dejas de rogar clientes: ellos te escriben, listos para hablar.</li>
+                            <li style="display:flex; gap:0.7rem;"><span class="accent">→</span> Perteneces a una comunidad que te empuja hacia tus sueños.</li>
+                        </ul>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <hr class="hairline">
+
+        <!-- ============ 07 · EL EQUIPO ============ -->
+        <section class="section" id="equipo" data-chapter="El equipo" data-num="07">
+            <div class="container-page">
+                <div class="grid lg:grid-cols-12 gap-12 items-end" style="margin-bottom:3rem;">
+                    <div class="lg:col-span-7">
+                        <p class="eyebrow reveal">El equipo</p>
+                        <h2 class="font-display split-words" style="font-size:clamp(2rem,4.8vw,3.4rem); margin-top:1rem; max-width:18ch;">Empecé solo. Llegó la gente correcta.</h2>
+                    </div>
+                    <div class="lg:col-span-5 reveal">
+                        <p class="text-soft text-pretty" style="font-size:1.05rem;">
+                            Durante un tiempo construí esto yo solo. Pero al compartir mi voz, empezaron a llegar
+                            las personas correctas — las que confían en mí y me ayudan a crecer. Eso es,
+                            justamente, lo que buscamos en La Red de Luz.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="grid md:grid-cols-3 gap-5">
+                    <article class="card reveal" style="padding:2rem;">
+                        <!-- TODO: reemplazar monograma por foto real de Lupita -->
+                        <div class="avatar-mono">L</div>
+                        <p class="role" style="margin-top:1.3rem;">Finanzas &amp; Visión</p>
+                        <h3 class="font-display" style="font-size:1.5rem; margin-top:0.3rem;">Lupita</h3>
+                        <p class="text-soft text-pretty" style="margin-top:0.8rem;">Contadora y visionaria, con participación en múltiples emprendimientos. Pone orden, números y estrategia donde otros solo ven caos.</p>
+                    </article>
+
+                    <article class="card reveal" style="padding:2rem;">
+                        <!-- TODO: reemplazar monograma por foto real de Arturo -->
+                        <div class="avatar-mono">A</div>
+                        <p class="role" style="margin-top:1.3rem;">Ventas &amp; Activación</p>
+                        <h3 class="font-display" style="font-size:1.5rem; margin-top:0.3rem;">Arturo</h3>
+                        <p class="text-soft text-pretty" style="margin-top:0.8rem;">Experto en ventas y activación social. Sabe convertir una comunidad en movimiento y un mensaje en clientes que llegan.</p>
+                    </article>
+
+                    <article class="card reveal" style="padding:2rem;">
+                        <div class="avatar-mono"><img src="assets/imgs/profile.png" alt="Javier Millán"></div>
+                        <p class="role" style="margin-top:1.3rem;">Sistemas &amp; Tecnología</p>
+                        <h3 class="font-display" style="font-size:1.5rem; margin-top:0.3rem;">Javier</h3>
+                        <p class="text-soft text-pretty" style="margin-top:0.8rem;">Una década de ingeniería de software al servicio de tu voz: el embudo, la automatización y la IA que trabajan por ti.</p>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <hr class="hairline">
+
+        <!-- ============ 08 · LA RED DE LUZ ============ -->
+        <section class="section" id="comunidad" data-chapter="La Red de Luz" data-num="08" style="overflow:hidden;">
+            <div class="glow-amber" style="width:480px;height:480px;bottom:-160px;left:35%;"></div>
+            <div class="container-page" style="z-index:2;">
+                <div class="grid lg:grid-cols-12 gap-12 items-center">
+                    <div class="lg:col-span-6">
+                        <p class="eyebrow reveal">La Red de Luz</p>
+                        <h2 class="font-display split-words" style="font-size:clamp(2.1rem,5vw,3.6rem); margin-top:1rem; max-width:14ch;">No tienes que hacerlo solo.</h2>
+                        <div class="reveal text-soft text-pretty" style="font-size:1.15rem; display:grid; gap:1.2rem; max-width:54ch; margin-top:1.4rem;">
+                            <p>Más que una comunidad, es un <span class="text-ink">ecosistema</span>: un contexto que te ayuda a desarrollar el mindset, las técnicas, las habilidades y las herramientas con las que puedes crecer — y apoyar a otros. Haces equipo, sinergia, y te apoyas de verdad.</p>
+                            <p>Un lugar que te empuja hacia tus sueños: no importa qué idea traigas — aunque al principio no la entendamos del todo — aquí todos te decimos que <span class="text-ink">sí es posible, que sí lo puedes lograr.</span></p>
+                        </div>
+                        <div class="reveal" style="margin-top:2rem;">
+                            <a href="https://lareddeluz.com" target="_blank" rel="noopener" class="btn btn-ghost">Conoce La Red de Luz
+                                <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.7" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M7 17 17 7M9 7h8v8"/></svg></a>
+                        </div>
+                    </div>
+                    <div class="lg:col-span-6 reveal">
+                        <div class="media media-16x9 media-tint glass-container" data-parallax="-6">
+                            <img src="assets/imgs/community.jpg" alt="La Red de Luz">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <hr class="hairline">
+
+        <!-- ============ 09 · COLABOREMOS (form -> WhatsApp) ============ -->
+        <section class="section" id="colaboremos" data-chapter="Colaboremos" data-num="09">
+            <div class="container-page">
+                <div class="grid lg:grid-cols-12 gap-12">
+                    <div class="lg:col-span-5">
+                        <p class="eyebrow reveal">El momento justo</p>
+                        <h2 class="font-display split-words" style="font-size:clamp(2.1rem,5vw,3.6rem); margin-top:1rem; max-width:14ch;">Da el paso. Yo lo doy contigo.</h2>
+                        <div class="reveal text-soft text-pretty" style="font-size:1.1rem; display:grid; gap:1.1rem; max-width:48ch; margin-top:1.4rem;">
+                            <p>Quiero que lleguen las personas correctas, dispuestas a dar el paso conmigo — así como yo lo daré con ellas. Si algo de esto resonó contigo, escríbeme.</p>
+                            <p class="text-mute" style="font-size:0.95rem;">Cuéntame qué haces y en qué andas. Al enviar, seguimos directo en WhatsApp.</p>
+                        </div>
+                        <div class="reveal" style="margin-top:1.8rem;">
+                            <a href="https://wa.me/526221424577?text=Hola%20Javier%2C%20quiero%20colaborar%20contigo." target="_blank" rel="noopener" class="btn btn-ghost">
+                                <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163a11.867 11.867 0 0 1-1.587-5.946C.16 5.335 5.495 0 12.05 0a11.817 11.817 0 0 1 8.413 3.488 11.824 11.824 0 0 1 3.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 0 1-5.688-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884a9.86 9.86 0 0 0 1.51 5.26l-.999 3.648 3.488-.916zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
+                                Escríbeme directo por WhatsApp
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="lg:col-span-7 reveal">
+                        <form class="glass-container" id="lead-form" novalidate style="padding:clamp(1.6rem,4vw,2.6rem);">
+                            <h3 class="font-display" style="font-size:1.6rem; margin-bottom:1.6rem;">Quiero colaborar</h3>
+                            <div style="display:grid; gap:1.2rem;">
+                                <div class="field">
+                                    <label for="nombre">¿Cómo te llamas?</label>
+                                    <input class="input" type="text" id="nombre" name="nombre" autocomplete="name" placeholder="Tu nombre">
+                                    <span class="field-error" data-error-for="nombre"></span>
+                                </div>
+                                <div class="field">
+                                    <label for="mensaje">¿A qué te dedicas? Tu mensaje o idea</label>
+                                    <textarea class="textarea" id="mensaje" name="mensaje" placeholder="Cuéntame qué haces, qué te trae aquí o qué idea traes en mente…"></textarea>
+                                    <span class="field-error" data-error-for="mensaje"></span>
+                                </div>
+                                <div class="field">
+                                    <label for="ayuda">¿En qué te puedo ayudar? <span class="text-mute">(opcional)</span></label>
+                                    <input class="input" type="text" id="ayuda" name="ayuda" placeholder="Atraer clientes, montar un embudo con IA, empezar de cero…">
+                                </div>
+                                <div class="hp" aria-hidden="true">
+                                    <label for="website">No llenar</label>
+                                    <input type="text" id="website" name="website" tabindex="-1" autocomplete="off">
+                                </div>
+                                <div class="form-status" role="status" aria-live="polite"></div>
+                                <button type="submit" class="btn btn-primary btn-block" style="margin-top:0.3rem;"><span class="btn-label">Enviar por WhatsApp</span></button>
+                                <p class="text-mute" style="font-size:0.8rem; text-align:center;">Sin spam. Se abre WhatsApp con tu mensaje listo para enviar.</p>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- ============ FOOTER ============ -->
+    <footer class="footer">
+        <div class="container-page">
+            <div class="grid md:grid-cols-3 gap-8 items-center">
+                <div>
+                    <a href="#inicio" class="nav-logo">Javier <span>Millán</span></a>
+                    <p class="text-mute" style="font-size:0.9rem; margin-top:0.6rem; max-width:30ch;">Crear una red de luz: millones de personas compartiendo su voz online.</p>
+                </div>
+                <div style="display:flex; gap:0.8rem; justify-content:center;">
+                    <a href="https://wa.me/526221424577" target="_blank" rel="noopener" class="social-link" aria-label="WhatsApp">
+                        <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163a11.867 11.867 0 0 1-1.587-5.946C.16 5.335 5.495 0 12.05 0a11.817 11.817 0 0 1 8.413 3.488 11.824 11.824 0 0 1 3.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 0 1-5.688-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884a9.86 9.86 0 0 0 1.51 5.26l-.999 3.648 3.488-.916zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
+                    </a>
+                    <a href="https://lareddeluz.com" target="_blank" rel="noopener" class="social-link" aria-label="La Red de Luz">
+                        <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path stroke-linecap="round" d="M12 2v3m0 14v3M2 12h3m14 0h3M5 5l2 2m10 10 2 2M19 5l-2 2M7 17l-2 2"/></svg>
+                    </a>
+                </div>
+                <div style="text-align:right;">
+                    <p class="text-mute" style="font-size:0.85rem;">© <span id="year">2026</span> Javier Millán · Guadalajara, MX</p>
+                    <p class="text-mute" style="font-size:0.85rem; margin-top:0.2rem;">De tu mente al mundo.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+    <script src="scripts/script.js"></script>
+</body>
+</html>
