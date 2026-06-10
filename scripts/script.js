@@ -1,5 +1,5 @@
 /* =====================================================================
-   JAVIER MILLÁN — "El hilo de luz"  ·  JS narrativo (reescrito)
+   DE TU MENTE AL MUNDO — "El hilo de luz"  ·  JS narrativo (reescrito)
    Preloader · cursor · smooth scroll (Lenis) · split de texto ·
    hilo de progreso · escena anclada · scroll horizontal · embudo ·
    botón magnético · captación de leads -> WhatsApp.
@@ -313,11 +313,18 @@ function initHorizontalPlan() {
 
     const panels = wrap.querySelectorAll('.h-panel').length || 3;
     const rail = addSceneRail(pin, panels);
-    const distance = () => track.scrollWidth - window.innerWidth + 80;
+    // recorrido horizontal real (cuánto viaja el track de izq. a der.)
+    const distance = () => track.scrollWidth - window.innerWidth + 120;
+    // recorrido vertical de scroll: más largo que el horizontal => sensación
+    // pausada y cinematográfica (antes era 1:1 y se sentía muy breve)
+    const scrollLen = () => distance() * 2.4;
     gsap.to(track, {
         x: () => -distance(), ease: 'none',
-        scrollTrigger: { trigger: wrap, start: 'top top', end: () => '+=' + distance(),
+        scrollTrigger: { trigger: wrap, start: 'top top', end: () => '+=' + scrollLen(),
             pin: pin, scrub: 1, invalidateOnRefresh: true,
+            // mientras el plan está anclado, ocultamos el indicador vertical
+            // global para que no se encime con la tarjeta de la derecha
+            onToggle: (self) => document.body.classList.toggle('section-pinned', self.isActive),
             onUpdate: (self) => rail.update(self.progress, Math.min(panels - 1, Math.floor(self.progress * panels))) },
     });
 }
@@ -459,7 +466,7 @@ function initLeadForm() {
         if (submitBtn) submitBtn.classList.add('loading');
         if (submitLabel) submitLabel.innerHTML = '<span class="spinner"></span>&nbsp; Abriendo WhatsApp…';
 
-        const lines = ['Hola Javier, quiero colaborar contigo.', '', `Nombre: ${nombre}`, `A qué me dedico / mi idea: ${mensaje}`];
+        const lines = ['Hola, quiero reservar mi lugar en la masterclass De tu mente al mundo.', '', `Nombre: ${nombre}`, `A qué me dedico / mi idea: ${mensaje}`];
         if (ayuda) lines.push(`En qué me puedes ayudar: ${ayuda}`);
         const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(lines.join('\n'))}`;
 
