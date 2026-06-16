@@ -10,12 +10,13 @@
 // 26 jun 2026, 7:30 PM, hora del centro de México (UTC-6, sin DST).
 const MASTERCLASS_DATE = new Date('2026-06-26T19:30:00-06:00');
 
-// Link de invitación al grupo de WhatsApp.
-// TODO: pegar aquí el enlace real cuando se cree el grupo.
-const WHATSAPP_GROUP_URL = 'https://chat.whatsapp.com/XXXXXXXXXXXXXXXXXX';
-// Fallback mientras no exista el grupo: mensaje directo para apartar lugar.
-const WHATSAPP_FALLBACK = 'https://wa.me/526221424577?text=' +
-    encodeURIComponent('Hola, quiero apartar mi lugar en la masterclass "Por qué nadie te escribe" (De tu mente al mundo).');
+// Grupos de WhatsApp — UNO POR HORARIO.
+// TODO: pegar aquí los enlaces reales de invitación cuando se creen los grupos.
+const WHATSAPP_GROUP_26 = 'https://chat.whatsapp.com/KdxeIeohnrp3v8hJHzU68J';   // Jueves 26 jun · 7:30 PM
+const WHATSAPP_GROUP_27 = 'https://chat.whatsapp.com/CqCcTClOV2zHMI2QQ4y2VI';  // Viernes 27 jun · 11:00 AM
+// Fallback mientras no existan los grupos: mensaje directo, indicando el horario elegido.
+const waFallback = (horario) => 'https://wa.me/526221424577?text=' +
+    encodeURIComponent(`Hola, quiero apartar mi lugar en la masterclass "Por qué nadie te escribe" — horario: ${horario}.`);
 
 const RM = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 const isDesktop = () => window.innerWidth >= 860;
@@ -29,7 +30,19 @@ let lenis = null;
 function runPreloader(onDone) {
     const pre = document.getElementById('preloader');
     if (!pre) { onDone(); return; }
-    if (RM || !window.gsap) { pre.classList.add('done'); pre.style.display = 'none'; onDone(); return; }
+
+    // Garantiza que el sitio SIEMPRE se desbloquee, aunque la animación falle.
+    let finished = false;
+    const finish = () => {
+        if (finished) return;
+        finished = true;
+        pre.classList.add('done');
+        pre.style.display = 'none';
+        document.body.classList.remove('is-locked');
+        onDone();
+    };
+
+    if (RM || !window.gsap) { finish(); return; }
 
     document.body.classList.add('is-locked');
     const spans = pre.querySelectorAll('.pre-line span');
@@ -37,12 +50,15 @@ function runPreloader(onDone) {
     const count = pre.querySelector('.pre-count');
     const counter = { v: 0 };
 
-    const tl = gsap.timeline({ onComplete: () => { pre.classList.add('done'); document.body.classList.remove('is-locked'); onDone(); } });
+    // Red de seguridad: si la timeline no termina en 4.5s (pestaña en 2º plano,
+    // GSAP atascado, rAF throttled…), forzamos la entrada de todos modos.
+    const safety = setTimeout(finish, 4500);
+
+    const tl = gsap.timeline({ onComplete: () => { clearTimeout(safety); finish(); } });
     tl.to(spans, { yPercent: -100, duration: 0.9, ease: 'expo.out', stagger: 0.08 }, 0.1)
       .to(bar, { scaleX: 1, duration: 1.1, ease: 'power2.inOut' }, 0.2)
       .to(counter, { v: 100, duration: 1.1, ease: 'power2.inOut', onUpdate: () => { if (count) count.textContent = String(Math.round(counter.v)).padStart(3, '0'); } }, 0.2)
-      .to(pre, { yPercent: -100, duration: 0.9, ease: 'expo.inOut' }, '+=0.25')
-      .set(pre, { display: 'none' });
+      .to(pre, { yPercent: -100, duration: 0.9, ease: 'expo.inOut' }, '+=0.25');
 }
 
 /* ===================================================================
@@ -299,10 +315,8 @@ function initCountdown() {
         const diff = MASTERCLASS_DATE.getTime() - Date.now();
         if (diff <= 0) {
             clocks.forEach((c) => { c.classList.add('live'); write(c, 0, 0, 0, 0); });
-            if (label) label.textContent = '¡Estamos en vivo! Entra al grupo y te paso el acceso';
+            if (label) label.textContent = '¡Estamos en vivo! Entra al grupo de tu horario';
             clearInterval(timer);
-            const cta = document.getElementById('wa-group');
-            if (cta) cta.querySelector('svg') && (cta.lastChild.textContent = ' Entrar a la sesión en vivo');
             return;
         }
         const days = Math.floor(diff / 86400000);
@@ -319,11 +333,45 @@ function initCountdown() {
    CTA grupo WhatsApp (usa link real si existe; si no, fallback DM)
    =================================================================== */
 function initWhatsApp() {
-    const cta = document.getElementById('wa-group');
-    if (!cta) return;
-    const valid = WHATSAPP_GROUP_URL && !/XXXX/.test(WHATSAPP_GROUP_URL);
-    cta.href = valid ? WHATSAPP_GROUP_URL : WHATSAPP_FALLBACK;
-    cta.target = '_blank'; cta.rel = 'noopener';
+    const modal = document.getElementById('horario-modal');
+    if (!modal) return;
+    const opt26 = document.getElementById('opt-26');
+    const opt27 = document.getElementById('opt-27');
+
+    // Asigna el link real del grupo si existe; si no, cae al DM con el horario.
+    const setLink = (el, url, horario) => {
+        if (!el) return;
+        const valid = url && !/XXXX/.test(url);
+        el.href = valid ? url : waFallback(horario);
+    };
+    setLink(opt26, WHATSAPP_GROUP_26, 'Jueves 26 de junio, 7:30 PM');
+    setLink(opt27, WHATSAPP_GROUP_27, 'Viernes 27 de junio, 11:00 AM');
+
+    let lastFocus = null;
+    const open = () => {
+        lastFocus = document.activeElement;
+        modal.classList.add('open');
+        modal.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden';
+        if (lenis) lenis.stop();
+        const first = modal.querySelector('.modal-opt');
+        if (first) first.focus();
+    };
+    const close = () => {
+        modal.classList.remove('open');
+        modal.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = '';
+        if (lenis) lenis.start();
+        if (lastFocus && lastFocus.focus) lastFocus.focus();
+    };
+
+    document.querySelectorAll('[data-open-horario]').forEach((btn) =>
+        btn.addEventListener('click', (e) => { e.preventDefault(); open(); }));
+    modal.querySelectorAll('[data-modal-close]').forEach((el) =>
+        el.addEventListener('click', close));
+    // al elegir un horario, cerramos el modal (el link abre en pestaña nueva)
+    [opt26, opt27].forEach((o) => o && o.addEventListener('click', () => setTimeout(close, 80)));
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && modal.classList.contains('open')) close(); });
 }
 
 /* ===================================================================

@@ -46,7 +46,7 @@
                 <a href="#arma" class="nav-link">La receta</a>
                 <a href="#clic" class="nav-link">El clic</a>
                 <a href="#masterclass" class="nav-link">La clase</a>
-                <a href="#mago" class="nav-link">Quién la da</a>
+                <a href="#mago" class="nav-link">Impartida por</a>
                 <span class="magnetic"><a href="#umbral" class="btn btn-primary" style="--pad-y:0.55rem;--pad-x:1.15rem;font-size:0.82rem;">Aparta tu lugar</a></span>
             </nav>
             <button class="menu-btn" id="menu-btn" aria-label="Abrir menú" aria-expanded="false" aria-controls="mobile-menu">
@@ -63,7 +63,7 @@
         <a href="#arma">La receta</a>
         <a href="#clic">El clic</a>
         <a href="#masterclass">La clase</a>
-        <a href="#mago">Quién la da</a>
+        <a href="#mago">Impartida por</a>
         <a href="#umbral">Aparta tu lugar</a>
     </nav>
 
@@ -266,7 +266,7 @@
                             </div>
 
                             <div class="magnetic" style="margin-top:1.8rem; width:100%;">
-                                <a href="#umbral" class="btn btn-primary btn-block">Aparta tu lugar — es gratis</a>
+                                <button type="button" data-open-horario class="btn btn-primary btn-block">Aparta tu lugar — es gratis</button>
                             </div>
                         </div>
 
@@ -288,11 +288,11 @@
         </section>
 
         <!-- ============ 07 · EL MAGO / mentor (papel) ============ -->
-        <section class="block on-light" id="mago" data-chapter="Quién la da" data-num="07">
+        <section class="block on-light" id="mago" data-chapter="Impartida por" data-num="07">
             <div class="wrap">
                 <div style="display:grid; grid-template-columns: 1fr; gap:clamp(1.5rem,4vw,3rem); max-width:760px;">
                     <div>
-                        <p class="eyebrow reveal">Quién la da</p>
+                        <p class="eyebrow reveal">Impartida por</p>
                         <div class="reveal" style="display:flex; align-items:center; gap:1.1rem; margin-top:1.4rem;">
                             <span class="mage-portrait"><img src="assets/imgs/profile.png" alt="Javier Millán" onerror="this.parentNode.textContent='J'"></span>
                             <div>
@@ -374,11 +374,10 @@
 
                 <div class="reveal" style="display:flex; flex-direction:column; align-items:center; gap:1rem; margin-top:2.6rem;">
                     <span class="magnetic">
-                        <!-- TODO: reemplazar con el link de invitación del grupo de WhatsApp -->
-                        <a href="#" id="wa-group" class="btn btn-wa" style="--pad-y:1.05rem;--pad-x:2rem;font-size:1.02rem;">
+                        <button type="button" data-open-horario class="btn btn-wa" style="--pad-y:1.05rem;--pad-x:2rem;font-size:1.02rem;">
                             <svg width="22" height="22" fill="currentColor" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163a11.867 11.867 0 0 1-1.587-5.946C.16 5.335 5.495 0 12.05 0a11.817 11.817 0 0 1 8.413 3.488 11.824 11.824 0 0 1 3.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 0 1-5.688-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884a9.86 9.86 0 0 0 1.51 5.26l-.999 3.648 3.488-.916zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
                             Entrar al grupo de WhatsApp
-                        </a>
+                        </button>
                     </span>
                     <p class="wa-note">Cupo de la sesión en vivo limitado · 26 jun 7:30 PM &nbsp;·&nbsp; 27 jun 11:00 AM</p>
                 </div>
@@ -408,6 +407,37 @@
             </div>
         </div>
     </footer>
+
+    <!-- ============ MODAL: elegir horario → grupo de WhatsApp ============ -->
+    <div class="modal" id="horario-modal" aria-hidden="true">
+        <div class="modal-backdrop" data-modal-close></div>
+        <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+            <button class="modal-x" data-modal-close aria-label="Cerrar">
+                <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" viewBox="0 0 24 24"><path stroke-linecap="round" d="M6 6l12 12M18 6 6 18"/></svg>
+            </button>
+            <p class="eyebrow" style="color:var(--sesame);">Aparta tu lugar</p>
+            <h3 class="display" id="modal-title" style="font-size:clamp(1.5rem,4vw,2.1rem); margin-top:0.8rem; max-width:20ch;">¿Qué horario te acomoda?</h3>
+            <p style="color:var(--on-char-soft); font-size:1rem; margin-top:0.8rem; max-width:36ch;">Elige uno y entras al grupo de esa sesión. Ahí te mando el acceso y los recordatorios.</p>
+
+            <div class="modal-options">
+                <a href="#" class="modal-opt" id="opt-26" target="_blank" rel="noopener">
+                    <span class="mo-day">Jueves 26 de junio</span>
+                    <span class="mo-time mono">7:30 PM</span>
+                    <span class="mo-go">Entrar al grupo
+                        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M13 6l6 6-6 6"/></svg>
+                    </span>
+                </a>
+                <a href="#" class="modal-opt" id="opt-27" target="_blank" rel="noopener">
+                    <span class="mo-day">Viernes 27 de junio</span>
+                    <span class="mo-time mono">11:00 AM</span>
+                    <span class="mo-go">Entrar al grupo
+                        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M13 6l6 6-6 6"/></svg>
+                    </span>
+                </a>
+            </div>
+            <p class="wa-note" style="margin-top:1.2rem; text-align:center;">Hora del centro de México · Es gratis</p>
+        </div>
+    </div>
 
     <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
