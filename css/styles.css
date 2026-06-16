@@ -1,453 +1,441 @@
 /* =====================================================================
-   JAVIER MILLÁN — "El hilo de luz"
-   Experiencia narrativa: scrollytelling cinematográfico, hilo luminoso
-   continuo, escenas ancladas, embudo animado. Editorial luxury.
+   DE TU MENTE AL MUNDO — "La hamburguesa que no pediste"
+   Masterclass: Por qué nadie te escribe (disponibilidad mental).
+   Scroll FX narrativo: la hamburguesa se arma capa por capa (cada capa
+   = un acto). Voz: el Mago cálido. Estética: diner a medianoche +
+   anotación blueprint. Editorial, premium, Awwwards-grade pero funcional.
    ===================================================================== */
 
 /* ---------- Tokens ---------- */
 :root {
-    --bg:            #08080a;
-    --bg-soft:       #0f0f12;
-    --bg-elev:       #16161a;
-    --line:          rgba(245, 243, 239, 0.10);
-    --line-strong:   rgba(245, 243, 239, 0.18);
+    /* Diner a medianoche: carbón cálido ↔ papel encerado */
+    --char:        #19140f;   /* carbón cálido (no negro frío) */
+    --char-soft:   #241d16;   /* superficie elevada oscura */
+    --char-line:   rgba(243, 234, 215, 0.12);
+    --char-line-2: rgba(243, 234, 215, 0.22);
 
-    --ink:           #f5f3ef;
-    --ink-soft:      #b9b6ae;
-    --ink-mute:      #74726b;
+    --paper:       #f3ead7;   /* papel encerado, crema cálida */
+    --paper-soft:  #ece0c6;
+    --paper-line:  rgba(25, 20, 15, 0.14);
+    --paper-line-2:rgba(25, 20, 15, 0.26);
 
-    --accent:        #e8c87a;
-    --accent-deep:   #c9a227;
-    --accent-soft:   rgba(232, 200, 122, 0.12);
-    --glow:          rgba(232, 200, 122, 0.55);
+    --sesame:      #e8a13c;   /* pan tostado / mostaza — acento, "luz que revela" */
+    --sesame-hi:   #f6c06a;
+    --ketchup:     #c8442e;   /* rojo quemado — tensión/urgencia, uso mínimo */
+    --lettuce:     #7c9a3e;   /* verde lechuga apagado — acento raro */
 
-    --radius:        18px;
-    --radius-sm:     12px;
-    --maxw:          1200px;
-    --ease:          cubic-bezier(0.22, 1, 0.36, 1);
-    --ease-io:       cubic-bezier(0.65, 0, 0.35, 1);
+    /* texto sobre carbón */
+    --on-char:        #f3ead7;
+    --on-char-soft:   #c4b69d;
+    --on-char-mute:   #8a7c68;
+    /* texto sobre papel */
+    --on-paper:       #221a12;
+    --on-paper-soft:  #5c4f3d;
+    --on-paper-mute:  #8a7d6a;
+
+    --glow:        rgba(232, 161, 60, 0.5);
+
+    --radius:      16px;
+    --radius-sm:   10px;
+    --maxw:        1240px;
+    --ease:        cubic-bezier(0.22, 1, 0.36, 1);
+    --ease-io:     cubic-bezier(0.76, 0, 0.24, 1);
 }
 
 /* ---------- Reset / base ---------- */
 * { box-sizing: border-box; margin: 0; padding: 0; }
-
-html { -webkit-text-size-adjust: 100%; }
+html { -webkit-text-size-adjust: 100%; scroll-behavior: auto; overflow-x: hidden; width: 100%; }
 
 body {
-    background: var(--bg);
-    color: var(--ink);
+    background: var(--char);
+    color: var(--on-char);
     font-family: 'Inter', system-ui, -apple-system, sans-serif;
-    line-height: 1.6;
+    line-height: 1.62;
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
     overflow-x: hidden;
+    width: 100%;
+    max-width: 100vw;
     overflow-wrap: break-word;
 }
 body.is-locked { overflow: hidden; height: 100vh; }
-
 .lenis.lenis-smooth { scroll-behavior: auto !important; }
 .lenis.lenis-stopped { overflow: hidden; }
 
 img { display: block; max-width: 100%; }
 a { color: inherit; text-decoration: none; }
 button { font: inherit; cursor: pointer; }
-
-::selection { background: var(--accent); color: #1a1505; }
+::selection { background: var(--sesame); color: #1a1505; }
 
 /* ---------- Tipografía ---------- */
-.font-display {
+.display {
     font-family: 'Fraunces', 'Times New Roman', serif;
-    font-weight: 400;
+    font-weight: 380;
+    font-optical-sizing: auto;
     letter-spacing: -0.02em;
-    line-height: 1.02;
+    line-height: 1.0;
 }
-.italic-d { font-style: italic; }
+.display.italic { font-style: italic; font-weight: 360; }
 
+/* utility / blueprint: Space Grotesk (técnica sin sabor a recibo) */
+.mono {
+    font-family: 'Space Grotesk', 'SFMono-Regular', ui-monospace, monospace;
+    font-feature-settings: "tnum" 1;
+}
 .eyebrow {
+    font-family: 'Space Grotesk', monospace;
     font-size: 0.72rem;
-    letter-spacing: 0.28em;
+    letter-spacing: 0.34em;
     text-transform: uppercase;
-    color: var(--ink-mute);
     font-weight: 500;
 }
-.accent { color: var(--accent); }
-.text-soft { color: var(--ink-soft); }
-.text-mute { color: var(--ink-mute); }
-.text-ink  { color: var(--ink); }
-.text-balance { text-wrap: balance; }
-.text-pretty  { text-wrap: pretty; }
-
-.accent-gradient {
-    background: linear-gradient(100deg, #f4dca0 0%, var(--accent-deep) 100%);
-    -webkit-background-clip: text; background-clip: text;
-    -webkit-text-fill-color: transparent; color: transparent;
-}
+.accent { color: var(--sesame); }
+.balance { text-wrap: balance; }
+.pretty  { text-wrap: pretty; }
 
 /* ---------- Layout ---------- */
-.container-page {
+.wrap {
     width: 100%;
     max-width: var(--maxw);
     margin-inline: auto;
-    padding-inline: clamp(1.25rem, 5vw, 3rem);
+    padding-inline: clamp(1.25rem, 5vw, 3.5rem);
     position: relative;
 }
-.section { position: relative; padding-block: clamp(5rem, 13vh, 10rem); }
-.hairline { height: 1px; background: var(--line); border: 0; }
+.block { position: relative; padding-block: clamp(5rem, 13vh, 9rem); }
+
+/* superficies de tono (la alternancia ES narrativa) */
+.on-dark  { background: var(--char);  color: var(--on-char); }
+.on-light { background: var(--paper); color: var(--on-paper); }
+.on-light .eyebrow { color: var(--ketchup); }
+.on-dark  .eyebrow { color: var(--sesame); }
+
+/* borde de costura entre tonos (como papel de hamburguesería) */
+.seam { height: 0; border: 0; position: relative; }
 
 /* ---------- Grano global ---------- */
 .grain::after {
     content: ""; position: fixed; inset: 0; z-index: 3; pointer-events: none;
-    opacity: 0.045; mix-blend-mode: overlay;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    opacity: 0.05; mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
-
-.glow-amber {
+.glow {
     position: absolute; border-radius: 50%; filter: blur(100px);
-    background: radial-gradient(circle at center, var(--accent-soft) 0%, transparent 70%);
+    background: radial-gradient(circle at center, rgba(232,161,60,0.16) 0%, transparent 70%);
     pointer-events: none; z-index: 0;
 }
-.hero .glow-amber { animation: floatGlow 16s ease-in-out infinite; }
-@keyframes floatGlow {
-    0%   { transform: translate(0, 0) scale(1); }
-    50%  { transform: translate(-32px, 30px) scale(1.1); }
-    100% { transform: translate(0, 0) scale(1); }
-}
 
 /* =====================================================================
-   PRELOADER
+   PRELOADER — "se enciende la parrilla"
    ===================================================================== */
 #preloader {
-    position: fixed; inset: 0; z-index: 200;
-    background: var(--bg);
+    position: fixed; inset: 0; z-index: 200; background: var(--char);
     display: flex; align-items: center; justify-content: center;
-    flex-direction: column; gap: 1.5rem;
+    flex-direction: column; gap: 1.4rem;
 }
 #preloader.done { pointer-events: none; }
-.pre-line {
-    font-family: 'Fraunces', serif; letter-spacing: -0.02em;
-    font-size: clamp(1.6rem, 5vw, 3rem); overflow: hidden;
-}
+.pre-line { font-family: 'Fraunces', serif; letter-spacing: -0.02em; font-size: clamp(1.5rem, 5vw, 2.8rem); overflow: hidden; }
 .pre-line span { display: inline-block; transform: translateY(110%); }
-.pre-bar {
-    width: min(320px, 60vw); height: 1px; background: var(--line); position: relative; overflow: hidden;
-}
-.pre-bar i {
-    position: absolute; inset: 0; transform-origin: left; transform: scaleX(0);
-    background: linear-gradient(90deg, var(--accent-deep), var(--accent));
-}
-.pre-count { font-size: 0.8rem; color: var(--ink-mute); letter-spacing: 0.2em; }
+.pre-bar { width: min(300px, 60vw); height: 1px; background: var(--char-line); position: relative; overflow: hidden; }
+.pre-bar i { position: absolute; inset: 0; transform-origin: left; transform: scaleX(0); background: linear-gradient(90deg, var(--ketchup), var(--sesame)); }
+.pre-count { font-family: 'Space Grotesk', monospace; font-size: 0.78rem; color: var(--on-char-mute); letter-spacing: 0.2em; }
 
 /* =====================================================================
-   CURSOR CUSTOM
+   CURSOR
    ===================================================================== */
 .cursor, .cursor-dot { position: fixed; top: 0; left: 0; z-index: 150; pointer-events: none; border-radius: 50%; mix-blend-mode: difference; }
-.cursor { width: 36px; height: 36px; border: 1px solid rgba(245,243,239,0.6); transform: translate(-50%, -50%); transition: width 0.25s var(--ease), height 0.25s var(--ease), background 0.25s var(--ease); }
-.cursor-dot { width: 5px; height: 5px; background: var(--ink); transform: translate(-50%, -50%); }
-.cursor.hover { width: 64px; height: 64px; background: rgba(245,243,239,0.1); border-color: transparent; }
+.cursor { width: 34px; height: 34px; border: 1px solid rgba(243,234,215,0.6); transform: translate(-50%, -50%); transition: width 0.25s var(--ease), height 0.25s var(--ease), background 0.25s var(--ease); }
+.cursor-dot { width: 5px; height: 5px; background: var(--on-char); transform: translate(-50%, -50%); }
+.cursor.hover { width: 60px; height: 60px; background: rgba(243,234,215,0.1); border-color: transparent; }
 @media (hover: none), (max-width: 859px) { .cursor, .cursor-dot { display: none; } }
 
 /* =====================================================================
-   HILO DE LUZ (progreso narrativo) + indicador de capítulo
+   HILO / PROGRESO + indicador de capítulo (mono, blueprint)
    ===================================================================== */
-.thread {
-    position: fixed; left: clamp(18px, 4vw, 48px); top: 0; bottom: 0; width: 2px;
-    z-index: 4; pointer-events: none;
-}
-.thread-track { position: absolute; inset: 0; background: var(--line); }
-.thread-fill {
-    position: absolute; left: 0; top: 0; width: 100%; height: 0%;
-    background: linear-gradient(180deg, var(--accent) 0%, var(--accent-deep) 100%);
-    box-shadow: 0 0 12px var(--glow);
-}
-.thread-head {
-    position: absolute; left: 50%; top: 0; width: 9px; height: 9px;
-    transform: translate(-50%, -50%); border-radius: 50%;
-    background: var(--accent); box-shadow: 0 0 16px 2px var(--glow);
-}
+.thread { position: fixed; left: clamp(16px, 3.4vw, 40px); top: 0; bottom: 0; width: 2px; z-index: 4; pointer-events: none; }
+.thread-track { position: absolute; inset: 0; background: var(--char-line); }
+.thread-fill { position: absolute; left: 0; top: 0; width: 100%; height: 0%; background: linear-gradient(180deg, var(--sesame) 0%, var(--ketchup) 100%); box-shadow: 0 0 12px var(--glow); }
+.thread-head { position: absolute; left: 50%; top: 0; width: 9px; height: 9px; transform: translate(-50%, -50%); border-radius: 50%; background: var(--sesame); box-shadow: 0 0 16px 2px var(--glow); }
 @media (max-width: 1099px) { .thread { display: none; } }
 
 .chapter-tag {
-    position: fixed; right: clamp(16px, 4vw, 44px); top: 50%; transform: translateY(-50%);
+    position: fixed; right: clamp(14px, 3.4vw, 38px); top: 50%; transform: translateY(-50%);
     z-index: 4; pointer-events: none; text-align: right;
     writing-mode: vertical-rl; text-orientation: mixed;
-    font-size: 0.72rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--ink-mute);
+    font-family: 'Space Grotesk', monospace;
+    font-size: 0.7rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--on-char-mute);
     transition: opacity 0.4s var(--ease);
+    mix-blend-mode: difference;
 }
-.chapter-tag b { color: var(--accent); font-weight: 500; }
+.chapter-tag b { color: var(--sesame); font-weight: 600; }
 body.section-pinned .chapter-tag { opacity: 0; }
 @media (max-width: 1099px) { .chapter-tag { display: none; } }
 
 /* =====================================================================
    NAVBAR
    ===================================================================== */
-.nav {
-    position: fixed; top: 0; left: 0; right: 0; z-index: 60;
-    transition: transform 0.5s var(--ease), background 0.4s var(--ease), border-color 0.4s var(--ease);
-    border-bottom: 1px solid transparent;
-}
+.nav { position: fixed; top: 0; left: 0; right: 0; z-index: 60; transition: transform 0.5s var(--ease), background 0.4s var(--ease), border-color 0.4s var(--ease); border-bottom: 1px solid transparent; }
 .nav.hidden-up { transform: translateY(-100%); }
-.nav.scrolled { background: rgba(8,8,10,0.6); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border-bottom-color: var(--line); }
-.nav-inner { display: flex; align-items: center; justify-content: space-between; height: 70px; }
-.nav-links { display: none; gap: 2rem; align-items: center; }
-.nav-link { position: relative; font-size: 0.88rem; color: var(--ink-soft); transition: color 0.3s var(--ease); }
-.nav-link:hover { color: var(--ink); }
-.nav-link::after { content: ""; position: absolute; left: 0; bottom: -6px; width: 0; height: 1px; background: var(--accent); transition: width 0.3s var(--ease); }
+.nav.scrolled { background: rgba(25,20,15,0.62); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border-bottom-color: var(--char-line); }
+.nav-inner { display: flex; align-items: center; justify-content: space-between; height: 68px; }
+.nav-logo { font-family: 'Fraunces', serif; font-size: 1.08rem; color: var(--on-char); }
+.nav-logo span { color: var(--sesame); }
+.nav-links { display: none; gap: 1.9rem; align-items: center; }
+.nav-link { font-family: 'Space Grotesk', monospace; font-size: 0.78rem; letter-spacing: 0.04em; text-transform: uppercase; color: var(--on-char-soft); position: relative; transition: color 0.3s var(--ease); }
+.nav-link:hover { color: var(--on-char); }
+.nav-link::after { content: ""; position: absolute; left: 0; bottom: -6px; width: 0; height: 1px; background: var(--sesame); transition: width 0.3s var(--ease); }
 .nav-link:hover::after { width: 100%; }
-.nav-logo { font-family: 'Fraunces', serif; font-size: 1.1rem; }
-.nav-logo span { color: var(--accent); }
-
-.menu-btn { display: inline-flex; background: transparent; border: 1px solid var(--line-strong); border-radius: 10px; padding: 0.5rem; color: var(--ink); }
-
+.menu-btn { display: inline-flex; align-items: center; justify-content: center; background: transparent; border: 1px solid var(--char-line-2); border-radius: 10px; padding: 0.45rem; color: var(--on-char); transition: color 0.3s var(--ease), border-color 0.3s var(--ease), background 0.3s var(--ease); flex-shrink: 0; }
+.menu-btn:hover { border-color: var(--char-line-2); background: rgba(243,234,215,0.04); }
+.menu-btn[aria-expanded="true"] { border-color: var(--sesame); background: rgba(232,161,60,0.1); }
+/* icono-hamburguesa abstracto: panes gruesos ámbar, relleno fino */
+.burger-icon { display: block; }
+.burger-icon line { transition: transform 0.35s var(--ease), opacity 0.3s var(--ease), stroke 0.3s var(--ease); transform-box: view-box; transform-origin: center; }
+.burger-icon .bi-bun { stroke: var(--sesame); stroke-width: 2.6; }   /* los panes */
+.burger-icon .bi-fill { stroke: var(--on-char-soft); stroke-width: 1.5; } /* el relleno */
+/* al abrir: los panes se separan un poco y el relleno se atenúa */
+.menu-btn[aria-expanded="true"] .bi-bun:first-of-type { transform: translateY(-1.2px); }
+.menu-btn[aria-expanded="true"] .bi-bun:last-of-type { transform: translateY(1.2px); }
+.menu-btn[aria-expanded="true"] .bi-fill { opacity: 0.35; }
 .mobile-menu {
-    position: fixed; inset: 70px 0 auto 0; z-index: 55;
-    background: rgba(8,8,10,0.97); backdrop-filter: blur(16px);
-    border-bottom: 1px solid var(--line); padding: 1.25rem clamp(1.25rem,5vw,2.5rem) 2rem;
-    display: grid; gap: 0.25rem; transform: translateY(-12px); opacity: 0; visibility: hidden;
+    position: fixed; inset: 68px 0 auto 0; z-index: 55;
+    background: rgba(25,20,15,0.98); backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--char-line); padding: 1.1rem clamp(1.25rem,5vw,2.5rem) 1.8rem;
+    display: grid; gap: 0.2rem; transform: translateY(-12px); opacity: 0; visibility: hidden;
     transition: opacity 0.3s var(--ease), transform 0.3s var(--ease), visibility 0.3s;
 }
 .mobile-menu.open { opacity: 1; visibility: visible; transform: translateY(0); }
-.mobile-menu a { color: var(--ink-soft); padding: 0.85rem 0; border-bottom: 1px solid var(--line); font-size: 1.05rem; }
+.mobile-menu a { font-family: 'Space Grotesk', monospace; text-transform: uppercase; letter-spacing: 0.06em; font-size: 0.92rem; color: var(--on-char-soft); padding: 0.8rem 0; border-bottom: 1px solid var(--char-line); }
 .mobile-menu a:last-of-type { border-bottom: 0; }
 
 /* =====================================================================
    BOTONES
    ===================================================================== */
 .btn {
-    --pad-y: 0.95rem; --pad-x: 1.7rem;
-    position: relative; display: inline-flex; align-items: center; justify-content: center; gap: 0.6rem;
-    padding: var(--pad-y) var(--pad-x); border-radius: 999px; font-weight: 500; font-size: 0.95rem;
+    --pad-y: 0.9rem; --pad-x: 1.6rem;
+    position: relative; display: inline-flex; align-items: center; justify-content: center; gap: 0.55rem;
+    padding: var(--pad-y) var(--pad-x); border-radius: 999px; font-weight: 500; font-size: 0.94rem;
     border: 1px solid transparent; line-height: 1; will-change: transform;
     transition: transform 0.3s var(--ease), background 0.3s var(--ease), color 0.3s var(--ease), border-color 0.3s var(--ease), box-shadow 0.3s var(--ease);
 }
-.btn-primary { background: var(--accent); color: #1a1505; box-shadow: 0 1px 0 rgba(255,255,255,0.25) inset, 0 12px 34px -12px var(--glow); }
-.btn-primary:hover { background: #f1d690; box-shadow: 0 1px 0 rgba(255,255,255,0.35) inset, 0 18px 44px -14px var(--glow); }
-.btn-ghost { background: transparent; color: var(--ink); border-color: var(--line-strong); }
-.btn-ghost:hover { border-color: var(--ink-soft); background: rgba(245,243,239,0.04); }
+.btn-primary { background: var(--sesame); color: #1a1103; box-shadow: 0 1px 0 rgba(255,255,255,0.3) inset, 0 12px 34px -12px var(--glow); }
+.btn-primary:hover { background: var(--sesame-hi); box-shadow: 0 1px 0 rgba(255,255,255,0.4) inset, 0 18px 46px -14px var(--glow); }
+.btn-wa { background: #25d366; color: #04301a; box-shadow: 0 12px 34px -14px rgba(37,211,102,0.6); }
+.btn-wa:hover { background: #36e078; }
+.btn-ghost { background: transparent; color: currentColor; border-color: currentColor; opacity: 0.92; }
+.btn-ghost:hover { opacity: 1; }
+.on-dark .btn-ghost { border-color: var(--char-line-2); color: var(--on-char); }
+.on-light .btn-ghost { border-color: var(--paper-line-2); color: var(--on-paper); }
 .btn-block { width: 100%; }
 .magnetic { display: inline-flex; }
 
 /* =====================================================================
-   SUPERFICIES
+   HERO — "Piensa en una hamburguesa"
    ===================================================================== */
-.glass-container {
-    position: relative; background: rgba(245,243,239,0.025);
-    backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
-    border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden;
-    transition: border-color 0.4s var(--ease), background 0.4s var(--ease);
-}
-.glass-container:hover { border-color: var(--line-strong); background: rgba(245,243,239,0.04); }
-.glass-container::before {
-    content: ""; position: absolute; top: 0; left: -120%; width: 80%; height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(245,243,239,0.06), transparent);
-    transition: left 0.7s var(--ease); pointer-events: none;
-}
-.glass-container:hover::before { left: 120%; }
+.hero { min-height: 100svh; display: flex; align-items: center; position: relative; overflow: hidden; }
+.hero .glow { width: 680px; height: 680px; top: -180px; right: -160px; }
+.hero-eyebrow { display: inline-flex; align-items: center; gap: 0.6rem; }
+.hero-eyebrow .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--ketchup); box-shadow: 0 0 10px var(--ketchup); animation: livePulse 2.2s ease-in-out infinite; }
+@keyframes livePulse { 0%,100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.4; transform: scale(0.8); } }
+.hero-mega { font-family: 'Fraunces', serif; font-weight: 360; letter-spacing: -0.035em; line-height: 0.94; font-size: clamp(2.7rem, 9.5vw, 7.6rem); }
+.hero-sub { font-size: clamp(1.05rem, 2.1vw, 1.32rem); max-width: 44ch; color: var(--on-char-soft); }
+.scroll-hint { position: absolute; bottom: 1.8rem; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 0.5rem; color: var(--on-char-mute); font-family: 'Space Grotesk', monospace; font-size: 0.66rem; letter-spacing: 0.25em; text-transform: uppercase; }
+.scroll-hint .bar { width: 1px; height: 36px; background: linear-gradient(var(--sesame), transparent); animation: drip 2s var(--ease) infinite; }
+@keyframes drip { 0% { transform: scaleY(0); transform-origin: top; } 45% { transform: scaleY(1); transform-origin: top; } 55% { transform: scaleY(1); transform-origin: bottom; } 100% { transform: scaleY(0); transform-origin: bottom; } }
 
-.card { position: relative; background: var(--bg-soft); border: 1px solid var(--line); border-radius: var(--radius); transition: border-color 0.4s var(--ease), transform 0.4s var(--ease), background 0.4s var(--ease); }
-.card:hover { border-color: var(--line-strong); background: var(--bg-elev); transform: translateY(-3px); }
-
-/* ---------- Imágenes ---------- */
-.media { position: relative; overflow: hidden; border-radius: var(--radius); background: var(--bg-elev); }
-.media img { width: 100%; height: 100%; object-fit: cover; }
-.media-4x5 { aspect-ratio: 4/5; }
-.media-1x1 { aspect-ratio: 1/1; }
-.media-16x9 { aspect-ratio: 16/9; }
-.media-tint::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 35%, rgba(8,8,10,0.6) 100%); pointer-events: none; }
+/* (El hero queda sin ilustración por ahora; se integrará un PNG animado
+   más adelante. La hamburguesa vive en la sección de ensamblado #arma.) */
 
 /* =====================================================================
-   REVEALS (atados a scroll por JS; sin JS quedan visibles)
+   FIRMA: LA HAMBURGUESA SE ARMA (scroll pinned)
    ===================================================================== */
-.reveal { opacity: 0; transform: translateY(30px); }
+.assembler { position: relative; background: var(--char); }
+.assembler-pin { position: relative; height: 100svh; display: flex; align-items: center; overflow: hidden; }
+.assembler .glow { width: 560px; height: 560px; bottom: -160px; left: -120px; }
+.assembler-grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(1.5rem, 5vw, 4rem); align-items: center; width: 100%; }
+
+/* stage de la hamburguesa */
+.burger-stage { position: relative; height: min(72svh, 560px); display: flex; align-items: center; justify-content: center; }
+.burger-svg { width: min(90%, 440px); height: auto; overflow: visible; }
+.burger-plate { position: absolute; bottom: 6%; left: 50%; transform: translateX(-50%); width: 78%; height: 22px; border-radius: 50%; background: radial-gradient(ellipse at center, rgba(0,0,0,0.45), transparent 70%); filter: blur(6px); }
+
+/* cada capa empieza arriba y "cae" a su lugar (lo anima GSAP) */
+.layer { transform-box: fill-box; transform-origin: center; }
+
+/* anotación blueprint que señala la capa activa */
+.annot { position: absolute; left: 0; right: 0; bottom: -2px; pointer-events: none; }
+.annot-line { stroke: var(--sesame); stroke-width: 1; stroke-dasharray: 3 3; opacity: 0.7; }
+
+/* texto-acto que entra por la derecha */
+.acts { position: relative; }
+.act { position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: center; opacity: 0; visibility: hidden; transition: opacity 0.5s var(--ease), visibility 0.5s; }
+.act.active { opacity: 1; visibility: visible; }
+.act-num { font-family: 'Space Grotesk', monospace; font-size: 0.74rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--sesame); display: flex; align-items: center; gap: 0.7rem; }
+.act-num::before { content: ""; width: 28px; height: 1px; background: var(--sesame); }
+.act-title { font-family: 'Fraunces', serif; font-weight: 370; font-size: clamp(1.8rem, 4.6vw, 3.4rem); line-height: 1.04; letter-spacing: -0.02em; margin-top: 1rem; max-width: 16ch; }
+.act-body { color: var(--on-char-soft); font-size: clamp(1rem, 1.6vw, 1.18rem); margin-top: 1.1rem; max-width: 34ch; }
+.act-body em { color: var(--on-char); font-style: normal; border-bottom: 1px solid var(--sesame); }
+/* el alto del bloque .acts lo fija la JS al beat más alto; fallback: */
+.acts { min-height: 340px; }
+
+.assembler-rail { position: absolute; left: 0; right: 0; bottom: 0; height: 2px; background: var(--char-line); z-index: 6; }
+.assembler-rail-fill { position: absolute; left: 0; top: 0; height: 100%; width: 0; background: linear-gradient(90deg, var(--ketchup), var(--sesame)); box-shadow: 0 0 12px var(--glow); }
+.assembler-count { position: absolute; right: clamp(1.2rem, 4vw, 3rem); bottom: 1.3rem; z-index: 6; font-family: 'Space Grotesk', monospace; font-size: 0.72rem; letter-spacing: 0.26em; color: var(--on-char-mute); }
+.assembler-count b { color: var(--sesame); font-weight: 600; }
+
+/* ---- MÓVIL CON PIN: apilado vertical (burger arriba fija, texto abajo) ----
+   Se conserva el scroll-FX de desktop; solo cambia la disposición a vertical. */
+@media (max-width: 859px) {
+    .assembler-pin { align-items: stretch; }
+    .assembler-grid {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto 1fr;
+        gap: 0.5rem;
+        align-content: center;
+        height: 100%;
+    }
+    /* burger arriba, compacta */
+    .burger-stage { height: clamp(180px, 34svh, 280px); }
+    .burger-svg { width: min(56%, 220px); }
+    .burger-plate { bottom: 2%; width: 56%; }
+    /* zona de texto: alto fijo para que el cross-fade no salte */
+    .acts { min-height: clamp(220px, 40svh, 300px); }
+    .act { justify-content: flex-start; }
+    .act-title { font-size: clamp(1.7rem, 7.4vw, 2.6rem); max-width: 18ch; }
+    .act-body { max-width: 40ch; }
+    /* el contador a la izquierda no choca con nada en vertical */
+    .assembler-count { right: auto; left: clamp(1.2rem, 5vw, 2rem); }
+}
+
+/* ---- FALLBACK REAL sin pin (reduced-motion / sin GSAP): apilado estático --- */
+.assembler.no-pin .assembler-pin { height: auto; display: block; padding-block: clamp(2rem, 7vh, 3rem); }
+.assembler.no-pin .assembler-grid { grid-template-columns: 1fr; grid-template-rows: none; height: auto; gap: 1rem; }
+.assembler.no-pin .burger-stage { height: auto; margin-bottom: 0.5rem; }
+.assembler.no-pin .burger-svg { width: min(56%, 220px); }
+.assembler.no-pin .burger-plate { display: none; }
+.assembler.no-pin .acts { min-height: 0; }
+.assembler.no-pin .act { position: relative; inset: auto; opacity: 1; visibility: visible; padding-block: 1.4rem; border-top: 1px solid var(--char-line); }
+.assembler.no-pin .act:first-child { border-top: 0; }
+.assembler.no-pin .assembler-rail, .assembler.no-pin .assembler-count { display: none; }
+
+/* =====================================================================
+   EL CLIC — sección papel, el "ajá" (reveal)
+   ===================================================================== */
+.click-line { font-family: 'Fraunces', serif; font-weight: 360; font-size: clamp(2rem, 6vw, 4.2rem); line-height: 1.04; letter-spacing: -0.025em; max-width: 18ch; }
+.click-line .mark { color: var(--ketchup); font-style: italic; }
+.pivot {
+    font-family: 'Fraunces', serif; font-style: italic; font-weight: 360;
+    font-size: clamp(1.5rem, 3.6vw, 2.6rem); line-height: 1.22; max-width: 26ch;
+    border-left: 2px solid var(--ketchup); padding-left: 1.4rem;
+}
+.pivot b { font-style: normal; font-weight: 500; }
+
+/* tarjetitas "lo que el cerebro SÍ recuerda" */
+.recall-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1px; background: var(--paper-line); border: 1px solid var(--paper-line); border-radius: var(--radius); overflow: hidden; }
+.recall-cell { background: var(--paper); padding: 1.6rem 1.4rem; transition: background 0.3s var(--ease); }
+.recall-cell:hover { background: var(--paper-soft); }
+.recall-cell .rc-k { font-family: 'Space Grotesk', monospace; font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ketchup); }
+.recall-cell .rc-t { font-family: 'Fraunces', serif; font-size: 1.35rem; margin-top: 0.5rem; }
+.recall-cell .rc-d { color: var(--on-paper-soft); font-size: 0.92rem; margin-top: 0.4rem; }
+.recall-cell.dim .rc-k { color: var(--on-paper-mute); }
+.recall-cell.dim { opacity: 0.62; }
+
+/* =====================================================================
+   LA MASTERCLASS — carbón, ticket + horarios + countdown
+   ===================================================================== */
+.ticket {
+    position: relative; background: var(--char-soft); border: 1px solid var(--char-line-2);
+    border-radius: var(--radius); padding: clamp(1.6rem, 4vw, 2.8rem);
+    overflow: hidden;
+}
+/* muescas tipo ticket */
+.ticket::before, .ticket::after { content: ""; position: absolute; width: 26px; height: 26px; border-radius: 50%; background: var(--char); top: 50%; transform: translateY(-50%); }
+.ticket::before { left: -13px; } .ticket::after { right: -13px; }
+
+.session { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; padding: 1.1rem 0; border-bottom: 1px dashed var(--char-line-2); }
+.session:last-child { border-bottom: 0; }
+.session .s-day { font-family: 'Fraunces', serif; font-size: 1.5rem; }
+.session .s-time { font-family: 'Space Grotesk', monospace; color: var(--sesame); font-size: 1.05rem; letter-spacing: 0.04em; }
+.session .s-tz { font-family: 'Space Grotesk', monospace; font-size: 0.72rem; color: var(--on-char-mute); letter-spacing: 0.1em; }
+
+/* countdown */
+.countdown { display: flex; gap: clamp(0.6rem, 2vw, 1.4rem); }
+.cd-cell { text-align: center; min-width: 64px; }
+.cd-num { font-family: 'Space Grotesk', monospace; font-weight: 600; font-size: clamp(2.2rem, 6vw, 3.6rem); line-height: 1; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; }
+.cd-lab { font-family: 'Space Grotesk', monospace; font-size: 0.64rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--on-char-mute); margin-top: 0.5rem; }
+.cd-sep { font-family: 'Space Grotesk', monospace; font-size: clamp(1.6rem, 5vw, 3rem); color: var(--on-char-mute); align-self: flex-start; line-height: 1.2; }
+.countdown.live .cd-num { color: var(--ketchup); }
+
+.menu-list { display: grid; gap: 1px; }
+.menu-row { display: flex; gap: 1rem; align-items: flex-start; padding: 1.1rem 0; border-top: 1px solid var(--char-line); }
+.menu-row .mr-n { font-family: 'Space Grotesk', monospace; color: var(--sesame); font-size: 0.82rem; flex-shrink: 0; width: 2.4rem; letter-spacing: 0.04em; padding-top: 0.2rem; }
+.menu-row .mr-t { font-weight: 500; }
+.menu-row .mr-d { color: var(--on-char-soft); font-size: 0.95rem; margin-top: 0.2rem; }
+
+/* =====================================================================
+   EL MAGO / mentor — papel
+   ===================================================================== */
+.mage-portrait { width: 84px; height: 84px; border-radius: 50%; overflow: hidden; border: 1px solid var(--paper-line-2); background: radial-gradient(circle at 30% 25%, rgba(232,161,60,0.25), transparent 70%); display: inline-flex; align-items: center; justify-content: center; font-family: 'Fraunces', serif; font-size: 2rem; color: var(--ketchup); }
+.mage-portrait img { width: 100%; height: 100%; object-fit: cover; }
+.mage-quote { font-family: 'Fraunces', serif; font-style: italic; font-weight: 360; font-size: clamp(1.4rem, 3.4vw, 2.2rem); line-height: 1.24; max-width: 24ch; }
+
+/* =====================================================================
+   UMBRAL — carbón + glow, CTA grupo WhatsApp
+   ===================================================================== */
+.threshold { position: relative; overflow: hidden; text-align: center; }
+.threshold .glow { width: 620px; height: 620px; bottom: -240px; left: 50%; transform: translateX(-50%); }
+.threshold-h { font-family: 'Fraunces', serif; font-weight: 360; font-size: clamp(2.2rem, 7vw, 5rem); line-height: 1.02; letter-spacing: -0.03em; max-width: 16ch; margin-inline: auto; }
+.wa-note { font-family: 'Space Grotesk', monospace; font-size: 0.78rem; letter-spacing: 0.06em; color: var(--on-char-mute); }
+
+/* =====================================================================
+   FOOTER
+   ===================================================================== */
+.footer { border-top: 1px solid var(--char-line); padding-block: 3.2rem; position: relative; }
+.footer .nav-logo { color: var(--on-char); }
+.social-link { display: inline-flex; align-items: center; justify-content: center; width: 42px; height: 42px; border-radius: 999px; border: 1px solid var(--char-line-2); color: var(--on-char-soft); transition: color 0.3s var(--ease), border-color 0.3s var(--ease), transform 0.3s var(--ease); }
+.social-link:hover { color: var(--sesame); border-color: var(--sesame); transform: translateY(-2px); }
+
+::-webkit-scrollbar { width: 10px; }
+::-webkit-scrollbar-track { background: var(--char); }
+::-webkit-scrollbar-thumb { background: #3a2f25; border-radius: 6px; border: 2px solid var(--char); }
+::-webkit-scrollbar-thumb:hover { background: #4a3d30; }
+
+/* =====================================================================
+   REVEALS
+   ===================================================================== */
+.reveal { opacity: 0; transform: translateY(28px); }
 .reveal.is-in { opacity: 1; transform: none; transition: opacity 0.9s var(--ease), transform 0.9s var(--ease); }
 html:not(.gsap-ready) .reveal { opacity: 1; transform: none; }
-
-/* Split de líneas/palabras */
-.line-mask { display: block; overflow: hidden; padding-bottom: 0.12em; }
+.line-mask { display: block; overflow: hidden; padding-bottom: 0.1em; }
 .line-inner { display: block; transform: translateY(110%); }
-/* Hero: line-height holgado + padding para que la máscara no recorte glifos grandes;
-   el degradado va sobre la línea completa (un solo span) para que sí se vea */
-.hero-title .line-mask { padding-bottom: 0.06em; }
-.hero-title .line-inner { line-height: 1.0; padding-bottom: 0.08em; padding-right: 0.08em; }
+.hero-title .line-inner { line-height: 1.0; padding-bottom: 0.08em; padding-right: 0.06em; }
 .word-mask { display: inline-block; overflow: hidden; vertical-align: top; }
 .word-inner { display: inline-block; transform: translateY(110%); }
 html:not(.gsap-ready) .line-inner,
 html:not(.gsap-ready) .word-inner { transform: none; }
 
 /* =====================================================================
-   HERO
+   RESPONSIVE
    ===================================================================== */
-.hero { min-height: 100svh; display: flex; align-items: center; position: relative; overflow: hidden; }
-.hero-mega {
-    font-family: 'Fraunces', serif; font-weight: 380; letter-spacing: -0.03em; line-height: 0.92;
-    font-size: clamp(3.2rem, 12vw, 9.5rem);
-}
-.hero-sub { font-size: clamp(1.05rem, 2.2vw, 1.4rem); max-width: 40ch; }
-.scroll-hint { position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 0.5rem; color: var(--ink-mute); font-size: 0.7rem; letter-spacing: 0.25em; text-transform: uppercase; }
-.scroll-hint .bar { width: 1px; height: 38px; background: linear-gradient(var(--accent), transparent); animation: drip 2s var(--ease) infinite; }
-@keyframes drip { 0% { transform: scaleY(0); transform-origin: top; } 45% { transform: scaleY(1); transform-origin: top; } 55% { transform: scaleY(1); transform-origin: bottom; } 100% { transform: scaleY(0); transform-origin: bottom; } }
-
-.tag { display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.4rem 0.9rem; border: 1px solid var(--line); border-radius: 999px; font-size: 0.8rem; color: var(--ink-soft); background: rgba(245,243,239,0.02); }
-
-/* =====================================================================
-   ESCENA ANCLADA — EL PROBLEMA (scrollytelling pantalla completa)
-   ===================================================================== */
-.scene { position: relative; }
-.scene-pin { position: relative; height: 100svh; display: flex; align-items: center; overflow: hidden; }
-.scene-beat {
-    position: absolute; inset: 0; display: flex; align-items: center;
-    opacity: 0; visibility: hidden;
-    transition: opacity 0.5s var(--ease), visibility 0.5s;
-}
-.scene-beat.active { opacity: 1; visibility: visible; }
-.scene-beat .beat-label { font-size: 0.78rem; letter-spacing: 0.25em; text-transform: uppercase; }
-.beat-line { font-family: 'Fraunces', serif; font-weight: 380; letter-spacing: -0.02em; line-height: 1.05; font-size: clamp(2rem, 6.5vw, 5rem); }
-/* Movimiento al activarse: cada verdad sube con energía */
-.scene-beat .beat-label, .scene-beat .beat-line { transform: translateY(46px); opacity: 0; transition: transform 0.85s var(--ease), opacity 0.85s var(--ease); }
-.scene-beat.active .beat-label { transform: none; opacity: 1; transition-delay: 0.04s; }
-.scene-beat.active .beat-line  { transform: none; opacity: 1; transition-delay: 0.12s; }
-
-/* Barra de progreso + contador (inyectados por JS en cada escena anclada).
-   Hijos directos del elemento pinned → pegados al borde inferior del viewport,
-   nunca se enciman con el contenido. */
-.scene-rail { position: absolute; left: 0; right: 0; bottom: 0; height: 2px; background: var(--line); z-index: 6; }
-.scene-rail-fill { position: absolute; left: 0; top: 0; height: 100%; width: 0; background: linear-gradient(90deg, var(--accent-deep), var(--accent)); box-shadow: 0 0 12px var(--glow); }
-.scene-count { position: absolute; right: clamp(1.2rem, 4vw, 3rem); bottom: 1.4rem; z-index: 6; font-size: 0.72rem; letter-spacing: 0.28em; color: var(--ink-mute); }
-.scene-count b { color: var(--accent); font-weight: 500; }
-/* fallback sin pin: mostrar beats apilados */
-.scene.no-pin .scene-pin { height: auto; display: block; }
-.scene.no-pin .scene-beat { position: relative; inset: auto; opacity: 1; visibility: visible; padding-block: 2.5rem; }
-.scene.no-pin .scene-beat .beat-label, .scene.no-pin .scene-beat .beat-line { opacity: 1; transform: none; }
-.scene.no-pin .scene-progress { display: none; }
-
-/* =====================================================================
-   SCROLL HORIZONTAL — EL PLAN
-   ===================================================================== */
-.h-scroll { position: relative; }
-.h-pin { position: relative; height: 100svh; display: flex; align-items: center; overflow: hidden; }
-/* fondo cinematográfico: cielo estrellado muy oscurecido + glow ámbar */
-.h-pin::before {
-    content: ''; position: absolute; inset: 0; z-index: 0; pointer-events: none;
-    background:
-        radial-gradient(110% 90% at 82% 50%, rgba(232,200,122,0.10), transparent 60%),
-        linear-gradient(180deg, rgba(8,8,10,0.93), rgba(8,8,10,0.80) 45%, rgba(8,8,10,0.97)),
-        url('https://images.unsplash.com/photo-1419242902214-272b3f66ee7a?auto=format&fit=crop&w=1920&q=80') center/cover no-repeat;
-}
-/* z-index:1 sobre el fondo; padding-right amplio para que la última tarjeta
-   no quede pegada al borde ni bajo los indicadores de la derecha */
-.h-track { position: relative; z-index: 1; display: flex; gap: clamp(1.5rem, 4vw, 3rem); padding-left: clamp(1.25rem, 5vw, 3rem); padding-right: clamp(5rem, 14vw, 11rem); will-change: transform; }
-.h-panel { flex: 0 0 auto; width: min(78vw, 460px); }
-.plan-card { height: 100%; border: 1px solid var(--line); border-radius: var(--radius); background: var(--bg-soft); padding: clamp(1.8rem, 4vw, 2.6rem); position: relative; overflow: hidden; }
-.plan-card .big-n { font-family: 'Fraunces', serif; font-size: clamp(3rem, 8vw, 5rem); color: var(--accent); opacity: 0.85; line-height: 1; }
-.h-intro { flex: 0 0 auto; width: min(80vw, 420px); display: flex; flex-direction: column; justify-content: center; }
-/* fallback sin pin: grid vertical */
-.h-scroll.no-pin .h-pin { height: auto; display: block; }
-.h-scroll.no-pin .h-track { flex-direction: column; padding-inline: 0; }
-.h-scroll.no-pin .h-panel, .h-scroll.no-pin .h-intro { width: 100%; }
-
-/* =====================================================================
-   EMBUDO — EL SISTEMA
-   ===================================================================== */
-.funnel-wrap { position: relative; aspect-ratio: 1/1; max-width: 460px; margin-inline: auto; }
-.funnel {
-    position: absolute; inset: 0;
-    clip-path: polygon(2% 4%, 98% 4%, 66% 60%, 66% 96%, 34% 96%, 34% 60%);
-    background: linear-gradient(180deg, rgba(232,200,122,0.10), rgba(232,200,122,0.02));
-    border: 0;
-}
-.funnel-outline {
-    position: absolute; inset: 0; pointer-events: none;
-}
-.funnel-particle {
-    position: absolute; top: -4%; width: 9px; height: 9px; border-radius: 50%;
-    background: var(--accent); box-shadow: 0 0 10px var(--glow);
-}
-.funnel-particle.reject { background: var(--ink-mute); box-shadow: none; }
-.funnel-stage { position: absolute; left: 50%; transform: translateX(-50%); text-align: center; width: 80%; }
-.funnel-stage .s-top { top: 12%; }
-.funnel-stage small { color: var(--ink-mute); font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; }
-.funnel-out { position: absolute; bottom: 1%; left: 50%; transform: translateX(-50%); text-align: center; z-index: 2; }
-/* Relleno del embudo (crece con el scroll en la escena del sistema) */
-.funnel-liquid { position: absolute; left: 0; right: 0; bottom: 0; height: 0; background: linear-gradient(180deg, rgba(232,200,122,0.18), rgba(232,200,122,0.5)); transition: none; }
-
-/* Media pegajosa del embudo en desktop */
-@media (min-width: 860px) { .sys-media { position: sticky; top: 16vh; } }
-
-.sys-step { display: flex; gap: 1rem; padding: 1.3rem 0; border-top: 1px solid var(--line); transition: opacity 0.4s var(--ease); opacity: 0.4; }
-.sys-step:last-child { border-bottom: 1px solid var(--line); }
-.sys-step.active { opacity: 1; }
-.sys-step.active .s-n { text-shadow: 0 0 14px var(--glow); }
-.sys-step .s-n { font-family: 'Fraunces', serif; color: var(--accent); font-size: 1.1rem; flex-shrink: 0; width: 2rem; transition: text-shadow 0.4s var(--ease); }
-/* Si GSAP no está listo (o falla), los pasos quedan legibles */
-html:not(.gsap-ready) .sys-step { opacity: 1; }
-
-.icon-chip { display: inline-flex; align-items: center; justify-content: center; width: 46px; height: 46px; border-radius: 12px; border: 1px solid var(--line-strong); background: var(--accent-soft); color: var(--accent); flex-shrink: 0; }
-.icon-chip svg { width: 22px; height: 22px; }
-.num-index { font-family: 'Fraunces', serif; font-size: 0.95rem; color: var(--accent); border: 1px solid var(--line-strong); border-radius: 999px; width: 38px; height: 38px; display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; }
-
-/* Avatar monograma (placeholder elegante hasta tener fotos reales) */
-.avatar-mono { width: 68px; height: 68px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-family: 'Fraunces', serif; font-size: 1.7rem; color: var(--accent); border: 1px solid var(--line-strong); background: radial-gradient(circle at 30% 25%, var(--accent-soft), transparent 70%); overflow: hidden; }
-.avatar-mono img { width: 100%; height: 100%; object-fit: cover; }
-.role { font-size: 0.74rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent); }
-
-blockquote.pull { font-family: 'Fraunces', serif; font-style: italic; font-weight: 380; line-height: 1.25; border-left: 2px solid var(--accent); padding-left: 1.3rem; }
-
-/* =====================================================================
-   FORMULARIO
-   ===================================================================== */
-.field { display: grid; gap: 0.5rem; }
-.field label { font-size: 0.82rem; color: var(--ink-soft); }
-.input, .textarea { width: 100%; background: var(--bg); border: 1px solid var(--line-strong); border-radius: var(--radius-sm); color: var(--ink); padding: 0.85rem 1rem; font: inherit; font-size: 0.95rem; transition: border-color 0.3s var(--ease), box-shadow 0.3s var(--ease); }
-.textarea { resize: vertical; min-height: 120px; }
-.input:focus, .textarea:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
-.input::placeholder, .textarea::placeholder { color: var(--ink-mute); }
-.field-error { color: #e98b7a; font-size: 0.78rem; min-height: 1rem; }
-.input.invalid, .textarea.invalid { border-color: #e98b7a; }
-.hp { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
-.form-status { border-radius: var(--radius-sm); padding: 0.9rem 1.1rem; font-size: 0.9rem; border: 1px solid var(--line); display: none; }
-.form-status.show { display: block; }
-.form-status.success { border-color: rgba(232,200,122,0.4); background: var(--accent-soft); color: var(--accent); }
-.form-status.error { border-color: rgba(233,139,122,0.4); background: rgba(233,139,122,0.08); color: #e98b7a; }
-.spinner { width: 16px; height: 16px; border: 2px solid rgba(26,21,5,0.35); border-top-color: #1a1505; border-radius: 50%; animation: spin 0.7s linear infinite; display: inline-block; vertical-align: middle; }
-@keyframes spin { to { transform: rotate(360deg); } }
-.btn.loading { pointer-events: none; opacity: 0.85; }
-
-/* =====================================================================
-   FOOTER
-   ===================================================================== */
-.footer { border-top: 1px solid var(--line); padding-block: 3.5rem; position: relative; }
-.social-link { display: inline-flex; align-items: center; justify-content: center; width: 42px; height: 42px; border-radius: 999px; border: 1px solid var(--line-strong); color: var(--ink-soft); transition: color 0.3s var(--ease), border-color 0.3s var(--ease), transform 0.3s var(--ease); }
-.social-link:hover { color: var(--accent); border-color: var(--accent); transform: translateY(-2px); }
-
-::-webkit-scrollbar { width: 10px; }
-::-webkit-scrollbar-track { background: var(--bg); }
-::-webkit-scrollbar-thumb { background: #26262b; border-radius: 6px; border: 2px solid var(--bg); }
-::-webkit-scrollbar-thumb:hover { background: #34343a; }
-
-/* ---------- Responsive ---------- */
 @media (min-width: 860px) { .nav-links { display: flex; } .menu-btn { display: none; } }
-
 @media (max-width: 640px) {
-    .container-page { padding-inline: 1.5rem; }
+    .wrap { padding-inline: 1.4rem; }
     .hero { min-height: 92svh; }
-    .hero-mega { font-size: clamp(2.5rem, 12vw, 3.8rem); }
-    .beat-line { font-size: clamp(1.7rem, 8vw, 2.8rem); }
-    .section { padding-block: clamp(3.5rem, 9vh, 5rem); }
-    .glow-amber { filter: blur(70px); }
-    blockquote.pull { padding-left: 1rem; }
+    .block { padding-block: clamp(3.6rem, 9vh, 5rem); }
+    .glow { filter: blur(70px); }
 }
 
-/* ---------- Reduce motion ---------- */
+/* =====================================================================
+   REDUCE MOTION
+   ===================================================================== */
 @media (prefers-reduced-motion: reduce) {
     .reveal { opacity: 1 !important; transform: none !important; }
     .line-inner, .word-inner { transform: none !important; }
     .pre-line span { transform: none !important; }
-    .glass-container::before, .scroll-hint .bar { display: none; }
-    .scene-beat { position: relative !important; opacity: 1 !important; visibility: visible !important; inset: auto !important; padding-block: 2.5rem; }
-    .scene-beat .beat-label, .scene-beat .beat-line { opacity: 1 !important; transform: none !important; }
-    .scene-pin { height: auto !important; display: block !important; }
-    .scene-progress { display: none !important; }
-    .h-pin { height: auto !important; display: block !important; }
-    .h-track { flex-direction: column !important; padding-inline: 0 !important; }
-    .h-panel, .h-intro { width: 100% !important; }
+    .scroll-hint .bar, .hero-eyebrow .dot { animation: none !important; }
+    .assembler-pin { height: auto !important; display: block !important; padding-block: 3rem; }
+    .assembler-grid { grid-template-columns: 1fr !important; }
+    .act { position: relative !important; inset: auto !important; opacity: 1 !important; visibility: visible !important; padding-block: 1.4rem; border-top: 1px solid var(--char-line); }
+    .acts { min-height: 0 !important; }
+    .assembler-rail, .assembler-count { display: none !important; }
     *, *::before, *::after { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; }
 }

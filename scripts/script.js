@@ -1,13 +1,21 @@
 /* =====================================================================
-   DE TU MENTE AL MUNDO — "El hilo de luz"  ·  JS narrativo (reescrito)
-   Preloader · cursor · smooth scroll (Lenis) · split de texto ·
-   hilo de progreso · escena anclada · scroll horizontal · embudo ·
-   botón magnético · captación de leads -> WhatsApp.
+   DE TU MENTE AL MUNDO — "La hamburguesa que no pediste"  ·  JS
+   Preloader · cursor · Lenis · split de texto · hilo de progreso ·
+   FIRMA: la hamburguesa se arma capa por capa (cada capa = un acto) ·
+   countdown a la masterclass · botón magnético · CTA grupo WhatsApp.
    ===================================================================== */
 
 // === CONFIG =========================================================
-// TODO: confirmar lada. México = 52; algunos móviles viejos requieren 521.
-const WHATSAPP_NUMBER = '526221424577'; // 52 + 6221424577
+// Primera sesión de la masterclass (la que alimenta el countdown).
+// 26 jun 2026, 7:30 PM, hora del centro de México (UTC-6, sin DST).
+const MASTERCLASS_DATE = new Date('2026-06-26T19:30:00-06:00');
+
+// Link de invitación al grupo de WhatsApp.
+// TODO: pegar aquí el enlace real cuando se cree el grupo.
+const WHATSAPP_GROUP_URL = 'https://chat.whatsapp.com/XXXXXXXXXXXXXXXXXX';
+// Fallback mientras no exista el grupo: mensaje directo para apartar lugar.
+const WHATSAPP_FALLBACK = 'https://wa.me/526221424577?text=' +
+    encodeURIComponent('Hola, quiero apartar mi lugar en la masterclass "Por qué nadie te escribe" (De tu mente al mundo).');
 
 const RM = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 const isDesktop = () => window.innerWidth >= 860;
@@ -21,13 +29,7 @@ let lenis = null;
 function runPreloader(onDone) {
     const pre = document.getElementById('preloader');
     if (!pre) { onDone(); return; }
-
-    if (RM || !window.gsap) {
-        pre.classList.add('done');
-        pre.style.display = 'none';
-        onDone();
-        return;
-    }
+    if (RM || !window.gsap) { pre.classList.add('done'); pre.style.display = 'none'; onDone(); return; }
 
     document.body.classList.add('is-locked');
     const spans = pre.querySelectorAll('.pre-line span');
@@ -44,21 +46,17 @@ function runPreloader(onDone) {
 }
 
 /* ===================================================================
-   CURSOR CUSTOM
+   CURSOR
    =================================================================== */
 function initCursor() {
     if (RM || !isDesktop() || 'ontouchstart' in window) return;
     const ring = document.querySelector('.cursor');
     const dot = document.querySelector('.cursor-dot');
     if (!ring || !dot) return;
-
-    let mx = window.innerWidth / 2, my = window.innerHeight / 2;
-    let rx = mx, ry = my;
-    window.addEventListener('mousemove', (e) => { mx = e.clientX; my = e.clientY; dot.style.transform = `translate(${mx}px, ${my}px) translate(-50%,-50%)`; }, { passive: true });
-
+    let mx = innerWidth / 2, my = innerHeight / 2, rx = mx, ry = my;
+    addEventListener('mousemove', (e) => { mx = e.clientX; my = e.clientY; dot.style.transform = `translate(${mx}px, ${my}px) translate(-50%,-50%)`; }, { passive: true });
     const loop = () => { rx += (mx - rx) * 0.18; ry += (my - ry) * 0.18; ring.style.transform = `translate(${rx}px, ${ry}px) translate(-50%,-50%)`; requestAnimationFrame(loop); };
     loop();
-
     document.querySelectorAll('a, button, .magnetic, input, textarea, [data-cursor]').forEach((el) => {
         el.addEventListener('mouseenter', () => ring.classList.add('hover'));
         el.addEventListener('mouseleave', () => ring.classList.remove('hover'));
@@ -66,26 +64,21 @@ function initCursor() {
 }
 
 /* ===================================================================
-   NAVBAR
+   NAVBAR · MENÚ MÓVIL
    =================================================================== */
 function initNavbar() {
     const nav = document.getElementById('nav');
     if (!nav) return;
     let last = 0;
     const onScroll = () => {
-        const y = window.scrollY;
+        const y = scrollY;
         nav.classList.toggle('scrolled', y > 24);
-        if (y > last && y > 300) nav.classList.add('hidden-up');
-        else nav.classList.remove('hidden-up');
+        if (y > last && y > 300) nav.classList.add('hidden-up'); else nav.classList.remove('hidden-up');
         last = y;
     };
-    window.addEventListener('scroll', onScroll, { passive: true });
+    addEventListener('scroll', onScroll, { passive: true });
     onScroll();
 }
-
-/* ===================================================================
-   MENÚ MÓVIL
-   =================================================================== */
 function initMobileMenu() {
     const btn = document.getElementById('menu-btn');
     const menu = document.getElementById('mobile-menu');
@@ -118,14 +111,14 @@ function initSmoothScroll() {
             const target = document.querySelector(id);
             if (!target) return;
             e.preventDefault();
-            if (lenis) lenis.scrollTo(target, { offset: -70 });
+            if (lenis) lenis.scrollTo(target, { offset: -68 });
             else target.scrollIntoView({ behavior: RM ? 'auto' : 'smooth' });
         });
     });
 }
 
 /* ===================================================================
-   SPLIT DE TEXTO (palabras en máscara)
+   SPLIT DE TEXTO
    =================================================================== */
 function splitWords(el) {
     if (el.dataset.split === 'done') return el.querySelectorAll('.word-inner');
@@ -147,31 +140,24 @@ function splitWords(el) {
    ANIMACIONES DE SCROLL
    =================================================================== */
 function initScrollAnimations() {
-    // El hero lo maneja revealHero(); el resto entra con scrub
     const reveals = document.querySelectorAll('.reveal:not(.hero-in)');
 
     if (RM || !hasGSAP()) {
         document.querySelectorAll('.reveal').forEach((el) => el.classList.add('is-in'));
-        // marcar contenedores que dependen de pin como fallback estático
-        document.querySelectorAll('.scene').forEach((s) => s.classList.add('no-pin'));
-        document.querySelectorAll('.h-scroll').forEach((s) => s.classList.add('no-pin'));
-        runFunnel(true);
+        document.querySelectorAll('.assembler').forEach((s) => s.classList.add('no-pin'));
+        revealBurgerStatic();
         return;
     }
 
     gsap.registerPlugin(ScrollTrigger);
     document.documentElement.classList.add('gsap-ready');
 
-    // Reveal genérico ATADO AL SCROLL (scrub bidireccional): cada bloque
-    // sube y aparece según tu posición de scroll, y se "rebobina" al subir.
     reveals.forEach((el) => {
-        gsap.fromTo(el,
-            { y: 60, autoAlpha: 0 },
+        gsap.fromTo(el, { y: 56, autoAlpha: 0 },
             { y: 0, autoAlpha: 1, ease: 'none',
-              scrollTrigger: { trigger: el, start: 'top 92%', end: 'top 60%', scrub: true } });
+              scrollTrigger: { trigger: el, start: 'top 92%', end: 'top 62%', scrub: true } });
     });
 
-    // Titulares palabra por palabra, con stagger atado al scroll
     document.querySelectorAll('.split-words').forEach((el) => {
         const words = splitWords(el);
         gsap.fromTo(words, { yPercent: 110 },
@@ -179,14 +165,7 @@ function initScrollAnimations() {
               scrollTrigger: { trigger: el, start: 'top 90%', end: 'top 55%', scrub: true } });
     });
 
-    // Parallax por capas
-    document.querySelectorAll('[data-parallax]').forEach((el) => {
-        gsap.to(el, { yPercent: parseFloat(el.dataset.parallax) || -10, ease: 'none',
-            scrollTrigger: { trigger: el, start: 'top bottom', end: 'bottom top', scrub: true } });
-    });
-
-    // Blindados: si uno falla, no tumba a los demás
-    [initThread, initHeroExit, initBgShift, initProblemScene, initHorizontalPlan, initSystemScene, initStakesScene, initFunnelTrigger]
+    [initThread, initHeroExit, initBgShift, initBurgerAssembler]
         .forEach((fn) => { try { fn(); } catch (e) { console.warn('[scroll init]', fn.name, e); } });
 
     ScrollTrigger.refresh();
@@ -194,49 +173,26 @@ function initScrollAnimations() {
 }
 
 /* ===================================================================
-   HELPERS de escena: barra de progreso + contador (reusable)
-   =================================================================== */
-function addSceneRail(pinEl, total) {
-    const rail = document.createElement('div'); rail.className = 'scene-rail';
-    const fill = document.createElement('div'); fill.className = 'scene-rail-fill';
-    rail.appendChild(fill);
-    const count = document.createElement('div'); count.className = 'scene-count';
-    const pad = (n) => String(n).padStart(2, '0');
-    count.innerHTML = `<b>01</b> &mdash; ${pad(total)}`;
-    pinEl.appendChild(rail); pinEl.appendChild(count);
-    return {
-        update: (progress, index) => {
-            fill.style.width = Math.max(0, Math.min(1, progress)) * 100 + '%';
-            if (typeof index === 'number') count.innerHTML = `<b>${pad(index + 1)}</b> &mdash; ${pad(total)}`;
-        },
-    };
-}
-
-/* ===================================================================
-   HERO: salida cinematográfica (sube y se desvanece con el scroll)
+   HERO: salida cinematográfica
    =================================================================== */
 function initHeroExit() {
     const hero = document.getElementById('inicio');
     if (!hero) return;
-    const content = hero.querySelector('.container-page');
-    if (!content) return;
-    gsap.to(content, { y: -90, autoAlpha: 0.0, ease: 'none',
+    const content = hero.querySelector('.wrap');
+    const burger = hero.querySelector('.hero-burger');
+    if (content) gsap.to(content, { y: -90, autoAlpha: 0, ease: 'none',
         scrollTrigger: { trigger: hero, start: 'center top', end: 'bottom top', scrub: true } });
+    if (burger) gsap.to(burger, { y: 120, autoAlpha: 0, ease: 'none',
+        scrollTrigger: { trigger: hero, start: 'top top', end: 'bottom top', scrub: true } });
 }
 
 /* ===================================================================
-   CONTINUIDAD DE FONDO: el body cambia de tono entre capítulos
+   CONTINUIDAD DE FONDO entre tonos (sutil; las clases ya pintan el grueso)
    =================================================================== */
 function initBgShift() {
-    const warm = '#0d0b08';   // cálido (capítulos emocionales)
-    const cold = '#08080a';   // base
-    const set = (c) => gsap.to(document.body, { backgroundColor: c, ease: 'none', duration: 0.6, overwrite: 'auto' });
-    [['#historia', warm], ['#equipo', warm], ['#comunidad', warm]].forEach(([sel, color]) => {
-        const el = document.querySelector(sel); if (!el) return;
-        ScrollTrigger.create({ trigger: el, start: 'top 60%', end: 'bottom 40%',
-            onEnter: () => set(color), onEnterBack: () => set(color),
-            onLeave: () => set(cold), onLeaveBack: () => set(cold) });
-    });
+    // El body es carbón; las secciones .on-light pintan su propio fondo.
+    // Aquí solo damos un empujón de calidez al cruzar la sección mago/clic.
+    return;
 }
 
 /* ===================================================================
@@ -251,168 +207,123 @@ function initThread() {
     if (fill) {
         ScrollTrigger.create({
             trigger: document.documentElement, start: 'top top', end: 'bottom bottom', scrub: true,
-            onUpdate: (self) => {
-                const p = self.progress * 100;
-                fill.style.height = p + '%';
-                if (head) head.style.top = p + '%';
-            },
+            onUpdate: (self) => { const p = self.progress * 100; fill.style.height = p + '%'; if (head) head.style.top = p + '%'; },
         });
     }
-
     if (tagWrap && chapters.length) {
         chapters.forEach((sec) => {
-            ScrollTrigger.create({
-                trigger: sec, start: 'top center', end: 'bottom center',
-                onToggle: (self) => { if (self.isActive) {
-                    tagWrap.innerHTML = `<b>${sec.dataset.num || ''}</b>&nbsp;&nbsp;${sec.dataset.chapter}`;
-                } },
-            });
+            ScrollTrigger.create({ trigger: sec, start: 'top center', end: 'bottom center',
+                onToggle: (self) => { if (self.isActive) tagWrap.innerHTML = `<b>${sec.dataset.num || ''}</b>&nbsp;&nbsp;${sec.dataset.chapter}`; } });
         });
     }
 }
 
 /* ===================================================================
-   ESCENA ANCLADA — EL PROBLEMA
+   FIRMA — LA HAMBURGUESA SE ARMA (cada capa = un acto)
    =================================================================== */
-function initProblemScene() {
-    const scene = document.getElementById('scene-problema');
-    if (!scene || !isDesktop()) { if (scene) scene.classList.add('no-pin'); return; }
-    const pin = scene.querySelector('.scene-pin');
-    const beats = Array.from(scene.querySelectorAll('.scene-beat'));
-    if (!pin || !beats.length) return;
+function initBurgerAssembler() {
+    const scene = document.getElementById('arma');
+    // El pin funciona en todas las pantallas; el layout (lado-a-lado vs
+    // apilado vertical) lo decide el CSS. Solo se desactiva sin GSAP / RM.
+    if (!scene) return;
 
-    const rail = addSceneRail(pin, beats.length);
+    const pin = scene.querySelector('.assembler-pin');
+    const acts = Array.from(scene.querySelectorAll('.act'));
+    // capas ordenadas por data-layer (0 = pan de arriba, cae primero)
+    const layers = Array.from(scene.querySelectorAll('.layer'))
+        .sort((a, b) => (+a.dataset.layer) - (+b.dataset.layer));
+    if (!pin || !acts.length || !layers.length) { scene.classList.add('no-pin'); revealBurgerStatic(); return; }
+
+    const N = acts.length; // 4 capas = 4 actos
+
+    // Estado inicial: cada capa arriba y transparente; se "deja caer" por scroll.
+    layers.forEach((ly) => gsap.set(ly, { yPercent: -260, autoAlpha: 0 }));
+
+    // riel de progreso + contador
+    const rail = document.createElement('div'); rail.className = 'assembler-rail';
+    const railFill = document.createElement('div'); railFill.className = 'assembler-rail-fill';
+    rail.appendChild(railFill);
+    const count = document.createElement('div'); count.className = 'assembler-count';
+    const pad = (n) => String(n).padStart(2, '0');
+    count.innerHTML = `<b>01</b> &mdash; ${pad(N)}`;
+    pin.appendChild(rail); pin.appendChild(count);
+
     let current = -1;
-    const setActive = (idx) => {
+    const setAct = (idx) => {
         if (idx === current) return;
         current = idx;
-        beats.forEach((b, i) => b.classList.toggle('active', i === idx));
+        acts.forEach((a, i) => a.classList.toggle('active', i === idx));
+        count.innerHTML = `<b>${pad(idx + 1)}</b> &mdash; ${pad(N)}`;
     };
-    setActive(0);
+    setAct(0);
 
-    ScrollTrigger.create({
-        trigger: scene, start: 'top top', end: '+=' + (beats.length * 100) + '%',
-        pin: pin, scrub: true, anticipatePin: 1,
-        onUpdate: (self) => {
-            const idx = Math.min(beats.length - 1, Math.floor(self.progress * beats.length));
-            setActive(idx);
-            rail.update(self.progress, idx);
+    // Timeline atada al scroll: por cada "tramo" cae una capa y cambia el acto.
+    const tl = gsap.timeline({
+        scrollTrigger: {
+            trigger: scene, start: 'top top', end: '+=' + (N * 105) + '%',
+            pin: pin, scrub: 0.6, anticipatePin: 1,
+            onToggle: (self) => document.body.classList.toggle('section-pinned', self.isActive),
+            onUpdate: (self) => {
+                railFill.style.width = (self.progress * 100) + '%';
+                const idx = Math.min(N - 1, Math.floor(self.progress * N + 0.0001));
+                setAct(idx);
+            },
         },
     });
-}
-
-/* ===================================================================
-   SCROLL HORIZONTAL — EL PLAN
-   =================================================================== */
-function initHorizontalPlan() {
-    const wrap = document.getElementById('plan');
-    if (!wrap || !isDesktop()) { if (wrap) wrap.classList.add('no-pin'); return; }
-    const pin = wrap.querySelector('.h-pin');
-    const track = wrap.querySelector('.h-track');
-    if (!pin || !track) return;
-
-    const panels = wrap.querySelectorAll('.h-panel').length || 3;
-    const rail = addSceneRail(pin, panels);
-    // recorrido horizontal real (cuánto viaja el track de izq. a der.)
-    const distance = () => track.scrollWidth - window.innerWidth + 120;
-    // recorrido vertical de scroll: más largo que el horizontal => sensación
-    // pausada y cinematográfica (antes era 1:1 y se sentía muy breve)
-    const scrollLen = () => distance() * 2.4;
-    gsap.to(track, {
-        x: () => -distance(), ease: 'none',
-        scrollTrigger: { trigger: wrap, start: 'top top', end: () => '+=' + scrollLen(),
-            pin: pin, scrub: 1, invalidateOnRefresh: true,
-            // mientras el plan está anclado, ocultamos el indicador vertical
-            // global para que no se encime con la tarjeta de la derecha
-            onToggle: (self) => document.body.classList.toggle('section-pinned', self.isActive),
-            onUpdate: (self) => rail.update(self.progress, Math.min(panels - 1, Math.floor(self.progress * panels))) },
+    layers.forEach((ly) => {
+        tl.to(ly, { yPercent: 0, autoAlpha: 1, duration: 0.7, ease: 'back.out(1.5)' })
+          .to(ly, { duration: 0.3 }); // respiro entre capas
     });
 }
 
+// Fallback estático (mobile / sin GSAP / reduce-motion): hamburguesa armada y actos visibles
+function revealBurgerStatic() {
+    document.querySelectorAll('#arma .layer').forEach((ly) => { ly.style.transform = 'none'; ly.style.opacity = '1'; });
+    document.querySelectorAll('#arma .act').forEach((a) => a.classList.add('active'));
+}
+
 /* ===================================================================
-   EL SISTEMA — media pegajosa (embudo) + pasos que se encienden
+   COUNTDOWN a la masterclass (dos relojes sincronizados)
    =================================================================== */
-function initSystemScene() {
-    const section = document.getElementById('sistema');
-    if (!section) return;
-    const steps = Array.from(section.querySelectorAll('.sys-step'));
-    const liquid = section.querySelector('.funnel-liquid');
-    if (!steps.length) return;
+function initCountdown() {
+    const clocks = Array.from(document.querySelectorAll('#countdown, #countdown-2'));
+    if (!clocks.length) return;
+    const label = document.getElementById('cd-label');
 
-    if (!isDesktop()) {
-        steps.forEach((s) => s.classList.add('active'));
-        if (liquid) liquid.style.height = '90%';
-        return;
-    }
-
-    let active = -1;
-    const setActive = (idx) => {
-        if (idx === active) return;
-        active = idx;
-        steps.forEach((s, i) => s.classList.toggle('active', i <= idx));
-        if (liquid) gsap.to(liquid, { height: ((idx + 1) / steps.length) * 100 + '%', duration: 0.5, ease: 'power2.out' });
+    const write = (root, d, h, m, s) => {
+        const set = (k, v) => { const el = root.querySelector(`[data-cd="${k}"]`); if (el) el.textContent = String(v).padStart(2, '0'); };
+        set('days', d); set('hours', h); set('mins', m); set('secs', s);
     };
 
-    steps.forEach((step, i) => {
-        ScrollTrigger.create({ trigger: step, start: 'top 68%', end: 'bottom 50%',
-            onEnter: () => setActive(i), onEnterBack: () => setActive(i) });
-    });
-    setActive(0);
+    const tick = () => {
+        const diff = MASTERCLASS_DATE.getTime() - Date.now();
+        if (diff <= 0) {
+            clocks.forEach((c) => { c.classList.add('live'); write(c, 0, 0, 0, 0); });
+            if (label) label.textContent = '¡Estamos en vivo! Entra al grupo y te paso el acceso';
+            clearInterval(timer);
+            const cta = document.getElementById('wa-group');
+            if (cta) cta.querySelector('svg') && (cta.lastChild.textContent = ' Entrar a la sesión en vivo');
+            return;
+        }
+        const days = Math.floor(diff / 86400000);
+        const hours = Math.floor((diff % 86400000) / 3600000);
+        const mins = Math.floor((diff % 3600000) / 60000);
+        const secs = Math.floor((diff % 60000) / 1000);
+        clocks.forEach((c) => write(c, days, hours, mins, secs));
+    };
+    tick();
+    const timer = setInterval(tick, 1000);
 }
 
 /* ===================================================================
-   EN JUEGO — las dos columnas entran desde lados opuestos
+   CTA grupo WhatsApp (usa link real si existe; si no, fallback DM)
    =================================================================== */
-function initStakesScene() {
-    const sec = document.getElementById('stakes');
-    if (!sec || !isDesktop()) return;
-    const fail = sec.querySelector('.stake-fail');
-    const win = sec.querySelector('.stake-win');
-    const st = { trigger: sec, start: 'top 78%', end: 'top 42%', scrub: true };
-    if (fail) gsap.fromTo(fail, { x: -70, autoAlpha: 0 }, { x: 0, autoAlpha: 1, ease: 'none', scrollTrigger: st });
-    if (win) gsap.fromTo(win, { x: 70, autoAlpha: 0 }, { x: 0, autoAlpha: 1, ease: 'none', scrollTrigger: st });
-}
-
-/* ===================================================================
-   EMBUDO — EL SISTEMA
-   =================================================================== */
-function runFunnel(staticMode) {
-    const wrap = document.getElementById('funnel');
-    if (!wrap) return;
-    const layer = wrap.querySelector('.funnel-particles');
-    if (!layer) return;
-    layer.innerHTML = '';
-
-    // De cada lote que "entra", la mayoría es rechazada (gris) y pocos pasan (oro).
-    const total = 9;
-    for (let i = 0; i < total; i++) {
-        const p = document.createElement('span');
-        const pass = i % 3 === 0;                 // ~1 de cada 3 pasa
-        p.className = 'funnel-particle' + (pass ? '' : ' reject');
-        p.style.left = (15 + Math.random() * 70) + '%';
-        layer.appendChild(p);
-
-        if (staticMode || RM || !window.gsap) {
-            p.style.top = pass ? '92%' : '46%';
-            p.style.opacity = pass ? '1' : '0.35';
-            continue;
-        }
-        const tl = gsap.timeline({ repeat: -1, delay: i * 0.45 });
-        if (pass) {
-            tl.fromTo(p, { top: '-4%', left: p.style.left, opacity: 0 }, { opacity: 1, duration: 0.2 })
-              .to(p, { top: '94%', left: '50%', duration: 2.4, ease: 'power1.in' })
-              .to(p, { opacity: 0, duration: 0.3 });
-        } else {
-            tl.fromTo(p, { top: '-4%', opacity: 0 }, { opacity: 0.6, duration: 0.2 })
-              .to(p, { top: (38 + Math.random() * 12) + '%', duration: 1.1, ease: 'power1.in' })
-              .to(p, { opacity: 0, x: (Math.random() > 0.5 ? 40 : -40), duration: 0.5 });
-        }
-    }
-}
-function initFunnelTrigger() {
-    const wrap = document.getElementById('funnel');
-    if (!wrap) return;
-    ScrollTrigger.create({ trigger: wrap, start: 'top 70%', once: true, onEnter: () => runFunnel(false) });
+function initWhatsApp() {
+    const cta = document.getElementById('wa-group');
+    if (!cta) return;
+    const valid = WHATSAPP_GROUP_URL && !/XXXX/.test(WHATSAPP_GROUP_URL);
+    cta.href = valid ? WHATSAPP_GROUP_URL : WHATSAPP_FALLBACK;
+    cta.target = '_blank'; cta.rel = 'noopener';
 }
 
 /* ===================================================================
@@ -425,72 +336,20 @@ function initMagneticButtons() {
         if (!el) return;
         wrap.addEventListener('mousemove', (e) => {
             const r = wrap.getBoundingClientRect();
-            el.style.transform = `translate(${(e.clientX - r.left - r.width / 2) * 0.35}px, ${(e.clientY - r.top - r.height / 2) * 0.35}px)`;
+            el.style.transform = `translate(${(e.clientX - r.left - r.width / 2) * 0.32}px, ${(e.clientY - r.top - r.height / 2) * 0.32}px)`;
         });
         wrap.addEventListener('mouseleave', () => { el.style.transform = ''; });
     });
 }
 
 /* ===================================================================
-   CAPTACIÓN DE LEADS -> WHATSAPP
-   =================================================================== */
-function initLeadForm() {
-    const form = document.getElementById('lead-form');
-    if (!form) return;
-    const statusEl = form.querySelector('.form-status');
-    const submitBtn = form.querySelector('button[type="submit"]');
-    const submitLabel = submitBtn ? submitBtn.querySelector('.btn-label') : null;
-
-    const setStatus = (msg, type) => { if (statusEl) { statusEl.textContent = msg; statusEl.className = `form-status show ${type}`; } };
-    const fieldErr = (name, msg) => {
-        const input = form.elements[name];
-        const errEl = form.querySelector(`[data-error-for="${name}"]`);
-        if (input) input.classList.toggle('invalid', !!msg);
-        if (errEl) errEl.textContent = msg || '';
-    };
-    ['nombre', 'mensaje', 'ayuda'].forEach((n) => { const i = form.elements[n]; if (i) i.addEventListener('input', () => fieldErr(n, '')); });
-
-    form.addEventListener('submit', (e) => {
-        e.preventDefault();
-        if (form.elements['website'] && form.elements['website'].value) { setStatus('Gracias, recibí tu mensaje.', 'success'); form.reset(); return; }
-
-        const nombre = form.elements['nombre'].value.trim();
-        const mensaje = form.elements['mensaje'].value.trim();
-        const ayuda = form.elements['ayuda'] ? form.elements['ayuda'].value.trim() : '';
-
-        let ok = true;
-        if (nombre.length < 2) { fieldErr('nombre', 'Dime cómo te llamas.'); ok = false; } else fieldErr('nombre', '');
-        if (mensaje.length < 5) { fieldErr('mensaje', 'Cuéntame un poco más.'); ok = false; } else fieldErr('mensaje', '');
-        if (!ok) { setStatus('Revisa los campos marcados.', 'error'); return; }
-
-        if (submitBtn) submitBtn.classList.add('loading');
-        if (submitLabel) submitLabel.innerHTML = '<span class="spinner"></span>&nbsp; Abriendo WhatsApp…';
-
-        const lines = ['Hola, quiero reservar mi lugar en la masterclass De tu mente al mundo.', '', `Nombre: ${nombre}`, `A qué me dedico / mi idea: ${mensaje}`];
-        if (ayuda) lines.push(`En qué me puedes ayudar: ${ayuda}`);
-        const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(lines.join('\n'))}`;
-
-        setTimeout(() => {
-            const win = window.open(url, '_blank');
-            if (submitBtn) submitBtn.classList.remove('loading');
-            if (submitLabel) submitLabel.textContent = 'Enviar por WhatsApp';
-            if (win) { setStatus('Listo. Sigamos la conversación en WhatsApp.', 'success'); form.reset(); }
-            else { setStatus('Tu navegador bloqueó la ventana. Toca aquí para abrir WhatsApp.', 'error'); if (statusEl) { statusEl.style.cursor = 'pointer'; statusEl.onclick = () => { window.location.href = url; }; } }
-        }, 450);
-    });
-}
-
-/* ===================================================================
-   AÑO
+   AÑO · REVEAL DEL HERO
    =================================================================== */
 function initYear() { const el = document.getElementById('year'); if (el) el.textContent = new Date().getFullYear(); }
 
-/* ===================================================================
-   REVELADO DEL HERO (tras preloader)
-   =================================================================== */
 function revealHero() {
     const heroLines = document.querySelectorAll('.hero-title .line-inner');
-    if (RM || !window.gsap || heroLines.length === 0) { document.querySelectorAll('.hero-in').forEach((el) => el.classList.add('is-in')); return; }
+    if (RM || !window.gsap || !heroLines.length) { document.querySelectorAll('.hero-in').forEach((el) => el.classList.add('is-in')); return; }
     const tl = gsap.timeline();
     tl.to(heroLines, { yPercent: 0, duration: 1.05, ease: 'expo.out', stagger: 0.12 })
       .add(() => document.querySelectorAll('.hero-in').forEach((el) => el.classList.add('is-in')), '-=0.55');
@@ -500,7 +359,6 @@ function revealHero() {
    INIT
    =================================================================== */
 document.addEventListener('DOMContentLoaded', () => {
-    // Ocultar líneas del hero para revelarlas al terminar el preloader
     if (window.gsap && !RM) gsap.set('.hero-title .line-inner', { yPercent: 110 });
 
     initNavbar();
@@ -508,7 +366,8 @@ document.addEventListener('DOMContentLoaded', () => {
     initSmoothScroll();
     initCursor();
     initMagneticButtons();
-    initLeadForm();
+    initCountdown();
+    initWhatsApp();
     initYear();
 
     runPreloader(() => {
@@ -517,4 +376,4 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
-window.addEventListener('load', () => { if (hasGSAP()) ScrollTrigger.refresh(); });
+addEventListener('load', () => { if (hasGSAP()) ScrollTrigger.refresh(); });
