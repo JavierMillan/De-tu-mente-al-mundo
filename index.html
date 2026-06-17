@@ -13,7 +13,7 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..500&family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;600;700;800&family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..500&family=Spline+Sans:wght@300;400;500;600&family=Martian+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="css/styles.css">
 </head>
@@ -25,10 +25,6 @@
         <div class="pre-bar"><i></i></div>
         <div class="pre-count">000</div>
     </div>
-
-    <!-- ============ CURSOR ============ -->
-    <div class="cursor" aria-hidden="true"></div>
-    <div class="cursor-dot" aria-hidden="true"></div>
 
     <!-- ============ HILO + CAPÍTULO ============ -->
     <div class="thread" aria-hidden="true">
@@ -47,7 +43,7 @@
                 <a href="#clic" class="nav-link">El clic</a>
                 <a href="#masterclass" class="nav-link">La clase</a>
                 <a href="#mago" class="nav-link">Impartida por</a>
-                <span class="magnetic"><a href="#umbral" class="btn btn-primary" style="--pad-y:0.55rem;--pad-x:1.15rem;font-size:0.82rem;">Aparta tu lugar</a></span>
+                <span class="magnetic"><button type="button" data-open-horario class="btn btn-primary" style="--pad-y:0.55rem;--pad-x:1.15rem;font-size:0.82rem;">Aparta tu lugar</button></span>
             </nav>
             <button class="menu-btn" id="menu-btn" aria-label="Abrir menú" aria-expanded="false" aria-controls="mobile-menu">
                 <!-- ☰ abstracto: líneas gruesas ámbar (los panes) + relleno fino -->
@@ -64,7 +60,7 @@
         <a href="#clic">El clic</a>
         <a href="#masterclass">La clase</a>
         <a href="#mago">Impartida por</a>
-        <a href="#umbral">Aparta tu lugar</a>
+        <a href="#umbral" data-open-horario>Aparta tu lugar</a>
     </nav>
 
     <main>
@@ -87,8 +83,8 @@
                 </p>
                 <div class="reveal hero-in" style="display:flex; flex-wrap:wrap; gap:0.9rem; margin-top:2.4rem;">
                     <span class="magnetic">
-                        <a href="#umbral" class="btn btn-primary">Aparta tu lugar
-                            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.7" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+                        <button type="button" data-open-horario class="btn btn-primary">Aparta tu lugar
+                            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.7" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M13 6l6 6-6 6"/></svg></button>
                     </span>
                     <a href="#arma" class="btn btn-ghost">Baja y te muestro por qué</a>
                 </div>
@@ -106,6 +102,12 @@
                         <!-- STAGE: hamburguesa por capas -->
                         <div class="burger-stage">
                             <div class="burger-plate"></div>
+                            <!-- anotación blueprint: línea de cota que señala la capa activa -->
+                            <div class="cota" id="cota" aria-hidden="true">
+                                <span class="cota-line"></span>
+                                <span class="cota-dot"></span>
+                                <span class="cota-label" id="cota-label">disponibilidad mental</span>
+                            </div>
                             <svg class="burger-svg" id="burger" viewBox="0 0 360 320" fill="none" aria-hidden="true">
                                 <!-- orden visual de abajo a arriba; data-layer = orden de caída -->
                                 <!-- pan inferior -->
@@ -146,22 +148,22 @@
 
                         <!-- ACTS: cada capa nombra un acto real de la clase -->
                         <div class="acts" id="acts">
-                            <article class="act active" data-act="0">
+                            <article class="act active" data-act="0" data-cota="el síntoma" data-cota-y="30">
                                 <p class="act-num">Ingrediente 01 — el pan de arriba</p>
                                 <h2 class="act-title">Publicas. Publicas. Y nadie te escribe.</h2>
                                 <p class="act-body">No es que publiques poco. No es el algoritmo. No es la suerte. Es algo que casi nadie te dice — y que vas a ver clarísimo en un momento. <em>Sigue bajando.</em></p>
                             </article>
-                            <article class="act" data-act="1">
+                            <article class="act" data-act="1" data-cota="disponibilidad mental" data-cota-y="44">
                                 <p class="act-num">Ingrediente 02 — lo que ya recordaste</p>
                                 <h2 class="act-title">¿Por qué pensaste en <span class="accent">esa</span> marca?</h2>
                                 <p class="act-body">No la mejor. No la más rica. La que tu cabeza tenía a la mano. Eso se llama <em>disponibilidad mental</em>: y es el activo más valioso que puede tener un negocio.</p>
                             </article>
-                            <article class="act" data-act="2">
+                            <article class="act" data-act="2" data-cota="el más conocido gana" data-cota-y="58">
                                 <p class="act-num">Ingrediente 03 — la verdad incómoda</p>
                                 <h2 class="act-title">No vende el mejor. Vende el más conocido.</h2>
                                 <p class="act-body">Tu calidad es el punto de partida, no el premio. Si nadie te recuerda, nadie te compra. El verdadero premio es ocupar <em>un espacio en su mente.</em></p>
                             </article>
-                            <article class="act" data-act="3">
+                            <article class="act" data-act="3" data-cota="memoria, no atención" data-cota-y="72">
                                 <p class="act-num">Ingrediente 04 — el pan de abajo</p>
                                 <h2 class="act-title">Que te vean no es lo mismo que te recuerden.</h2>
                                 <p class="act-body">La mayoría pelea por atención de un segundo. Tú vas a aprender a quedarte en su memoria — <em>hasta el día que necesiten lo que tú haces.</em></p>
@@ -287,27 +289,50 @@
             </div>
         </section>
 
-        <!-- ============ 07 · EL MAGO / mentor (papel) ============ -->
+        <!-- ============ 07 · IMPARTIDA POR (papel, compacto) ============ -->
         <section class="block on-light" id="mago" data-chapter="Impartida por" data-num="07">
             <div class="wrap">
-                <div style="display:grid; grid-template-columns: 1fr; gap:clamp(1.5rem,4vw,3rem); max-width:760px;">
-                    <div>
-                        <p class="eyebrow reveal">Impartida por</p>
-                        <div class="reveal" style="display:flex; align-items:center; gap:1.1rem; margin-top:1.4rem;">
-                            <span class="mage-portrait"><img src="assets/imgs/profile.png" alt="Javier Millán" onerror="this.parentNode.textContent='J'"></span>
-                            <div>
-                                <p class="display" style="font-size:1.7rem;">Javier Millán</p>
-                                <p class="mono" style="font-size:0.8rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--on-paper-mute);">De tu mente al mundo · La Red de Luz</p>
-                            </div>
+                <div class="story" style="max-width:580px; margin-inline:auto;">
+                    <div class="reveal" style="display:flex; align-items:center; gap:1.1rem;">
+                        <span class="mage-portrait"><img src="assets/imgs/profile.png" alt="Javier Millán" onerror="this.parentNode.textContent='J'"></span>
+                        <div>
+                            <p class="eyebrow" style="color:var(--ketchup);">Impartida por</p>
+                            <p class="display" style="font-size:1.5rem; margin-top:0.3rem;">Javier Millán</p>
+                            <p class="mono" style="font-size:0.72rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--on-paper-mute);">De tu mente al mundo · La Red de Luz</p>
                         </div>
-                        <div class="reveal pretty" style="font-size:1.1rem; color:var(--on-paper-soft); display:grid; gap:1.1rem; max-width:56ch; margin-top:1.8rem;">
-                            <p>He estado en muchos negocios: venta directa, network marketing, varios giros más. Pasé <strong style="color:var(--on-paper);">años sin resultados</strong> — pero con miles de enseñanzas: capacitaciones, libros, seminarios. También me asocié con las personas incorrectas, y eso enseña tanto como cualquier curso.</p>
-                            <p>Y por si fuera poco: me considero una persona tímida. Así que sé lo que se siente querer que tu voz llegue… y que no salga. Esta clase es lo que rescaté de todo eso, ordenado: <strong style="color:var(--on-paper);">lo que me hubiera encantado que alguien me contara cuando empezaba.</strong></p>
-                        </div>
-                        <blockquote class="mage-quote reveal" style="margin-top:2rem;">
-                            "Soy tímido. Y aun así, <span class="accent" style="color:var(--ketchup);">yo ya salté.</span> Si yo pude, déjame mostrarte el agua antes de que brinques tú."
-                        </blockquote>
                     </div>
+
+                    <p class="pulse reveal" style="margin-top:2.4rem;">Tienes algo que decir. <span class="pulse-accent">Y no termina de salir.</span></p>
+
+                    <ul class="bio-bullets reveal" style="margin-top:1.8rem;">
+                        <li>Emprendí mucho. Caí mucho. Y, como tú, seguí volviendo a los libros y a los cursos sin encontrar el clic.</li>
+                        <li>El clic vino el día que aprendí a <strong>regalar valor primero</strong> — y entendí que mi mensaje no molestaba: aportaba.</li>
+                        <li>Hoy ayudo a otros a hacer lo mismo. Sigo cayéndome. La diferencia es que ahora <strong>conozco el camino</strong>.</li>
+                    </ul>
+
+                    <blockquote class="mage-quote reveal" style="margin-top:2rem; font-size:clamp(1.2rem,2.8vw,1.6rem);">
+                        "No vine a verme a salvo arriba. <span style="color:var(--ketchup);">Vine a caminar contigo.</span>"
+                    </blockquote>
+
+                    <p class="reveal" style="margin-top:2.2rem;">
+                        <a href="https://javiermillanv.com" target="_blank" rel="noopener" class="more-link">
+                            Mi historia completa
+                            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.7" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M7 17 17 7M9 7h8v8"/></svg>
+                        </a>
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <hr class="seam" aria-hidden="true">
+
+        <!-- ============ 07g · LA RED DE LUZ (papel cálido) ============ -->
+        <section class="block on-light reddeluz" id="red-de-luz" data-chapter="La Red de Luz" data-num="07">
+            <div class="wrap">
+                <div class="story" style="max-width:640px; margin-inline:auto; text-align:center;">
+                    <p class="eyebrow reveal" style="color:var(--ketchup);">El porqué de todo esto</p>
+                    <h2 class="display reveal balance" style="font-size:clamp(1.8rem,5vw,3rem); margin-top:1.1rem; max-width:18ch; margin-inline:auto;">No te enseño a vender. Te enseño a no estar solo.</h2>
+                    <p class="reveal story-p" style="margin-inline:auto; margin-top:1.4rem;">Yo busqué mi tribu por años. No la encontraba — hasta que entendí que tenía que <strong style="color:var(--on-paper);">construirla.</strong> Esto que ves no es solo una clase: es el primer paso a <strong style="color:var(--on-paper);">un movimiento de personas que se recuerdan, una a otra, cómo brillar.</strong></p>
                 </div>
             </div>
         </section>
@@ -318,20 +343,19 @@
             <div class="wrap" style="z-index:2;">
                 <div class="quebradita-grid">
                     <div>
-                        <p class="eyebrow reveal" style="color:var(--lettuce);">Un regalo antes de empezar</p>
+                        <p class="eyebrow reveal" style="color:var(--sesame);">Si el miedo te tiene quieto, empieza por aquí</p>
                         <h2 class="display reveal balance" style="font-size:clamp(2rem,5.5vw,3.6rem); margin-top:1.1rem; max-width:16ch;">La&nbsp;Quebradita</h2>
                         <div class="reveal pretty" style="color:var(--on-char-soft); font-size:1.12rem; display:grid; gap:1.1rem; max-width:50ch; margin-top:1.4rem;">
-                            <p>Hay un cerro junto al mar, en San Carlos, Sonora. Ahí aprendí por qué a veces, aunque sepamos exactamente qué hacer, <em style="color:var(--on-char);font-style:normal;">no lo hacemos.</em></p>
-                            <p>Es una historia corta sobre el miedo a dar el paso — y sobre por qué <strong style="color:var(--on-char);">no necesitas más información, necesitas saltar.</strong> Te la regalo apenas entres al grupo, para que recibas algo de valor desde hoy.</p>
+                            <p>¿Te pasa que sabes qué hacer… pero algo te frena? Eso no es flojera. Es <em style="color:var(--on-char);font-style:normal;">miedo paralizante</em> — y tiene cómo trabajarse.</p>
+                            <p>En un cerro junto al mar aprendí a darle la vuelta. Escribí esa historia: corta, honesta, sobre por qué <strong style="color:var(--on-char);">no necesitas más información, necesitas dar el paso.</strong> No está a la venta en ningún lado.</p>
                         </div>
-                        <div class="reveal" style="display:flex; align-items:center; gap:0.7rem; margin-top:1.8rem; color:var(--on-char-mute);">
-                            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v13m0 0 4-4m-4 4-4-4M5 21h14"/></svg>
-                            <span class="mono" style="font-size:0.82rem; letter-spacing:0.06em;">Tuyo al unirte al grupo · lectura de 5 minutos</span>
+                        <div class="reveal gift-line" style="margin-top:1.8rem;">
+                            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24" style="flex-shrink:0;"><path stroke-linecap="round" stroke-linejoin="round" d="M20 12v9H4v-9M2 7h20v5H2zM12 22V7M12 7S10.5 3 8 3 5 5 5 6s1 1 3 1m4 0s1.5-4 4-4 3 2 3 3-1 1-3 1"/></svg>
+                            <span class="mono" style="font-size:0.82rem; letter-spacing:0.04em;">Tuya gratis al entrar al grupo · 5 min de lectura</span>
                         </div>
                     </div>
 
                     <div class="reveal cover-col">
-                        <span class="leap-tag mono">Lead magnet · PDF</span>
                         <!-- Portada real del e-book (vertical, como un libro) -->
                         <figure class="cover-book">
                             <img src="assets/imgs/quebradita.png" alt="Portada de La Quebradita: unos pies al borde de un acantilado mirando el mar azul"
@@ -350,6 +374,32 @@
         </section>
 
         <hr class="seam" aria-hidden="true">
+
+        <!-- ============ 08b · EL LLAMADO (carbón — callout + himno) ============ -->
+        <section class="block on-dark llamado" id="llamado" data-chapter="El llamado" data-num="08">
+            <div class="glow" style="width:520px;height:520px;top:50%;left:50%;transform:translate(-50%,-50%);"></div>
+            <div class="wrap" style="z-index:2;">
+                <div class="story" style="max-width:680px; margin-inline:auto; text-align:center;">
+                    <!-- ANCLA: la red te llama -->
+                    <p class="callout reveal">
+                        A esta red le falta una luz.
+                        <span class="callout-strong">La tuya.</span>
+                    </p>
+
+                    <!-- Línea de luz: detalle blueprint que separa callout y himno -->
+                    <div class="light-line reveal" aria-hidden="true">
+                        <span class="ll-track"></span>
+                        <span class="ll-dot"></span>
+                    </div>
+
+                    <!-- HIMNO -->
+                    <blockquote class="anthem reveal">
+                        <span>Mi luz ilumina a algunos.</span>
+                        <span class="anthem-glow">Pero con la tuya, le damos la vuelta al mundo.</span>
+                    </blockquote>
+                </div>
+            </div>
+        </section>
 
         <!-- ============ 09 · UMBRAL (carbón + CTA grupo WhatsApp) ============ -->
         <section class="block on-dark threshold" id="umbral" data-chapter="Tu lugar" data-num="09">
@@ -418,6 +468,7 @@
             <p class="eyebrow" style="color:var(--sesame);">Aparta tu lugar</p>
             <h3 class="display" id="modal-title" style="font-size:clamp(1.5rem,4vw,2.1rem); margin-top:0.8rem; max-width:20ch;">¿Qué horario te acomoda?</h3>
             <p style="color:var(--on-char-soft); font-size:1rem; margin-top:0.8rem; max-width:36ch;">Elige uno y entras al grupo de esa sesión. Ahí te mando el acceso y los recordatorios.</p>
+            <p class="mono" style="color:var(--sesame); font-size:0.74rem; letter-spacing:0.03em; margin-top:0.7rem;">＋ Te regalo <em style="font-style:normal;">La Quebradita</em> al entrar.</p>
 
             <div class="modal-options">
                 <a href="#" class="modal-opt" id="opt-26" target="_blank" rel="noopener">

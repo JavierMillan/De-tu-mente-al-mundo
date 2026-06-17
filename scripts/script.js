@@ -62,24 +62,6 @@ function runPreloader(onDone) {
 }
 
 /* ===================================================================
-   CURSOR
-   =================================================================== */
-function initCursor() {
-    if (RM || !isDesktop() || 'ontouchstart' in window) return;
-    const ring = document.querySelector('.cursor');
-    const dot = document.querySelector('.cursor-dot');
-    if (!ring || !dot) return;
-    let mx = innerWidth / 2, my = innerHeight / 2, rx = mx, ry = my;
-    addEventListener('mousemove', (e) => { mx = e.clientX; my = e.clientY; dot.style.transform = `translate(${mx}px, ${my}px) translate(-50%,-50%)`; }, { passive: true });
-    const loop = () => { rx += (mx - rx) * 0.18; ry += (my - ry) * 0.18; ring.style.transform = `translate(${rx}px, ${ry}px) translate(-50%,-50%)`; requestAnimationFrame(loop); };
-    loop();
-    document.querySelectorAll('a, button, .magnetic, input, textarea, [data-cursor]').forEach((el) => {
-        el.addEventListener('mouseenter', () => ring.classList.add('hover'));
-        el.addEventListener('mouseleave', () => ring.classList.remove('hover'));
-    });
-}
-
-/* ===================================================================
    NAVBAR · MENÚ MÓVIL
    =================================================================== */
 function initNavbar() {
@@ -181,7 +163,7 @@ function initScrollAnimations() {
               scrollTrigger: { trigger: el, start: 'top 90%', end: 'top 55%', scrub: true } });
     });
 
-    [initThread, initHeroExit, initBgShift, initBurgerAssembler]
+    [initThread, initHeroExit, initBgShift, initBurgerAssembler, initRogues]
         .forEach((fn) => { try { fn(); } catch (e) { console.warn('[scroll init]', fn.name, e); } });
 
     ScrollTrigger.refresh();
@@ -264,12 +246,23 @@ function initBurgerAssembler() {
     count.innerHTML = `<b>01</b> &mdash; ${pad(N)}`;
     pin.appendChild(rail); pin.appendChild(count);
 
+    // anotación blueprint (cota) que señala la capa activa
+    const cota = document.getElementById('cota');
+    const cotaLabel = document.getElementById('cota-label');
+
     let current = -1;
     const setAct = (idx) => {
         if (idx === current) return;
         current = idx;
         acts.forEach((a, i) => a.classList.toggle('active', i === idx));
         count.innerHTML = `<b>${pad(idx + 1)}</b> &mdash; ${pad(N)}`;
+        // mueve la cota a la capa activa y actualiza el término técnico
+        if (cota && acts[idx]) {
+            const y = acts[idx].dataset.cotaY || 50;
+            const term = acts[idx].dataset.cota || '';
+            cota.style.top = y + '%';
+            if (cotaLabel) cotaLabel.textContent = term;
+        }
     };
     setAct(0);
 
@@ -296,6 +289,23 @@ function initBurgerAssembler() {
 function revealBurgerStatic() {
     document.querySelectorAll('#arma .layer').forEach((ly) => { ly.style.transform = 'none'; ly.style.opacity = '1'; });
     document.querySelectorAll('#arma .act').forEach((a) => a.classList.add('active'));
+}
+
+/* ===================================================================
+   FICHAS DE VILLANO — revelado escalonado (scrollytelling)
+   Cada ficha entra una por una al hacer scroll por la sección.
+   =================================================================== */
+function initRogues() {
+    const rogues = Array.from(document.querySelectorAll('#rogues .rogue'));
+    if (!rogues.length) return;
+    rogues.forEach((r, i) => {
+        ScrollTrigger.create({
+            trigger: r, start: 'top 88%',
+            onEnter: () => setTimeout(() => r.classList.add('is-in'), i * 180),
+            onEnterBack: () => r.classList.add('is-in'),
+            once: false,
+        });
+    });
 }
 
 /* ===================================================================
@@ -375,22 +385,6 @@ function initWhatsApp() {
 }
 
 /* ===================================================================
-   BOTÓN MAGNÉTICO
-   =================================================================== */
-function initMagneticButtons() {
-    if (RM || !isDesktop() || 'ontouchstart' in window) return;
-    document.querySelectorAll('.magnetic').forEach((wrap) => {
-        const el = wrap.querySelector('.btn') || wrap.firstElementChild;
-        if (!el) return;
-        wrap.addEventListener('mousemove', (e) => {
-            const r = wrap.getBoundingClientRect();
-            el.style.transform = `translate(${(e.clientX - r.left - r.width / 2) * 0.32}px, ${(e.clientY - r.top - r.height / 2) * 0.32}px)`;
-        });
-        wrap.addEventListener('mouseleave', () => { el.style.transform = ''; });
-    });
-}
-
-/* ===================================================================
    AÑO · REVEAL DEL HERO
    =================================================================== */
 function initYear() { const el = document.getElementById('year'); if (el) el.textContent = new Date().getFullYear(); }
@@ -412,8 +406,6 @@ document.addEventListener('DOMContentLoaded', () => {
     initNavbar();
     initMobileMenu();
     initSmoothScroll();
-    initCursor();
-    initMagneticButtons();
     initCountdown();
     initWhatsApp();
     initYear();
