@@ -24,6 +24,22 @@ body{
     linear-gradient(180deg,#14123a 0%,var(--night-1) 28%,var(--night-0) 100%);
   background-attachment:fixed;min-height:100vh;line-height:1.5;-webkit-font-smoothing:antialiased;
 }
+
+/* ===== NAV compartido entre guías ===== */
+.gnav{position:sticky;top:0;z-index:50;backdrop-filter:blur(12px);
+  background:rgba(8,11,34,.72);border-bottom:1px solid var(--line)}
+.gnav .in{max-width:980px;margin:0 auto;display:flex;align-items:center;gap:14px;
+  padding:10px clamp(18px,5vw,38px)}
+.gnav .brand{font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--muted);margin-right:auto}
+.gnav .brand b{color:var(--star)}
+.gnav a{font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.04em;
+  text-decoration:none;color:var(--muted);border:1px solid var(--line);
+  padding:7px 13px;border-radius:99px;transition:all .18s ease;white-space:nowrap}
+.gnav a:hover{color:var(--ink);border-color:rgba(255,255,255,.25)}
+.gnav a.on{color:#fff;border-color:var(--gold);background:rgba(245,181,68,.12)}
+@media(max-width:560px){.gnav .brand{display:none}}
+
 .wrap{max-width:980px;margin:0 auto;padding:clamp(24px,4vw,52px) clamp(18px,5vw,38px) 80px}
 .eyebrow{font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted)}
 
@@ -124,6 +140,15 @@ h1 em{font-style:normal;color:var(--gold)}
 </style>
 </head>
 <body>
+
+<nav class="gnav">
+  <div class="in">
+    <span class="brand">DTMM · <b>Guías internas</b></span>
+    <a href="run-sheet-dia-evento.html">Run sheet</a>
+    <a href="guia-admins-1a-generacion.html" class="on">Guía de admins</a>
+  </div>
+</nav>
+
 <div class="wrap">
 
   <!-- HEADER -->

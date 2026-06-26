@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="es-MX">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DTMM · Día del evento · Run sheet</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=Inter:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap');
+:root{
+  --night-0:#080B22;--night-1:#11143a;
+  --ink:#ECEAF6;--muted:#9A9AC4;
+  --line:rgba(255,255,255,.09);--card:rgba(255,255,255,.035);
+  --arturo:#7C6FCB;--lupita:#D06DA0;--javier:#F2A93C;
+  --star:#FFD27A;--gold:#F5B544;--ok:#7BD88F;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  font-family:'Inter',system-ui,sans-serif;color:var(--ink);
+  background:radial-gradient(1100px 500px at 50% -12%,rgba(245,181,68,.09),transparent 60%),
+    linear-gradient(180deg,#14123a 0%,var(--night-1) 28%,var(--night-0) 100%);
+  background-attachment:fixed;min-height:100vh;line-height:1.5;-webkit-font-smoothing:antialiased;
+}
+
+/* ===== NAV compartido entre guías ===== */
+.gnav{position:sticky;top:0;z-index:50;backdrop-filter:blur(12px);
+  background:rgba(8,11,34,.72);border-bottom:1px solid var(--line)}
+.gnav .in{max-width:920px;margin:0 auto;display:flex;align-items:center;gap:14px;
+  padding:10px clamp(18px,5vw,36px)}
+.gnav .brand{font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--muted);margin-right:auto}
+.gnav .brand b{color:var(--star)}
+.gnav a{font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.04em;
+  text-decoration:none;color:var(--muted);border:1px solid var(--line);
+  padding:7px 13px;border-radius:99px;transition:all .18s ease;white-space:nowrap}
+.gnav a:hover{color:var(--ink);border-color:rgba(255,255,255,.25)}
+.gnav a.on{color:#fff;border-color:var(--gold);background:rgba(245,181,68,.12)}
+@media(max-width:560px){.gnav .brand{display:none}}
+
+.wrap{max-width:920px;margin:0 auto;padding:clamp(24px,4vw,50px) clamp(18px,5vw,36px) 80px}
+.badge{display:inline-flex;align-items:center;gap:8px;font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);border:1px solid rgba(245,181,68,.35);background:rgba(245,181,68,.07);padding:5px 11px;border-radius:99px}
+h1{font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:clamp(28px,5vw,48px);line-height:1.05;letter-spacing:-.02em;margin:16px 0 4px}
+.two{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+.slot{font-family:'Space Mono',monospace;font-size:12px;color:var(--muted);border:1px solid var(--line);border-radius:99px;padding:7px 14px;background:var(--card)}
+.slot b{color:var(--star)}
+
+.sec{margin-top:clamp(34px,5vw,56px)}
+.sec-h{font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:clamp(19px,3vw,25px);letter-spacing:-.01em;margin-bottom:4px}
+.sec-d{color:var(--muted);font-size:14px;margin-bottom:18px;max-width:60ch}
+.sec-h .reset{float:right;font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--muted);background:var(--card);border:1px solid var(--line);
+  border-radius:99px;padding:5px 11px;cursor:pointer;transition:all .18s ease}
+.sec-h .reset:hover{color:var(--ink);border-color:rgba(255,255,255,.25)}
+
+/* recursos */
+.res{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:680px){.res{grid-template-columns:1fr}}
+.field{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:13px 15px}
+.field label{display:block;font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+.field .row{display:flex;gap:8px;align-items:center}
+.field input{width:100%;background:rgba(0,0,0,.25);border:1px solid var(--line);border-radius:8px;color:var(--ink);font-family:'Space Mono',monospace;font-size:13px;padding:9px 11px}
+.field input:focus{outline:2px solid var(--gold);outline-offset:1px;border-color:var(--gold)}
+.field input::placeholder{color:#5b5b86}
+.field .open{flex-shrink:0;font-family:'Space Mono',monospace;font-size:11px;color:var(--star);text-decoration:none;border:1px solid var(--line);border-radius:8px;padding:9px 11px;transition:all .18s ease}
+.field .open:hover{border-color:var(--gold);background:rgba(245,181,68,.1)}
+.field.note{display:flex;flex-direction:column;gap:6px}
+.field.note .txt{font-size:13.5px;color:var(--ink)}
+.field.note .txt b{color:var(--star)}
+
+/* timeline */
+.tl{display:flex;flex-direction:column;gap:0}
+.step{display:grid;grid-template-columns:64px 1fr;gap:16px;cursor:pointer;padding:4px 0}
+.step .rail{position:relative;display:flex;justify-content:center}
+.step .rail:before{content:"";position:absolute;top:0;bottom:0;width:2px;background:var(--line)}
+.step:first-child .rail:before{top:22px}
+.step:last-child .rail:before{bottom:auto;height:22px}
+.step .node{position:relative;z-index:1;width:16px;height:16px;border-radius:50%;background:var(--night-1);border:2px solid var(--pc);margin-top:16px;transition:all .2s ease}
+.step .body{background:var(--card);border:1px solid var(--line);border-left:3px solid var(--pc);border-radius:0 12px 12px 0;padding:14px 16px;margin:8px 0}
+.step .who{font-family:'Space Mono',monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--pc)}
+.step .ttl{font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:17px;margin:3px 0}
+.step .dur{font-family:'Space Mono',monospace;font-size:11px;color:var(--muted);float:right;margin-top:2px}
+.step .desc{font-size:13.5px;color:var(--muted);margin-top:4px}
+.step:hover .body{border-color:rgba(255,255,255,.22)}
+.step.here .node{background:var(--pc);box-shadow:0 0 16px 3px var(--pc);transform:scale(1.15)}
+.step.here .body{background:color-mix(in srgb,var(--pc) 13%,transparent);box-shadow:0 0 0 1px var(--pc)}
+.step.here .ttl{color:var(--pc)}
+.tl-total{font-family:'Space Mono',monospace;font-size:11px;color:var(--muted);margin-top:10px;text-align:right}
+
+/* checklist */
+.cols{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+@media(max-width:760px){.cols{grid-template-columns:1fr}}
+.col{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px}
+.col h4{font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--phase);margin-bottom:12px}
+.chk{display:flex;gap:10px;align-items:flex-start;padding:7px 0;cursor:pointer;font-size:13.5px}
+.chk .box{flex-shrink:0;width:18px;height:18px;border-radius:5px;border:1.5px solid var(--muted);margin-top:1px;display:flex;align-items:center;justify-content:center;transition:all .15s ease}
+.chk .box svg{width:11px;height:11px;opacity:0;transform:scale(.5);transition:all .15s ease}
+.chk.done .box{background:var(--ok);border-color:var(--ok)}
+.chk.done .box svg{opacity:1;transform:scale(1)}
+.chk.done .lbl{color:var(--muted);text-decoration:line-through;text-decoration-color:rgba(255,255,255,.3)}
+
+.next{margin-top:34px;border-top:1px dashed var(--line);padding-top:18px}
+.next .tag{font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--star);margin-bottom:10px}
+.next .item{font-size:14px;color:var(--muted);padding:4px 0;padding-left:18px;position:relative}
+.next .item:before{content:"›";position:absolute;left:2px;color:var(--star)}
+.next .item b{color:var(--ink)}
+
+.foot{margin-top:46px;border-top:1px solid var(--line);padding-top:16px;font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.08em;color:var(--muted);display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+
+<nav class="gnav">
+  <div class="in">
+    <span class="brand">DTMM · <b>Guías internas</b></span>
+    <a href="run-sheet-dia-evento.html" class="on">Run sheet</a>
+    <a href="guia-admins-1a-generacion.html">Guía de admins</a>
+  </div>
+</nav>
+
+<div class="wrap">
+
+  <div class="badge">● Día del evento · Masterclass</div>
+  <h1>Run sheet — De tu mente al mundo</h1>
+  <div class="two">
+    <span class="slot">2 HORARIOS · mismo guion</span>
+    <span class="slot">HORARIO 1 · <b id="h1">—</b></span>
+    <span class="slot">HORARIO 2 · <b id="h2">—</b></span>
+  </div>
+
+  <!-- RECURSOS -->
+  <div class="sec">
+    <div class="sec-h">Recursos a la mano</div>
+    <div class="sec-d">Pega tus enlaces aquí antes de empezar. Quedan guardados en este navegador.</div>
+    <div class="res">
+      <div class="field"><label>Página · La Red de Luz (sirve de diapositivas)</label><div class="row"><input type="text" placeholder="https://..." id="r1"><a class="open" data-for="r1" target="_blank" rel="noopener">Abrir</a></div></div>
+      <div class="field"><label>Grupo de WhatsApp (enlace de acceso)</label><div class="row"><input type="text" placeholder="https://chat.whatsapp.com/..." id="r2"><a class="open" data-for="r2" target="_blank" rel="noopener">Abrir</a></div></div>
+      <div class="field"><label>ChatGPT / AD Alchemist (por si demuestras)</label><div class="row"><input type="text" placeholder="https://chatgpt.com/..." id="r3"><a class="open" data-for="r3" target="_blank" rel="noopener">Abrir</a></div></div>
+      <div class="field note"><label>QR de entrada</label><div class="txt"><b>Última diapositiva.</b> Probado: que lleve al grupo correcto. Más el enlace de WhatsApp en el chat para los que están en celular.</div></div>
+    </div>
+  </div>
+
+  <!-- ESTRUCTURA DE LA LLAMADA -->
+  <div class="sec">
+    <div class="sec-h">Estructura de la llamada</div>
+    <div class="sec-d">Toca un bloque para marcar "estamos aquí" mientras corre el evento.</div>
+    <div class="tl" id="tl">
+      <div class="step" style="--pc:var(--arturo)">
+        <div class="rail"><div class="node"></div></div>
+        <div class="body"><span class="dur">10–15 min</span><div class="who">Arturo · Anfitrión</div><div class="ttl">Recepción y bienvenida</div><div class="desc">Recibe a la gente conforme llega, rompe el hielo, platica. No arrancar hasta que haya audiencia. Estira o acorta según qué tan rápido lleguen.</div></div>
+      </div>
+      <div class="step" style="--pc:var(--lupita)">
+        <div class="rail"><div class="node"></div></div>
+        <div class="body"><span class="dur">5–10 min</span><div class="who">Lupita</div><div class="ttl">Presenta el proyecto</div><div class="desc">Se presenta, da contexto de qué va el proyecto y la masterclass. Cierra presentando a Javier.</div></div>
+      </div>
+      <div class="step" style="--pc:var(--javier)">
+        <div class="rail"><div class="node"></div></div>
+        <div class="body"><span class="dur">~30 min</span><div class="who">Javier</div><div class="ttl">Masterclass</div><div class="desc">La clase. El corazón del evento.</div></div>
+      </div>
+      <div class="step" style="--pc:var(--javier)">
+        <div class="rail"><div class="node"></div></div>
+        <div class="body"><span class="dur">~10 min</span><div class="who">Javier · página = slides</div><div class="ttl">Presenta La Red de Luz</div><div class="desc">Explica la comunidad usando la página como diapositivas para mostrar de qué va el proyecto.</div></div>
+      </div>
+      <div class="step" style="--pc:var(--star)">
+        <div class="rail"><div class="node"></div></div>
+        <div class="body"><span class="dur">abierto</span><div class="who">Todos</div><div class="ttl">Preguntas y respuestas</div><div class="desc">Resuelve dudas y baja la fricción para entrar a la comunidad.</div></div>
+      </div>
+      <div class="step" style="--pc:var(--star)">
+        <div class="rail"><div class="node"></div></div>
+        <div class="body"><span class="dur">cierre</span><div class="who">Cierre</div><div class="ttl">Entrada a la comunidad</div><div class="desc">Última diapositiva con QR. Manda el enlace del grupo de WhatsApp en el chat para los del celular. Da la bienvenida.</div></div>
+      </div>
+    </div>
+    <div class="tl-total">Total aprox. ~65–75 min + Q&A</div>
+  </div>
+
+  <!-- CHECKLIST -->
+  <div class="sec">
+    <div class="sec-h">Checklist operativo <span class="reset" id="resetChk">Reiniciar para 2º horario</span></div>
+    <div class="sec-d">Toca para marcar. Se guarda en este navegador — usa "reiniciar" entre horarios.</div>
+    <div class="cols">
+      <div class="col" style="--phase:var(--arturo)">
+        <h4>Antes</h4>
+        <div class="chk"><span class="box"></span><span class="lbl">Enlaces pegados arriba y probados</span></div>
+        <div class="chk"><span class="box"></span><span class="lbl">QR probado (lleva al grupo correcto)</span></div>
+        <div class="chk"><span class="box"></span><span class="lbl">Página / diapositivas abiertas, listas para compartir pantalla</span></div>
+        <div class="chk"><span class="box"></span><span class="lbl">Aviso enviado a "avisos" (mensaje + imagen)</span></div>
+        <div class="chk"><span class="box"></span><span class="lbl">Roles confirmados: Arturo recibe · Lupita presenta · Javier clase</span></div>
+        <div class="chk"><span class="box"></span><span class="lbl">Audio, cámara y pantalla probados</span></div>
+        <div class="chk"><span class="box"></span><span class="lbl">ChatGPT / AD Alchemist abierto por si demuestras</span></div>
+      </div>
+      <div class="col" style="--phase:var(--lupita)">
+        <h4>Durante</h4>
+        <div class="chk"><span class="box"></span><span class="lbl">Arturo recibe y platica (no arrancar sin gente)</span></div>
+        <div class="chk"><span class="box"></span><span class="lbl">Lupita presenta proyecto y a Javier</span></div>
+        <div class="chk"><span class="box"></span><span class="lbl">Javier da la clase</span></div>
+        <div class="chk"><span class="box"></span><span class="lbl">Javier presenta La Red de Luz con la página</span></div>
+        <div class="chk"><span class="box"></span><span class="lbl">Q&A</span></div>
+        <div class="chk"><span class="box"></span><span class="lbl">Mostrar QR + mandar link de WhatsApp en el chat</span></div>
+      </div>
+      <div class="col" style="--phase:var(--javier)">
+        <h4>Después</h4>
+        <div class="chk"><span class="box"></span><span class="lbl">Bienvenida a los nuevos del grupo</span></div>
+        <div class="chk"><span class="box"></span><span class="lbl">Seguimiento a quienes entraron</span></div>
+        <div class="chk"><span class="box"></span><span class="lbl">Repetir el guion en el 2º horario</span></div>
+      </div>
+    </div>
+
+    <div class="next">
+      <div class="tag">Qué sigue · estructurar la comunidad</div>
+      <div class="item"><b>Definir las clases</b> por nivel (Invisible → Sin respuesta).</div>
+      <div class="item"><b>Lanzar el club de lectura</b> como capa de retención (más adelante, sin saturar).</div>
+    </div>
+  </div>
+
+  <div class="foot">
+    <span>DTMM · RUN SHEET · USO INTERNO</span>
+    <span>1ª GENERACIÓN · v0.1</span>
+  </div>
+
+</div>
+
+<script>
+const LS='dtmm-runsheet-v1';
+const state=JSON.parse(localStorage.getItem(LS)||'{}');
+const save=()=>localStorage.setItem(LS,JSON.stringify(state));
+
+// horarios editables + persistentes
+['h1','h2'].forEach(id=>{
+  const el=document.getElementById(id);
+  if(state[id])el.textContent=state[id];
+  el.style.cursor='pointer';el.title='Toca para editar';
+  el.addEventListener('click',()=>{const v=prompt('Horario:',el.textContent==='—'?'':el.textContent);
+    if(v!==null){el.textContent=v||'—';state[id]=el.textContent;save();}});
+});
+
+// recursos: persistencia + botón abrir
+['r1','r2','r3'].forEach(id=>{
+  const el=document.getElementById(id);
+  if(state[id])el.value=state[id];
+  el.addEventListener('input',()=>{state[id]=el.value;save();});
+});
+document.querySelectorAll('.open').forEach(a=>a.addEventListener('click',e=>{
+  const v=document.getElementById(a.dataset.for).value.trim();
+  if(!v){e.preventDefault();return;}
+  let u=v;if(!/^https?:\/\//i.test(u))u='https://'+u;a.href=u;
+}));
+
+// timeline "estamos aquí" + persistente
+const steps=[...document.querySelectorAll('#tl .step')];
+if(typeof state.here==='number'&&steps[state.here])steps[state.here].classList.add('here');
+steps.forEach((s,i)=>s.addEventListener('click',()=>{
+  const on=s.classList.contains('here');
+  steps.forEach(x=>x.classList.remove('here'));
+  if(!on){s.classList.add('here');state.here=i;}else{delete state.here;}
+  save();
+}));
+
+// checklist + persistente
+const checks=[...document.querySelectorAll('.chk')];
+state.chk=state.chk||{};
+checks.forEach((c,i)=>{
+  c.querySelector('.box').innerHTML='<svg viewBox="0 0 24 24" fill="none"><path d="M5 12l4 4L19 7" stroke="#0a0d26" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+  if(state.chk[i])c.classList.add('done');
+  c.addEventListener('click',()=>{c.classList.toggle('done');state.chk[i]=c.classList.contains('done');save();});
+});
+document.getElementById('resetChk').addEventListener('click',()=>{
+  if(!confirm('¿Desmarcar todo el checklist y el "estamos aquí" para el 2º horario? (Los enlaces y horarios se conservan)'))return;
+  checks.forEach(c=>c.classList.remove('done'));
+  steps.forEach(x=>x.classList.remove('here'));
+  state.chk={};delete state.here;save();
+});
+</script>
+</body>
+</html>
