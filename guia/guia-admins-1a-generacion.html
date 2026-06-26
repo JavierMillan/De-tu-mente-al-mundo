@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="es-MX">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DTMM · Guía de admins · 1ª generación</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=Inter:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap');
+
+:root{
+  --night-0:#080B22;--night-1:#11143a;
+  --ink:#ECEAF6;--muted:#9A9AC4;
+  --line:rgba(255,255,255,.09);--card:rgba(255,255,255,.035);
+  --t0:#4A5286;--t1:#7C6FCB;--t2:#D06DA0;--t3:#F2A93C;
+  --star:#FFD27A;--gold:#F5B544;
+  --yes:#7BD88F;--no:#F08585;--wa:#1f6f53;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Inter',system-ui,sans-serif;color:var(--ink);
+  background:
+    radial-gradient(1100px 500px at 50% -12%, rgba(124,111,203,.10), transparent 60%),
+    linear-gradient(180deg,#14123a 0%,var(--night-1) 28%,var(--night-0) 100%);
+  background-attachment:fixed;min-height:100vh;line-height:1.5;-webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:980px;margin:0 auto;padding:clamp(24px,4vw,52px) clamp(18px,5vw,38px) 80px}
+.eyebrow{font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted)}
+
+/* header */
+.badge{
+  display:inline-flex;align-items:center;gap:8px;font-family:'Space Mono',monospace;
+  font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--no);
+  border:1px solid rgba(240,133,133,.35);background:rgba(240,133,133,.07);
+  padding:5px 11px;border-radius:99px;
+}
+.badge .blink{width:7px;height:7px;border-radius:50%;background:var(--no);animation:blink 1.8s ease-in-out infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.25}}
+h1{font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:clamp(28px,5.2vw,52px);line-height:1.04;letter-spacing:-.02em;margin:18px 0 0;max-width:20ch}
+h1 em{font-style:normal;color:var(--gold)}
+.principle{
+  margin-top:22px;padding:16px 20px;border-left:3px solid var(--gold);
+  background:rgba(245,181,68,.07);border-radius:0 12px 12px 0;max-width:64ch;font-size:16px;
+}
+.principle strong{color:var(--gold)}
+.north{margin-top:14px;color:var(--muted);font-size:14px;max-width:64ch}
+.north b{color:var(--star)}
+
+/* section heads */
+.sec{margin-top:clamp(38px,6vw,64px)}
+.sec-h{font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:clamp(20px,3.2vw,27px);letter-spacing:-.01em;margin-bottom:4px}
+.sec-d{color:var(--muted);font-size:14px;margin-bottom:20px;max-width:60ch}
+
+/* diagnóstico rápido */
+.dx{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+@media(max-width:760px){.dx{grid-template-columns:1fr 1fr}}
+.dx-card{background:var(--card);border:1px solid var(--line);border-top:3px solid var(--c);border-radius:12px;padding:14px}
+.dx-card .lv{font-family:'Space Mono',monospace;font-size:10.5px;letter-spacing:.12em;color:var(--c)}
+.dx-card .says{font-size:13.5px;font-style:italic;color:var(--ink);margin-top:8px}
+.dx-card .nm{font-size:11.5px;color:var(--muted);margin-top:8px;font-family:'Space Mono',monospace;letter-spacing:.06em}
+
+/* selector niveles */
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px}
+.tab{
+  font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.05em;cursor:pointer;
+  background:var(--card);border:1px solid var(--line);color:var(--muted);
+  padding:9px 14px;border-radius:99px;transition:all .2s ease;
+}
+.tab:hover{border-color:rgba(255,255,255,.25);color:var(--ink)}
+.tab:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+.tab.active{background:color-mix(in srgb,var(--c) 20%,transparent);border-color:var(--c);color:#fff;box-shadow:0 8px 30px -14px var(--c)}
+
+/* playbook */
+.play{background:linear-gradient(180deg,rgba(255,255,255,.05),rgba(255,255,255,.02));border:1px solid var(--line);border-radius:18px;padding:clamp(20px,3vw,30px);border-top:3px solid var(--pc,var(--gold))}
+.play .pcode{font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.14em;color:var(--pc)}
+.play h3{font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:25px;color:var(--pc);margin:5px 0 0;letter-spacing:-.01em}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:22px}
+@media(max-width:680px){.grid2{grid-template-columns:1fr}}
+.block .k{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:7px}
+.block .v{font-size:14.5px}
+.yesno{border-radius:12px;padding:13px 15px;font-size:14px}
+.yes{background:rgba(123,216,143,.08);border:1px solid rgba(123,216,143,.22)}
+.yes .k{color:var(--yes)}
+.no{background:rgba(240,133,133,.07);border:1px solid rgba(240,133,133,.22)}
+.no .k{color:var(--no)}
+.reto{background:rgba(245,181,68,.08);border:1px solid rgba(245,181,68,.22);border-radius:12px;padding:13px 15px;font-size:14.5px}
+.reto .k{color:var(--gold)}
+.promote{margin-top:18px;font-size:13.5px;color:var(--muted);border-top:1px dashed var(--line);padding-top:14px}
+.promote b{color:var(--star)}
+
+/* whatsapp bubble */
+.wa-wrap{margin-top:22px}
+.wa-wrap .k{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:10px}
+.bubble{
+  background:var(--wa);color:#eafff3;border-radius:14px 14px 14px 4px;
+  padding:13px 16px;font-size:14.5px;max-width:90%;line-height:1.45;
+  box-shadow:0 8px 24px -12px rgba(31,111,83,.6);position:relative;
+}
+.bubble:after{content:"✓✓";position:absolute;right:12px;bottom:7px;font-size:10px;color:#9fe9c4;opacity:.7}
+
+/* listas */
+.rules{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:680px){.rules{grid-template-columns:1fr}}
+.rule{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:15px 17px;display:flex;gap:13px;align-items:flex-start}
+.rule .num{font-family:'Space Mono',monospace;color:var(--gold);font-size:13px;font-weight:700;flex-shrink:0}
+.rule .txt{font-size:14px}
+.rule .txt b{color:var(--ink)}
+
+.wa-principles{display:flex;flex-direction:column;gap:10px}
+.wp{background:var(--card);border:1px solid var(--line);border-left:3px solid var(--wa);border-radius:0 12px 12px 0;padding:13px 16px;font-size:14px}
+.wp b{color:#8fe9c4}
+
+.club{border:1px dashed rgba(124,111,203,.4);border-radius:16px;padding:clamp(20px,3vw,28px);background:radial-gradient(500px 180px at 100% 0%,rgba(124,111,203,.12),transparent 60%)}
+.club .tag{font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--t1)}
+.club h3{font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:23px;margin:9px 0}
+.club ul{margin:12px 0 0 0;list-style:none;display:flex;flex-direction:column;gap:8px}
+.club li{font-size:14px;color:var(--muted);padding-left:20px;position:relative}
+.club li:before{content:"›";position:absolute;left:4px;color:var(--t1)}
+.club li b{color:var(--ink)}
+
+.foot{margin-top:54px;border-top:1px solid var(--line);padding-top:18px;font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.08em;color:var(--muted);display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
+
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- HEADER -->
+  <div class="badge"><span class="blink"></span>Uso interno · 1ª generación</div>
+  <h1>Cómo sostener a un miembro <em>sin enseñarle de más</em>.</h1>
+  <div class="principle">Tu trabajo no es enseñarles todo. Es <strong>subirlos un nivel y mantenerlos ejecutando.</strong> El error #1 de un admin es enseñar al nivel equivocado — hablarle de embudos a quien ni tiene cuenta lo paraliza.</div>
+  <div class="north">Norte: cada interacción mueve a la persona hacia recibir un <b>mensaje tibio en WhatsApp</b> de alguien que ya quiere dar el paso. Diagnostica primero, apoya al nivel correcto, asigna un reto, repite.</div>
+
+  <!-- DIAGNÓSTICO RÁPIDO -->
+  <div class="sec">
+    <div class="sec-h">1 · Diagnóstico rápido</div>
+    <div class="sec-d">Lo que la persona dice te revela su nivel. Ubícalo en silencio antes de responder.</div>
+    <div class="dx">
+      <div class="dx-card" style="--c:var(--t0)"><div class="lv">N00</div><div class="says">"No tengo IG ni redes."</div><div class="nm">INVISIBLE</div></div>
+      <div class="dx-card" style="--c:var(--t1)"><div class="lv">N01</div><div class="says">"Tengo redes pero casi no sé usarlas."</div><div class="nm">PRESENTE PERO MUDO</div></div>
+      <div class="dx-card" style="--c:var(--t2)"><div class="lv">N02</div><div class="says">"Las uso para mi marca pero no sé montar embudos."</div><div class="nm">MARCA SIN SISTEMA</div></div>
+      <div class="dx-card" style="--c:var(--t3)"><div class="lv">N03</div><div class="says">"Tengo embudo pero no me llegan buenos prospectos."</div><div class="nm">EMBUDO SIN RESPUESTA</div></div>
+    </div>
+  </div>
+
+  <!-- PLAYBOOK POR NIVEL -->
+  <div class="sec">
+    <div class="sec-h">2 · Playbook por nivel</div>
+    <div class="sec-d">Toca un nivel para ver cómo apoyarlo: qué SÍ haces, qué NO, qué reto le asignas y cómo le respondes en WhatsApp.</div>
+    <div class="tabs" id="tabs" role="tablist">
+      <button class="tab" data-lv="0" style="--c:var(--t0)" role="tab">N00 · Invisible</button>
+      <button class="tab" data-lv="1" style="--c:var(--t1)" role="tab">N01 · Mudo</button>
+      <button class="tab" data-lv="2" style="--c:var(--t2)" role="tab">N02 · Sin sistema</button>
+      <button class="tab" data-lv="3" style="--c:var(--t3)" role="tab">N03 · Sin respuesta</button>
+    </div>
+
+    <div class="play" id="play" aria-live="polite">
+      <div class="pcode" id="pcode"></div>
+      <h3 id="pname"></h3>
+      <div class="reto" style="margin-top:18px"><div class="k" style="font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;margin-bottom:7px">Reto que le asignas</div><div id="preto"></div></div>
+      <div class="grid2">
+        <div class="block"><div class="k">Cómo lo reconoces</div><div class="v" id="psenales"></div></div>
+        <div class="block"><div class="k">Cuándo ya subió de nivel</div><div class="v" id="psube"></div></div>
+        <div class="yesno yes"><div class="k">✓ Qué SÍ haces</div><div id="psi"></div></div>
+        <div class="yesno no"><div class="k">✕ Error de admin a evitar</div><div id="pno"></div></div>
+      </div>
+      <div class="wa-wrap">
+        <div class="k">Respuesta tipo en WhatsApp</div>
+        <div class="bubble" id="pwa"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MANEJO WHATSAPP -->
+  <div class="sec">
+    <div class="sec-h">3 · Cuando llega un mensaje</div>
+    <div class="sec-d">El que escribe ya dio un paso. Tu única misión: no enfriarlo.</div>
+    <div class="wa-principles">
+      <div class="wp"><b>Diagnostica en silencio.</b> Antes de teclear, ¿qué nivel revela su frase? Responde a ese nivel, no al literal.</div>
+      <div class="wp"><b>Responde al dolor, no a la pregunta técnica.</b> Si un N01 pregunta "¿cómo hago un reel?", llévalo al mensaje, no al reel.</div>
+      <div class="wp"><b>Etiqueta la emoción.</b> "Suena a que llevas rato publicando sin respuesta y ya cansa." Eso abre la conversación, no la cierra.</div>
+      <div class="wp"><b>Tono tibio, no vendedor.</b> Ya está aquí; un pitch lo espanta. Acompaña, no vendas.</div>
+      <div class="wp"><b>Una acción a la vez.</b> Sal de cada conversación con UN reto claro, no con una lista.</div>
+    </div>
+  </div>
+
+  <!-- REGLAS DE ORO -->
+  <div class="sec">
+    <div class="sec-h">4 · Reglas de oro</div>
+    <div class="sec-d">Si dudas en una interacción, regresa a esto.</div>
+    <div class="rules">
+      <div class="rule"><span class="num">01</span><span class="txt"><b>Diagnostica antes de aconsejar.</b> El consejo correcto al nivel equivocado paraliza.</span></div>
+      <div class="rule"><span class="num">02</span><span class="txt"><b>Un nivel, un reto.</b> No enseñes de más. Sube a la persona un escalón, no diez.</span></div>
+      <div class="rule"><span class="num">03</span><span class="txt"><b>Ejecución sobre teoría.</b> Celebra lo feo que existe. Primero tiene que existir para perfeccionarlo.</span></div>
+      <div class="rule"><span class="num">04</span><span class="txt"><b>No resuelvas todo.</b> Tu meta es moverlos un nivel, no entregarles el negocio armado.</span></div>
+      <div class="rule"><span class="num">05</span><span class="txt"><b>Todo apunta al norte.</b> Cada reto acerca a la persona al inbound tibio. Si no, sobra.</span></div>
+      <div class="rule"><span class="num">06</span><span class="txt"><b>Mismo lenguaje entre admins.</b> Tú, Arturo y Lupita usan los mismos niveles y nombres. Que nadie reciba consejos contradictorios.</span></div>
+    </div>
+  </div>
+
+  <!-- CLUB DE LECTURA -->
+  <div class="sec">
+    <div class="club">
+      <div class="tag">Capa de comunidad · corre por todos los niveles</div>
+      <h3>📖 Club de lectura — cómo lo operan</h3>
+      <ul>
+        <li><b>Para qué sirve:</b> retención. Es la razón para volver al grupo aunque no sea día de clase.</li>
+        <li><b>Ritmo semanal:</b> una lectura corta + una pregunta de discusión + un check-in de ejecución.</li>
+        <li><b>Regla:</b> cada lectura conecta con mentalidad o ejecución del nivel — nada de teoría suelta.</li>
+        <li><b>Quién lo modera:</b> definan un responsable fijo para que no se enfríe (sugerencia: Lupita por el lado de mentalidad).</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="foot">
+    <span>DTMM · GUÍA INTERNA DE ADMINS</span>
+    <span>1ª GENERACIÓN · v0.1 — POR VALIDAR</span>
+  </div>
+
+</div>
+
+<script>
+const D={
+ 0:{c:'--t0',code:'N00 · INVISIBLE',name:'Invisible',
+    reto:'Abrir la cuenta + 1 post CON INTENCIÓN. Que diga a quién ayuda — feo está bien, bonito no importa.',
+    senales:'No tiene cuenta o la tiene en cero. Dice "no soy de redes", "no sé ni por dónde empezar".',
+    sube:'Tiene cuenta abierta y publicó un post con un mensaje claro.',
+    si:'Quítale el peso de "hacerlo bien". La meta es que EXISTA. Celebra el primer post aunque esté feo.',
+    no:'Hablarle de estética, algoritmo o embudos. Lo abrumas y no abre la cuenta.',
+    wa:'No necesitas saber de redes todavía. Solo abre la cuenta y sube un post diciendo a quién ayudas. Feo está perfecto. ¿Lo subes hoy y me lo mandas?'},
+ 1:{c:'--t1',code:'N01 · PRESENTE PERO MUDO',name:'Presente pero mudo',
+    reto:'Definir su mensaje en una frase (a quién + de qué dolor lo saca) + 1 post sobre ese dolor real.',
+    senales:'Tiene cuenta pero publica sin rumbo o no publica. "No sé qué postear", "subo cosas pero nada pega".',
+    sube:'Tiene una frase clara de a-quién / qué-dolor y publica con intención.',
+    si:'Ayúdale a nombrar a su persona y su dolor. El contenido empieza a tener dirección: menos "qué subo", más "a quién le hablo".',
+    no:'Darle un calendario de 30 posts. Sin mensaje, un calendario es puro ruido.',
+    wa:'Antes de pensar qué postear: ¿a quién ayudas y de qué dolor lo sacas? Escríbelo en UNA frase y de ahí sale tu primer post de verdad. Mándame tu frase.'},
+ 2:{c:'--t2',code:'N02 · MARCA SIN SISTEMA',name:'Marca sin sistema',
+    reto:'Montar el embudo mínimo: post con dolor → CTA → conversación de WhatsApp. Imagen con AD Alchemist (que NO sea lo que sube todos).',
+    senales:'Publica con consistencia y mensaje, pero no captura. "Tengo seguidores pero no clientes", "no sé cómo convertir".',
+    sube:'Tiene un embudo funcionando (post → CTA → WhatsApp), aunque llegue poco.',
+    si:'Muéstrale que un embudo no es complicado: es un puente del post a la conversación. Enséñale AD Alchemist para diferenciar la imagen.',
+    no:'Meterlo a herramientas o automatizaciones caras. El embudo mínimo es manual y termina en WhatsApp.',
+    wa:'Ya tienes mensaje, ahora te falta el puente: post que toca el dolor → "escríbeme por WhatsApp" → conversación. Eso YA es un embudo. ¿Armamos tu primer creativo con AD Alchemist?'},
+ 3:{c:'--t3',code:'N03 · EMBUDO SIN RESPUESTA',name:'Embudo sin respuesta',
+    reto:'Vincular página para pre-calificar + afinar a quién atrae + manejar la conversación para que el que escriba ya venga tibio.',
+    senales:'Tiene embudo pero los mensajes son fríos o escasos. "Me escriben pero no compran", "puro curioso".',
+    sube:'Recibe mensajes tibios de gente lista para la conversación. El norte cumplido.',
+    si:'El problema casi nunca es el embudo — es a quién atrae y qué tan tibio llega. Afina el mensaje para que solo escriba quien ya siente el dolor.',
+    no:'Decirle que rehaga todo el embudo. Casi siempre es afinar mensaje y pre-calificación, no empezar de cero.',
+    wa:'Si llegan fríos, el problema está arriba del embudo: tu post atrae curiosos, no dolidos. Afinemos a quién le hablas y metamos pre-calificación para que solo escriba quien ya quiere salir.'}
+};
+const play=document.getElementById('play');
+const set=(id,v)=>document.getElementById(id).textContent=v;
+function pick(n){
+  const d=D[n];
+  document.querySelectorAll('.tab').forEach(t=>t.classList.toggle('active',t.dataset.lv===String(n)));
+  play.style.setProperty('--pc',`var(${d.c})`);
+  set('pcode',d.code);set('pname',d.name);set('preto',d.reto);
+  set('psenales',d.senales);set('psube',d.sube);set('psi',d.si);set('pno',d.no);set('pwa',d.wa);
+}
+document.querySelectorAll('.tab').forEach(t=>t.addEventListener('click',()=>pick(t.dataset.lv)));
+pick(0);
+</script>
+</body>
+</html>
