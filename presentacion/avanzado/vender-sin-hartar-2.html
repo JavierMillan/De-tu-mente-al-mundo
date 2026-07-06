@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Cómo hacer que el algoritmo te ame — De tu mente al mundo</title>
+<title>Vender sin que se sienta a venta — De tu mente al mundo</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;600;700;800&family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..500&family=Spline+Sans:wght@300;400;500;600&family=Martian+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -203,7 +203,6 @@ html,body{height:100%;background:#000;overflow:hidden;font-family:'Spline Sans',
 .fill .kw{color:var(--ketchup)}
 
 /* ============ ÁTOMOS "FUERA DE LA CAJA" ============ */
-/* palabra/dato gigante que sangra fuera del marco */
 .bleed{position:absolute;font-family:'Unbounded',sans-serif;font-weight:800;
   line-height:.8;letter-spacing:-.04em;color:var(--char-soft);
   font-size:clamp(9rem,34vw,30rem);z-index:0;pointer-events:none;user-select:none;
@@ -212,13 +211,11 @@ html,body{height:100%;background:#000;overflow:hidden;font-family:'Spline Sans',
 .bleed.tl{top:-6vh;left:-2vw;-webkit-text-stroke:1px var(--line-d2);color:transparent}
 .slide > .z1{position:relative;z-index:1}
 
-/* comilla mega para citas a pantalla completa */
 .mark{font-family:'Fraunces',serif;font-weight:600;line-height:.7;
   font-size:clamp(8rem,22vw,20rem);color:var(--sesame);opacity:.22;
   position:absolute;top:2vh;left:clamp(1rem,4vw,4rem);z-index:0;pointer-events:none}
 .paper .mark{color:var(--ketchup);opacity:.18}
 
-/* texto en escalera (staircase) */
 .stair{display:flex;flex-direction:column;gap:.1em}
 .stair span{font-family:'Unbounded',sans-serif;font-weight:700;letter-spacing:-.02em;
   line-height:.98;font-size:clamp(1.8rem,6vw,4.6rem)}
@@ -226,19 +223,31 @@ html,body{height:100%;background:#000;overflow:hidden;font-family:'Spline Sans',
 .stair span:nth-child(3){margin-left:2.8em}
 @media(max-width:820px){.stair span{margin-left:0 !important}}
 
-/* nota manuscrita / guiño (humor) */
 .aside{font-family:'Fraunces',serif;font-style:italic;color:var(--on-char-mute);
   font-size:clamp(.92rem,1.3vw,1.15rem);max-width:34ch}
 .paper .aside{color:var(--on-paper-mute)}
 .aside::before{content:"↳ ";color:var(--sesame);font-style:normal}
 .paper .aside::before{color:var(--ketchup)}
 
-/* arquetipo · Ventana ("La Ventana") — marco simétrico, revelación enmarcada */
-.window{display:flex;align-items:center;justify-content:center}
-.window .frame{border:2px solid var(--sesame);border-radius:8px;
-  padding:clamp(2rem,6vw,5rem);max-width:60ch;text-align:center;
-  box-shadow:0 0 0 12px var(--char),0 0 0 13px var(--line-d2)}
-.paper .window .frame{border-color:var(--ketchup);box-shadow:0 0 0 12px var(--paper),0 0 0 13px var(--line-l2)}
+/* chat bubble mock (firma para avanzado) */
+.dm{display:flex;flex-direction:column;gap:.7rem;width:100%;max-width:36rem}
+.bub{max-width:82%;padding:.8rem 1.1rem;border-radius:16px;font-size:clamp(.9rem,1.2vw,1.08rem);
+  line-height:1.4}
+.bub.them{align-self:flex-start;background:var(--char-soft);border:1px solid var(--line-d);
+  border-bottom-left-radius:4px;color:var(--on-char-soft)}
+.bub.you{align-self:flex-end;background:rgba(232,161,60,.14);border:1px solid var(--sesame);
+  border-bottom-right-radius:4px;color:var(--on-char)}
+.paper .bub.them{background:var(--paper-soft);border-color:var(--line-l);color:var(--on-paper-soft)}
+.paper .bub.you{background:rgba(200,68,46,.1);border-color:var(--ketchup);color:var(--on-paper)}
+
+/* arquetipo · Diagonal ("El Corte") — eje de fuga propio, dos campos de peso desigual */
+.diagonal{position:relative;overflow:hidden}
+.diagonal::before{content:"";position:absolute;inset:-20% -10%;z-index:0;
+  background:linear-gradient(115deg,var(--char) 68%,var(--sesame) 68.5%,var(--sesame) 69.7%,transparent 70.2%)}
+.paper .diagonal::before{background:linear-gradient(115deg,var(--paper) 68%,var(--ketchup) 68.5%,var(--ketchup) 69.7%,transparent 70.2%)}
+.diagonal .z1{max-width:56ch}
+.diagonal .side-mark{position:absolute;top:50%;right:clamp(2rem,7vw,6rem);transform:translateY(-50%);
+  font-size:clamp(5rem,11vw,9rem);opacity:.9;z-index:1;filter:drop-shadow(0 0 30px var(--glow))}
 
 /* footer / brand */
 .brandmark{position:absolute;bottom:clamp(1.2rem,2.4vw,2rem);left:clamp(2.5rem,6vw,7rem);
@@ -363,184 +372,135 @@ body.on-paper .navbtn:hover{border-color:var(--ketchup);color:var(--ketchup)}
     <!-- 1 · PORTADA -->
     <section class="slide active">
       <div class="glow tr"></div>
-      <div class="bleed tl">ame</div>
+      <div class="bleed tl">venta</div>
       <div class="z1">
-        <div class="eyebrow">Nivel Intermedio · Parte 1</div>
-        <h1 class="mega">Cómo hacer que el<br>algoritmo te <span class="hl">ame.</span></h1>
-        <p class="lead wide mt-m serif" style="font-style:italic;font-size:clamp(1.1rem,1.9vw,1.7rem)">Spoiler: no es cuestión de suerte, ni de publicar a las 3am porque un gurú lo dijo.</p>
+        <div class="eyebrow">Nivel Avanzado · Parte 2</div>
+        <h1 class="mega">Vender sin que<br>se sienta a <span class="hl">venta.</span></h1>
+        <p class="lead wide mt-m serif" style="font-style:italic;font-size:clamp(1.1rem,1.9vw,1.7rem)">Se puede vender y hacerse viral al mismo tiempo. Aquí está cómo.</p>
       </div>
       <div class="brandmark">De tu mente al mundo · una iniciativa de La Red de Luz</div>
     </section>
 
-    <!-- 2 · EL MALENTENDIDO -->
-    <section class="slide">
-      <div class="glow bl"></div>
-      <div class="eyebrow">Empecemos por lo que TODOS creemos</div>
-      <h2 class="mega" style="max-width:16ch">Sientes que el algoritmo te trae <span class="hl">entre ojos.</span></h2>
-      <p class="lead wide mt-m">Malas noticias: ni te conoce. Buenas noticias: eso es liberador. El algoritmo no te odia — solo <span class="hl">reparte lo que la gente ya aprobó</span>. Es un repartidor, no un juez.</p>
-      <div class="chip"><span class="dot"></span> Sé honesto: ¿a qué le echas la culpa cuando un post no pega?</div>
+    <!-- 2 · REVISIÓN RÁPIDA -->
+    <section class="slide paper">
+      <div class="eyebrow">Antes de empezar</div>
+      <h2 class="h1">¿Quién trae su <span class="hl">conversación</span> reescrita?</h2>
+      <p class="lead wide mt-m">La clase pasada quedamos en pasar 3 chats reales por Reconocer → Indagar → Conectar → Invitar. Vamos a leer 2 o 3 en el chat antes de seguir.</p>
+      <div class="chip"><span class="dot"></span> Comparte cómo cambió tu conversación</div>
     </section>
 
-    <!-- 3 · EL ALGORITMO ES UN ESPEJO (PAPER · cita firma) -->
-    <section class="slide paper center">
-      <div class="mark">“</div>
+    <!-- 3 · EL DETECTOR ANTIPUBLICIDAD (diagonal, arquetipo nuevo) -->
+    <section class="slide diagonal">
+      <span class="side-mark">🚨</span>
       <div class="z1">
-        <div class="eyebrow" style="justify-content:center">La neta detrás del alcance</div>
-        <p class="bigline" style="margin-inline:auto;text-align:center">El algoritmo no decide si eres <em class="serif" style="color:var(--on-paper-soft)">bueno</em>.</p>
-        <div class="rule" style="margin-inline:auto"></div>
-        <p class="bigline" style="margin-inline:auto;text-align:center">Solo repite lo que la gente <span class="hl">hizo</span> contigo.</p>
-        <p class="lead mt-m" style="text-align:center">Es un espejo. Si no te gusta el reflejo, no le grites al espejo.</p>
+        <div class="eyebrow">Llevas toda tu vida entrenándolo</div>
+        <h2 class="h1" style="max-width:13ch">Hueles al vendedor antes de que <span class="hl">abra la boca.</span></h2>
+        <p class="serif mt-m" style="font-style:italic;font-size:clamp(1.1rem,1.8vw,1.5rem);max-width:38ch">El problema no es tu producto. Es que <span class="hl" style="font-style:normal;font-weight:500">tú eres la peor persona</span> para hablar bien de él — tu voz ya está descalificada.</p>
       </div>
     </section>
 
-    <!-- 4 · QUÉ MIDE REALMENTE -->
+    <!-- 4 · EL CARNAVAL DE VENECIA (PAPER) -->
+    <section class="slide paper">
+      <div class="eyebrow">La solución no es esconder</div>
+      <div class="split">
+        <div>
+          <h2 class="h1">Ponte una <span class="hl">máscara</span> real.</h2>
+        </div>
+        <div>
+          <p class="lead wide">En el Carnaval de Venecia no importaba quién eras ni cuánto ganabas — solo lo que decías. Se rompía el prejuicio de quién daba el mensaje.</p>
+          <p class="lead wide mt-s">Julián se puso muchas: el científico, el novio inseguro, el fan de Cerati, el rebelde en el balcón. Ninguna mentira — todas facetas reales que abren la puerta por razones distintas a "te voy a vender algo".</p>
+        </div>
+      </div>
+      <div class="chip"><span class="dot"></span> ¿Qué faceta real tuya podría contar tu próxima historia?</div>
+    </section>
+
+    <!-- 5 · HISTORIA > ARGUMENTO -->
     <section class="slide">
       <div class="glow br"></div>
-      <div class="eyebrow">Cómo decide a quién enseñarte</div>
-      <h2 class="h1">En el fondo, mide <span class="hl">4 cosas.</span></h2>
-      <div class="steps mt-l">
-        <div class="step"><div class="ico">👁️</div><div class="st">Retención</div><div class="sh">¿lo vieron completo?</div></div>
-        <div class="step"><div class="ico">💬</div><div class="st">Conversación</div><div class="sh">¿comentaron?</div></div>
-        <div class="step"><div class="ico">🔖</div><div class="st">Valor</div><div class="sh">¿lo guardaron?</div></div>
-        <div class="step"><div class="ico">📤</div><div class="st">Identidad</div><div class="sh">¿lo compartieron?</div></div>
-      </div>
-      <p class="lead wide mt-l">Según cómo reaccione la gente, decide a <span class="hl">cuántos más</span> se lo enseña. O sea: tú no le hablas al algoritmo. Le hablas a las personas, y él nomás está oyendo.</p>
-      <div class="chip"><span class="dot"></span> Abre tu último post: ¿cuál de las 4 ganó?</div>
-    </section>
-
-    <!-- 5 · LAS 3 PARTES DE TODO CONTENIDO -->
-    <section class="slide">
-      <div class="glow bl"></div>
-      <div class="eyebrow">La anatomía de un buen contenido</div>
-      <h2 class="h1">Todo lo que publicas tiene <span class="hl">3 partes.</span></h2>
-      <div class="steps mt-l" style="grid-template-columns:repeat(3,1fr)">
-        <div class="step"><span class="arrow">→</span><div class="st">El inicio</div><div class="sh">Hook</div><p style="color:var(--on-char-soft);font-size:.92rem;margin-top:.6rem">La promesa.</p></div>
-        <div class="step"><span class="arrow">→</span><div class="st">El cuerpo</div><div class="sh">Contenido</div><p style="color:var(--on-char-soft);font-size:.92rem;margin-top:.6rem">El valor.</p></div>
-        <div class="step"><div class="st">El cierre</div><div class="sh">Final</div><p style="color:var(--on-char-soft);font-size:.92rem;margin-top:.6rem">El compartir.</p></div>
-      </div>
-      <p class="lead wide mt-l">Cada una tiene su chamba. Si una falla, se cae todo. Vamos una por una.</p>
-    </section>
-
-    <!-- 6 · HOOK = PROMESA -->
-    <section class="slide">
-      <div class="glow tr"></div>
-      <div class="eyebrow">Parte 1 · el hook</div>
-      <h2 class="h1">El hook es tu <span class="hl">boleto de entrada.</span></h2>
-      <p class="lead wide mt-s">Con él te compras 2 segundos de atención. Pero ojo: prometer no es gritar. Un buen hook promete <em>valor</em>, no humo.</p>
-      <div class="ab mt-m">
+      <div class="eyebrow">Por qué una historia convence más que un dato</div>
+      <h2 class="h1">Tu cerebro entra en <span class="hl">"modo detective."</span></h2>
+      <p class="lead wide mt-m">Cuando escuchas un pitch, evalúas, comparas, buscas la trampa. Pero metido en una historia, te importa lo que le pasa al personaje — y el cerebro apaga los filtros críticos.</p>
+      <div class="ab mt-l">
         <div class="pub a">
-          <span class="label">Hook de humo</span>
-          <p class="txt">"3 tips que te van a cambiar la vida 🤯🔥"</p>
+          <span class="label">Argumento directo</span>
+          <p class="txt">"Te puedo asegurar que mi gym es el mejor de la colonia."</p>
         </div>
         <div class="pub b">
-          <span class="label">Hook que promete</span>
-          <p class="txt">"Publicas todos los días y nadie guarda nada. Va por qué."</p>
+          <span class="label">Historia</span>
+          <p class="txt">"No te puedo decir que mi gym es el mejor. Pero sí que mi vecino de 50 años se metió hace 6 meses y ahora su ex le manda mensajes para cenar."</p>
         </div>
       </div>
-      <p class="aside mt-s">Sí, yo también usé el de los 3 tips. No lo volveremos a mencionar.</p>
     </section>
 
-    <!-- 7 · CONTENIDO = VALOR (PAPER) -->
+    <!-- 6 · EL CABALLO DE TROYA (PAPER, staircase) -->
     <section class="slide paper">
-      <div class="eyebrow">Parte 2 · el contenido</div>
-      <div class="split">
-        <div>
-          <h2 class="mega" style="max-width:14ch">"Vine a darte algo que vale tu <span class="hl">rato.</span>"</h2>
-        </div>
-        <div>
-          <p class="lead wide">El contenido tiene que justificar por qué se quedaron. Si prometiste una bomba y entregas un tibio, la confianza se <em>truena</em> — y a la próxima ya no te creen.</p>
-          <p class="serif mt-m" style="font-style:italic;font-size:clamp(1.2rem,2vw,1.7rem);line-height:1.3">Cada post <span class="hl" style="font-style:normal;font-weight:500">renueva</span> esa promesa. O la rompe.</p>
-        </div>
+      <div class="eyebrow">Los griegos tardaron 10 años en entrar a Troya</div>
+      <div class="stair mt-s">
+        <span>Dejaron</span>
+        <span>de empujar.</span>
+        <span><span class="hl">Regalaron</span> un caballo.</span>
       </div>
+      <p class="lead wide mt-l">Tu historia es ese caballo. No necesitas empujar tu venta contra el muro del detector — envuélvela en algo que tu audiencia quiera meter en su casa, por decisión propia.</p>
     </section>
 
-    <!-- 8 · LA CONFIANZA (2 COSAS) -->
-    <section class="slide">
-      <div class="glow br"></div>
-      <div class="eyebrow">La confianza se construye con 2 cosas</div>
-      <h2 class="h1">Nada más <span class="hl">dos.</span></h2>
-      <div class="ab mt-l">
-        <div class="card lit">
-          <div class="tag">Mientras te ven</div>
-          <h3>El <span class="hl">"órale"</span></h3>
-          <p>"Qué bueno estuvo esto." El valor se siente en el momento, no después.</p>
-        </div>
-        <div class="card lit">
-          <div class="tag">Al despedirte</div>
-          <h3>El <span class="hl">último sabor</span></h3>
-          <p>Tan bueno que digan "esto se lo tengo que mandar a alguien". Ahí arranca la parte 3.</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- 9 · FINAL = COMPARTIR (staircase firma) -->
+    <!-- 7 · STALLONE/ROCKY -->
     <section class="slide">
       <div class="glow bl"></div>
-      <div class="eyebrow">Parte 3 · el final</div>
-      <div class="stair mt-s">
-        <span>El final</span>
-        <span>no es</span>
-        <span>para <span class="hl">ti.</span></span>
-      </div>
-      <p class="lead wide mt-l">Nadie comparte "contenido". La gente comparte su <span class="hl">identidad</span>: comparte lo que la hace verse bien frente a los demás.</p>
-      <p class="serif mt-s" style="font-style:italic;font-size:clamp(1.2rem,2vw,1.6rem)">La pregunta de oro: <span class="hl" style="font-style:normal;font-weight:500">"¿esto alguien lo querría regalar?"</span></p>
-      <div class="chip"><span class="dot"></span> ¿Tu último post lo compartirías TÚ? Sin trampa.</div>
+      <div class="eyebrow">Cuando no tienes tu propia historia</div>
+      <h2 class="h1">Pídele prestada una que <span class="hl">todos ya aman.</span></h2>
+      <p class="lead wide mt-m">Stallone tenía 50 dólares, no podía ni darle de comer a su perro. Se sentó a escribir Rocky.</p>
+      <p class="lead wide mt-s">La audiencia queda enganchada en "qué va a pasar" — y la idea real (la que querías vender) entra sin que la analicen, porque no llegó dentro de un pitch: llegó dentro de una historia que ya amaban.</p>
     </section>
 
-    <!-- 10 · NOLAN (PAPER) -->
-    <section class="slide paper">
-      <div class="eyebrow">Roba esto de Christopher Nolan</div>
-      <div class="split">
-        <div>
-          <h2 class="h1">Promete mucho.<br>Entrega <span class="hl">más.</span></h2>
-          <p class="lead wide mt-m">Sus tráilers prometen un montón. Y aun así, la película es mejor. Sales pensando más de lo que entraste — por eso la gente hace fila en cada estreno.</p>
-        </div>
-        <div>
-          <p class="serif" style="font-size:clamp(1.3rem,2.2vw,1.9rem);line-height:1.3">¿Tu final fue épico y elegante…</p>
-          <p class="serif mt-s" style="font-size:clamp(1.3rem,2.2vw,1.9rem);line-height:1.3">…o fue <span class="hl" style="font-weight:500">"comenta 'INFO' y te paso mi ebook"?</span></p>
-        </div>
+    <!-- 8 · LA CICATRIZ, NO EL DIPLOMA (PAPER) -->
+    <section class="slide paper center">
+      <div class="mark">"</div>
+      <div class="z1">
+        <div class="eyebrow" style="justify-content:center">Vulnerabilidad como anti-manipulación</div>
+        <p class="bigline" style="margin-inline:auto;text-align:center">Enseña la <span class="hl">cicatriz,</span></p>
+        <div class="rule" style="margin-inline:auto"></div>
+        <p class="bigline" style="margin-inline:auto;text-align:center">no el <span class="hl">diploma.</span></p>
+        <p class="lead mt-m" style="text-align:center">A la cicatriz se le cree más. El error, la duda, el miedo — eso desactiva el detector de ventas mejor que casi cualquier otra técnica.</p>
       </div>
     </section>
 
-    <!-- 11 · EL BUCLE COMPLETO -->
+    <!-- 9 · MIL CAMINOS, NO UNA CARRETERA -->
     <section class="slide">
       <div class="glow br"></div>
-      <div class="eyebrow">Así se conecta todo</div>
-      <h2 class="h1">El bucle que te hace <span class="hl">crecer.</span></h2>
-      <div class="rows mt-l" style="max-width:52ch">
-        <div class="row"><span class="n">01</span><span class="t">Hook → entran</span></div>
-        <div class="row key"><span class="n">02</span><span class="t">Valor → se quedan y te respetan</span></div>
-        <div class="row key"><span class="n">03</span><span class="t">Final → lo comparten</span></div>
-        <div class="row"><span class="n">04</span><span class="t">El algoritmo lo lleva a más gente</span></div>
-      </div>
-      <p class="lead wide mt-m">El respeto no se pide, se <span class="hl">gana post a post</span>. Cada video que cumple es la razón por la que se quedan al siguiente.</p>
+      <div class="eyebrow">La metáfora de la ciudad</div>
+      <h2 class="h1">No construyas <span class="hl">una carretera</span> con letrero de VENTA.</h2>
+      <p class="lead wide mt-m">La mayoría hace eso, y luego se pregunta por qué nadie quiere manejar por ahí.</p>
+      <p class="serif mt-m" style="font-style:italic;font-size:clamp(1.15rem,1.9vw,1.6rem)">Construye <span class="hl" style="font-style:normal;font-weight:500">mil caminos</span> — mil historias, mil ángulos — que la gente disfruta recorrer, aunque no se den cuenta de que llegaron al centro. El viaje ya valía la pena.</p>
     </section>
 
-    <!-- 12 · EL ERROR DEL HOOK SIN FONDO (cita firma con bleed) -->
+    <!-- 10 · SEDUCIR, NO MANIPULAR -->
+    <section class="slide paper">
+      <div class="eyebrow">La diferencia que lo cambia todo</div>
+      <div class="split">
+        <div>
+          <h2 class="h1">Quien necesita <span class="hl">convencerte</span>, ya perdió.</h2>
+        </div>
+        <div>
+          <p class="lead wide">Si necesito convencerte es porque ni yo mismo lo siento del todo. La gente no le compra al convencedor — le compra al convencido.</p>
+          <p class="serif mt-s" style="font-style:italic;font-size:clamp(1.1rem,1.8vw,1.5rem)">Un buen cirujano no te pide que confíes en él. Te da evidencia, te da una cita. <span class="hl" style="font-style:normal;font-weight:500">No jala del brazo.</span></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 11 · CITA DE CIERRE -->
     <section class="slide center">
       <div class="glow tr"></div>
-      <div class="bleed br">?</div>
-      <div class="z1">
-        <div class="eyebrow" style="justify-content:center">El error que rompe el bucle</div>
-        <p class="quote" style="margin-inline:auto;text-align:center;max-width:24ch">"Un hook bomba con contenido flojo no engaña dos veces. La segunda, ya nadie te <span class="hl">cree</span>."</p>
-        <p class="lead mt-l" style="text-align:center">El algoritmo te perdona un mal día. Un mal <em>patrón</em>, no.</p>
-      </div>
+      <div class="eyebrow" style="justify-content:center">Recuérdalo así</div>
+      <p class="quote" style="margin-inline:auto;text-align:center;max-width:26ch">"El manipulador miente para vender lo que no necesitas. El que seduce da algo tan bueno que tú mismo <span class="hl">decides que quieres más.</span>"</p>
     </section>
 
-    <!-- 13 · CITA DE CIERRE (PAPER, ventana — arquetipo nuevo) -->
-    <section class="slide paper window">
-      <div class="frame">
-        <div class="eyebrow" style="justify-content:center">Quédate con esto</div>
-        <p class="quote" style="margin-inline:auto;text-align:center;max-width:26ch">"El algoritmo no premia al que grita más fuerte. Premia al que <span class="hl">deja a la gente mejor de como la encontró</span>."</p>
-      </div>
-    </section>
-
-    <!-- 14 · SIGUIENTE PASO -->
+    <!-- 12 · SIGUIENTE PASO -->
     <section class="slide">
       <div class="glow br"></div>
       <div class="eyebrow">Tu reto de la semana</div>
-      <h2 class="mega" style="max-width:16ch">Un post con las 3 partes <span class="hl">a propósito.</span></h2>
-      <p class="lead wide mt-m">Un hook que <span class="hl">promete</span>. Un contenido que <span class="hl">cumple</span>. Un final que se <span class="hl">comparte</span>. Esta semana hazlo consciente, no al aventón.</p>
+      <h2 class="mega" style="max-width:16ch">Elige tu <span class="hl">máscara.</span></h2>
+      <p class="lead wide mt-m">Antes de tu próxima venta: ¿qué faceta real tuya va a contar la historia? El que se equivocó primero, el que lo probó consigo mismo, el que se arriesga a verse mal. Escríbela y súbela al grupo de WhatsApp.</p>
+      <p class="serif mt-m" style="font-style:italic;font-size:clamp(1.1rem,1.9vw,1.6rem);color:var(--on-char-soft)">La próxima clase revisamos 2 o 3 en vivo, y vemos cómo la IA puede ayudarte sin quitarte la voz.</p>
       <div class="brandmark">De tu mente al mundo · una iniciativa de La Red de Luz</div>
     </section>
 
