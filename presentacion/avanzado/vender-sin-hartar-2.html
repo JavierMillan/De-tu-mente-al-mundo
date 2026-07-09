@@ -241,13 +241,15 @@ html,body{height:100%;background:#000;overflow:hidden;font-family:'Spline Sans',
 .paper .bub.you{background:rgba(200,68,46,.1);border-color:var(--ketchup);color:var(--on-paper)}
 
 /* arquetipo · Diagonal ("El Corte") — eje de fuga propio, dos campos de peso desigual */
-.diagonal{position:relative;overflow:hidden}
+.diagonal{isolation:isolate;overflow:hidden}
 .diagonal::before{content:"";position:absolute;inset:-20% -10%;z-index:0;
-  background:linear-gradient(115deg,var(--char) 68%,var(--sesame) 68.5%,var(--sesame) 69.7%,transparent 70.2%)}
-.paper .diagonal::before{background:linear-gradient(115deg,var(--paper) 68%,var(--ketchup) 68.5%,var(--ketchup) 69.7%,transparent 70.2%)}
+  background:
+    radial-gradient(60% 55% at 88% 50%,rgba(232,161,60,.16) 0%,transparent 70%),
+    linear-gradient(115deg,var(--char) 68%,var(--sesame) 68.5%,var(--sesame) 69.7%,transparent 70.2%)}
+.paper .diagonal::before{background:
+    radial-gradient(60% 55% at 88% 50%,rgba(200,68,46,.12) 0%,transparent 70%),
+    linear-gradient(115deg,var(--paper) 68%,var(--ketchup) 68.5%,var(--ketchup) 69.7%,transparent 70.2%)}
 .diagonal .z1{max-width:56ch}
-.diagonal .side-mark{position:absolute;top:50%;right:clamp(2rem,7vw,6rem);transform:translateY(-50%);
-  font-size:clamp(5rem,11vw,9rem);opacity:.9;z-index:1;filter:drop-shadow(0 0 30px var(--glow))}
 
 /* footer / brand */
 .brandmark{position:absolute;bottom:clamp(1.2rem,2.4vw,2rem);left:clamp(2.5rem,6vw,7rem);
@@ -391,7 +393,6 @@ body.on-paper .navbtn:hover{border-color:var(--ketchup);color:var(--ketchup)}
 
     <!-- 3 · EL DETECTOR ANTIPUBLICIDAD (diagonal, arquetipo nuevo) -->
     <section class="slide diagonal">
-      <span class="side-mark">🚨</span>
       <div class="z1">
         <div class="eyebrow">Llevas toda tu vida entrenándolo</div>
         <h2 class="h1" style="max-width:13ch">Hueles al vendedor antes de que <span class="hl">abra la boca.</span></h2>
