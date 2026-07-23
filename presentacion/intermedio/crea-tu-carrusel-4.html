@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Crea tu carrusel o guion con ChatGPT — De tu mente al mundo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;600;700;800&family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..500&family=Spline+Sans:wght@300;400;500;600&family=Martian+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --char:#19140f; --char-soft:#241d16;
+  --paper:#f3ead7; --paper-soft:#ece0c6;
+  --sesame:#e8a13c; --sesame-hi:#f6c06a; --ketchup:#c8442e; --lettuce:#7c9a3e;
+  --on-char:#f3ead7; --on-char-soft:#c4b69d; --on-char-mute:#8a7c68;
+  --on-paper:#221a12; --on-paper-soft:#5c4f3d; --on-paper-mute:#8a7d6a;
+  --line-d:rgba(243,234,215,0.12); --line-d2:rgba(243,234,215,0.22);
+  --line-l:rgba(25,20,15,0.14); --line-l2:rgba(25,20,15,0.26);
+  --glow:rgba(232,161,60,0.5);
+  --ease:cubic-bezier(0.22,1,0.36,1);
+  --mega:clamp(2.6rem,6.4vw,5.6rem);
+  --h1:clamp(2rem,4.4vw,3.6rem);
+  --lead:clamp(1.05rem,1.7vw,1.5rem);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{height:100%;background:#000;overflow:hidden;font-family:'Spline Sans',system-ui,sans-serif}
+
+/* ---- stage ---- */
+#stage{position:fixed;inset:0;display:flex;align-items:center;justify-content:center}
+.deck{position:relative;width:100vw;height:100vh}
+.slide{position:absolute;inset:0;opacity:0;visibility:hidden;
+  display:flex;flex-direction:column;justify-content:center;
+  padding:clamp(2.5rem,6vw,7rem);
+  transition:opacity .55s var(--ease);
+  background:var(--char);color:var(--on-char);overflow:hidden}
+.slide.paper{background:var(--paper);color:var(--on-paper)}
+.slide.active{opacity:1;visibility:visible}
+
+/* glow blobs */
+.glow{position:absolute;border-radius:50%;filter:blur(110px);pointer-events:none;
+  background:radial-gradient(circle at center,rgba(232,161,60,0.16) 0%,transparent 70%);
+  width:60vh;height:60vh}
+.glow.tr{top:-15vh;right:-10vh}
+.glow.br{bottom:-18vh;right:6vw}
+.glow.bl{bottom:-20vh;left:-10vh}
+
+/* typography atoms */
+.eyebrow{font-family:'Martian Mono',monospace;font-size:clamp(.62rem,.8vw,.82rem);
+  letter-spacing:.32em;text-transform:uppercase;color:var(--sesame);
+  display:flex;align-items:center;gap:.8rem;margin-bottom:clamp(1rem,2vw,1.8rem)}
+.paper .eyebrow{color:var(--ketchup)}
+.eyebrow::before{content:"";width:clamp(24px,3vw,46px);height:1px;background:currentColor;opacity:.6}
+.mega{font-family:'Unbounded',sans-serif;font-weight:700;letter-spacing:-.02em;
+  line-height:.98;font-size:var(--mega)}
+.h1{font-family:'Unbounded',sans-serif;font-weight:600;letter-spacing:-.02em;
+  line-height:1.04;font-size:var(--h1)}
+.serif{font-family:'Fraunces',serif}
+.lead{font-size:var(--lead);line-height:1.5;color:var(--on-char-soft);max-width:30ch}
+.paper .lead{color:var(--on-paper-soft)}
+.lead.wide{max-width:46ch}
+.hl{color:var(--sesame)}
+.paper .hl{color:var(--ketchup)}
+.mono{font-family:'Martian Mono',monospace}
+.center{text-align:center;align-items:center}
+.center .lead{max-width:50ch;margin-inline:auto}
+
+/* spacing helpers */
+.mt-s{margin-top:clamp(.8rem,1.4vw,1.4rem)}
+.mt-m{margin-top:clamp(1.4rem,2.4vw,2.4rem)}
+.mt-l{margin-top:clamp(2rem,3.4vw,3.4rem)}
+
+/* grid layout for asymmetric slides */
+.split{display:grid;grid-template-columns:1.1fr .9fr;gap:clamp(2rem,5vw,5rem);
+  align-items:center;width:100%;height:100%}
+@media(max-width:820px){.split{grid-template-columns:1fr;gap:1.4rem}}
+
+/* steps */
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(.6rem,1.4vw,1.2rem);width:100%}
+@media(max-width:820px){.steps{grid-template-columns:repeat(2,1fr)}}
+.step{background:var(--char-soft);border:1px solid var(--line-d);border-radius:14px;
+  padding:clamp(1rem,1.8vw,1.5rem);position:relative}
+.step .ico{font-size:1.6rem;line-height:1}
+.step .st{font-family:'Martian Mono',monospace;font-size:.66rem;letter-spacing:.2em;
+  color:var(--on-char-mute);text-transform:uppercase;margin-top:.7rem}
+.step .sh{font-family:'Unbounded',sans-serif;font-weight:500;font-size:clamp(1rem,1.5vw,1.3rem);margin-top:.3rem;color:var(--on-char)}
+.step .arrow{position:absolute;right:-.85rem;top:50%;transform:translateY(-50%);
+  color:var(--sesame);font-size:1.1rem;z-index:2}
+@media(max-width:820px){.step .arrow{display:none}}
+.paper .step{background:var(--paper-soft);border-color:var(--line-l)}
+.paper .step .st{color:var(--on-paper-mute)}
+.paper .step .sh{color:var(--on-paper)}
+
+/* pause chip */
+.chip{display:inline-flex;align-items:center;gap:.6rem;
+  font-family:'Martian Mono',monospace;font-size:.74rem;letter-spacing:.08em;
+  color:var(--sesame);border:1px solid rgba(232,161,60,.35);border-radius:999px;
+  padding:.5rem 1rem;margin-top:clamp(1.4rem,2.4vw,2.2rem)}
+.paper .chip{color:var(--ketchup);border-color:rgba(200,68,46,.4)}
+.dot{width:7px;height:7px;border-radius:50%;background:var(--ketchup);box-shadow:0 0 10px var(--ketchup)}
+
+/* rows editorial numeradas (partes del prompt) */
+.rows{display:flex;flex-direction:column;width:100%}
+.row{display:grid;grid-template-columns:auto 1fr;gap:1.2rem;align-items:baseline;
+  padding:clamp(.6rem,1.1vw,1rem) 0;border-top:1px solid var(--line-d)}
+.row:first-child{border-top:1px solid var(--sesame)}
+.paper .row{border-top-color:var(--line-l)}
+.paper .row:first-child{border-top-color:var(--ketchup)}
+.row .n{font-family:'Martian Mono',monospace;font-size:.78rem;color:var(--on-char-mute)}
+.paper .row .n{color:var(--on-paper-mute)}
+.row .t{font-family:'Unbounded',sans-serif;font-weight:500;font-size:clamp(1rem,1.6vw,1.4rem)}
+.paper .row .t{color:var(--on-paper)}
+.row.key .t{color:var(--sesame)}
+.paper .row.key .t{color:var(--ketchup)}
+
+/* prompt mock (como chat, fondo tipo terminal) */
+.promptbox{background:var(--char-soft);border:1px solid var(--line-d);border-radius:16px;
+  padding:clamp(1.2rem,2.4vw,2rem);width:100%;font-family:'Martian Mono',monospace}
+.paper .promptbox{background:var(--paper-soft);border-color:var(--line-l)}
+.promptbox .lbl{font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:var(--sesame);margin-bottom:.8rem}
+.paper .promptbox .lbl{color:var(--ketchup)}
+.promptbox .ln{font-size:clamp(.82rem,1.15vw,1rem);line-height:1.7;color:var(--on-char-soft)}
+.paper .promptbox .ln{color:var(--on-paper-soft)}
+.promptbox .ln .k{color:var(--sesame)}
+.paper .promptbox .ln .k{color:var(--ketchup)}
+
+/* checklist de graduación */
+.gradlist{display:flex;flex-direction:column;gap:clamp(.7rem,1.4vw,1.1rem);width:100%}
+.gitem{display:grid;grid-template-columns:auto 1fr;gap:1rem;align-items:center;
+  background:var(--char-soft);border:1px solid var(--line-d);border-radius:14px;
+  padding:clamp(.9rem,1.6vw,1.3rem)}
+.paper .gitem{background:var(--paper-soft);border-color:var(--line-l)}
+.gitem .box{width:28px;height:28px;border-radius:8px;border:2px solid var(--sesame);
+  display:flex;align-items:center;justify-content:center;font-family:'Martian Mono',monospace;
+  color:var(--sesame);flex-shrink:0}
+.paper .gitem .box{border-color:var(--ketchup);color:var(--ketchup)}
+.gitem .t{font-family:'Unbounded',sans-serif;font-weight:500;font-size:clamp(.95rem,1.5vw,1.2rem)}
+.paper .gitem .t{color:var(--on-paper)}
+
+/* quote */
+.quote{font-family:'Fraunces',serif;font-style:italic;font-weight:400;
+  font-size:clamp(1.6rem,3.4vw,3rem);line-height:1.18;max-width:22ch}
+.quote .hl{font-style:normal;font-weight:500}
+
+/* footer / brand */
+.brandmark{position:absolute;bottom:clamp(1.2rem,2.4vw,2rem);left:clamp(2.5rem,6vw,7rem);
+  font-family:'Fraunces',serif;font-size:.85rem;color:var(--on-char-mute);opacity:.7;z-index:2}
+.paper .brandmark{color:var(--on-paper-mute)}
+
+/* HUD */
+#hud{position:fixed;bottom:1rem;right:1.2rem;z-index:50;display:flex;align-items:center;gap:1rem;
+  font-family:'Martian Mono',monospace;font-size:.72rem;color:rgba(243,234,215,.5)}
+#hud .cnt{letter-spacing:.15em}
+#bar{position:fixed;top:0;left:0;height:3px;z-index:50;
+  background:linear-gradient(90deg,var(--ketchup),var(--sesame));
+  width:0;transition:width .4s var(--ease)}
+#hint{position:fixed;bottom:1rem;left:1.2rem;z-index:50;font-family:'Martian Mono',monospace;
+  font-size:.66rem;letter-spacing:.1em;color:rgba(243,234,215,.32)}
+.navbtn{background:transparent;border:1px solid rgba(243,234,215,.2);color:rgba(243,234,215,.7);
+  border-radius:8px;width:30px;height:30px;cursor:pointer;font-size:1rem;transition:.25s var(--ease)}
+.navbtn:hover{border-color:var(--sesame);color:var(--sesame)}
+.hub-btn{width:auto;padding:0 .7rem;display:inline-flex;align-items:center;justify-content:center;
+  font-family:'Martian Mono',monospace;font-size:.68rem;letter-spacing:.12em;text-decoration:none}
+body.on-paper .hub-btn{border-color:rgba(34,26,18,.25);color:rgba(34,26,18,.7)}
+body.on-paper .hub-btn:hover{border-color:var(--ketchup);color:var(--ketchup)}
+
+/* HUD adapts to light (paper) slides */
+body.on-paper #hud{color:rgba(34,26,18,.6)}
+body.on-paper #hint{color:rgba(34,26,18,.4)}
+body.on-paper .navbtn{border-color:rgba(34,26,18,.25);color:rgba(34,26,18,.7)}
+body.on-paper .navbtn:hover{border-color:var(--ketchup);color:var(--ketchup)}
+
+/* ============================================================
+   RESPONSIVE · "1 slide = 1 pantalla" (Fase 1)
+   ============================================================ */
+@media (max-width:900px){
+  :root{
+    --mega:clamp(2.1rem, 6.4vw + 1vh, 5.6rem);
+    --h1:clamp(1.6rem, 4.6vw + .8vh, 3.6rem);
+    --lead:clamp(1rem, 2.4vw + .4vh, 1.5rem);
+  }
+}
+@media (max-width:640px){
+  .slide{padding:clamp(1.3rem,4.5vh,2rem) clamp(1.4rem,6vw,2.2rem);
+    overflow-y:auto;overflow-x:hidden;justify-content:safe center}
+  .slide::-webkit-scrollbar{width:0}
+  .mt-s{margin-top:clamp(.6rem,1.4vh,1rem)}
+  .mt-m{margin-top:clamp(.8rem,2vh,1.4rem)}
+  .mt-l{margin-top:clamp(1rem,2.6vh,1.8rem)}
+  .eyebrow{margin-bottom:clamp(.7rem,1.8vh,1.2rem)}
+  .split{grid-template-columns:1fr !important;
+    display:grid;gap:clamp(.8rem,2.2vh,1.3rem);height:auto;align-content:center}
+  .lead,.lead.wide{max-width:100%}
+  .quote{font-size:clamp(1.4rem,6.5vw,2.2rem);max-width:100%}
+  .card,.step,.gitem{padding:clamp(.85rem,2.2vw,1.2rem)}
+  .steps{grid-template-columns:repeat(2,1fr)!important;gap:.7rem}
+  .promptbox{padding:clamp(.9rem,3vw,1.3rem)}
+  .promptbox .ln{font-size:.78rem}
+  .glow{width:70vmin;height:70vmin}
+  #hud{bottom:.5rem;right:.6rem;gap:.55rem;font-size:.64rem}
+  #hint{display:none}
+  .brandmark{font-size:.7rem;left:clamp(1.4rem,6vw,2.2rem);bottom:.6rem}
+}
+@media (max-height:480px) and (orientation:landscape){
+  .slide{padding:clamp(1rem,4vw,2.5rem);justify-content:center}
+  :root{
+    --mega:clamp(1.8rem,6vw,3.4rem);
+    --h1:clamp(1.5rem,4.5vw,2.6rem);
+  }
+  .steps{gap:.6rem}
+  .glow{filter:blur(80px)}
+  #hint{display:none}
+}
+</style>
+</head>
+<body>
+<div id="bar"></div>
+<div id="stage">
+  <div class="deck" id="deck">
+
+    <!-- 1 · PORTADA -->
+    <section class="slide active">
+      <div class="glow tr"></div>
+      <div class="eyebrow">Nivel Intermedio · Parte 4 · Taller en vivo</div>
+      <h1 class="mega">Crea tu carrusel <span class="hl">o tu guion,</span> hoy.</h1>
+      <p class="lead wide mt-m">Nada de teoría nueva. Vas a construir tu propio prompt de ChatGPT y salir con un guion o carrusel real, listo para grabar o diseñar.</p>
+      <div class="brandmark">De tu mente al mundo · una iniciativa de La Red de Luz</div>
+    </section>
+
+    <!-- 2 · POR QUÉ ESTA CLASE -->
+    <section class="slide paper">
+      <div class="eyebrow">Antes de empezar</div>
+      <h2 class="h1">ChatGPT no piensa <span class="hl">por ti — piensa contigo.</span></h2>
+      <p class="lead wide mt-m">Ya tienes tu avatar (Parte 2) y sabes cómo lee el algoritmo (Parte 1). Hoy conviertes eso en instrucciones claras para que la IA te ayude a estructurar, no a inventar desde cero.</p>
+      <div class="chip"><span class="dot"></span> Abre ChatGPT en tu celular o compu, ahora</div>
+    </section>
+
+    <!-- 3 · LO QUE UN PROMPT NECESITA (rows) -->
+    <section class="slide">
+      <div class="glow bl"></div>
+      <div class="eyebrow">Antes de escribir el prompt</div>
+      <h2 class="h1">4 cosas que <span class="hl">tú ya sabes</span> y la IA no.</h2>
+      <div class="rows mt-l">
+        <div class="row key"><span class="n">01</span><span class="t">Tu avatar — a quién le hablas exactamente</span></div>
+        <div class="row"><span class="n">02</span><span class="t">Tu mensaje — la frase que resume qué haces</span></div>
+        <div class="row"><span class="n">03</span><span class="t">El formato elegido — carrusel o reel</span></div>
+        <div class="row"><span class="n">04</span><span class="t">El tema de hoy — un problema real de tu avatar</span></div>
+      </div>
+    </section>
+
+    <!-- 4 · CONSTRUYE TU PROMPT (promptbox) -->
+    <section class="slide paper">
+      <div class="eyebrow">Ahora sí, el prompt</div>
+      <h2 class="h1">Rellena esto <span class="hl">con lo tuyo.</span></h2>
+      <div class="promptbox mt-l">
+        <div class="lbl">Plantilla de prompt</div>
+        <div class="ln">Actúa como copywriter experto en redes sociales.</div>
+        <div class="ln">Mi avatar es: <span class="k">[tu avatar]</span>.</div>
+        <div class="ln">Mi mensaje central es: <span class="k">[tu mensaje]</span>.</div>
+        <div class="ln">Quiero un <span class="k">[carrusel de 6 slides / guion de reel de 30 seg]</span></div>
+        <div class="ln">sobre este problema de mi avatar: <span class="k">[tu tema]</span>.</div>
+        <div class="ln">Usa hook que prometa algo específico, cuerpo que entregue valor real,</div>
+        <div class="ln">y cierre que invite a compartir o guardar. Sin sonar a IA.</div>
+      </div>
+    </section>
+
+    <!-- 5 · ITERA, NO ACEPTES LA PRIMERA RESPUESTA -->
+    <section class="slide">
+      <div class="glow br"></div>
+      <div class="eyebrow">El paso que casi todos se saltan</div>
+      <h2 class="h1">La primera respuesta <span class="hl">nunca es la buena.</span></h2>
+      <p class="lead wide mt-m">Pídele que suene más como tú, que quite frases genéricas, que acorte el hook. Cada ajuste que le pides es una decisión tuya — la IA da estructura, tú pones el criterio.</p>
+      <div class="chip"><span class="dot"></span> Pide al menos 2 ajustes antes de dar por bueno el resultado</div>
+    </section>
+
+    <!-- 6 · DE GUION A GRABACIÓN (split) -->
+    <section class="slide paper">
+      <div class="eyebrow">Último paso de hoy</div>
+      <div class="split">
+        <div>
+          <h2 class="h1">No lo dejes en el <span class="hl">chat de ChatGPT.</span></h2>
+        </div>
+        <div>
+          <p class="lead wide">Copia tu guion o carrusel a donde lo vayas a grabar o diseñar. Grabarlo/editarlo lo terminas por tu cuenta esta semana — hoy la meta es tener el contenido ya escrito.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 7 · CHECKLIST DE GRADUACIÓN -->
+    <section class="slide">
+      <div class="glow bl"></div>
+      <div class="eyebrow">Tu entregable de graduación</div>
+      <h2 class="h1" style="max-width:20ch">Antes de salir de aquí, <span class="hl">dos cosas.</span></h2>
+      <div class="gradlist mt-l">
+        <div class="gitem"><div class="box">1</div><div class="t">Un prompt propio, con tu avatar y tu tema</div></div>
+        <div class="gitem"><div class="box">2</div><div class="t">Un guion o carrusel terminado (o casi) hoy</div></div>
+      </div>
+    </section>
+
+    <!-- 8 · CITA DE CIERRE -->
+    <section class="slide center">
+      <div class="glow tr"></div>
+      <div class="eyebrow" style="justify-content:center">Recuérdalo así</div>
+      <p class="quote" style="margin-inline:auto;text-align:center;max-width:28ch">"La IA te da la estructura en segundos. El criterio para saber si está bien — <span class="hl">ese sigue siendo tuyo.</span>"</p>
+    </section>
+
+    <!-- 9 · SIGUIENTE NIVEL (cierre) -->
+    <section class="slide">
+      <div class="glow br"></div>
+      <div class="eyebrow">Terminaste el nivel intermedio</div>
+      <h2 class="mega" style="max-width:16ch">Ya sabes <span class="hl">crear con ayuda.</span></h2>
+      <p class="lead wide mt-m">Sube tu guion o carrusel terminado al grupo de WhatsApp — que quede como prueba de que sí lo hiciste, no solo que lo platicaste.</p>
+      <p class="serif mt-m" style="font-style:italic;font-size:clamp(1.1rem,1.9vw,1.6rem);color:var(--on-char-soft)">La próxima clase, en nivel avanzado, revisamos 2 o 3 en vivo y entramos a la conversación que vende sin vender.</p>
+      <div class="brandmark">De tu mente al mundo · una iniciativa de La Red de Luz</div>
+    </section>
+
+  </div>
+</div>
+
+<div id="hint">← → · espacio · F pantalla completa</div>
+<div id="hud">
+  <a class="navbtn hub-btn" href="../index.html" aria-label="Volver al hub">‹ Hub</a>
+  <button class="navbtn" id="prev" aria-label="Anterior">‹</button>
+  <span class="cnt"><span id="cur">01</span> / <span id="tot">18</span></span>
+  <button class="navbtn" id="next" aria-label="Siguiente">›</button>
+</div>
+
+<script>
+(function(){
+  const slides=[...document.querySelectorAll('.slide')];
+  const tot=slides.length; let i=0;
+  const cur=document.getElementById('cur'), bar=document.getElementById('bar');
+  document.getElementById('tot').textContent=String(tot).padStart(2,'0');
+  function show(n){
+    i=Math.max(0,Math.min(tot-1,n));
+    slides.forEach((s,k)=>s.classList.toggle('active',k===i));
+    document.body.classList.toggle('on-paper',slides[i].classList.contains('paper'));
+    cur.textContent=String(i+1).padStart(2,'0');
+    bar.style.width=((i+1)/tot*100)+'%';
+  }
+  function go(d){show(i+d)}
+  document.getElementById('next').onclick=()=>go(1);
+  document.getElementById('prev').onclick=()=>go(-1);
+  document.addEventListener('keydown',e=>{
+    if(['ArrowRight','ArrowDown',' ','PageDown'].includes(e.key)){e.preventDefault();go(1)}
+    else if(['ArrowLeft','ArrowUp','PageUp'].includes(e.key)){e.preventDefault();go(-1)}
+    else if(e.key==='Home'){show(0)} else if(e.key==='End'){show(tot-1)}
+    else if(e.key==='f'||e.key==='F'){
+      if(!document.fullscreenElement)document.documentElement.requestFullscreen();
+      else document.exitFullscreen();
+    }
+  });
+  let sx=0;
+  document.addEventListener('touchstart',e=>sx=e.touches[0].clientX,{passive:true});
+  document.addEventListener('touchend',e=>{const dx=e.changedTouches[0].clientX-sx;
+    if(Math.abs(dx)>50)go(dx<0?1:-1)},{passive:true});
+  show(0);
+})();
+</script>
+</body>
+</html>
