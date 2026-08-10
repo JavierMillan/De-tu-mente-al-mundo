@@ -7,80 +7,17 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;600;700;800&family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..500&family=Spline+Sans:wght@300;400;500;600&family=Martian+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+<!-- motor compartido: estructura, chrome, navegación y responsive -->
+<link rel="stylesheet" href="../assets/deck.css">
+
 <style>
-:root{
-  --char:#19140f; --char-soft:#241d16;
-  --paper:#f3ead7; --paper-soft:#ece0c6;
-  --sesame:#e8a13c; --sesame-hi:#f6c06a; --ketchup:#c8442e; --lettuce:#7c9a3e;
-  --on-char:#f3ead7; --on-char-soft:#c4b69d; --on-char-mute:#8a7c68;
-  --on-paper:#221a12; --on-paper-soft:#5c4f3d; --on-paper-mute:#8a7d6a;
-  --line-d:rgba(243,234,215,0.12); --line-d2:rgba(243,234,215,0.22);
-  --line-l:rgba(25,20,15,0.14); --line-l2:rgba(25,20,15,0.26);
-  --glow:rgba(232,161,60,0.5);
-  --ease:cubic-bezier(0.22,1,0.36,1);
-  --mega:clamp(2.6rem,6.4vw,5.6rem);
-  --h1:clamp(2rem,4.4vw,3.6rem);
-  --lead:clamp(1.05rem,1.7vw,1.5rem);
-}
-*{margin:0;padding:0;box-sizing:border-box}
-html,body{height:100%;background:#000;overflow:hidden;font-family:'Spline Sans',system-ui,sans-serif}
-
-/* ---- stage ---- */
-#stage{position:fixed;inset:0;display:flex;align-items:center;justify-content:center}
-.deck{position:relative;width:100vw;height:100vh}
-.slide{position:absolute;inset:0;opacity:0;visibility:hidden;
-  display:flex;flex-direction:column;justify-content:center;
-  padding:clamp(2.5rem,6vw,7rem);
-  transition:opacity .55s var(--ease);
-  background:var(--char);color:var(--on-char);overflow:hidden}
-.slide.paper{background:var(--paper);color:var(--on-paper)}
-.slide.active{opacity:1;visibility:visible}
-
-/* glow blobs */
-.glow{position:absolute;border-radius:50%;filter:blur(110px);pointer-events:none;
-  background:radial-gradient(circle at center,rgba(232,161,60,0.16) 0%,transparent 70%);
-  width:60vh;height:60vh}
-.glow.tr{top:-15vh;right:-10vh}
-.glow.br{bottom:-18vh;right:6vw}
-.glow.bl{bottom:-20vh;left:-10vh}
-
-/* typography atoms */
-.eyebrow{font-family:'Martian Mono',monospace;font-size:clamp(.62rem,.8vw,.82rem);
-  letter-spacing:.32em;text-transform:uppercase;color:var(--sesame);
-  display:flex;align-items:center;gap:.8rem;margin-bottom:clamp(1rem,2vw,1.8rem)}
-.paper .eyebrow{color:var(--ketchup)}
-.eyebrow::before{content:"";width:clamp(24px,3vw,46px);height:1px;background:currentColor;opacity:.6}
-.mega{font-family:'Unbounded',sans-serif;font-weight:700;letter-spacing:-.02em;
-  line-height:.98;font-size:var(--mega)}
-.h1{font-family:'Unbounded',sans-serif;font-weight:600;letter-spacing:-.02em;
-  line-height:1.04;font-size:var(--h1)}
-.serif{font-family:'Fraunces',serif}
-.lead{font-size:var(--lead);line-height:1.5;color:var(--on-char-soft);max-width:30ch}
-.paper .lead{color:var(--on-paper-soft)}
-.lead.wide{max-width:46ch}
-.hl{color:var(--sesame)}
-.paper .hl{color:var(--ketchup)}
-.mono{font-family:'Martian Mono',monospace}
-.center{text-align:center;align-items:center}
-.center .lead{max-width:50ch;margin-inline:auto}
-
-/* spacing helpers */
-.mt-s{margin-top:clamp(.8rem,1.4vw,1.4rem)}
-.mt-m{margin-top:clamp(1.4rem,2.4vw,2.4rem)}
-.mt-l{margin-top:clamp(2rem,3.4vw,3.4rem)}
-
-/* big stat */
-.stat{font-family:'Unbounded',sans-serif;font-weight:800;color:var(--sesame);
-  line-height:.86;letter-spacing:-.03em;font-size:clamp(6rem,20vw,17rem);
-  text-shadow:0 0 60px var(--glow)}
-
-/* grid layout for asymmetric slides */
-.split{display:grid;grid-template-columns:1.1fr .9fr;gap:clamp(2rem,5vw,5rem);
-  align-items:center;width:100%;height:100%}
-.split.stat-split{grid-template-columns:.9fr 1.1fr}
-@media(max-width:820px){.split{grid-template-columns:1fr;gap:1.4rem}}
-
+/* ============================================================
+   Átomos propios de esta clase
+   (si alguno se repite en otros decks, súbelo a deck.css)
+   ============================================================ */
 /* cards */
+
 .card{background:var(--char-soft);border:1px solid var(--line-d);
   border-radius:16px;padding:clamp(1.2rem,2.4vw,2rem)}
 .card.lit{border-color:var(--sesame);box-shadow:0 0 0 1px var(--sesame),0 20px 60px -30px var(--glow)}
@@ -94,6 +31,7 @@ html,body{height:100%;background:#000;overflow:hidden;font-family:'Spline Sans',
 .stack{display:flex;flex-direction:column;gap:clamp(.8rem,1.6vw,1.3rem)}
 
 /* numbered editorial list (funnel-real / 4 etapas) */
+
 .rows{display:flex;flex-direction:column;width:100%}
 .row{display:grid;grid-template-columns:auto 1fr;gap:1.2rem;align-items:baseline;
   padding:clamp(.6rem,1.1vw,1rem) 0;border-top:1px solid var(--line-d)}
@@ -102,45 +40,15 @@ html,body{height:100%;background:#000;overflow:hidden;font-family:'Spline Sans',
 .row .t{font-family:'Unbounded',sans-serif;font-weight:500;font-size:clamp(1rem,1.6vw,1.4rem)}
 .row.key .t{color:var(--sesame)}
 
-/* quote */
-.quote{font-family:'Fraunces',serif;font-style:italic;font-weight:400;
-  font-size:clamp(1.6rem,3.4vw,3rem);line-height:1.18;max-width:20ch}
-.quote .hl{font-style:normal;font-weight:500}
-
-/* divider rule slide */
-.bigline{font-family:'Unbounded',sans-serif;font-weight:600;font-size:clamp(1.6rem,3.6vw,3.2rem);
-  line-height:1.06;letter-spacing:-.02em;max-width:22ch}
-.bigline .hl{display:inline}
-.rule{width:clamp(60px,8vw,120px);height:2px;margin:clamp(1.2rem,2.4vw,2rem) 0;
-  background:linear-gradient(90deg,var(--ketchup),var(--sesame))}
-
-/* steps (4 etapas) */
-.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(.6rem,1.4vw,1.2rem);width:100%}
-@media(max-width:820px){.steps{grid-template-columns:repeat(2,1fr)}}
-.step{background:var(--char-soft);border:1px solid var(--line-d);border-radius:14px;
-  padding:clamp(1rem,1.8vw,1.5rem);position:relative}
-.step .ico{font-size:1.6rem;line-height:1}
-.step .st{font-family:'Martian Mono',monospace;font-size:.66rem;letter-spacing:.2em;
-  color:var(--on-char-mute);text-transform:uppercase;margin-top:.7rem}
-.step .sh{font-family:'Unbounded',sans-serif;font-weight:500;font-size:clamp(1rem,1.5vw,1.3rem);margin-top:.3rem;color:var(--on-char)}
-.step .arrow{position:absolute;right:-.85rem;top:50%;transform:translateY(-50%);
-  color:var(--sesame);font-size:1.1rem;z-index:2}
-@media(max-width:820px){.step .arrow{display:none}}
 /* contraste correcto cuando .step/.card viven en slide .paper (fondo claro) */
+
 .paper .step,.paper .card{background:var(--paper-soft);border-color:var(--line-l)}
 .paper .step .st{color:var(--on-paper-mute)}
 .paper .step .sh,.paper .card p{color:var(--on-paper)}
 .paper .card.lit{border-color:var(--ketchup);box-shadow:0 0 0 1px var(--ketchup),0 20px 60px -30px rgba(200,68,46,.35)}
 
-/* pause chip */
-.chip{display:inline-flex;align-items:center;gap:.6rem;
-  font-family:'Martian Mono',monospace;font-size:.74rem;letter-spacing:.08em;
-  color:var(--sesame);border:1px solid rgba(232,161,60,.35);border-radius:999px;
-  padding:.5rem 1rem;margin-top:clamp(1.4rem,2.4vw,2.2rem)}
-.paper .chip{color:var(--ketchup);border-color:rgba(200,68,46,.4)}
-.dot{width:7px;height:7px;border-radius:50%;background:var(--ketchup);box-shadow:0 0 10px var(--ketchup)}
-
 /* transform examples (ahora tú) */
+
 .tx{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(.8rem,1.6vw,1.4rem);width:100%}
 @media(max-width:820px){.tx{grid-template-columns:1fr}}
 .tx .item{background:var(--char-soft);border:1px solid var(--line-d);border-radius:14px;
@@ -152,19 +60,8 @@ html,body{height:100%;background:#000;overflow:hidden;font-family:'Spline Sans',
 .tx .good{font-family:'Fraunces',serif;font-style:italic;color:var(--sesame);
   font-size:clamp(1rem,1.4vw,1.25rem);line-height:1.25}
 
-/* compare A/B */
-.ab{display:grid;grid-template-columns:1fr 1fr;gap:clamp(1rem,2.4vw,2rem);width:100%}
-@media(max-width:820px){.ab{grid-template-columns:1fr}}
-.ab .pub{border-radius:16px;padding:clamp(1.4rem,2.6vw,2.2rem);min-height:clamp(140px,22vh,220px);
-  display:flex;flex-direction:column;justify-content:space-between}
-.ab .a{background:var(--char-soft);border:1px solid var(--line-d)}
-.ab .b{background:rgba(232,161,60,.1);border:1px solid var(--sesame);box-shadow:0 20px 60px -30px var(--glow)}
-.ab .label{font-family:'Martian Mono',monospace;font-size:.7rem;letter-spacing:.2em;text-transform:uppercase}
-.ab .a .label{color:var(--on-char-mute)} .ab .b .label{color:var(--sesame)}
-.ab .txt{font-family:'Fraunces',serif;font-size:clamp(1.05rem,1.7vw,1.5rem);line-height:1.3;margin-top:1rem}
-.ab .a .txt{color:var(--on-char-soft)} .ab .b .txt{color:var(--on-char)}
-
 /* flyer slide */
+
 .flyer-wrap{display:grid;grid-template-columns:.8fr 1.2fr;gap:clamp(1.5rem,4vw,4rem);align-items:center;width:100%}
 @media(max-width:820px){.flyer-wrap{grid-template-columns:1fr}}
 .flyer-ph{aspect-ratio:3/4;border:1px dashed var(--line-l2);border-radius:12px;
@@ -175,6 +72,7 @@ html,body{height:100%;background:#000;overflow:hidden;font-family:'Spline Sans',
   box-shadow:0 30px 80px -30px rgba(25,20,15,.5);transform:rotate(-1.5deg)}
 
 /* QR slide */
+
 .qr-wrap{display:grid;grid-template-columns:1.1fr .9fr;gap:clamp(2rem,5vw,5rem);
   align-items:center;width:100%}
 @media(max-width:820px){.qr-wrap{grid-template-columns:1fr}}
@@ -185,6 +83,7 @@ html,body{height:100%;background:#000;overflow:hidden;font-family:'Spline Sans',
   text-transform:uppercase;color:var(--on-paper-mute);text-align:center;margin-top:1rem}
 
 /* ikigai grid 2x2 */
+
 .iki{display:grid;grid-template-columns:1fr 1fr;gap:clamp(.7rem,1.6vw,1.2rem);width:100%;position:relative}
 @media(max-width:820px){.iki{grid-template-columns:1fr}}
 .iki .cell{background:var(--char-soft);border:1px solid var(--line-d);border-radius:16px;
@@ -201,14 +100,11 @@ html,body{height:100%;background:#000;overflow:hidden;font-family:'Spline Sans',
   font-size:clamp(.9rem,1.5vw,1.3rem);box-shadow:0 0 40px -8px var(--glow),0 0 0 6px var(--char)}
 @media(max-width:820px){.iki .core{display:none}}
 
-/* fill-in template line */
-.fill{font-family:'Unbounded',sans-serif;font-weight:500;line-height:1.35;
-  font-size:clamp(1.15rem,2.2vw,1.9rem);max-width:24ch}
-.fill .blank{color:var(--ketchup);border-bottom:2px solid var(--ketchup);padding:0 .5em}
-.fill .kw{color:var(--ketchup)}
-
 /* ============ ÁTOMOS "FUERA DE LA CAJA" ============ */
+
+
 /* palabra/dato gigante que sangra fuera del marco */
+
 .bleed{position:absolute;font-family:'Unbounded',sans-serif;font-weight:800;
   line-height:.8;letter-spacing:-.04em;color:var(--char-soft);
   font-size:clamp(9rem,34vw,30rem);z-index:0;pointer-events:none;user-select:none;
@@ -218,12 +114,14 @@ html,body{height:100%;background:#000;overflow:hidden;font-family:'Spline Sans',
 .slide > .z1{position:relative;z-index:1}
 
 /* comilla mega para citas a pantalla completa */
+
 .mark{font-family:'Fraunces',serif;font-weight:600;line-height:.7;
   font-size:clamp(8rem,22vw,20rem);color:var(--sesame);opacity:.22;
   position:absolute;top:2vh;left:clamp(1rem,4vw,4rem);z-index:0;pointer-events:none}
 .paper .mark{color:var(--ketchup);opacity:.18}
 
 /* texto en escalera (staircase) */
+
 .stair{display:flex;flex-direction:column;gap:.1em}
 .stair span{font-family:'Unbounded',sans-serif;font-weight:700;letter-spacing:-.02em;
   line-height:.98;font-size:clamp(1.8rem,6vw,4.6rem)}
@@ -232,6 +130,7 @@ html,body{height:100%;background:#000;overflow:hidden;font-family:'Spline Sans',
 @media(max-width:820px){.stair span{margin-left:0 !important}}
 
 /* nota manuscrita / guiño (humor) */
+
 .aside{font-family:'Fraunces',serif;font-style:italic;color:var(--on-char-mute);
   font-size:clamp(.92rem,1.3vw,1.15rem);max-width:34ch}
 .paper .aside{color:var(--on-paper-mute)}
@@ -239,6 +138,7 @@ html,body{height:100%;background:#000;overflow:hidden;font-family:'Spline Sans',
 .paper .aside::before{color:var(--ketchup)}
 
 /* contraste correcto cuando .ab/.step/.card viven en slide .paper (fondo claro) */
+
 .paper .ab .a{background:var(--paper-soft);border-color:var(--line-l)}
 .paper .ab .b{background:rgba(200,68,46,.08);border-color:var(--ketchup);box-shadow:0 20px 60px -30px rgba(200,68,46,.3)}
 .paper .ab .a .label{color:var(--on-paper-mute)} .paper .ab .b .label{color:var(--ketchup)}
@@ -246,124 +146,10 @@ html,body{height:100%;background:#000;overflow:hidden;font-family:'Spline Sans',
 .paper .step,.paper .card{background:var(--paper-soft);border-color:var(--line-l)}
 .paper .step .st{color:var(--on-paper-mute)}
 .paper .step .sh,.paper .card p{color:var(--on-paper)}
-
-/* footer / brand */
-.brandmark{position:absolute;bottom:clamp(1.2rem,2.4vw,2rem);left:clamp(2.5rem,6vw,7rem);
-  font-family:'Fraunces',serif;font-size:.85rem;color:var(--on-char-mute);opacity:.7;z-index:2}
-.paper .brandmark{color:var(--on-paper-mute)}
-
-/* HUD */
-#hud{position:fixed;bottom:1rem;right:1.2rem;z-index:50;display:flex;align-items:center;gap:1rem;
-  font-family:'Martian Mono',monospace;font-size:.72rem;color:rgba(243,234,215,.5)}
-#hud .cnt{letter-spacing:.15em}
-#bar{position:fixed;top:0;left:0;height:3px;z-index:50;
-  background:linear-gradient(90deg,var(--ketchup),var(--sesame));
-  width:0;transition:width .4s var(--ease)}
-#hint{position:fixed;bottom:1rem;left:1.2rem;z-index:50;font-family:'Martian Mono',monospace;
-  font-size:.66rem;letter-spacing:.1em;color:rgba(243,234,215,.32)}
-.navbtn{background:transparent;border:1px solid rgba(243,234,215,.2);color:rgba(243,234,215,.7);
-  border-radius:8px;width:30px;height:30px;cursor:pointer;font-size:1rem;transition:.25s var(--ease)}
-.navbtn:hover{border-color:var(--sesame);color:var(--sesame)}
-.hub-btn{width:auto;padding:0 .7rem;display:inline-flex;align-items:center;justify-content:center;
-  font-family:'Martian Mono',monospace;font-size:.68rem;letter-spacing:.12em;text-decoration:none}
-body.on-paper .hub-btn{border-color:rgba(34,26,18,.25);color:rgba(34,26,18,.7)}
-body.on-paper .hub-btn:hover{border-color:var(--ketchup);color:var(--ketchup)}
-
-/* HUD adapts to light (paper) slides */
-body.on-paper #hud{color:rgba(34,26,18,.6)}
-body.on-paper #hint{color:rgba(34,26,18,.4)}
-body.on-paper .navbtn{border-color:rgba(34,26,18,.25);color:rgba(34,26,18,.7)}
-body.on-paper .navbtn:hover{border-color:var(--ketchup);color:var(--ketchup)}
-
-/* ============================================================
-   RESPONSIVE · "1 slide = 1 pantalla" (Fase 1)
-   Objetivo: en móvil vertical el texto no colapsa, las columnas
-   se apilan y cada slide cabe en la pantalla sin scroll interno.
-   ============================================================ */
-
-/* Escala fluida con piso legible: combina ancho + alto para que
-   en retrato angosto el texto no se haga diminuto. */
-@media (max-width:900px){
-  :root{
-    --mega:clamp(2.1rem, 6.4vw + 1vh, 5.6rem);
-    --h1:clamp(1.6rem, 4.6vw + .8vh, 3.6rem);
-    --lead:clamp(1rem, 2.4vw + .4vh, 1.5rem);
-  }
-}
-
-/* ---- RETRATO / móvil vertical ---- */
-@media (max-width:640px){
-  /* padding vertical compacto (1 slide = 1 pantalla) */
-  .slide{padding:clamp(1.3rem,4.5vh,2rem) clamp(1.4rem,6vw,2.2rem);
-    /* red de seguridad: si una slide densa excede el alto en retrato,
-       permite scroll interno suave en vez de cortar contenido */
-    overflow-y:auto;overflow-x:hidden;justify-content:safe center}
-  .slide::-webkit-scrollbar{width:0}
-
-  /* márgenes verticales más cortos para que quepa */
-  .mt-s{margin-top:clamp(.6rem,1.4vh,1rem)}
-  .mt-m{margin-top:clamp(.8rem,2vh,1.4rem)}
-  .mt-l{margin-top:clamp(1rem,2.6vh,1.8rem)}
-  .eyebrow{margin-bottom:clamp(.7rem,1.8vh,1.2rem)}
-  .rule{margin:clamp(.8rem,2vh,1.4rem) 0}
-
-  /* columnas → una sola */
-  .split,.split.stat-split,.iki,.ab,.tx,.qr-wrap,.flyer-wrap{
-    grid-template-columns:1fr !important;
-    display:grid;gap:clamp(.8rem,2.2vh,1.3rem);height:auto;align-content:center}
-  .dm{max-width:100%}
-
-  /* medidas de texto a ancho completo, techos algo menores */
-  .lead,.lead.wide{max-width:100%}
-  .quote{font-size:clamp(1.4rem,6.5vw,2.2rem);max-width:100%}
-  .bigline{font-size:clamp(1.4rem,6.5vw,2.2rem);max-width:100%}
-
-  /* stat gigante: que no desborde */
-  .stat{font-size:clamp(3.8rem,22vw,7rem)}
-
-  /* cards/steps más compactos verticalmente */
-  .card,.step,.tx .item,.iki .cell,.ab .pub{padding:clamp(.85rem,2.2vw,1.2rem)}
-  .steps{grid-template-columns:repeat(2,1fr)!important;gap:.7rem}
-  .steps[style*="repeat(3"]{grid-template-columns:repeat(2,1fr)!important}
-  .tx{grid-template-columns:1fr!important;gap:.7rem}
-  .ab[style*="repeat(3"]{grid-template-columns:1fr!important}
-  .rows .row{padding:clamp(.5rem,1.4vh,.85rem) 0}
-
-  /* átomos "fuera de la caja" en retrato */
-  .stair span{margin-left:0 !important;font-size:clamp(1.6rem,8vw,2.8rem)}
-  .bleed{font-size:clamp(6rem,48vw,14rem)}
-  .mark{font-size:clamp(5rem,36vw,10rem)}
-  .fill{font-size:clamp(1.02rem,4.6vw,1.6rem);max-width:100%}
-
-  /* glows y blobs con vmin para no descuadrar */
-  .glow{width:70vmin;height:70vmin}
-
-  /* imágenes/QR/flyer se contienen */
-  .flyer-img{max-height:38vh}
-  .qr-box img{width:clamp(150px,46vw,220px)}
-  .qr-box{padding:clamp(.7rem,3vw,1.1rem)}
-
-  /* HUD discreto */
-  #hud{bottom:.5rem;right:.6rem;gap:.55rem;font-size:.64rem}
-  #hint{display:none}
-  .brandmark{font-size:.7rem;left:clamp(1.4rem,6vw,2.2rem);bottom:.6rem}
-}
-
-/* ---- pantallas muy bajas en horizontal (landscape móvil) ---- */
-@media (max-height:480px) and (orientation:landscape){
-  .slide{padding:clamp(1rem,4vw,2.5rem);justify-content:center}
-  :root{
-    --mega:clamp(1.8rem,6vw,3.4rem);
-    --h1:clamp(1.5rem,4.5vw,2.6rem);
-  }
-  .steps{gap:.6rem}
-  .glow{filter:blur(80px)}
-  #hint{display:none}
-}
 </style>
 </head>
 <body>
-<div id="bar"></div>
+
 <div id="stage">
   <div class="deck" id="deck">
 
@@ -483,45 +269,6 @@ body.on-paper .navbtn:hover{border-color:var(--ketchup);color:var(--ketchup)}
   </div>
 </div>
 
-<div id="hint">← → · espacio · F pantalla completa</div>
-<div id="hud">
-  <a class="navbtn hub-btn" href="../index.html" aria-label="Volver al hub">‹ Hub</a>
-  <button class="navbtn" id="prev" aria-label="Anterior">‹</button>
-  <span class="cnt"><span id="cur">01</span> / <span id="tot">18</span></span>
-  <button class="navbtn" id="next" aria-label="Siguiente">›</button>
-</div>
-
-<script>
-(function(){
-  const slides=[...document.querySelectorAll('.slide')];
-  const tot=slides.length; let i=0;
-  const cur=document.getElementById('cur'), bar=document.getElementById('bar');
-  document.getElementById('tot').textContent=String(tot).padStart(2,'0');
-  function show(n){
-    i=Math.max(0,Math.min(tot-1,n));
-    slides.forEach((s,k)=>s.classList.toggle('active',k===i));
-    document.body.classList.toggle('on-paper',slides[i].classList.contains('paper'));
-    cur.textContent=String(i+1).padStart(2,'0');
-    bar.style.width=((i+1)/tot*100)+'%';
-  }
-  function go(d){show(i+d)}
-  document.getElementById('next').onclick=()=>go(1);
-  document.getElementById('prev').onclick=()=>go(-1);
-  document.addEventListener('keydown',e=>{
-    if(['ArrowRight','ArrowDown',' ','PageDown'].includes(e.key)){e.preventDefault();go(1)}
-    else if(['ArrowLeft','ArrowUp','PageUp'].includes(e.key)){e.preventDefault();go(-1)}
-    else if(e.key==='Home'){show(0)} else if(e.key==='End'){show(tot-1)}
-    else if(e.key==='f'||e.key==='F'){
-      if(!document.fullscreenElement)document.documentElement.requestFullscreen();
-      else document.exitFullscreen();
-    }
-  });
-  let sx=0;
-  document.addEventListener('touchstart',e=>sx=e.touches[0].clientX,{passive:true});
-  document.addEventListener('touchend',e=>{const dx=e.changedTouches[0].clientX-sx;
-    if(Math.abs(dx)>50)go(dx<0?1:-1)},{passive:true});
-  show(0);
-})();
-</script>
+<script src="../assets/deck.js" defer></script>
 </body>
 </html>
