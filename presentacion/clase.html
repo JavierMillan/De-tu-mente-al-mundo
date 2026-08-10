@@ -29,15 +29,33 @@
   const id = new URLSearchParams(location.search).get('id');
   const box = document.getElementById('detail');
 
+  function fechaLarga(iso){
+    const [a,m,d] = String(iso).split('-').map(Number);
+    if(!a||!m||!d) return esc(iso);
+    const meses=['enero','febrero','marzo','abril','mayo','junio','julio',
+                 'agosto','septiembre','octubre','noviembre','diciembre'];
+    return d+' de '+meses[m-1]+' de '+a;
+  }
+
   function pinta(clase, fila){
     document.title = clase.titulo + ' — De tu mente al mundo';
 
-    const grabacion = clase.grabacion
-      ? '<a class="item" href="'+esc(clase.grabacion)+'" target="_blank" rel="noopener">'+
-          '<span class="ico">▶</span>'+
-          '<span class="body"><span class="t">Video de la sesión</span>'+
-          '<span class="d">Se abre en una pestaña nueva.</span></span>'+
-          '<span class="go">Ver →</span></a>'
+    // admite el formato nuevo (lista de generaciones) y el viejo (una sola URL)
+    const grabs = clase.grabaciones && clase.grabaciones.length
+      ? clase.grabaciones
+      : (clase.grabacion ? [{url:clase.grabacion}] : []);
+
+    const grabacion = grabs.length
+      ? grabs.map((g,i)=>
+          '<a class="item" href="repaso.html?id='+encodeURIComponent(clase.id)+
+            (i?'&g='+i:'')+'">'+
+            '<span class="ico">▶</span>'+
+            '<span class="body">'+
+              '<span class="t">'+(g.generacion?esc(g.generacion)+' generación':'Video de la sesión')+'</span>'+
+              '<span class="d">'+(g.fecha?fechaLarga(g.fecha)+' · ':'')+
+                'Se abre junto a la presentación.</span>'+
+            '</span>'+
+            '<span class="go">Ver →</span></a>').join('')
       : '<span class="item soon">'+
           '<span class="ico">▶</span>'+
           '<span class="body"><span class="t">Video de la sesión</span>'+

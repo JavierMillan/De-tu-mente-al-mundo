@@ -122,6 +122,33 @@ Si una slide necesita algo que no está aquí, va en un `<style>` dentro de ese
 deck. **Si el mismo átomo aparece en tres o más decks, súbelo a `deck.css`** —
 así es como creció este catálogo.
 
+## Agregar la grabación de una clase
+
+En `clases.json`, dentro de la clase:
+
+```json
+"grabaciones": [
+  { "generacion": "1ª", "fecha": "2026-06-26",
+    "url": "https://youtu.be/abc123" },
+  { "generacion": "2ª", "fecha": "2026-09-14",
+    "url": "https://drive.google.com/file/d/1AbC.../view" }
+]
+```
+
+Pega la URL tal como la copias del navegador. Se reconocen **YouTube**, **Vimeo**
+y **Google Drive** en cualquiera de sus formatos; si es otro sitio, se muestra
+como enlace normal.
+
+La más reciente se reproduce por defecto y aparece un selector para cambiar de
+generación. El video se abre en **modo repaso** (`repaso.html`): la grabación de
+un lado y la presentación del otro, cada una navegable por su cuenta. En celular
+se apilan — video arriba, presentación abajo.
+
+**Si el video es de Drive**, tiene que estar compartido como "cualquiera con el
+enlace"; si queda privado, se ve un cuadro pidiendo iniciar sesión. YouTube "no
+listado" o Vimeo con dominio restringido son más fiables para material que no
+quieres público.
+
 ## Cambiar el tema
 
 Los colores y familias viven en el primer bloque de `deck.css`. La estructura no

@@ -156,7 +156,7 @@
           "titulo": "Una página web que se convierte en video",
           "resumen": "Editar video escribiendo código: instalación, flujo de trabajo y las trampas que cuestan tiempo.",
           "deck": "herramientas-ia/video-con-codigo-1.html",
-          "grabacion": null,
+          "grabaciones": [],
           "recursos": [
             {
               "tipo": "prompt",
