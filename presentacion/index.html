@@ -104,7 +104,6 @@ body.menu-open .nav-scrim{opacity:1;visibility:visible}
   display:flex;gap:.8rem;align-items:center;flex-wrap:wrap}
 .tagline .badge{background:var(--sesame);color:#1a1103;border-radius:999px;padding:.22rem .7rem;
   font-weight:600;letter-spacing:.1em}
-.hero,.hero *{text-decoration:none}
 .hero h1{font-family:'Unbounded',sans-serif;font-weight:700;letter-spacing:-.02em;
   font-size:clamp(2.3rem,6vw,4.8rem);line-height:.98;margin:1.1rem 0 .9rem;color:var(--on-char)}
 .hero h1 .hl{color:var(--sesame)}
@@ -117,6 +116,7 @@ body.menu-open .nav-scrim{opacity:1;visibility:visible}
 .hero .cta:hover{transform:translateY(-2px);box-shadow:0 22px 48px -18px var(--glow)}
 .hero .cta .arw{transition:transform .25s var(--ease)}
 .hero .cta:hover .arw{transform:translateX(4px)}
+.hero .cta:focus-visible{outline:2px solid var(--sesame);outline-offset:4px}
 
 .wrap{position:relative;z-index:1;max-width:1320px;margin-inline:auto}
 
@@ -180,6 +180,13 @@ body.menu-open .nav-scrim{opacity:1;visibility:visible}
 .deck-card .go .arw{transition:transform .3s var(--ease)}
 .deck-card:hover .go .arw{transform:translateX(4px)}
 
+/* marca de "esta clase tiene material extra" */
+.deck-card .extras{margin-top:.7rem;display:flex;flex-wrap:wrap;gap:.4rem}
+.deck-card .extras .tag{font-family:'Martian Mono',monospace;font-size:.58rem;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--sesame);
+  border:1px solid rgba(232,161,60,.32);border-radius:999px;padding:.22rem .55rem;
+  display:inline-flex;align-items:center;gap:.35rem}
+
 /* progress bar (decorative for now) */
 .prog{position:absolute;left:0;bottom:0;height:3px;width:100%;background:rgba(243,234,215,.08)}
 .prog i{display:block;height:100%;width:var(--p,0%);
@@ -233,6 +240,7 @@ body.menu-open .nav-scrim{opacity:1;visibility:visible}
     <a href="#intermedio">Intermedio</a>
     <a href="#avanzado">Avanzado</a>
     <a href="#ventas">Ventas</a>
+    <a href="#herramientas-ia">Herramientas de IA</a>
   </nav>
   <a class="home" href="../index.html">La Red de Luz ↗</a>
   <button class="burger" id="burger" aria-label="Menú" aria-expanded="false"><span></span><span></span><span></span></button>
@@ -245,20 +253,21 @@ body.menu-open .nav-scrim{opacity:1;visibility:visible}
   <a href="#intermedio">Intermedio</a>
   <a href="#avanzado">Avanzado</a>
   <a href="#ventas">Ventas</a>
+  <a href="#herramientas-ia">Herramientas de IA</a>
   <a href="../index.html">La Red de Luz ↗</a>
 </nav>
 <div class="nav-scrim" id="navScrim"></div>
 
 <!-- ===== HERO · MASTERCLASS ===== -->
-<a class="hero" id="top" href="masterclass/por-que-nadie-te-escribe.html">
+<section class="hero" id="top">
   <div class="halo"></div>
   <div class="hero-in">
     <div class="tagline"><span class="badge">Masterclass</span><span>La puerta de entrada · Abierta</span></div>
     <h1>Por qué nadie<br>te <span class="hl">escribe.</span></h1>
     <p>El error silencioso que apaga tus ventas antes de que el embudo empiece. Psicología del consumidor aplicada a tu mensaje.</p>
-    <span class="cta">Abrir presentación <span class="arw">→</span></span>
+    <a class="cta" href="masterclass/por-que-nadie-te-escribe.html">Abrir presentación <span class="arw">→</span></a>
   </div>
-</a>
+</section>
 
 <div class="wrap pad rows-area">
 
@@ -416,6 +425,29 @@ body.menu-open .nav-scrim{opacity:1;visibility:visible}
           <h4>Se te acabó la lista. Ahora, ¿qué?</h4>
           <p>Creatividad para conseguir prospectos nuevos sin quemar tus contactos.</p>
           <div class="go">Abrir presentación <span class="arw">→</span></div>
+          <div class="prog"><i style="--p:0%"></i></div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== HERRAMIENTAS DE IA ===== -->
+  <section class="row-sec" id="herramientas-ia">
+    <div class="row-head">
+      <div class="rt"><h3>Herramientas de IA</h3><span class="cnt">Producción con código y asistentes</span></div>
+      <button class="more">Ver más →</button>
+    </div>
+    <div class="rail-wrap">
+      <button class="side l" aria-label="Anterior"><span>‹</span></button>
+      <button class="side r" aria-label="Siguiente"><span>›</span></button>
+      <div class="rail">
+        <a class="deck-card" href="herramientas-ia/video-con-codigo-1-detalle.html">
+          <span class="stripe"></span>
+          <div class="lvl"><span>IA</span><span class="part">Clase 1</span></div>
+          <h4>Una página web que se convierte en video</h4>
+          <p>Editar video escribiendo código: instalación, flujo de trabajo y las trampas que cuestan tiempo.</p>
+          <div class="extras"><span class="tag">⌘ 1 recurso</span></div>
+          <div class="go">Ver la clase <span class="arw">→</span></div>
           <div class="prog"><i style="--p:0%"></i></div>
         </a>
       </div>
