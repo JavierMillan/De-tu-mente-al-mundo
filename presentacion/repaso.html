@@ -70,6 +70,11 @@ body{display:flex;flex-direction:column;background:var(--char)}
 .vacio{display:flex;align-items:center;justify-content:center;height:100%;
   color:var(--on-char-mute);font-size:.9rem;text-align:center;padding:2rem;line-height:1.6}
 
+/* clase sin presentación: el video ocupa toda la pantalla */
+.panes.solo-video{grid-template-columns:1fr}
+.panes.solo-video .pane:last-child{display:none}
+.panes.solo-video .pane.video .cuerpo{flex:1}
+
 /* ---- vertical: el video arriba, la presentación abajo ---- */
 @media (max-width:900px), (orientation:portrait){
   .panes{grid-template-columns:1fr;
@@ -132,17 +137,22 @@ body{display:flex;flex-direction:column;background:var(--char)}
       document.getElementById('titulo').textContent = clase.titulo;
       document.getElementById('volver').href = 'clase.html?id='+encodeURIComponent(clase.id);
 
-      // la presentación, en su panel
+      // la presentación, en su panel. Si la clase no tiene deck (p.ej. una
+      // sesión abierta que solo se grabó), el video se queda con toda la pantalla.
       if(clase.deck){
         document.getElementById('paneDeck').innerHTML =
           '<iframe src="'+esc(clase.deck)+'" title="Presentación de la clase"></iframe>';
         document.getElementById('abrirDeck').href = clase.deck;
+      }else{
+        document.querySelector('.panes').classList.add('solo-video');
       }
 
       // grabaciones: formato nuevo o el viejo de una sola URL
-      const grabs = (clase.grabaciones && clase.grabaciones.length)
+      // las entradas sin url son huecos preparados, no grabaciones todavía
+      const grabs = ((clase.grabaciones && clase.grabaciones.length)
         ? clase.grabaciones.slice()
-        : (clase.grabacion ? [{url:clase.grabacion}] : []);
+        : (clase.grabacion ? [{url:clase.grabacion}] : [])
+      ).filter(g => g && g.url);
       // la más reciente primero
       grabs.sort((a,b)=>String(b.fecha||'').localeCompare(String(a.fecha||'')));
 

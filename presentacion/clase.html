@@ -40,10 +40,12 @@
   function pinta(clase, fila){
     document.title = clase.titulo + ' — De tu mente al mundo';
 
-    // admite el formato nuevo (lista de generaciones) y el viejo (una sola URL)
-    const grabs = clase.grabaciones && clase.grabaciones.length
+    // admite el formato nuevo (lista de generaciones) y el viejo (una sola URL).
+    // Las entradas sin url son huecos preparados: aún no cuentan como grabación.
+    const grabs = (clase.grabaciones && clase.grabaciones.length
       ? clase.grabaciones
-      : (clase.grabacion ? [{url:clase.grabacion}] : []);
+      : (clase.grabacion ? [{url:clase.grabacion}] : [])
+    ).filter(g => g && g.url);
 
     const grabacion = grabs.length
       ? grabs.map((g,i)=>

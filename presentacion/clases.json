@@ -4,20 +4,36 @@
     "estado": "La puerta de entrada · Abierta",
     "titulo": "Por qué nadie<br>te <span class=\"hl\">escribe.</span>",
     "resumen": "El error silencioso que apaga tus ventas antes de que el embudo empiece. Psicología del consumidor aplicada a tu mensaje.",
-    "deck": "masterclass/por-que-nadie-te-escribe.html"
+    "deck": "masterclass/por-que-nadie-te-escribe.html",
+    "id": "por-que-nadie-te-escribe",
+    "grabaciones": [
+      {
+        "generacion": "1ª",
+        "fecha": "2026-06-26",
+        "url": ""
+      }
+    ]
   },
   "grupos": [
     {
       "id": "programa",
       "titulo": "El programa",
       "descripcion": "Los tres niveles, en orden",
-      "filas": ["basico", "intermedio", "avanzado"]
+      "filas": [
+        "basico",
+        "intermedio",
+        "avanzado"
+      ]
     },
     {
       "id": "especialidades",
       "titulo": "Especialidades",
       "descripcion": "Temas propios, con invitados",
-      "filas": ["ventas", "herramientas-ia"]
+      "filas": [
+        "ventas",
+        "herramientas-ia",
+        "abiertas"
+      ]
     }
   ],
   "filas": [
@@ -32,21 +48,42 @@
           "parte": "Parte 1",
           "titulo": "Antes de publicar, ¿a quién le hablas?",
           "resumen": "Define tu mensaje con el Ikigai. La primera decisión que casi nadie toma… y la que lo cambia todo.",
-          "deck": "basico/redes-desde-cero-1.html"
+          "deck": "basico/redes-desde-cero-1.html",
+          "grabaciones": [
+            {
+              "generacion": "1ª",
+              "fecha": "2026-07-01",
+              "url": ""
+            }
+          ]
         },
         {
           "id": "formatos-que-funcionan-2",
           "parte": "Parte 2",
           "titulo": "Ya sabes a quién, ahora aprende a decirlo",
           "resumen": "Reel, carrusel, historia: qué hace cada uno y por qué. Datos reales, no moda.",
-          "deck": "basico/formatos-que-funcionan-2.html"
+          "deck": "basico/formatos-que-funcionan-2.html",
+          "grabaciones": [
+            {
+              "generacion": "1ª",
+              "fecha": "2026-07-07",
+              "url": ""
+            }
+          ]
         },
         {
           "id": "cadencia-sostenible-3",
           "parte": "Parte 3",
           "titulo": "Mejor 2 veces por semana durante un año",
           "resumen": "Cómo construir una cadencia de posteo que sí puedas sostener.",
-          "deck": "basico/cadencia-sostenible-3.html"
+          "deck": "basico/cadencia-sostenible-3.html",
+          "grabaciones": [
+            {
+              "generacion": "1ª",
+              "fecha": "2026-07-15",
+              "url": ""
+            }
+          ]
         },
         {
           "id": "tu-primer-post-4",
@@ -68,14 +105,28 @@
           "parte": "Parte 1",
           "titulo": "Cómo hacer que el algoritmo te ame",
           "resumen": "El algoritmo es un espejo. Hook que promete, contenido que cumple, final que se comparte.",
-          "deck": "intermedio/intermedio-algoritmo-1.html"
+          "deck": "intermedio/intermedio-algoritmo-1.html",
+          "grabaciones": [
+            {
+              "generacion": "1ª",
+              "fecha": "2026-07-02",
+              "url": ""
+            }
+          ]
         },
         {
           "id": "avatar-cliente-2",
           "parte": "Parte 2",
           "titulo": "Deja de hablarle a todos",
           "resumen": "Volante vs. carta, 3 tiros al bat y el ejercicio de la silla vacía.",
-          "deck": "intermedio/avatar-cliente-2.html"
+          "deck": "intermedio/avatar-cliente-2.html",
+          "grabaciones": [
+            {
+              "generacion": "1ª",
+              "fecha": "2026-07-08",
+              "url": ""
+            }
+          ]
         },
         {
           "id": "leer-metricas-3",
@@ -104,7 +155,14 @@
           "parte": "Parte 1",
           "titulo": "La conversación que vende sin vender",
           "resumen": "La venta se juega en el chat. Calificar, entender y acompañar a quien ya estaba listo.",
-          "deck": "avanzado/avanzado-conversacion-1.html"
+          "deck": "avanzado/avanzado-conversacion-1.html",
+          "grabaciones": [
+            {
+              "generacion": "1ª",
+              "fecha": "2026-07-03",
+              "url": ""
+            }
+          ]
         },
         {
           "id": "vender-sin-hartar-2",
@@ -133,14 +191,28 @@
           "parte": "Clase 1",
           "titulo": "Guiones que controlan la conversación",
           "resumen": "De tocar puertas en Estados Unidos a cerrar en bienes raíces — con Arturo.",
-          "deck": "ventas/guiones-estrategicos-1.html"
+          "deck": "ventas/guiones-estrategicos-1.html",
+          "grabaciones": [
+            {
+              "generacion": "1ª",
+              "fecha": "2026-07-29",
+              "url": ""
+            }
+          ]
         },
         {
           "id": "creatividad-prospectos-2",
           "parte": "Clase 2",
           "titulo": "Se te acabó la lista. Ahora, ¿qué?",
           "resumen": "Creatividad para conseguir prospectos nuevos sin quemar tus contactos.",
-          "deck": "ventas/creatividad-prospectos-2.html"
+          "deck": "ventas/creatividad-prospectos-2.html",
+          "grabaciones": [
+            {
+              "generacion": "1ª",
+              "fecha": "2026-07-31",
+              "url": ""
+            }
+          ]
         }
       ]
     },
@@ -156,7 +228,13 @@
           "titulo": "Una página web que se convierte en video",
           "resumen": "Editar video escribiendo código: instalación, flujo de trabajo y las trampas que cuestan tiempo.",
           "deck": "herramientas-ia/video-con-codigo-1.html",
-          "grabaciones": [],
+          "grabaciones": [
+            {
+              "generacion": "1ª",
+              "fecha": "2026-08-12",
+              "url": ""
+            }
+          ],
           "recursos": [
             {
               "tipo": "prompt",
@@ -172,6 +250,27 @@
             "Cómo se le pide a un asistente: qué y con qué criterio, no cómo.",
             "Editar leyendo la transcripción en vez de rebobinando.",
             "Las tres trampas que cuestan tiempo — y por qué no te van a pasar."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "abiertas",
+      "titulo": "Clases abiertas",
+      "subtitulo": "Sesiones sueltas, fuera del programa",
+      "etiqueta": "Abierta",
+      "clases": [
+        {
+          "id": "clase-ia-practico",
+          "parte": "6 ago 2026",
+          "titulo": "Clase práctica de IA",
+          "resumen": "Sesión abierta y práctica sobre herramientas de IA. No requiere haber tomado clases anteriores.",
+          "grabaciones": [
+            {
+              "generacion": "1ª",
+              "fecha": "2026-08-06",
+              "url": ""
+            }
           ]
         }
       ]

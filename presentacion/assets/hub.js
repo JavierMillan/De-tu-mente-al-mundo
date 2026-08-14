@@ -7,15 +7,25 @@
 (function(){
   'use strict';
 
+  /* Grabaciones publicadas: las entradas sin url son huecos preparados. */
+  function grabacionesDe(clase){
+    const lista = (clase.grabaciones && clase.grabaciones.length)
+      ? clase.grabaciones
+      : (clase.grabacion ? [{url:clase.grabacion}] : []);
+    return lista.filter(g => g && g.url);
+  }
+
   /* Una clase con grabación o recursos merece vista de detalle.
      Si solo tiene deck, la tarjeta va directo a la presentación
-     — así nunca se crean páginas intermedias vacías. */
+     — así nunca se crean páginas intermedias vacías.
+     Sin deck pero con material (p.ej. una clase abierta grabada), también
+     va al detalle: lo que decide es si hay algo que ver, no si hay deck. */
   function tieneExtras(clase){
-    return !!(clase.grabacion || (clase.recursos && clase.recursos.length));
+    return !!(grabacionesDe(clase).length || (clase.recursos && clase.recursos.length));
   }
   function destino(clase){
-    if(!clase.deck) return null;                       // próximamente
-    return tieneExtras(clase) ? 'clase.html?id='+encodeURIComponent(clase.id) : clase.deck;
+    if(tieneExtras(clase)) return 'clase.html?id='+encodeURIComponent(clase.id);
+    return clase.deck || null;                         // sin nada: próximamente
   }
   function esc(s){
     return String(s==null?'':s).replace(/[&<>"']/g,c=>(
@@ -31,7 +41,8 @@
     let extras = '';
     if(!soon && tieneExtras(clase)){
       const chips = [];
-      if(clase.grabacion) chips.push('<span class="tag">▶ Grabación</span>');
+      const g = grabacionesDe(clase).length;
+      if(g) chips.push('<span class="tag">▶ '+(g>1?g+' grabaciones':'Grabación')+'</span>');
       const n = clase.recursos ? clase.recursos.length : 0;
       if(n) chips.push('<span class="tag">⌘ '+n+' recurso'+(n>1?'s':'')+'</span>');
       extras = '<div class="extras">'+chips.join('')+'</div>';
