@@ -49,18 +49,6 @@
     '</section>';
   }
 
-  function hero(programa){
-    return '<section class="hero" id="top">'+
-      '<div class="halo"></div>'+
-      '<div class="hero-in">'+
-        '<div class="tagline"><span class="badge">Programa</span>'+
-        '<span>Sesiones semanales · en vivo</span></div>'+
-        '<h1>'+esc(programa.nombre)+'</h1>'+
-        '<p>'+esc(programa.eslogan)+'</p>'+
-      '</div>'+
-    '</section>';
-  }
-
   function activarRieles(scope){
     scope.querySelectorAll('.rail-wrap').forEach(w=>{
       const rail = w.querySelector('.rail');
@@ -142,13 +130,11 @@
   fetch('clases.json')
     .then(r=>{ if(!r.ok) throw new Error('HTTP '+r.status); return r.json(); })
     .then(data=>{
-      const heroSlot = document.getElementById('heroSlot');
       const rows     = document.getElementById('rows');
       const navMain  = document.getElementById('navMain');
       const navDraw  = document.getElementById('navDrawer');
 
-      if(heroSlot) heroSlot.innerHTML = hero(data.programa);
-      if(rows)     rows.innerHTML     = data.filas.map(fila).join('');
+      if(rows) rows.innerHTML = data.filas.map(fila).join('');
 
       const navLinks = data.filas.map(r=>'<a href="#'+esc(r.id)+'" class="solo">'+esc(r.titulo)+'</a>').join('');
       if(navMain) navMain.insertAdjacentHTML('afterbegin', navLinks);
