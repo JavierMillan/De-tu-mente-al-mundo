@@ -32,9 +32,6 @@ body{background:var(--char);color:var(--on-char);
   transition:.25s var(--ease);display:inline-flex;align-items:center;gap:.4rem}
 .tb-btn:hover{border-color:var(--sesame);color:var(--sesame)}
 .tb-sp{flex:1}
-.tb-stat{font-family:'Martian Mono',monospace;font-size:.66rem;letter-spacing:.1em;
-  color:var(--on-char-mute)}
-.tb-stat b{color:var(--sesame)}
 .tb-btn.on{border-color:var(--sesame);color:var(--sesame);background:rgba(200,16,46,.1)}
 .tb-btn[disabled]{opacity:.4;cursor:not-allowed;pointer-events:none}
 
@@ -299,7 +296,6 @@ h1 .hl{color:var(--sesame)}
   <a class="tb-btn" href="../index.html">‹ Clases</a>
   <a class="tb-btn" href="../recursos.html">‹ Recursos</a>
   <div class="tb-sp"></div>
-  <span class="tb-stat" id="tbStat"></span>
 </div>
 
 <div class="wrap">
@@ -404,7 +400,6 @@ h1 .hl{color:var(--sesame)}
   const vacioH2 = document.getElementById('vacioH2');
   const vacioP = document.getElementById('vacioP');
   const barraFill = document.getElementById('barraFill');
-  const tbStat = document.getElementById('tbStat');
   const btnOtraVez = document.getElementById('btnOtraVez');
   const btnDificiles = document.getElementById('btnDificiles');
   const btnDificilesTxt = document.getElementById('btnDificilesTxt');
@@ -489,9 +484,6 @@ h1 .hl{color:var(--sesame)}
   }
 
   function actualizarStat(){
-    const total = vocab.length;
-    const dominadas = vocab.filter(p=>estadoDe(p).caja >= 5).length;
-    tbStat.innerHTML = '<b>'+dominadas+'</b> / '+total+' ya se te quedaron';
     const n = contarDificiles();
     if(!modoDificiles) tbDificiles.textContent = '('+n+')';
     btnDificiles.disabled = n === 0 && !modoDificiles;
