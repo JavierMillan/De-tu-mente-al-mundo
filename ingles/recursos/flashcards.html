@@ -39,25 +39,6 @@ body{background:var(--char);color:var(--on-char);
 
 .wrap{max-width:40rem;margin:0 auto;padding:clamp(1.6rem,5vw,3rem) clamp(1.2rem,4vw,3rem) 5rem}
 
-/* desktop: la pantalla angosta de mobile desperdicia mucho espacio —
-   aquí se abre a dos columnas, tarjeta grande a la izquierda y un
-   panel de controles/estado fijo a la derecha */
-@media(min-width:900px){
-  .wrap{max-width:72rem}
-  .layout{display:grid;grid-template-columns:1fr 20rem;gap:clamp(2rem,4vw,3.5rem);
-    align-items:start;margin-top:1.6rem}
-  /* en el HTML .panel va primero (así en mobile los controles quedan
-     arriba, antes de la tarjeta); en desktop se reubica a la columna
-     derecha explícitamente, sin depender de su orden en el HTML */
-  .col-principal{grid-column:1;grid-row:1}
-  .panel{grid-column:2;grid-row:1;position:sticky;top:5.5rem;
-    display:flex;flex-direction:column;gap:1.2rem}
-  .panel .controles{margin-top:0;flex-direction:column}
-  .panel .controles .tb-btn{width:100%;justify-content:center}
-  .pila{height:19rem}
-  .cara .w{font-size:clamp(2rem,3.4vw,3.1rem)}
-}
-
 .eyebrow{font-family:'Martian Mono',monospace;font-size:.68rem;letter-spacing:.3em;
   text-transform:uppercase;color:var(--sesame);
   display:flex;align-items:center;gap:.8rem;margin-bottom:1rem}
@@ -198,9 +179,11 @@ h1 .hl{color:var(--sesame)}
 .nota p{padding:0 1.2rem 1.1rem;font-size:.88rem;color:var(--on-char-soft)}
 .panel .nota{margin-top:0}
 
-/* panel lateral (desktop): título de sección corto arriba de cada bloque */
-.panel .bloque-t{font-family:'Martian Mono',monospace;font-size:.62rem;letter-spacing:.16em;
-  text-transform:uppercase;color:var(--on-char-mute)}
+/* panel lateral: título de sección corto arriba de los controles —
+   solo tiene sentido visual en desktop, donde el panel es un bloque
+   propio; en mobile queda oculto */
+.bloque-t{display:none;font-family:'Martian Mono',monospace;font-size:.62rem;
+  letter-spacing:.16em;text-transform:uppercase;color:var(--on-char-mute)}
 
 .salir{display:flex;gap:.8rem;flex-wrap:wrap;margin-top:3rem;padding-top:1.6rem;
   border-top:1px solid var(--line-d)}
@@ -218,6 +201,52 @@ h1 .hl{color:var(--sesame)}
 
 @media(max-width:480px){
   .responder{flex-direction:column}
+}
+
+/* ============================================================
+   DESKTOP (min-width:900px) — la columna angosta de mobile (40rem)
+   desperdiciaba muchísimo espacio en pantallas grandes. Aquí se abre
+   a dos columnas: tarjeta protagonista a la izquierda, panel fijo de
+   controles/ayuda a la derecha que se queda a la vista al hacer scroll.
+   Va AL FINAL del stylesheet a propósito: sin esto, las reglas base
+   .pila/.cara más abajo en el archivo pisaban a las de este media
+   query por tener la misma especificidad y venir después en cascada.
+   ============================================================ */
+@media(min-width:900px){
+  .wrap{max-width:76rem}
+  .eyebrow,h1,.sub{max-width:44rem}
+
+  .layout{display:grid;grid-template-columns:1fr 21rem;gap:clamp(2.4rem,4vw,4rem);
+    align-items:start;margin-top:2rem}
+  /* en el HTML .panel va primero (así en mobile los controles quedan
+     arriba, antes de la tarjeta); aquí se reubica a la columna derecha
+     explícitamente, sin depender de su orden en el HTML */
+  .col-principal{grid-column:1;grid-row:1}
+  .panel{grid-column:2;grid-row:1;position:sticky;top:5.5rem;
+    display:flex;flex-direction:column;gap:1rem;
+    border:1px solid var(--line-d);border-radius:16px;
+    background:var(--char-soft);padding:1.3rem}
+  .bloque-t{display:block;margin-bottom:.2rem}
+  .panel .controles{margin-top:0;flex-direction:column;gap:.7rem}
+  .panel .controles .tb-btn{width:100%;justify-content:center;padding:.7rem .9rem}
+  .panel .nota{border:none;background:none;padding:0}
+  .panel .nota summary{padding:0 0 .3rem}
+  .panel .nota p{padding:0}
+  .panel .nota[open]{border-top:1px dashed var(--line-d2);padding-top:1rem;margin-top:.2rem}
+
+  /* la tarjeta crece con la pantalla en vez de quedarse al tamaño de
+     mobile — la columna principal ahora tiene mucho más ancho real */
+  .pila{height:min(26rem,52vh)}
+  .cara{padding:2.6rem}
+  .cara .w{font-size:clamp(2.2rem,3.6vw,3.4rem)}
+  .cara .m{font-size:1.25rem;max-width:30ch}
+  .zona{margin-top:2.4rem}
+
+  .responder{max-width:26rem;margin-inline:auto}
+
+  /* el desglose de fin de sesión respira más al no estar comprimido
+     en una columna angosta */
+  .fin .msg{max-width:38ch}
 }
 </style>
 </head>
@@ -238,6 +267,7 @@ h1 .hl{color:var(--sesame)}
 
   <div class="layout">
     <div class="panel">
+      <p class="bloque-t">Tu repaso</p>
       <div class="controles" id="controles">
         <button class="tb-btn" id="btnDificiles"><span id="btnDificilesTxt">★ Las que me cuestan</span> <span id="tbDificiles">(0)</span></button>
         <button class="tb-btn" id="btnLimpiar" title="Borra todo tu progreso guardado en este navegador">⟲ Empezar de cero</button>
