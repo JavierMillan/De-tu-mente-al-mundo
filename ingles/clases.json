@@ -1,0 +1,23 @@
+{
+  "programa": {
+    "nombre": "¡Hablemos Inglés!",
+    "eslogan": "Un espacio entre amigos para practicar, equivocarnos y reírnos en el intento."
+  },
+  "filas": [
+    {
+      "id": "sesiones",
+      "titulo": "Sesiones",
+      "subtitulo": "Una por semana, en orden",
+      "etiqueta": "Sesión",
+      "clases": [
+        {
+          "id": "sesion-2",
+          "parte": "Sesión 2",
+          "titulo": "Construyendo nuestras primeras conversaciones",
+          "resumen": "Pronunciación sin miedo, mini role-play y los errores más chistosos que todos cometemos al empezar.",
+          "deck": "sesion-2.html"
+        }
+      ]
+    }
+  ]
+}
