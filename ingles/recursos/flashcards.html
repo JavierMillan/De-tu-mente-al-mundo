@@ -39,6 +39,25 @@ body{background:var(--char);color:var(--on-char);
 
 .wrap{max-width:40rem;margin:0 auto;padding:clamp(1.6rem,5vw,3rem) clamp(1.2rem,4vw,3rem) 5rem}
 
+/* desktop: la pantalla angosta de mobile desperdicia mucho espacio —
+   aquí se abre a dos columnas, tarjeta grande a la izquierda y un
+   panel de controles/estado fijo a la derecha */
+@media(min-width:900px){
+  .wrap{max-width:72rem}
+  .layout{display:grid;grid-template-columns:1fr 20rem;gap:clamp(2rem,4vw,3.5rem);
+    align-items:start;margin-top:1.6rem}
+  /* en el HTML .panel va primero (así en mobile los controles quedan
+     arriba, antes de la tarjeta); en desktop se reubica a la columna
+     derecha explícitamente, sin depender de su orden en el HTML */
+  .col-principal{grid-column:1;grid-row:1}
+  .panel{grid-column:2;grid-row:1;position:sticky;top:5.5rem;
+    display:flex;flex-direction:column;gap:1.2rem}
+  .panel .controles{margin-top:0;flex-direction:column}
+  .panel .controles .tb-btn{width:100%;justify-content:center}
+  .pila{height:19rem}
+  .cara .w{font-size:clamp(2rem,3.4vw,3.1rem)}
+}
+
 .eyebrow{font-family:'Martian Mono',monospace;font-size:.68rem;letter-spacing:.3em;
   text-transform:uppercase;color:var(--sesame);
   display:flex;align-items:center;gap:.8rem;margin-bottom:1rem}
@@ -56,6 +75,21 @@ h1 .hl{color:var(--sesame)}
   margin-top:1.6rem;overflow:hidden}
 .barra i{display:block;height:100%;width:0%;background:var(--sesame);
   transition:width .3s var(--ease)}
+
+/* racha en vivo: solo aparece a partir de 2 seguidas, para no ser
+   ruido constante — un empujoncito breve, no un marcador permanente */
+.racha{display:none;align-items:center;justify-content:center;gap:.4rem;
+  margin-top:.8rem;font-family:'Martian Mono',monospace;font-size:.78rem;
+  color:var(--sesame);letter-spacing:.06em}
+.racha.on{display:flex}
+.racha .ico{font-size:.95rem;animation:rachaPulso .35s var(--ease)}
+.racha b,.racha #rachaN{font-size:.95rem}
+@keyframes rachaPulso{
+  0%{transform:scale(1)}
+  50%{transform:scale(1.35)}
+  100%{transform:scale(1)}
+}
+@media(prefers-reduced-motion:reduce){.racha .ico{animation:none}}
 
 /* la pila: hasta 3 tarjetas visibles, las de atrás asomándose.
    La de arriba se arrastra (mouse/touch) o se voltea con click;
@@ -108,11 +142,21 @@ h1 .hl{color:var(--sesame)}
 .responder .costo:hover{border-color:var(--sesame);background:rgba(200,16,46,.1)}
 .responder .sabia:hover{border-color:var(--lettuce);background:rgba(76,175,107,.1)}
 
-/* pantalla de fin de sesión */
+/* pantalla de fin de sesión: el ícono y el número entran con un pop,
+   no aparecen secos — es el único momento "de premio" de todo el flujo */
 .fin{display:none;text-align:center;margin-top:2.4rem}
 .fin.on{display:block}
-.fin .ico{font-size:2.6rem}
-.fin .n{font-family:'Archivo Black',sans-serif;font-size:clamp(2.4rem,8vw,4rem);color:var(--sesame)}
+.fin .ico{font-size:2.6rem;display:inline-block;animation:finPop .5s var(--ease) both}
+.fin .n{font-family:'Archivo Black',sans-serif;font-size:clamp(2.4rem,8vw,4rem);color:var(--sesame);
+  animation:finPop .5s var(--ease) .08s both}
+@keyframes finPop{
+  0%{transform:scale(.4) translateY(10px);opacity:0}
+  65%{transform:scale(1.12) translateY(0)}
+  100%{transform:scale(1);opacity:1}
+}
+@media(prefers-reduced-motion:reduce){
+  .fin .ico,.fin .n{animation:none}
+}
 .fin p{color:var(--on-char-soft);margin-top:.6rem}
 .fin .msg{color:var(--on-char);font-size:1.05rem;font-weight:600;margin-top:1.2rem;max-width:32ch;
   margin-left:auto;margin-right:auto}
@@ -140,12 +184,23 @@ h1 .hl{color:var(--sesame)}
   font-size:1.3rem}
 .vacio p{color:var(--on-char-soft);margin-top:.6rem}
 
-.nota{margin-top:2.4rem;padding:1rem 1.2rem;
-  background:var(--char-soft);border:1px solid var(--line-d);
-  border-left:3px solid var(--sesame);border-radius:10px}
-.nota .lt{font-family:'Martian Mono',monospace;font-size:.62rem;letter-spacing:.16em;
+/* "Cómo funciona": colapsable, no un bloque de texto siempre abierto */
+.nota{margin-top:2.4rem;border:1px solid var(--line-d);border-radius:10px;
+  border-left:3px solid var(--sesame);overflow:hidden;background:var(--char-soft)}
+.nota summary{list-style:none;cursor:pointer;padding:1rem 1.2rem;
+  display:flex;align-items:center;gap:.6rem;
+  font-family:'Martian Mono',monospace;font-size:.62rem;letter-spacing:.16em;
   text-transform:uppercase;color:var(--sesame)}
-.nota p{margin-top:.45rem;font-size:.88rem;color:var(--on-char-soft)}
+.nota summary::-webkit-details-marker{display:none}
+.nota summary .arw{margin-left:auto;font-size:.75rem;color:var(--on-char-mute);
+  transition:transform .25s var(--ease)}
+.nota[open] summary .arw{transform:rotate(90deg)}
+.nota p{padding:0 1.2rem 1.1rem;font-size:.88rem;color:var(--on-char-soft)}
+.panel .nota{margin-top:0}
+
+/* panel lateral (desktop): título de sección corto arriba de cada bloque */
+.panel .bloque-t{font-family:'Martian Mono',monospace;font-size:.62rem;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--on-char-mute)}
 
 .salir{display:flex;gap:.8rem;flex-wrap:wrap;margin-top:3rem;padding-top:1.6rem;
   border-top:1px solid var(--line-d)}
@@ -181,47 +236,53 @@ h1 .hl{color:var(--sesame)}
   <h1 id="tituloH1">Tarjetas <span class="hl">para que no se te olviden</span></h1>
   <p class="sub" id="subP">Le vas a dar vuelta a una tarjeta, vas a intentar recordar qué significa, y luego nos dices si te costó o no. Así de simple — y así es como de verdad se queda una palabra en la cabeza.</p>
 
-  <div class="controles">
-    <button class="tb-btn" id="btnDificiles"><span id="btnDificilesTxt">★ Las que me cuestan</span> <span id="tbDificiles">(0)</span></button>
-    <button class="tb-btn" id="btnLimpiar" title="Borra todo tu progreso guardado en este navegador">⟲ Empezar de cero</button>
-  </div>
-
-  <div class="barra"><i id="barraFill"></i></div>
-
-  <div class="zona" id="zona">
-    <div class="pila" id="pila"></div>
-  </div>
-
-  <div class="responder" id="responder">
-    <button class="costo" data-r="0"><span class="ico">↺</span>Me costó</button>
-    <button class="sabia" data-r="1"><span class="ico">✓</span>Ya la sé</button>
-  </div>
-
-  <div class="fin" id="fin">
-    <div class="ico" id="finIco">🎉</div>
-    <div class="n" id="finN">0</div>
-    <p id="finTexto">palabras repasadas.</p>
-    <div class="desglose">
-      <span>✓ <b id="finAciertos">0</b> ya la sabías</span>
-      <span>↺ <b id="finCostaron">0</b> te costaron</span>
+  <div class="layout">
+    <div class="panel">
+      <div class="controles" id="controles">
+        <button class="tb-btn" id="btnDificiles"><span id="btnDificilesTxt">★ Las que me cuestan</span> <span id="tbDificiles">(0)</span></button>
+        <button class="tb-btn" id="btnLimpiar" title="Borra todo tu progreso guardado en este navegador">⟲ Empezar de cero</button>
+      </div>
+      <details class="nota panel-nota" open>
+        <summary>Cómo funciona<span class="arw">▸</span></summary>
+        <p>Cada vez que aciertas, la palabra se aleja un poco más — tarda más en volver a aparecer. Si te cuesta, la marcamos y la vuelves a ver pronto, además de que se va sumando a tu montón de "las que me cuestan", por si un día quieres repasar solo esas. Todo se guarda en este navegador — nada de cuentas, pero tampoco se sincroniza si cambias de celular.</p>
+      </details>
     </div>
-    <p class="msg" id="finMsg"></p>
-    <p class="descanso" id="finDescanso"></p>
-    <div class="btns">
-      <button class="primary" id="btnOtraVez">Seguir repasando</button>
-      <a href="../recursos.html">‹ Más recursos</a>
+
+    <div class="col-principal">
+      <div class="barra"><i id="barraFill"></i></div>
+      <div class="racha" id="racha"><span class="ico">🔥</span><span id="rachaN">0</span> seguidas</div>
+
+      <div class="zona" id="zona">
+        <div class="pila" id="pila"></div>
+      </div>
+
+      <div class="responder" id="responder">
+        <button class="costo" data-r="0"><span class="ico">↺</span>Me costó</button>
+        <button class="sabia" data-r="1"><span class="ico">✓</span>Ya la sé</button>
+      </div>
+
+      <div class="fin" id="fin">
+        <div class="ico" id="finIco">🎉</div>
+        <div class="n" id="finN">0</div>
+        <p id="finTexto">palabras repasadas.</p>
+        <div class="desglose">
+          <span>✓ <b id="finAciertos">0</b> ya la sabías</span>
+          <span>↺ <b id="finCostaron">0</b> te costaron</span>
+        </div>
+        <p class="msg" id="finMsg"></p>
+        <p class="descanso" id="finDescanso"></p>
+        <div class="btns">
+          <button class="primary" id="btnOtraVez">Seguir repasando</button>
+          <a href="../recursos.html">‹ Más recursos</a>
+        </div>
+      </div>
+
+      <div class="vacio" id="vacio">
+        <div class="ico">✓</div>
+        <h2 id="vacioH2">Por hoy ya no hay nada pendiente</h2>
+        <p id="vacioP">Terminaste todo lo que tocaba repasar. Regresa mañana y te vamos a tener listas las que ya están por vencerse.</p>
+      </div>
     </div>
-  </div>
-
-  <div class="vacio" id="vacio">
-    <div class="ico">✓</div>
-    <h2 id="vacioH2">Por hoy ya no hay nada pendiente</h2>
-    <p id="vacioP">Terminaste todo lo que tocaba repasar. Regresa mañana y te vamos a tener listas las que ya están por vencerse.</p>
-  </div>
-
-  <div class="nota">
-    <div class="lt">Cómo funciona</div>
-    <p>Cada vez que aciertas, la palabra se aleja un poco más — tarda más en volver a aparecer. Si te cuesta, la marcamos y la vuelves a ver pronto, además de que se va sumando a tu montón de "las que me cuestan" (arriba a la derecha), por si un día quieres repasar solo esas. Todo se guarda en este navegador — nada de cuentas, pero tampoco se sincroniza si cambias de celular.</p>
   </div>
 
   <div class="salir">
@@ -270,6 +331,8 @@ h1 .hl{color:var(--sesame)}
   const eyebrow = document.getElementById('eyebrow');
   const tituloH1 = document.getElementById('tituloH1');
   const subP = document.getElementById('subP');
+  const racha = document.getElementById('racha');
+  const rachaN = document.getElementById('rachaN');
 
   function hoyISO(){
     return new Date().toISOString().slice(0,10);
@@ -301,6 +364,7 @@ h1 .hl{color:var(--sesame)}
   let modoDificiles = false;
   let vistasEnEstaVisita = 0; // no se resetea entre "seguir repasando" — es para el aviso de descanso
   let hayMasPendientes = false; // si quedó vocabulario fuera de esta tanda de 15
+  let rachaActual = 0; // aciertos seguidos en esta tanda
 
   function idDe(p){ return p.w; }
 
@@ -557,6 +621,16 @@ h1 .hl{color:var(--sesame)}
     actualizarStat();
   }
 
+  function actualizarRacha(){
+    racha.classList.toggle('on', rachaActual >= 2);
+    rachaN.textContent = rachaActual;
+    // vuelve a disparar el pulso reiniciando la animación
+    const ico = racha.querySelector('.ico');
+    ico.style.animation = 'none';
+    void ico.offsetWidth;
+    ico.style.animation = '';
+  }
+
   function empezarSesion(){
     fin.classList.remove('on');
     vacio.classList.remove('on');
@@ -564,6 +638,8 @@ h1 .hl{color:var(--sesame)}
     repasadas = 0;
     aciertos = 0;
     costaron = 0;
+    rachaActual = 0;
+    actualizarRacha();
     if(!cola.length){
       zona.style.display = 'none';
       document.querySelector('.barra').style.display = 'none';
