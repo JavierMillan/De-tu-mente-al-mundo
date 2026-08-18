@@ -91,6 +91,20 @@
           "titulo": "Tu perfil y tu primer post",
           "resumen": "Taller en vivo: foto, bio y tu primer post publicado. Graduación de nivel.",
           "deck": "basico/tu-primer-post-4.html"
+        },
+        {
+          "id": "tu-celular-ya-es-suficiente-5",
+          "parte": "Parte 5",
+          "titulo": "Tu celular ya es suficiente",
+          "resumen": "Luz, encuadre y audio con lo que ya tienes en la mano. Sin comprar nada.",
+          "deck": "basico/tu-celular-ya-es-suficiente-5.html"
+        },
+        {
+          "id": "nadie-te-ve-todavia-6",
+          "parte": "Parte 6",
+          "titulo": "Qué hacer cuando nadie te ve todavía",
+          "resumen": "Las primeras semanas son silenciosas para todos. Qué hacer con ese silencio.",
+          "deck": "basico/nadie-te-ve-todavia-6.html"
         }
       ]
     },
@@ -141,6 +155,54 @@
           "titulo": "Crea tu carrusel o guion con ChatGPT",
           "resumen": "Taller en vivo: construye tu prompt y sal con contenido real. Graduación de nivel.",
           "deck": "intermedio/crea-tu-carrusel-4.html"
+        },
+        {
+          "id": "te-escribieron-5",
+          "parte": "Parte 5",
+          "titulo": "Te escribieron. Y ahora, ¿qué?",
+          "resumen": "No es vender — es no arruinarlo en los primeros mensajes. El puente entre publicar y vender.",
+          "deck": "intermedio/te-escribieron-5.html",
+          "recursos": [
+            {
+              "tipo": "chuleta",
+              "icono": "⌘",
+              "titulo": "Chuleta de respuestas rápidas",
+              "descripcion": "Los tres tipos de mensaje, con ejemplo de respuesta para cada uno.",
+              "url": "intermedio/recursos/chuleta-respuestas.html"
+            }
+          ]
+        },
+        {
+          "id": "constancia-sin-quemarte-6",
+          "parte": "Parte 6",
+          "titulo": "Constancia sin quemarte",
+          "resumen": "El siguiente problema después de la cadencia: sostenerla sin que se vuelva trabajo forzado.",
+          "deck": "intermedio/constancia-sin-quemarte-6.html",
+          "recursos": [
+            {
+              "tipo": "plantilla",
+              "icono": "⌘",
+              "titulo": "Plantilla de banco de ideas + calendario de lotes",
+              "descripcion": "Para llenar hoy y reutilizar cada semana, con ejemplos de cada categoría.",
+              "url": "intermedio/recursos/banco-de-ideas.html"
+            }
+          ]
+        },
+        {
+          "id": "tu-historia-como-material-7",
+          "parte": "Parte 7",
+          "titulo": "Tu historia como material",
+          "resumen": "De dónde sacar contenido cuando se te acaban las ideas del negocio, sin exponerte de más.",
+          "deck": "intermedio/tu-historia-como-material-7.html",
+          "recursos": [
+            {
+              "tipo": "plantilla",
+              "icono": "⌘",
+              "titulo": "Plantilla de banco de historias",
+              "descripcion": "Un espacio por zona (pública, trabajo, personal filtrada) para armar tus 5 historias.",
+              "url": "intermedio/recursos/banco-de-historias.html"
+            }
+          ]
         }
       ]
     },
@@ -227,6 +289,22 @@
               "url": ""
             }
           ]
+        },
+        {
+          "id": "seguimiento-sin-incomodar-3",
+          "parte": "Clase 3",
+          "titulo": "El seguimiento que no incomoda",
+          "resumen": "Con Arturo. Qué pasa entre el \"déjame lo pienso\" y la venta.",
+          "deck": "ventas/seguimiento-sin-incomodar-3.html",
+          "recursos": [
+            {
+              "tipo": "plantilla",
+              "icono": "⌘",
+              "titulo": "Los 3 mensajes de seguimiento, en plantilla",
+              "descripcion": "Listos para adaptar a cualquier prospecto, con el calendario de 3-7-14 días.",
+              "url": "ventas/recursos/plantilla-seguimiento.html"
+            }
+          ]
         }
       ]
     },
@@ -264,6 +342,22 @@
             "Cómo se le pide a un asistente: qué y con qué criterio, no cómo.",
             "Editar leyendo la transcripción en vez de rebobinando.",
             "Las tres trampas que cuestan tiempo — y por qué no te van a pasar."
+          ]
+        },
+        {
+          "id": "tu-asistente-con-tu-voz-3",
+          "parte": "Clase 3",
+          "titulo": "Tu asistente con tu voz",
+          "resumen": "Cómo darle a cualquier asistente tu forma de escribir, para que deje de sonar genérico.",
+          "deck": "herramientas-ia/tu-asistente-con-tu-voz-3.html",
+          "recursos": [
+            {
+              "tipo": "prompt",
+              "icono": "⌘",
+              "titulo": "Prompt de arranque · documento de voz",
+              "descripcion": "Se copia y se pega al inicio de cualquier conversación con un asistente.",
+              "url": "herramientas-ia/recursos/documento-de-voz.html"
+            }
           ]
         }
       ]

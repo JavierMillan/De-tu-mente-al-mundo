@@ -215,6 +215,44 @@ html,body{height:100%;background:#000;overflow:hidden;font-family:var(--font-bod
 .dot{width:7px;height:7px;border-radius:50%;background:var(--ketchup);
   box-shadow:0 0 10px var(--ketchup)}
 
+/* lista de recursos descargables (prompts, plantillas, chuletas) */
+.reslist{display:flex;flex-direction:column;gap:clamp(.7rem,1.4vw,1.05rem);
+  width:100%;max-width:48rem}
+.res{display:grid;grid-template-columns:auto 1fr auto;gap:clamp(.8rem,1.6vw,1.2rem);
+  align-items:center;text-decoration:none;color:inherit;
+  background:var(--char-soft);border:1px solid var(--line-d);border-radius:14px;
+  padding:clamp(.9rem,1.7vw,1.3rem);transition:.28s var(--ease)}
+.paper .res{background:var(--paper-soft);border-color:var(--line-l)}
+.res:hover{border-color:var(--sesame);transform:translateY(-2px);
+  box-shadow:0 18px 44px -28px var(--glow)}
+.paper .res:hover{border-color:var(--ketchup);box-shadow:0 18px 44px -28px rgba(200,68,46,.4)}
+.res .ri{font-size:1.3rem;line-height:1;color:var(--sesame);flex-shrink:0}
+.paper .res .ri{color:var(--ketchup)}
+.res .rb{display:flex;flex-direction:column;gap:.3rem;min-width:0}
+.res .rt{font-family:var(--font-display);font-weight:500;
+  font-size:clamp(.95rem,1.5vw,1.18rem);line-height:1.25}
+.res .rd{color:var(--on-char-soft);font-size:clamp(.82rem,1.15vw,.98rem);line-height:1.45}
+.paper .res .rd{color:var(--on-paper-soft)}
+.res .rgo{font-family:var(--font-mono);font-size:.66rem;letter-spacing:.14em;
+  color:var(--sesame);white-space:nowrap;flex-shrink:0}
+.paper .res .rgo{color:var(--ketchup)}
+/* variante estática: no es un enlace, es un bloque de contenido */
+.res.flat{cursor:default}
+.res.flat:hover{transform:none;box-shadow:none;border-color:var(--line-d)}
+.paper .res.flat:hover{border-color:var(--line-l)}
+.res.flat .ri{font-family:var(--font-mono);font-size:.82rem;letter-spacing:.1em;
+  align-self:flex-start;padding-top:.2rem}
+.res.soon{border-style:dashed;border-color:var(--line-d2);cursor:default}
+.paper .res.soon{border-color:var(--line-l2)}
+.res.soon:hover{transform:none;box-shadow:none;border-color:var(--line-d2)}
+.paper .res.soon:hover{border-color:var(--line-l2)}
+.res.soon .ri,.res.soon .rgo{color:var(--on-char-mute)}
+.paper .res.soon .ri,.paper .res.soon .rgo{color:var(--on-paper-mute)}
+.res.soon .rt{color:var(--on-char-soft)}
+.paper .res.soon .rt{color:var(--on-paper-soft)}
+.res.soon .rd{color:var(--on-char-mute)}
+.paper .res.soon .rd{color:var(--on-paper-mute)}
+
 /* firma de marca */
 .brandmark{position:absolute;bottom:clamp(1.2rem,2.4vw,2rem);left:clamp(2.5rem,6vw,7rem);
   font-family:var(--font-serif);font-size:.85rem;color:var(--on-char-mute);opacity:.7;z-index:2}
