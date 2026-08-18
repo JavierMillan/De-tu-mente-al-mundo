@@ -300,6 +300,7 @@ h1 .hl{color:var(--sesame)}
   let volteada = false;
   let modoDificiles = false;
   let vistasEnEstaVisita = 0; // no se resetea entre "seguir repasando" — es para el aviso de descanso
+  let hayMasPendientes = false; // si quedó vocabulario fuera de esta tanda de 15
 
   function idDe(p){ return p.w; }
 
@@ -317,14 +318,19 @@ h1 .hl{color:var(--sesame)}
     return arr;
   }
 
+  const TAMANO_TANDA = 15; // repasar 100 de un jalón cansa — mejor en dosis chicas
+
   function construirCola(){
+    let pendientes;
     if(modoDificiles){
-      cola = vocab.filter(p => estadoDe(p).dificil);
+      pendientes = vocab.filter(p => estadoDe(p).dificil);
     }else{
       const hoy = hoyISO();
-      cola = vocab.filter(p => estadoDe(p).vence <= hoy);
+      pendientes = vocab.filter(p => estadoDe(p).vence <= hoy);
     }
-    barajar(cola);
+    barajar(pendientes);
+    hayMasPendientes = pendientes.length > TAMANO_TANDA;
+    cola = pendientes.slice(0, TAMANO_TANDA);
     idx = 0;
   }
 
@@ -534,13 +540,17 @@ h1 .hl{color:var(--sesame)}
       finMsg.textContent = 'Está bien que cuesten al principio. Por eso vuelven a aparecer.';
     }
 
-    // si fue una sesión larga, sugerimos parar — la constancia diaria
-    // rinde más que una maratón de tarjetas
-    if(vistasEnEstaVisita >= 40){
-      finDescanso.textContent = 'Ya van '+vistasEnEstaVisita+' tarjetas hoy — es un buen momento para parar. Mañana rinden más que veinte de golpe ahora.';
+    // las tandas ya son chicas (15) a propósito — en vez de dejar que
+    // sigan de largo hasta cansarse, avisamos aquí mismo cuánto queda y
+    // dejamos claro que está bien parar. La constancia diaria en dosis
+    // cortas rinde más que una maratón de tarjetas.
+    if(hayMasPendientes){
+      finDescanso.textContent = 'Todavía queda vocabulario pendiente, pero por hoy con esto ya avanzaste bastante. Está perfecto si lo dejas aquí y regresas más tarde (o mañana).';
       finDescanso.classList.add('on');
+      btnOtraVez.textContent = 'Repasar otra tanda';
     }else{
       finDescanso.classList.remove('on');
+      btnOtraVez.textContent = 'Seguir repasando';
     }
 
     fin.classList.add('on');
