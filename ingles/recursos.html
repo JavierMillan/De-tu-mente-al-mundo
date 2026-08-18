@@ -43,10 +43,17 @@ h1 .hl{color:var(--sesame)}
 
 .loaderr{color:var(--on-char-mute);font-family:var(--font-mono);font-size:.85rem}
 
-.foot{margin-top:4rem;padding-top:1.4rem;border-top:1px solid var(--line-d);
+.foot{margin-top:1.6rem;padding-top:1.4rem;border-top:1px solid var(--line-d);
   font-family:var(--font-mono);font-size:.72rem;letter-spacing:.05em;color:var(--on-char-mute)}
 .foot a{color:var(--sesame);text-decoration:none}
 .foot a:hover{text-decoration:underline}
+
+.salir{margin-top:3rem;padding-top:1.6rem;border-top:1px solid var(--line-d)}
+.salir a{display:inline-flex;align-items:center;gap:.5rem;
+  padding:1rem 1.6rem;border-radius:12px;border:1px solid var(--line-d2);
+  color:var(--on-char-soft);text-decoration:none;font-family:var(--font-mono);
+  font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;transition:.25s var(--ease)}
+.salir a:hover{border-color:var(--sesame);color:var(--sesame)}
 </style>
 </head>
 <body>
@@ -67,6 +74,10 @@ h1 .hl{color:var(--sesame)}
 
   <div class="items" id="items">
     <p class="loaderr">Cargando recursos…</p>
+  </div>
+
+  <div class="salir">
+    <a href="index.html">‹ Volver a Clases</a>
   </div>
 
   <p class="foot">¡HABLEMOS INGLÉS! · UNA INICIATIVA DE <a href="https://lareddeluz.com" target="_blank" rel="noopener">LA RED DE LUZ</a></p>
