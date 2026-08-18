@@ -397,18 +397,19 @@ h1 .hl{color:var(--sesame)}
   }
 
   // reconstruye la pila SIN tocar una tarjeta marcada .saliendo (la que
-  // está en pleno vuelo) — así la animación nunca se corta a medio camino
+  // está en pleno vuelo) — así la animación nunca se corta a medio camino.
+  // Las tarjetas nuevas saltan de inmediato a su posición final (offset
+  // 0,1,2...) aunque la vieja todavía no haya terminado de salir: como la
+  // saliente vuela lejos y queda con opacity 0, no se superponen — si en
+  // vez de eso se dejaba la nueva "top" a medio offset esperando, se veía
+  // fantasma/transparentada encima de la que se iba.
   function renderPila(){
     [...pila.querySelectorAll('.tarjeta:not(.saliendo)')].forEach(el=>el.remove());
-    const saliente = pila.querySelector('.tarjeta.saliendo');
-    const yaHayVuelo = !!saliente;
     for(let i=0; i<MAX_PILA && (idx+i)<cola.length; i++){
-      // si hay una tarjeta volando, la posición 0 la sigue ocupando ella
-      // visualmente, así que las nuevas entran a partir de después
       const el = crearTarjetaEl(cola[idx+i]);
       pila.appendChild(el);
     }
-    acomodarPila(yaHayVuelo ? 1 : 0);
+    acomodarPila(0);
     activarDragEnTop();
   }
 
