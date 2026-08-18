@@ -1,0 +1,11 @@
+{
+  "recursos": [
+    {
+      "id": "100-palabras",
+      "icono": "⌘",
+      "titulo": "Las 100 palabras más usadas en inglés",
+      "descripcion": "Vocabulario base con pronunciación y significado, agrupado por categoría. Sirve para cualquier sesión.",
+      "url": "recursos/100-palabras.html"
+    }
+  ]
+}
