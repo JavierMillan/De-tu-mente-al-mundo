@@ -12,15 +12,14 @@
   /* --- tema Constelación (sustituye el bloque de tema de deck.css) --- */
   --char:#0a0a0a; --char-soft:#161414;
   --paper:#0a0a0a; --paper-soft:#161414;      /* sin modo "paper" claro: la marca es siempre negra */
-  /* "sesame"/"ketchup" = nuestro rojo, heredando la estructura del motor.
-     #c8102e (el rojo "de marca", más saturado) da solo 3.37:1 sobre negro —
-     falla el mínimo de 4.5:1 para texto. #ea4a63 pasa AA tanto sobre negro
-     puro (5.33:1) como sobre las tarjetas --char-soft (4.94:1) — un solo
-     rojo que funciona en cualquier fondo del deck, sin variantes por caso.
-     #c8102e queda disponible como --sesame-deep para superficies/bordes
-     donde el contraste de texto no aplica. */
-  --sesame:#ea4a63; --sesame-hi:#ea4a63; --sesame-deep:#c8102e;
-  --ketchup:#ea4a63; --lettuce:#7c9a3e;
+  /* "sesame"/"ketchup" = nuestro rojo, el mismo de las piezas de marca.
+     Nota de contraste (por si el rojo se ve apagado en pantallas muy
+     brillantes): #c8102e sobre negro da 3.37:1, bajo el AA de 4.5:1 para
+     texto pequeño. Se decidió mantener el rojo de marca tal cual — el
+     bug real reportado era otro (ver más abajo, body.on-paper .navbtn).
+     --sesame-deep queda como alias del mismo valor por compatibilidad. */
+  --sesame:#c8102e; --sesame-hi:#e13350; --sesame-deep:#c8102e;
+  --ketchup:#c8102e; --lettuce:#7c9a3e;
   --on-char:#f2f0ec; --on-char-soft:#c9c5be; --on-char-mute:#8a8680;
   --on-paper:#f2f0ec; --on-paper-soft:#c9c5be; --on-paper-mute:#8a8680;
   --line-d:rgba(242,240,236,0.12); --line-d2:rgba(242,240,236,0.22);
@@ -59,12 +58,18 @@
 /* el .glow de deck.css trae mostaza hardcodeada (tema DTMM); aquí es rojo */
 .glow{background:radial-gradient(circle at center,rgba(200,16,46,0.16) 0%,transparent 70%)}
 
-/* deck.css hardcodea varios tonos de mostaza/crema para el tema DTMM;
-   esta marca no tiene variante "paper" clara (siempre negra), así que
-   pisamos también el estado base, no solo body.on-paper */
-#hud,#hint{color:var(--on-char-mute)}
-.navbtn{border-color:var(--line-d2);color:var(--on-char-soft)}
-.navbtn:hover,.navbtn.on{border-color:var(--sesame);color:var(--sesame)}
+/* deck.css hardcodea varios tonos de mostaza/crema para el tema DTMM,
+   con reglas SEPARADAS para el estado base y para body.on-paper (que en
+   DTMM es texto casi negro para leerse sobre fondo crema). Esta marca no
+   tiene variante "paper" clara — siempre es negra — así que hay que pisar
+   AMBOS estados o el HUD queda casi negro sobre negro en las slides .paper
+   (bug real: "‹ Clases" ilegible en slides pensadas como claras). */
+#hud,#hint,
+body.on-paper #hud,body.on-paper #hint{color:var(--on-char-mute)}
+.navbtn,
+body.on-paper .navbtn{border-color:var(--line-d2);color:var(--on-char-soft)}
+.navbtn:hover,.navbtn.on,
+body.on-paper .navbtn:hover,body.on-paper .navbtn.on{border-color:var(--sesame);color:var(--sesame)}
 .ab .b{background:rgba(234,74,99,.1)}
 /* texto rojo sobre fondo rojo translúcido nunca pasa contraste — la etiqueta
    destacada de .ab .b usa blanco, y el rojo se queda en el borde/acento */
