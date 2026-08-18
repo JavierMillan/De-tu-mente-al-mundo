@@ -79,6 +79,20 @@
 .escena .linea{font-family:'Fraunces',serif;font-style:italic;font-size:.86rem;
   line-height:1.5;margin-top:.6rem;color:var(--on-char-soft)}
 .paper .escena .linea{color:var(--on-paper-soft)}
+
+/* las tarjetas .pub de "herramientas de hoy" ahora son <a> reales —
+   sin esto heredan el underline por defecto del navegador en .label/.txt,
+   y no tenían ningún indicador visual de que se puede abrir */
+.ab .pub{text-decoration:none;transition:.2s var(--ease);position:relative}
+.ab .pub:hover{transform:translateY(-3px)}
+.ab .pub-go{display:inline-flex;align-items:center;gap:.4rem;margin-top:1rem;
+  font-family:var(--font-mono);font-size:.68rem;letter-spacing:.1em;text-transform:uppercase}
+.ab .a .pub-go{color:var(--sesame)}
+.ab .b .pub-go{color:var(--on-char)}
+.paper .ab .a .pub-go{color:var(--ketchup)}
+.paper .ab .b .pub-go{color:var(--on-paper)}
+.ab .pub-go .arw{transition:transform .2s var(--ease)}
+.ab .pub:hover .pub-go .arw{transform:translateX(4px)}
 </style>
 </head>
 <body data-volver="index.html" data-volver-texto="‹ Clases">
@@ -141,12 +155,14 @@
       <h2 class="h1">Ten esto <span class="hl">a la mano.</span></h2>
       <div class="ab mt-l">
         <a class="pub a" href="recursos/100-palabras.html" target="_blank" rel="noopener">
-          <div class="label">100 palabras más útiles →</div>
+          <div class="label">100 palabras más útiles</div>
           <div class="txt">Nuestro banco de vocabulario, organizado por categoría.</div>
+          <div class="pub-go">Abrir recurso <span class="arw">→</span></div>
         </a>
         <a class="pub b" href="recursos/100-palabras.html" target="_blank" rel="noopener">
-          <div class="label">Guía de pronunciación →</div>
+          <div class="label">Guía de pronunciación</div>
           <div class="txt">Today = tudei. Está dentro del mismo recurso — cada palabra trae cómo se pronuncia.</div>
+          <div class="pub-go">Abrir recurso <span class="arw">→</span></div>
         </a>
       </div>
       <div class="chip"><span class="dot"></span> Tip: ábrelo en tu celular durante toda la sesión</div>
