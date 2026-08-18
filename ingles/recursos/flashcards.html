@@ -34,6 +34,8 @@ body{background:var(--char);color:var(--on-char);
 .tb-stat{font-family:'Martian Mono',monospace;font-size:.66rem;letter-spacing:.1em;
   color:var(--on-char-mute)}
 .tb-stat b{color:var(--sesame)}
+.tb-btn.on{border-color:var(--sesame);color:var(--sesame);background:rgba(200,16,46,.1)}
+.tb-btn[disabled]{opacity:.4;cursor:not-allowed;pointer-events:none}
 
 .wrap{max-width:40rem;margin:0 auto;padding:clamp(1.6rem,5vw,3rem) clamp(1.2rem,4vw,3rem) 5rem}
 
@@ -47,17 +49,28 @@ h1 .hl{color:var(--sesame)}
 .sub{font-size:clamp(.95rem,1.5vw,1.1rem);color:var(--on-char-soft);
   max-width:50ch;margin-top:1rem}
 
+.controles{display:flex;gap:.6rem;flex-wrap:wrap;margin-top:1.2rem}
+
 /* barra de progreso de la sesión: cuántas tarjetas van */
 .barra{width:100%;height:4px;border-radius:999px;background:var(--line-d);
   margin-top:1.6rem;overflow:hidden}
 .barra i{display:block;height:100%;width:0%;background:var(--sesame);
   transition:width .3s var(--ease)}
 
-/* la tarjeta: click para voltear */
+/* la pila: hasta 3 tarjetas visibles, las de atrás asomándose.
+   La de arriba se arrastra (mouse/touch) o se voltea con click;
+   al responder, "vuela" hacia el lado y la siguiente sube un puesto. */
 .zona{margin-top:2rem;perspective:1400px}
-.tarjeta{position:relative;width:100%;min-height:16rem;cursor:pointer;
-  transform-style:preserve-3d;transition:transform .5s var(--ease)}
-.tarjeta.volteada{transform:rotateY(180deg)}
+.pila{position:relative;width:100%;height:16rem}
+.tarjeta{position:absolute;inset:0;cursor:grab;
+  transform-style:preserve-3d;
+  transition:transform .45s var(--ease),opacity .45s var(--ease);
+  touch-action:pan-y}
+.tarjeta:active{cursor:grabbing}
+.tarjeta.volteada .cara-int{transform:rotateY(180deg)}
+.tarjeta.arrastrando{transition:none}
+.cara-int{position:relative;width:100%;height:100%;transform-style:preserve-3d;
+  transition:transform .5s var(--ease)}
 .cara{position:absolute;inset:0;backface-visibility:hidden;
   border-radius:20px;border:1px solid var(--line-d2);background:var(--char-soft);
   display:flex;flex-direction:column;align-items:center;justify-content:center;
@@ -76,6 +89,13 @@ h1 .hl{color:var(--sesame)}
 .cara .hint{position:absolute;bottom:1rem;font-family:'Martian Mono',monospace;
   font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:var(--on-char-mute)}
 
+/* sello de "me costó" / "ya la sé" que aparece al arrastrar */
+.sello{position:absolute;top:1.4rem;padding:.4rem .9rem;border-radius:8px;
+  font-family:'Archivo Black',sans-serif;text-transform:uppercase;font-size:1rem;
+  letter-spacing:.03em;opacity:0;transition:opacity .15s linear;pointer-events:none}
+.sello.izq{left:1.4rem;border:3px solid var(--sesame);color:var(--sesame);transform:rotate(-12deg)}
+.sello.der{right:1.4rem;border:3px solid var(--lettuce);color:var(--lettuce);transform:rotate(12deg)}
+
 /* botones de respuesta: aparecen solo con la tarjeta volteada */
 .responder{display:flex;gap:.8rem;margin-top:1.6rem;visibility:hidden;opacity:0;
   transition:opacity .25s var(--ease)}
@@ -91,8 +111,18 @@ h1 .hl{color:var(--sesame)}
 /* pantalla de fin de sesión */
 .fin{display:none;text-align:center;margin-top:2.4rem}
 .fin.on{display:block}
+.fin .ico{font-size:2.6rem}
 .fin .n{font-family:'Archivo Black',sans-serif;font-size:clamp(2.4rem,8vw,4rem);color:var(--sesame)}
 .fin p{color:var(--on-char-soft);margin-top:.6rem}
+.fin .msg{color:var(--on-char);font-size:1.05rem;font-weight:600;margin-top:1.2rem;max-width:32ch;
+  margin-left:auto;margin-right:auto}
+.fin .desglose{display:flex;justify-content:center;gap:1.6rem;margin-top:1rem;
+  font-family:'Martian Mono',monospace;font-size:.72rem;color:var(--on-char-mute)}
+.fin .desglose b{color:var(--on-char);font-size:.9rem}
+.fin .descanso{margin-top:1.4rem;padding:.9rem 1.2rem;border-radius:12px;
+  background:var(--char-soft);border:1px solid var(--line-d);color:var(--on-char-soft);
+  font-size:.88rem;display:none}
+.fin .descanso.on{display:block}
 .fin .btns{display:flex;gap:.8rem;justify-content:center;margin-top:1.6rem;flex-wrap:wrap}
 .fin .btns a,.fin .btns button{padding:.9rem 1.4rem;border-radius:12px;border:1px solid var(--line-d2);
   background:transparent;color:var(--on-char-soft);font-family:'Martian Mono',monospace;
@@ -147,49 +177,51 @@ h1 .hl{color:var(--sesame)}
 
 <div class="wrap">
 
-  <div class="eyebrow">Recurso general · Repaso</div>
-  <h1>Flashcards <span class="hl">con repetición espaciada</span></h1>
-  <p class="sub">El sistema con más evidencia para que el vocabulario se quede: cada palabra vuelve justo antes de que la olvides. Toca la tarjeta para voltearla, y dinos si te costó o si ya la sabías.</p>
+  <div class="eyebrow" id="eyebrow">Recurso general · Repaso</div>
+  <h1 id="tituloH1">Tarjetas <span class="hl">para que no se te olviden</span></h1>
+  <p class="sub" id="subP">Le vas a dar vuelta a una tarjeta, vas a intentar recordar qué significa, y luego nos dices si te costó o no. Así de simple — y así es como de verdad se queda una palabra en la cabeza.</p>
+
+  <div class="controles">
+    <button class="tb-btn" id="btnDificiles"><span id="btnDificilesTxt">★ Las que me cuestan</span> <span id="tbDificiles">(0)</span></button>
+    <button class="tb-btn" id="btnLimpiar" title="Borra todo tu progreso guardado en este navegador">⟲ Empezar de cero</button>
+  </div>
 
   <div class="barra"><i id="barraFill"></i></div>
 
   <div class="zona" id="zona">
-    <div class="tarjeta" id="tarjeta">
-      <div class="cara frente">
-        <div class="cat" id="fCat"></div>
-        <div class="w" id="fW"></div>
-        <div class="hint">Toca para voltear</div>
-      </div>
-      <div class="cara reverso">
-        <div class="p" id="rP"></div>
-        <div class="m" id="rM"></div>
-      </div>
-    </div>
+    <div class="pila" id="pila"></div>
   </div>
 
   <div class="responder" id="responder">
     <button class="costo" data-r="0"><span class="ico">↺</span>Me costó</button>
-    <button class="sabia" data-r="1"><span class="ico">✓</span>La sabía</button>
+    <button class="sabia" data-r="1"><span class="ico">✓</span>Ya la sé</button>
   </div>
 
   <div class="fin" id="fin">
+    <div class="ico" id="finIco">🎉</div>
     <div class="n" id="finN">0</div>
-    <p>palabras repasadas en esta sesión.</p>
+    <p id="finTexto">palabras repasadas.</p>
+    <div class="desglose">
+      <span>✓ <b id="finAciertos">0</b> ya la sabías</span>
+      <span>↺ <b id="finCostaron">0</b> te costaron</span>
+    </div>
+    <p class="msg" id="finMsg"></p>
+    <p class="descanso" id="finDescanso"></p>
     <div class="btns">
-      <button class="primary" id="btnOtraVez">Repasar más</button>
+      <button class="primary" id="btnOtraVez">Seguir repasando</button>
       <a href="../recursos.html">‹ Más recursos</a>
     </div>
   </div>
 
   <div class="vacio" id="vacio">
     <div class="ico">✓</div>
-    <h2>Por hoy no hay nada pendiente</h2>
-    <p>Ya repasaste todo lo que tocaba. Vuelve mañana — el sistema te avisará cuáles palabras están listas para repetirse.</p>
+    <h2 id="vacioH2">Por hoy ya no hay nada pendiente</h2>
+    <p id="vacioP">Terminaste todo lo que tocaba repasar. Regresa mañana y te vamos a tener listas las que ya están por vencerse.</p>
   </div>
 
   <div class="nota">
     <div class="lt">Cómo funciona</div>
-    <p>Cada palabra vive en una de 5 cajas. Si la sabes, sube de caja y tarda más en volver a aparecer; si te cuesta, baja a la caja 1 y la repasas pronto otra vez. Tu progreso se guarda en este navegador — no necesitas cuenta, pero tampoco se sincroniza entre dispositivos.</p>
+    <p>Cada vez que aciertas, la palabra se aleja un poco más — tarda más en volver a aparecer. Si te cuesta, la marcamos y la vuelves a ver pronto, además de que se va sumando a tu montón de "las que me cuestan" (arriba a la derecha), por si un día quieres repasar solo esas. Todo se guarda en este navegador — nada de cuentas, pero tampoco se sincroniza si cambias de celular.</p>
   </div>
 
   <div class="salir">
@@ -215,18 +247,29 @@ h1 .hl{color:var(--sesame)}
   const CLAVE = 'hi_srs_vocab-100';
 
   const zona = document.getElementById('zona');
-  const tarjetaEl = document.getElementById('tarjeta');
-  const fCat = document.getElementById('fCat');
-  const fW = document.getElementById('fW');
-  const rP = document.getElementById('rP');
-  const rM = document.getElementById('rM');
+  const pila = document.getElementById('pila');
   const responder = document.getElementById('responder');
   const fin = document.getElementById('fin');
+  const finIco = document.getElementById('finIco');
   const finN = document.getElementById('finN');
+  const finTexto = document.getElementById('finTexto');
+  const finAciertos = document.getElementById('finAciertos');
+  const finCostaron = document.getElementById('finCostaron');
+  const finMsg = document.getElementById('finMsg');
+  const finDescanso = document.getElementById('finDescanso');
   const vacio = document.getElementById('vacio');
+  const vacioH2 = document.getElementById('vacioH2');
+  const vacioP = document.getElementById('vacioP');
   const barraFill = document.getElementById('barraFill');
   const tbStat = document.getElementById('tbStat');
   const btnOtraVez = document.getElementById('btnOtraVez');
+  const btnDificiles = document.getElementById('btnDificiles');
+  const btnDificilesTxt = document.getElementById('btnDificilesTxt');
+  const tbDificiles = document.getElementById('tbDificiles');
+  const btnLimpiar = document.getElementById('btnLimpiar');
+  const eyebrow = document.getElementById('eyebrow');
+  const tituloH1 = document.getElementById('tituloH1');
+  const subP = document.getElementById('subP');
 
   function hoyISO(){
     return new Date().toISOString().slice(0,10);
@@ -252,31 +295,121 @@ h1 .hl{color:var(--sesame)}
   let cola = [];
   let idx = 0;
   let repasadas = 0;
+  let aciertos = 0;
+  let costaron = 0;
   let volteada = false;
+  let modoDificiles = false;
+  let vistasEnEstaVisita = 0; // no se resetea entre "seguir repasando" — es para el aviso de descanso
 
   function idDe(p){ return p.w; }
 
   function estadoDe(p){
     const id = idDe(p);
-    if(!estado[id]) estado[id] = {caja: 1, vence: hoyISO()};
+    if(!estado[id]) estado[id] = {caja: 1, vence: hoyISO(), dificil: false};
     return estado[id];
   }
 
-  function construirCola(){
-    const hoy = hoyISO();
-    cola = vocab.filter(p => estadoDe(p).vence <= hoy);
-    // baraja simple
-    for(let i=cola.length-1;i>0;i--){
+  function barajar(arr){
+    for(let i=arr.length-1;i>0;i--){
       const j = Math.floor(Math.random()*(i+1));
-      [cola[i],cola[j]] = [cola[j],cola[i]];
+      [arr[i],arr[j]] = [arr[j],arr[i]];
     }
+    return arr;
+  }
+
+  function construirCola(){
+    if(modoDificiles){
+      cola = vocab.filter(p => estadoDe(p).dificil);
+    }else{
+      const hoy = hoyISO();
+      cola = vocab.filter(p => estadoDe(p).vence <= hoy);
+    }
+    barajar(cola);
     idx = 0;
+  }
+
+  function contarDificiles(){
+    return vocab.filter(p=>estadoDe(p).dificil).length;
   }
 
   function actualizarStat(){
     const total = vocab.length;
     const dominadas = vocab.filter(p=>estadoDe(p).caja >= 5).length;
-    tbStat.innerHTML = '<b>'+dominadas+'</b> / '+total+' dominadas';
+    tbStat.innerHTML = '<b>'+dominadas+'</b> / '+total+' ya se te quedaron';
+    const n = contarDificiles();
+    if(!modoDificiles) tbDificiles.textContent = '('+n+')';
+    btnDificiles.disabled = n === 0 && !modoDificiles;
+  }
+
+  function actualizarModoUI(){
+    btnDificiles.classList.toggle('on', modoDificiles);
+    if(modoDificiles){
+      btnDificilesTxt.textContent = '← Volver al repaso normal';
+      tbDificiles.textContent = '';
+      eyebrow.textContent = 'Repasando · Las que te cuestan';
+      tituloH1.innerHTML = 'Las que <span class="hl">se te resisten</span>';
+      subP.textContent = 'Estas son las que has marcado como "me costó" al menos una vez. Repásalas las veces que quieras, sin esperar a que toque su turno.';
+    }else{
+      btnDificilesTxt.textContent = '★ Las que me cuestan';
+      eyebrow.textContent = 'Recurso general · Repaso';
+      tituloH1.innerHTML = 'Tarjetas <span class="hl">para que no se te olviden</span>';
+      subP.textContent = 'Le vas a dar vuelta a una tarjeta, vas a intentar recordar qué significa, y luego nos dices si te costó o no. Así de simple — y así es como de verdad se queda una palabra en la cabeza.';
+    }
+  }
+
+  const MAX_PILA = 3; // cuántas tarjetas se ven asomando detrás
+
+  function crearTarjetaEl(p){
+    const el = document.createElement('div');
+    el.className = 'tarjeta';
+    el.innerHTML =
+      '<div class="cara-int">'+
+        '<div class="cara frente">'+
+          '<div class="cat">'+p.cat+'</div>'+
+          '<div class="w">'+p.w+'</div>'+
+          '<div class="hint">Toca para ver el significado, o arrastra</div>'+
+        '</div>'+
+        '<div class="cara reverso">'+
+          '<div class="p">'+p.p+'</div>'+
+          '<div class="m">'+p.m+'</div>'+
+        '</div>'+
+      '</div>'+
+      '<div class="sello izq">Me costó</div>'+
+      '<div class="sello der">Ya la sé</div>';
+    return el;
+  }
+
+  // acomoda visualmente las tarjetas ya creadas en la pila (escala/offset
+  // según su posición), sin recrear DOM — para que la animación de salida
+  // de la tarjeta de arriba no se corte al re-renderizar
+  function acomodarPila(offsetInicial){
+    offsetInicial = offsetInicial || 0;
+    const els = [...pila.querySelectorAll('.tarjeta:not(.saliendo)')];
+    els.forEach((el, i)=>{
+      const offset = i + offsetInicial; // 0 = arriba (visualmente, ignorando la que sale)
+      el.style.zIndex = String(100 - offset);
+      if(!el.classList.contains('arrastrando')){
+        el.style.transform = 'translateY('+(offset*10)+'px) scale('+(1 - offset*0.045)+')';
+      }
+      el.style.opacity = offset < MAX_PILA ? String(1 - offset*0.28) : '0';
+      el.style.pointerEvents = (offset === 0 && offsetInicial === 0) ? 'auto' : 'none';
+    });
+  }
+
+  // reconstruye la pila SIN tocar una tarjeta marcada .saliendo (la que
+  // está en pleno vuelo) — así la animación nunca se corta a medio camino
+  function renderPila(){
+    [...pila.querySelectorAll('.tarjeta:not(.saliendo)')].forEach(el=>el.remove());
+    const saliente = pila.querySelector('.tarjeta.saliendo');
+    const yaHayVuelo = !!saliente;
+    for(let i=0; i<MAX_PILA && (idx+i)<cola.length; i++){
+      // si hay una tarjeta volando, la posición 0 la sigue ocupando ella
+      // visualmente, así que las nuevas entran a partir de después
+      const el = crearTarjetaEl(cola[idx+i]);
+      pila.appendChild(el);
+    }
+    acomodarPila(yaHayVuelo ? 1 : 0);
+    activarDragEnTop();
   }
 
   function mostrarTarjeta(){
@@ -285,14 +418,86 @@ h1 .hl{color:var(--sesame)}
       return;
     }
     volteada = false;
-    tarjetaEl.classList.remove('volteada');
     responder.classList.remove('on');
-    const p = cola[idx];
-    fCat.textContent = p.cat;
-    fW.textContent = p.w;
-    rP.textContent = p.p;
-    rM.textContent = p.m;
+    renderPila();
     barraFill.style.width = (cola.length ? (idx/cola.length*100) : 0)+'%';
+  }
+
+  // saca visualmente la tarjeta de arriba volando hacia el lado elegido,
+  // y en paralelo ya arma la pila siguiente detrás de ella
+  function volarYAvanzar(sabia){
+    const top = pila.querySelector('.tarjeta:not(.saliendo)');
+    if(!top) return;
+    const dx = sabia ? 560 : -560;
+    const rot = sabia ? 24 : -24;
+    top.classList.add('saliendo');
+    top.style.zIndex = '200';
+    top.style.transition = 'transform .4s var(--ease), opacity .4s var(--ease)';
+    top.style.transform = 'translate('+dx+'px,-20px) rotate('+rot+'deg)';
+    top.style.opacity = '0';
+    setTimeout(()=>top.remove(), 420);
+    responderTarjeta(sabia);
+  }
+
+  function activarDragEnTop(){
+    const top = pila.querySelector('.tarjeta:not(.saliendo)');
+    if(!top || top.dataset.dragListo === '1') return;
+    top.dataset.dragListo = '1';
+
+    top.addEventListener('click', (e)=>{
+      if(top.dataset.arrastrado === '1'){ top.dataset.arrastrado = '0'; return; }
+      volteada = !volteada;
+      top.classList.toggle('volteada', volteada);
+      responder.classList.toggle('on', volteada);
+    });
+
+    let startX = 0, startY = 0, dx = 0, activo = false;
+    const selloIzq = top.querySelector('.sello.izq');
+    const selloDer = top.querySelector('.sello.der');
+
+    function onDown(e){
+      activo = true;
+      top.dataset.arrastrado = '0';
+      const pt = e.touches ? e.touches[0] : e;
+      startX = pt.clientX; startY = pt.clientY; dx = 0;
+      top.classList.add('arrastrando');
+    }
+    function onMove(e){
+      if(!activo) return;
+      const pt = e.touches ? e.touches[0] : e;
+      dx = pt.clientX - startX;
+      const dy = pt.clientY - startY;
+      if(Math.abs(dx) > 8) top.dataset.arrastrado = '1';
+      const rot = dx / 22;
+      top.style.transform = 'translate('+dx+'px,'+(dy*0.15)+'px) rotate('+rot+'deg)';
+      const t = Math.min(1, Math.abs(dx) / 110);
+      selloIzq.style.opacity = dx < 0 ? String(t) : '0';
+      selloDer.style.opacity = dx > 0 ? String(t) : '0';
+    }
+    function onUp(){
+      if(!activo) return;
+      activo = false;
+      top.classList.remove('arrastrando');
+      const UMBRAL = 100;
+      if(Math.abs(dx) > UMBRAL){
+        volarYAvanzar(dx > 0);
+      }else{
+        top.style.transform = '';
+        selloIzq.style.opacity = '0';
+        selloDer.style.opacity = '0';
+      }
+    }
+
+    // pointermove/up van en el propio top con setPointerCapture, así el
+    // navegador redirige el arrastre a esta tarjeta aunque el dedo/mouse
+    // se salga de ella — y el listener muere con la tarjeta, sin acumularse
+    top.addEventListener('pointerdown', (e)=>{
+      top.setPointerCapture(e.pointerId);
+      onDown(e);
+    });
+    top.addEventListener('pointermove', onMove);
+    top.addEventListener('pointerup', onUp);
+    top.addEventListener('pointercancel', onUp);
   }
 
   function terminarSesion(){
@@ -300,6 +505,42 @@ h1 .hl{color:var(--sesame)}
     responder.classList.remove('on');
     document.querySelector('.barra').style.display = 'none';
     finN.textContent = repasadas;
+    finTexto.textContent = modoDificiles
+      ? 'palabras de tu montón de "me cuestan".'
+      : 'palabras repasadas.';
+    finAciertos.textContent = aciertos;
+    finCostaron.textContent = costaron;
+
+    // mensaje según qué tanto costó la sesión, no solo cuántas viste
+    const ratio = repasadas ? aciertos / repasadas : 1;
+    if(modoDificiles){
+      finIco.textContent = ratio >= 0.6 ? '💪' : '🔁';
+      finMsg.textContent = ratio >= 0.6
+        ? 'Les estás ganando terreno a las difíciles.'
+        : 'Están tercas, pero cada vuelta cuenta. Ya casi.';
+    }else if(repasadas === 0){
+      finIco.textContent = '👀';
+      finMsg.textContent = '';
+    }else if(ratio === 1){
+      finIco.textContent = '🔥';
+      finMsg.textContent = 'Todas bien. Se te están quedando de verdad.';
+    }else if(ratio >= 0.7){
+      finIco.textContent = '🎉';
+      finMsg.textContent = 'Muy bien — las que te costaron van a volver pronto.';
+    }else{
+      finIco.textContent = '🌱';
+      finMsg.textContent = 'Está bien que cuesten al principio. Por eso vuelven a aparecer.';
+    }
+
+    // si fue una sesión larga, sugerimos parar — la constancia diaria
+    // rinde más que una maratón de tarjetas
+    if(vistasEnEstaVisita >= 40){
+      finDescanso.textContent = 'Ya van '+vistasEnEstaVisita+' tarjetas hoy — es un buen momento para parar. Mañana rinden más que veinte de golpe ahora.';
+      finDescanso.classList.add('on');
+    }else{
+      finDescanso.classList.remove('on');
+    }
+
     fin.classList.add('on');
     actualizarStat();
   }
@@ -309,10 +550,19 @@ h1 .hl{color:var(--sesame)}
     vacio.classList.remove('on');
     construirCola();
     repasadas = 0;
+    aciertos = 0;
+    costaron = 0;
     if(!cola.length){
       zona.style.display = 'none';
       document.querySelector('.barra').style.display = 'none';
       responder.classList.remove('on');
+      if(modoDificiles){
+        vacioH2.textContent = 'Por ahora no tienes ninguna difícil';
+        vacioP.textContent = 'En cuanto marques una tarjeta como "me costó", va a aparecer aquí para que la repases cuando quieras.';
+      }else{
+        vacioH2.textContent = 'Por hoy ya no hay nada pendiente';
+        vacioP.textContent = 'Terminaste todo lo que tocaba repasar. Regresa mañana y te vamos a tener listas las que ya están por vencerse.';
+      }
       vacio.classList.add('on');
       actualizarStat();
       return;
@@ -328,30 +578,47 @@ h1 .hl{color:var(--sesame)}
     const e = estadoDe(p);
     if(sabia){
       e.caja = Math.min(5, e.caja + 1);
+      // si la responde bien estando en modo difíciles, se la quitamos del montón
+      if(modoDificiles) e.dificil = false;
+      aciertos++;
     }else{
       e.caja = 1;
+      e.dificil = true;
+      costaron++;
     }
     e.vence = sumarDias(hoyISO(), INTERVALOS[e.caja - 1]);
     guardarEstado(estado);
     repasadas++;
+    vistasEnEstaVisita++;
     idx++;
     mostrarTarjeta();
+    actualizarStat();
   }
-
-  tarjetaEl.addEventListener('click', ()=>{
-    volteada = !volteada;
-    tarjetaEl.classList.toggle('volteada', volteada);
-    responder.classList.toggle('on', volteada);
-  });
 
   responder.addEventListener('click', (e)=>{
     const btn = e.target.closest('button');
     if(!btn) return;
     e.stopPropagation();
-    responderTarjeta(btn.dataset.r === '1');
+    volarYAvanzar(btn.dataset.r === '1');
   });
 
   btnOtraVez.addEventListener('click', empezarSesion);
+
+  btnDificiles.addEventListener('click', ()=>{
+    modoDificiles = !modoDificiles;
+    actualizarModoUI();
+    empezarSesion();
+  });
+
+  btnLimpiar.addEventListener('click', ()=>{
+    const ok = confirm('¿Borramos todo tu progreso? Vas a volver a empezar desde cero — esto no se puede deshacer.');
+    if(!ok) return;
+    estado = {};
+    guardarEstado(estado);
+    modoDificiles = false;
+    actualizarModoUI();
+    empezarSesion();
+  });
 
   fetch('vocab-100.json')
     .then(r=>{ if(!r.ok) throw new Error('HTTP '+r.status); return r.json(); })
