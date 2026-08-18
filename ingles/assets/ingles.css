@@ -12,8 +12,15 @@
   /* --- tema Constelación (sustituye el bloque de tema de deck.css) --- */
   --char:#0a0a0a; --char-soft:#161414;
   --paper:#0a0a0a; --paper-soft:#161414;      /* sin modo "paper" claro: la marca es siempre negra */
-  --sesame:#c8102e; --sesame-hi:#e13350;      /* "sesame" = nuestro acento rojo, para heredar la estructura del motor */
-  --ketchup:#c8102e; --lettuce:#7c9a3e;
+  /* "sesame"/"ketchup" = nuestro rojo, heredando la estructura del motor.
+     #c8102e (el rojo "de marca", más saturado) da solo 3.37:1 sobre negro —
+     falla el mínimo de 4.5:1 para texto. #ea4a63 pasa AA tanto sobre negro
+     puro (5.33:1) como sobre las tarjetas --char-soft (4.94:1) — un solo
+     rojo que funciona en cualquier fondo del deck, sin variantes por caso.
+     #c8102e queda disponible como --sesame-deep para superficies/bordes
+     donde el contraste de texto no aplica. */
+  --sesame:#ea4a63; --sesame-hi:#ea4a63; --sesame-deep:#c8102e;
+  --ketchup:#ea4a63; --lettuce:#7c9a3e;
   --on-char:#f2f0ec; --on-char-soft:#c9c5be; --on-char-mute:#8a8680;
   --on-paper:#f2f0ec; --on-paper-soft:#c9c5be; --on-paper-mute:#8a8680;
   --line-d:rgba(242,240,236,0.12); --line-d2:rgba(242,240,236,0.22);
@@ -58,9 +65,12 @@
 #hud,#hint{color:var(--on-char-mute)}
 .navbtn{border-color:var(--line-d2);color:var(--on-char-soft)}
 .navbtn:hover,.navbtn.on{border-color:var(--sesame);color:var(--sesame)}
-.ab .b{background:rgba(200,16,46,.12)}
-.bub.you{background:rgba(200,16,46,.16)}
-.chip{border-color:rgba(200,16,46,.4)}
+.ab .b{background:rgba(234,74,99,.1)}
+/* texto rojo sobre fondo rojo translúcido nunca pasa contraste — la etiqueta
+   destacada de .ab .b usa blanco, y el rojo se queda en el borde/acento */
+.ab .b .label{color:var(--on-char)}
+.bub.you{background:rgba(234,74,99,.16)}
+.chip{border-color:rgba(234,74,99,.4)}
 
 /* ============================================================
    Lockup de La Red de Luz (logo + wordmark, dorado, aislado)

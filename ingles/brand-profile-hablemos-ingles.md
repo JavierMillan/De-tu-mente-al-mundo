@@ -1,5 +1,5 @@
 # Brand Profile — ¡Hablemos Inglés! (Constelación · La Red de Luz)
-<!-- version: 1.0 · updated: 2026-08-18 · status: confirmed -->
+<!-- version: 1.1 · updated: 2026-08-18 · status: confirmed -->
 
 ## 0. Snapshot
 - One-line definition: sesiones de inglés en vivo, en comunidad, dentro de la constelación de programas de La Red de Luz.
@@ -18,12 +18,15 @@
 ## 2. Color system
 - Dominant / base (~60%): Negro `#0A0A0A` — fondo de toda pieza. *(inferido — confirmar si es #000 puro o un negro cálido tipo #0A0A0A; en las piezas se ve negro casi puro con textura sutil)*
 - Secondary (~30%): Blanco hueso `#F2F0EC` — titulares grandes, texto principal.
-- Accent (~10%, reservado): Rojo Constelación `#C8102E` — números/palabras clave, badges "EN VIVO"/"PRE-LIVE", líneas y nodos activos de la red. *(inferido — confirmar hex exacto con el diseñador de las piezas; visualmente es un rojo vivo, saturado, no vino ni coral)*
+- Accent (~10%, reservado): Rojo Constelación — dos variantes según uso, no un solo hex:
+  - **Texto** `#EA4A63` — la única que se usa donde el rojo lleva palabras encima (eyebrows, `.hl`, badges, tablas). `#C8102E` (el rojo "de marca" más saturado de las piezas de referencia) da solo 3.37:1 sobre negro — falla el mínimo AA de 4.5:1. `#EA4A63` pasa en cualquier fondo del deck: 5.33:1 sobre negro puro, 4.94:1 sobre tarjetas `--char-soft`.
+  - **Superficie** `#C8102E` (`--sesame-deep`) — bordes, fondos translúcidos, gradientes de barra de progreso, la línea/dot del badge en vivo. Ahí no aplica el requisito de contraste de texto, así que se conserva el rojo más saturado y fiel a las piezas.
+  *(inferido — confirmar hex exacto con el diseñador si difiere; la separación texto/superficie es una regla nueva de este ciclo, nacida de una auditoría de contraste real hecha en el navegador)*
 - Neutrals: gris línea `rgba(242,240,236,.14)`, gris mute `rgba(242,240,236,.5)`, línea activa roja `rgba(200,16,46,.4)`.
 - Dorado de marca madre `#D4A94A` — **solo** en el lockup del logo "LA RED DE LUZ", nunca como acento de la pieza de Inglés. Mantiene la trazabilidad a la marca madre sin diluir el rojo como acento único de esta sub-marca.
 - Harmony logic: acromático (negro/blanco) + un solo acento saturado (rojo) — "punch" editorial de control room, no una paleta cromática compleja. El dorado queda aislado al logo como firma de procedencia, no como color de composición.
 - Semantic: no aplica UI compleja aún; el rojo dobla como "en vivo/urgente" y el blanco como "informativo".
-- Contraste verificado: blanco hueso sobre negro ≈ 18:1 (AAA). Rojo sobre negro ≈ 5.3:1 (AA para texto grande/badges; **evitar rojo en texto de cuerpo pequeño** — usarlo en números grandes, badges y acentos de línea).
+- Contraste verificado (medido con composición de alfa real en navegador, no solo el hex nominal): blanco hueso sobre negro ≈ 18:1 (AAA). Rojo texto `#EA4A63` sobre negro ≈ 5.33:1 (AA), sobre tarjeta `--char-soft` ≈ 4.94:1 (AA). **Nunca texto rojo sobre fondo rojo translúcido** — ese combo falla siempre sin importar el tono exacto; en esos casos el texto va en blanco y el rojo se queda en el borde/acento (ver `.ab .b .label` en ingles.css como ejemplo resuelto).
 
 ## 3. Typography system
 - Heading face: sans condensada, bold/black, todo mayúsculas, tracking ajustado (look "broadcast"). *(inferido — confirmar familia exacta; candidatas de espíritu similar: **Archivo Black**, **Anton**, o **Bebas Neue** — todas gratuitas, con ese peso condensado-editorial. Se usará Archivo Black como placeholder hasta confirmar.)*
