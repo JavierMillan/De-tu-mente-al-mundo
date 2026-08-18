@@ -547,6 +547,19 @@ html:not(.gsap-ready) .rogue { opacity: 1; transform: none; }
 .subproject-soon { opacity: 0.72; }
 .subproject-soon .sp-icon { border-style: dashed; }
 
+/* acciones dentro de la tarjeta: unirse al grupo / ver las clases */
+.sp-actions { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 1.2rem; padding-top: 1.1rem; border-top: 1px dashed var(--char-line-2); }
+.sp-action {
+    display: inline-flex; align-items: center; gap: 0.4rem;
+    font-family: 'Martian Mono', monospace; font-size: 0.7rem; letter-spacing: 0.06em;
+    text-transform: uppercase; text-decoration: none; color: var(--on-char-soft);
+    border: 1px solid rgba(232,161,60,0.3); border-radius: 999px; padding: 0.5rem 0.9rem;
+    transition: border-color 0.25s var(--ease), color 0.25s var(--ease), background 0.25s var(--ease);
+}
+.sp-action:hover { border-color: var(--sesame); color: var(--sesame); background: rgba(232,161,60,0.08); }
+.sp-action.sp-action-primary { border-color: var(--sesame); color: var(--sesame); }
+.sp-action.sp-action-primary:hover { background: rgba(232,161,60,0.14); }
+
 /* =====================================================================
    UMBRAL — carbón + glow, CTA grupo WhatsApp
    ===================================================================== */
