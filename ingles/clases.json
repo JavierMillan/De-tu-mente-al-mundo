@@ -11,6 +11,20 @@
       "etiqueta": "Sesión",
       "clases": [
         {
+          "id": "sesion-1",
+          "parte": "Sesión 1",
+          "titulo": "Cinco palabras al día",
+          "resumen": "Presentaciones, gustos personales, la regla de la \"s\" en tercera persona y el sufijo -ing. Con Arturo.",
+          "deck": "sesion-1.html",
+          "grabaciones": [
+            {
+              "generacion": "1ª",
+              "fecha": "2026-08-15",
+              "url": ""
+            }
+          ]
+        },
+        {
           "id": "sesion-2",
           "parte": "Sesión 2",
           "titulo": "Construyendo nuestras primeras conversaciones",
