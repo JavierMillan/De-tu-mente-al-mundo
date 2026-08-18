@@ -63,9 +63,9 @@ h1 .hl{color:var(--sesame)}
 .zona{margin-top:2rem;perspective:1400px}
 .pila{position:relative;width:100%;height:16rem}
 .tarjeta{position:absolute;inset:0;cursor:grab;
-  transform-style:preserve-3d;
+  transform-style:preserve-3d;will-change:transform,opacity;
   transition:transform .45s var(--ease),opacity .45s var(--ease);
-  touch-action:pan-y}
+  touch-action:none}
 .tarjeta:active{cursor:grabbing}
 .tarjeta.volteada .cara-int{transform:rotateY(180deg)}
 .tarjeta.arrastrando{transition:none}
@@ -464,6 +464,7 @@ h1 .hl{color:var(--sesame)}
     }
     function onMove(e){
       if(!activo) return;
+      e.preventDefault();
       const pt = e.touches ? e.touches[0] : e;
       dx = pt.clientX - startX;
       const dy = pt.clientY - startY;
