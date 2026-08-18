@@ -177,6 +177,20 @@
           "titulo": "La IA es tu intern, no tu jefe",
           "resumen": "Regla del 75/25: la IA da la estructura, tú pones el alma.",
           "deck": "avanzado/automatizar-ia-3.html"
+        },
+        {
+          "id": "conexion-humana-3",
+          "parte": "Parte 4",
+          "titulo": "Lo que hace que alguien diga \"exacto, eso me pasa a mí\"",
+          "resumen": "Labeling, mirroring y feel-felt-found: cómo sostener la conversación una vez que la máscara ya abrió la puerta.",
+          "deck": "avanzado/conexion-humana-3.html"
+        },
+        {
+          "id": "tu-sistema-completo-4",
+          "parte": "Parte 5 · Taller",
+          "titulo": "Tu sistema completo, funcionando hoy",
+          "resumen": "Taller en vivo: arma tu faceta, tu guion de chat y tu prompt personal. Graduación de nivel.",
+          "deck": "avanzado/tu-sistema-completo-4.html"
         }
       ]
     },
