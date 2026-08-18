@@ -1,6 +1,13 @@
 {
   "recursos": [
     {
+      "id": "flashcards",
+      "icono": "◈",
+      "titulo": "Flashcards con repetición espaciada",
+      "descripcion": "Repasa el vocabulario justo antes de olvidarlo — el sistema con más evidencia para que se quede. Guarda tu progreso en este navegador.",
+      "url": "recursos/flashcards.html"
+    },
+    {
       "id": "100-palabras",
       "icono": "⌘",
       "titulo": "Las 100 palabras más usadas en inglés",
