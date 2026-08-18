@@ -75,7 +75,11 @@ h1 .hl{color:var(--sesame)}
 /* la pila: hasta 3 tarjetas visibles, las de atrás asomándose.
    La de arriba se arrastra (mouse/touch) o se voltea con click;
    al responder, "vuela" hacia el lado y la siguiente sube un puesto. */
-.zona{margin-top:2rem;perspective:1400px}
+/* margin-bottom reserva el espacio que ocupan las tarjetas de atrás
+   asomándose (offset*10px, hasta 2 posiciones detrás = 20px) — sin
+   esto, la 2ª/3ª tarjeta de la pila se salían del contenedor y
+   quedaban flotando encima de los botones de responder */
+.zona{margin-top:2rem;margin-bottom:1.6rem;perspective:1400px}
 .pila{position:relative;width:100%;height:16rem}
 .tarjeta{position:absolute;inset:0;cursor:grab;
   transform-style:preserve-3d;will-change:transform,opacity;
@@ -213,11 +217,16 @@ h1 .hl{color:var(--sesame)}
    query por tener la misma especificidad y venir después en cascada.
    ============================================================ */
 @media(min-width:900px){
-  .wrap{max-width:76rem}
+  .wrap{max-width:76rem;padding-top:1.4rem}
   .eyebrow,h1,.sub{max-width:44rem}
+  /* con la tarjeta+botones ya visibles sin scroll, el título no necesita
+     tanto peso — se compacta para dejarle presupuesto vertical al
+     repaso, que es lo que realmente hay que ver completo de un jalón */
+  h1{font-size:clamp(1.5rem,2.6vw,1.9rem)}
+  .sub{font-size:.95rem;margin-top:.5rem}
 
   .layout{display:grid;grid-template-columns:1fr 21rem;gap:clamp(2.4rem,4vw,4rem);
-    align-items:start;margin-top:2rem}
+    align-items:start;margin-top:1.4rem}
   /* en el HTML .panel va primero (así en mobile los controles quedan
      arriba, antes de la tarjeta); aquí se reubica a la columna derecha
      explícitamente, sin depender de su orden en el HTML */
@@ -234,13 +243,16 @@ h1 .hl{color:var(--sesame)}
   .panel .nota p{padding:0}
   .panel .nota[open]{border-top:1px dashed var(--line-d2);padding-top:1rem;margin-top:.2rem}
 
-  /* la tarjeta crece con la pantalla en vez de quedarse al tamaño de
-     mobile — la columna principal ahora tiene mucho más ancho real */
-  .pila{height:min(26rem,52vh)}
-  .cara{padding:2.6rem}
-  .cara .w{font-size:clamp(2.2rem,3.6vw,3.4rem)}
-  .cara .m{font-size:1.25rem;max-width:30ch}
-  .zona{margin-top:2.4rem}
+  /* la tarjeta crece en ANCHO con la pantalla, pero su alto se calcula
+     para que tarjeta + barra + racha + botones de responder quepan
+     completos en una pantalla típica de laptop (~800-900px de alto)
+     sin scroll — antes el límite era 52vh y no dejaba presupuesto para
+     el resto de los elementos, cortando los botones fuera de vista */
+  .pila{height:min(19rem,38vh)}
+  .cara{padding:2rem 2.4rem}
+  .cara .w{font-size:clamp(2rem,3.2vw,2.9rem)}
+  .cara .m{font-size:1.15rem;max-width:30ch}
+  .zona{margin-top:1.4rem}
 
   .responder{max-width:26rem;margin-inline:auto}
 
