@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/png" href="../assets/imgs/reddeluz.png">
+<title>Gustos, planes y pedir comida — ¡Hablemos Inglés!</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<!-- motor compartido de DTMM: estructura, chrome, navegación y responsive -->
+<link rel="stylesheet" href="../presentacion/assets/deck.css">
+<!-- piel propia "Constelación": pisa el tema de deck.css con negro+rojo -->
+<link rel="stylesheet" href="assets/ingles.css">
+
+<style>
+/* ============================================================
+   Átomos propios de esta clase
+   (si alguno se repite en 3+ decks de este programa, súbelo a
+   assets/ingles.css)
+   ============================================================ */
+
+/* regla gramatical: forma + ejemplo, hasta 3 filas */
+.regla{width:100%;max-width:44rem;background:var(--char-soft);
+  border:1px solid var(--line-d);border-left:3px solid var(--sesame);border-radius:14px;
+  padding:clamp(1.1rem,2.2vw,1.6rem)}
+.paper .regla{background:var(--paper-soft);border-color:var(--line-l);border-left-color:var(--ketchup)}
+.regla .fila{display:flex;align-items:baseline;gap:.8rem;flex-wrap:wrap}
+.regla .fila+.fila{margin-top:.8rem;padding-top:.8rem;border-top:1px dashed var(--line-d2)}
+.regla .forma{font-family:var(--font-display);font-size:clamp(.98rem,1.5vw,1.15rem)}
+.regla .forma .v{color:var(--sesame)}
+.paper .regla .forma .v{color:var(--ketchup)}
+.regla .ej{display:block;font-size:.85rem;color:var(--on-char-mute);margin-top:.3rem}
+.paper .regla .ej{color:var(--on-paper-mute)}
+
+/* chips de gustos con reacción */
+.gustos{display:flex;flex-wrap:wrap;gap:.7rem;width:100%;justify-content:center}
+.gusto{display:inline-flex;align-items:center;gap:.5rem;
+  padding:.7rem 1.1rem;background:var(--char-soft);border:1px solid var(--line-d);border-radius:999px}
+.paper .gusto{background:var(--paper-soft);border-color:var(--line-l)}
+.gusto .en{font-family:var(--font-display);font-size:.92rem}
+
+/* menú de práctica: sección + items con precio */
+.menu{width:100%;max-width:44rem;display:flex;flex-direction:column;gap:1.1rem}
+.menu .sec{border-radius:14px;border:1px solid var(--line-d);background:var(--char-soft);
+  padding:clamp(.9rem,1.8vw,1.2rem)}
+.paper .menu .sec{background:var(--paper-soft);border-color:var(--line-l)}
+.menu .sec-t{font-family:'Martian Mono',monospace;font-size:.62rem;letter-spacing:.18em;
+  text-transform:uppercase;color:var(--sesame);margin-bottom:.5rem}
+.paper .menu .sec-t{color:var(--ketchup)}
+.menu .item{display:flex;justify-content:space-between;gap:1rem;
+  padding:.35rem 0;font-family:var(--font-body);font-size:.92rem}
+.menu .item+.item{border-top:1px dashed var(--line-d)}
+.paper .menu .item+.item{border-color:var(--line-l)}
+.menu .item .precio{font-family:'Martian Mono',monospace;color:var(--on-char-mute);white-space:nowrap}
+.paper .menu .item .precio{color:var(--on-paper-mute)}
+
+/* diálogo A/B, reusa .dialogo de sesion-2 pero con más líneas */
+.dialogo{display:flex;flex-direction:column;gap:.55rem;width:100%;max-width:38rem}
+.dialogo .linea{display:grid;grid-template-columns:5.2rem 1fr;gap:.8rem;align-items:baseline}
+.dialogo .quien{font-family:'Martian Mono',monospace;font-size:.66rem;letter-spacing:.06em;
+  text-transform:uppercase;color:var(--sesame)}
+.paper .dialogo .quien{color:var(--ketchup)}
+.dialogo .txt{font-family:var(--font-body);font-size:clamp(.9rem,1.4vw,1.05rem);line-height:1.4}
+
+/* frases clave, dos columnas */
+.frases2{display:grid;grid-template-columns:1fr 1fr;gap:clamp(1rem,2.4vw,2rem);width:100%}
+@media(max-width:820px){.frases2{grid-template-columns:1fr}}
+.frases2 .col{border-radius:14px;padding:clamp(1rem,2vw,1.4rem);
+  background:var(--char-soft);border:1px solid var(--line-d)}
+.paper .frases2 .col{background:var(--paper-soft);border-color:var(--line-l)}
+.frases2 .lab{font-family:'Martian Mono',monospace;font-size:.62rem;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--sesame)}
+.paper .frases2 .lab{color:var(--ketchup)}
+.frases2 ul{list-style:none;margin-top:.6rem;display:flex;flex-direction:column;gap:.45rem}
+.frases2 li{font-family:var(--font-body);font-size:.88rem;line-height:1.4;color:var(--on-char-soft)}
+.paper .frases2 li{color:var(--on-paper-soft)}
+
+/* pasos numerados de actividad */
+.pasos{display:flex;flex-direction:column;gap:.9rem;width:100%;max-width:40rem}
+.paso{display:flex;gap:1rem;align-items:flex-start}
+.paso .n{flex:none;width:2.2rem;height:2.2rem;border-radius:999px;
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Martian Mono',monospace;font-size:.82rem;color:var(--sesame);
+  border:1px solid var(--sesame)}
+.paper .paso .n{color:var(--ketchup);border-color:var(--ketchup)}
+.paso .cuerpo .t{font-family:var(--font-display);font-weight:500;font-size:clamp(.98rem,1.5vw,1.15rem)}
+.paso .cuerpo .d{font-size:clamp(.88rem,1.2vw,1rem);color:var(--on-char-soft);margin-top:.25rem}
+.paper .paso .cuerpo .d{color:var(--on-paper-soft)}
+
+/* lista de preguntas para practicar en pareja */
+.preguntas{display:flex;flex-direction:column;gap:.7rem;width:100%;max-width:36rem}
+.preguntas .p{display:flex;align-items:baseline;gap:.7rem;
+  padding:.7rem 1rem;background:var(--char-soft);border:1px solid var(--line-d);border-radius:10px}
+.paper .preguntas .p{background:var(--paper-soft);border-color:var(--line-l)}
+.preguntas .n{font-family:'Martian Mono',monospace;color:var(--sesame);flex:none}
+.paper .preguntas .n{color:var(--ketchup)}
+.preguntas .t{font-family:var(--font-body);font-size:clamp(.95rem,1.4vw,1.1rem)}
+</style>
+</head>
+<body data-volver="index.html" data-volver-texto="‹ Clases">
+
+<div id="stage">
+  <div class="deck" id="deck">
+
+    <!-- 1 · PORTADA -->
+    <section class="slide center" data-notes="Tercera y última clase de Básico. Objetivo: gustos/preferencias y planes inmediatos, aplicados a pedir comida y planear el fin de semana. Es la clase más densa — el role-play de McDonald's es el corazón de la sesión, dale tiempo.">
+      <div class="constelacion-tag" style="margin-inline:auto">
+        <span class="k1">Constelación</span><span class="k2">Clases de Inglés</span>
+      </div>
+      <h1 class="mega" style="text-align:center">I'd like... <span class="hl">I'm going to...</span></h1>
+      <p class="lead wide mt-m" style="text-align:center;margin-inline:auto">Gustos, planes de fin de semana, y cómo pedir comida sin ponerte nervioso. Básico · Clase 3.</p>
+      <div class="live-badge" style="margin-inline:auto;margin-top:1.4rem">
+        <span class="dot"></span><span class="label">En vivo</span><span class="clock">Básico · 3/3</span>
+      </div>
+      <div class="brandmark">¡Hablemos Inglés! · una iniciativa de La Red de Luz</div>
+    </section>
+
+    <!-- 2 · OBJETIVO -->
+    <section class="slide paper" data-notes="Objetivo claro: gustos + planes, aplicados a una situación práctica real (pedir comida). Menciona que hoy van a hacer un role-play completo.">
+      <div class="eyebrow">Objetivo de hoy</div>
+      <h2 class="h1">Gustos, planes <span class="hl">y pedir comida.</span></h2>
+      <p class="lead wide mt-m">Hoy vas a aprender a decir lo que te gusta, contar tus planes de fin de semana, y a pedir comida en inglés — con un role-play completo en McDonald's.</p>
+    </section>
+
+    <!-- 3 · REGLA -->
+    <section class="slide" data-notes="La regla más densa de las tres clases, pero sigue siendo breve. No mezcles con el futuro 'will' — eso es para otra clase, dilo explícitamente si preguntan.">
+      <div class="glow br"></div>
+      <div class="eyebrow">Gramática de hoy</div>
+      <h2 class="h1">Tres formas <span class="hl">que vas a usar hoy.</span></h2>
+      <div class="regla mt-l">
+        <div class="fila">
+          <span class="forma">like / love / hate + <span class="v">-ing</span>
+            <span class="ej">"I like cooking." "I hate waiting."</span>
+          </span>
+        </div>
+        <div class="fila">
+          <span class="forma"><span class="v">I'd like</span> + sustantivo/verbo
+            <span class="ej">"I'd like a coffee." "I'd like to order, please."</span>
+          </span>
+        </div>
+        <div class="fila">
+          <span class="forma"><span class="v">I'm going to</span> + verbo
+            <span class="ej">"I'm going to visit my family this weekend."</span>
+          </span>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4 · WARM-UP -->
+    <section class="slide paper" data-notes="5 min. Repaso de rutina de la clase pasada + una oración nueva de gustos. Transición corta hacia el tema de hoy.">
+      <div class="eyebrow">Warm-up · 5 min</div>
+      <h2 class="h1">Repaso <span class="hl">+ algo nuevo.</span></h2>
+      <p class="lead wide mt-m">Di una oración sobre tu rutina (de la clase pasada) y una oración nueva con "I like" o "I don't like".</p>
+    </section>
+
+    <!-- 5 · GUSTOS Y PREFERENCIAS -->
+    <section class="slide" data-notes="10 min. Ronda de opiniones con seguimiento entre compañeros (Why? / Me too! / Really?). Que reaccionen de verdad, no solo repitan la frase.">
+      <div class="glow bl"></div>
+      <div class="eyebrow">Gustos y preferencias · 10 min</div>
+      <h2 class="h1">¿Qué te <span class="hl">gusta hacer?</span></h2>
+      <div class="gustos mt-l">
+        <div class="gusto"><span class="en">Cooking</span></div>
+        <div class="gusto"><span class="en">Dancing</span></div>
+        <div class="gusto"><span class="en">Traveling</span></div>
+        <div class="gusto"><span class="en">Reading</span></div>
+        <div class="gusto"><span class="en">Working out</span></div>
+      </div>
+      <div class="chip"><span class="dot"></span> Reacciona: "I love traveling." "Why?" "Me too!" "Really? I hate that."</div>
+    </section>
+
+    <!-- 6 · ROLE-PLAY: MENÚ -->
+    <section class="slide paper" data-notes="El role-play central, 20 min. El profesor hace de cajero, el alumno de cliente. Situación real de baja presión. Muestra el menú completo antes de empezar — que lo tengan a la vista todo el tiempo.">
+      <div class="eyebrow">Role-play · 20 min · profesor = cajero, alumno = cliente</div>
+      <h2 class="h1">Pide en <span class="hl">McDonald's.</span></h2>
+      <div class="menu mt-l">
+        <div class="sec">
+          <div class="sec-t">Burgers</div>
+          <div class="item"><span>Hamburger</span><span class="precio">$35</span></div>
+          <div class="item"><span>Cheeseburger</span><span class="precio">$40</span></div>
+          <div class="item"><span>Big Mac</span><span class="precio">$75</span></div>
+          <div class="item"><span>Quarter Pounder</span><span class="precio">$85</span></div>
+          <div class="item"><span>McChicken</span><span class="precio">$65</span></div>
+        </div>
+        <div class="sec">
+          <div class="sec-t">Sides & Drinks</div>
+          <div class="item"><span>Small / Medium / Large fries</span><span class="precio">$30 / $40 / $50</span></div>
+          <div class="item"><span>Apple slices</span><span class="precio">$25</span></div>
+          <div class="item"><span>Small / Medium / Large soda</span><span class="precio">$25 / $30 / $35</span></div>
+          <div class="item"><span>Coffee</span><span class="precio">$30</span></div>
+          <div class="item"><span>Bottled water</span><span class="precio">$25</span></div>
+        </div>
+        <div class="sec">
+          <div class="sec-t">Combos (burger + fries + drink)</div>
+          <div class="item"><span>Big Mac Combo</span><span class="precio">$110</span></div>
+          <div class="item"><span>Quarter Pounder Combo</span><span class="precio">$120</span></div>
+          <div class="item"><span>McChicken Combo</span><span class="precio">$95</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 7 · FRASES CLAVE -->
+    <section class="slide" data-notes="Antes de empezar el role-play, muestra las frases clave de ambos lados. Que el alumno tenga esto a la vista mientras practica.">
+      <div class="glow br"></div>
+      <div class="eyebrow">Antes de empezar</div>
+      <h2 class="h1">Tus frases <span class="hl">clave.</span></h2>
+      <div class="frases2 mt-l">
+        <div class="col">
+          <div class="lab">Tú (cliente)</div>
+          <ul>
+            <li>Can I get a... / I'd like a...</li>
+            <li>Can I have that as a combo?</li>
+            <li>Medium, please.</li>
+            <li>For here or to go?</li>
+            <li>That's all, thank you.</li>
+          </ul>
+        </div>
+        <div class="col">
+          <div class="lab">Quien atiende (profesor)</div>
+          <ul>
+            <li>What can I get for you?</li>
+            <li>Would you like a combo with that?</li>
+            <li>What size would you like?</li>
+            <li>For here or to go?</li>
+            <li>That'll be $[cantidad]. Cash or card?</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- 8 · DIÁLOGO MODELO -->
+    <section class="slide paper" data-notes="Primero practica este diálogo completo con el alumno leyendo su parte. Después repite el role-play 2-3 veces cambiando el pedido cada vez, hasta que pueda pedir sin leer el guion.">
+      <div class="eyebrow">Diálogo modelo</div>
+      <h2 class="h1">Así se <span class="hl">arma un pedido.</span></h2>
+      <div class="dialogo mt-l">
+        <div class="linea"><span class="quien">Cajero</span><span class="txt">Hi, welcome to McDonald's! What can I get for you?</span></div>
+        <div class="linea"><span class="quien">Cliente</span><span class="txt">Hi, I'd like a Big Mac, please.</span></div>
+        <div class="linea"><span class="quien">Cajero</span><span class="txt">Would you like to make that a combo?</span></div>
+        <div class="linea"><span class="quien">Cliente</span><span class="txt">Yes, please.</span></div>
+        <div class="linea"><span class="quien">Cajero</span><span class="txt">What size fries and drink would you like?</span></div>
+        <div class="linea"><span class="quien">Cliente</span><span class="txt">Medium, please.</span></div>
+        <div class="linea"><span class="quien">Cajero</span><span class="txt">For here or to go?</span></div>
+        <div class="linea"><span class="quien">Cliente</span><span class="txt">To go, please.</span></div>
+        <div class="linea"><span class="quien">Cajero</span><span class="txt">That'll be $110. Cash or card?</span></div>
+        <div class="linea"><span class="quien">Cliente</span><span class="txt">Card, please.</span></div>
+      </div>
+      <div class="chip"><span class="dot"></span> Repite 2-3 veces cambiando el pedido, hasta pedir sin leer</div>
+    </section>
+
+    <!-- 9 · PLANES DE FIN DE SEMANA -->
+    <section class="slide" data-notes="15 min en parejas. Reportar el plan del compañero en tercera persona — mismo truco que en la clase 2, refuerza sin explicar de nuevo.">
+      <div class="glow bl"></div>
+      <div class="eyebrow">Planes de fin de semana · 15 min · en parejas</div>
+      <h2 class="h1">¿Qué vas <span class="hl">a hacer?</span></h2>
+      <div class="preguntas mt-l">
+        <div class="p"><span class="n">01</span><span class="t">What are you going to do this weekend?</span></div>
+        <div class="p"><span class="n">02</span><span class="t">Are you going to visit anyone?</span></div>
+        <div class="p"><span class="n">03</span><span class="t">Are you going to work?</span></div>
+      </div>
+      <div class="chip"><span class="dot"></span> Después, cuéntale al grupo: "He's going to play soccer on Saturday."</div>
+    </section>
+
+    <!-- 10 · CIERRE INTEGRADOR -->
+    <section class="slide paper" data-notes="10 min. Combina las tres clases de Básico en una sola mini-conversación: presentación + rutina + gustos + planes. Puede ser en parejas o frente al grupo según el tamaño.">
+      <div class="eyebrow">Cierre integrador · 10 min</div>
+      <h2 class="h1">Todo <span class="hl">junto.</span></h2>
+      <p class="lead wide mt-m">Mini-conversación libre: preséntate, cuenta algo de tu rutina, di qué te gusta y qué vas a hacer el fin de semana. Todo lo que aprendiste en las 3 clases, en una sola vez.</p>
+    </section>
+
+    <!-- 11 · CIERRE FINAL + TAREA -->
+    <section class="slide center" data-notes="Cierre del nivel Básico completo. La tarea combina like/love/hate + going to — último refuerzo antes de terminar el nivel.">
+      <div class="glow tr"></div>
+      <div class="eyebrow" style="justify-content:center">¡Terminaste el nivel Básico!</div>
+      <p class="quote" style="margin-inline:auto;text-align:center;max-width:28ch">Ya puedes presentarte, contar tu rutina, <span class="hl">y pedir lo que quieras.</span></p>
+      <p class="lead mt-m" style="text-align:center">Tarea: graba un audio de 1 minuto — "My weekend plan" — usando like/love/hate y going to.</p>
+      <p class="frase-red mt-l">La luz se construye <span class="hl">en red</span></p>
+      <div class="brandmark">¡Hablemos Inglés! · una iniciativa de La Red de Luz</div>
+    </section>
+
+  </div>
+</div>
+
+<script src="../presentacion/assets/deck.js" defer></script>
+</body>
+</html>
