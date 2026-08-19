@@ -1,6 +1,13 @@
 {
   "recursos": [
     {
+      "id": "grammar-grill",
+      "icono": "▦",
+      "titulo": "Grammar Grill · kiosco de pedidos",
+      "descripcion": "Practica en inglés como cliente o prepara exactamente la orden del ticket en este restaurante de autoservicio.",
+      "url": "recursos/grammar-grill.html"
+    },
+    {
       "id": "flashcards",
       "icono": "◈",
       "titulo": "Flashcards con repetición espaciada",
