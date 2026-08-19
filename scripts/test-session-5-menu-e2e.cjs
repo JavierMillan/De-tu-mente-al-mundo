@@ -82,13 +82,15 @@ async function desktopMeasurements(page) {
     for (const viewport of [{ width: 1440, height: 900 }, { width: 1280, height: 720 }]) {
       const { context, page, pageErrors } = await openMenuPage(browser, url, viewport);
       const metrics = await desktopMeasurements(page);
-      const floorTop = viewport.height * 0.82;
+      const floorTop = viewport.height * 0.89;
       assert.equal(metrics.panels, 3);
       assert.equal(metrics.rails, 0);
       assert.ok(metrics.rig.width >= viewport.width * 0.93, 'Menu board should use at least 93% of viewport width');
       assert.ok(metrics.counter.bottom <= floorTop + 1, 'Counter must end before the navigation-safe floor');
       assert.ok(metrics.hud.top >= floorTop, 'HUD must stay inside the navigation-safe floor');
       assert.ok(metrics.hint.top >= floorTop, 'Navigation hint must stay inside the navigation-safe floor');
+      assert.ok(metrics.hud.top - metrics.counter.bottom <= viewport.height * 0.07,
+        'The gap between the board and the navigation must stay compact');
       assert.match(metrics.hudColor, /34, 26, 18/);
       assert.ok(metrics.overflow <= 0, 'Desktop layout must not overflow horizontally');
       assert.deepEqual(pageErrors, []);

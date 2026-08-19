@@ -14,7 +14,7 @@ const source = slide[1];
 assert.match(source, /class="slide[^"\n]*menu-slide/);
 assert.match(source, /class="restaurant-scene"/);
 assert.doesNotMatch(source, /ceiling-rail/);
-assert.match(html, /linear-gradient\(180deg,#292826 0 82%,#aaa49a 82% 100%\)/);
+assert.match(html, /linear-gradient\(180deg,#292826 0 89%,#aaa49a 89% 100%\)/);
 assert.match(html, /body:has\(\.menu-slide\.active\) #hud/);
 assert.match(html, /body:has\(\.menu-slide\.active\) #hint/);
 assert.match(source, /class="menu-rig"/);
