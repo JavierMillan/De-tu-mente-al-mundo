@@ -301,6 +301,14 @@ body.notes-on #notes{transform:translateY(0)}
   text-transform:uppercase;color:var(--sesame);margin-bottom:.6rem;
   display:flex;align-items:center;gap:.7rem}
 #notes .nlabel::before{content:"";width:26px;height:1px;background:currentColor;opacity:.6}
+/* siempre visible dentro del propio panel — en mobile el panel puede
+   tapar el botón "N" del HUD que lo abrió, así que cerrar no puede
+   depender de volver a encontrar ese botón por debajo */
+.notes-close{margin-left:auto;background:transparent;border:1px solid var(--line-d2);
+  color:var(--on-char-soft);border-radius:8px;padding:.35rem .7rem;cursor:pointer;
+  font-family:var(--font-mono);font-size:.62rem;letter-spacing:.1em;text-transform:none;
+  transition:.25s var(--ease);touch-action:manipulation}
+.notes-close:hover{border-color:var(--sesame);color:var(--sesame)}
 #notes .ntext{color:var(--on-char-soft);font-size:clamp(.92rem,1.25vw,1.08rem);
   line-height:1.55;max-width:72ch}
 #notes .ntext em{color:var(--on-char);font-style:normal;font-weight:500}

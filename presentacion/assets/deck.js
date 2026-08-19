@@ -43,8 +43,14 @@
   }
 
   if(hayNotas && !document.getElementById('notes')){
+    // botón de cierre propio: en mobile el panel puede tapar el HUD de
+    // abajo (mismo botón "N" que lo abrió), dejando sin forma obvia de
+    // cerrarlo — Escape tampoco existe en touch. Este botón siempre
+    // vive dentro del panel mismo, nunca queda tapado por él.
     crear('<div id="notes" aria-live="polite">'+
-      '<div class="nlabel">Notas del ponente</div>'+
+      '<div class="nlabel">Notas del ponente'+
+        '<button class="notes-close" id="notesClose" type="button" aria-label="Cerrar notas">✕ Cerrar</button>'+
+      '</div>'+
       '<div class="ntext" id="ntext"></div></div>');
   }
 
@@ -62,11 +68,12 @@
     '</div>');
   }
 
-  const cur      = document.getElementById('cur');
-  const bar      = document.getElementById('bar');
-  const totEl    = document.getElementById('tot');
-  const ntext    = document.getElementById('ntext');
-  const notesBtn = document.getElementById('notesBtn');
+  const cur        = document.getElementById('cur');
+  const bar        = document.getElementById('bar');
+  const totEl      = document.getElementById('tot');
+  const ntext      = document.getElementById('ntext');
+  const notesBtn   = document.getElementById('notesBtn');
+  const notesClose = document.getElementById('notesClose');
   if(totEl) totEl.textContent = String(tot).padStart(2,'0');
 
   /* ---- navegación ---- */
@@ -106,6 +113,7 @@
   if(next) next.onclick = ()=>go(1);
   if(prev) prev.onclick = ()=>go(-1);
   if(notesBtn) notesBtn.onclick = ()=>toggleNotas();
+  if(notesClose) notesClose.onclick = ()=>toggleNotas(false);
 
   document.addEventListener('keydown', e=>{
     if(e.metaKey||e.ctrlKey||e.altKey) return;
