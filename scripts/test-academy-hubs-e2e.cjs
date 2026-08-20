@@ -36,6 +36,8 @@ async function inspect(browser,base,route,name,viewport){
     return {
       overflow:document.documentElement.scrollWidth-document.documentElement.clientWidth,
       header:rect('.academy-shell'),hero:rect('.hub-hero'),firstRow:rect('.row-sec'),
+      academyLinks:[...document.querySelectorAll('.academy-brand,.all-constellations,.dfoot')]
+        .map(link=>link.href),
       burger:getComputedStyle(document.querySelector('#burger')).display,
       nav:getComputedStyle(document.querySelector('#navMain')).display,
       blurred:cards.every(card=>getComputedStyle(card).backdropFilter.includes('blur')),
@@ -45,6 +47,9 @@ async function inspect(browser,base,route,name,viewport){
   assert.ok(metrics.overflow<=0, `${name} must not overflow at ${viewport.width}`);
   assert.ok(metrics.firstRow.top<viewport.height, `${name} first row must begin in first viewport`);
   assert.ok(metrics.blurred, `${name} cards must blur their backdrop`);
+  assert.ok(metrics.academyLinks.length>=3, `${name} must expose academy navigation links`);
+  assert.ok(metrics.academyLinks.every(href=>href==='https://academia.lareddeluz.com/'),
+    `${name} academy navigation must return to the academy domain`);
   assert.deepEqual(errors,[]);
   if(viewport.width===1440){
     assert.equal(metrics.burger,'none',`${name} desktop navigation should fit at 1440`);
