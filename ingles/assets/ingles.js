@@ -67,7 +67,6 @@
       '<h4>'+esc(clase.titulo)+'</h4>'+
       '<p>'+esc(clase.resumen)+'</p>'+
       cta+
-      '<div class="prog"><i style="--p:'+(clase.progreso||0)+'%"></i></div>'+
     '</'+tag+'>';
   }
 
@@ -166,8 +165,19 @@
 
     function medir(){
       document.body.classList.remove('nav-overflow');
-      const overflow = header.scrollWidth > header.clientWidth + 1 ||
-        nav.scrollWidth > nav.clientWidth + 1;
+      const headerStyle = getComputedStyle(header);
+      const navStyle = getComputedStyle(nav);
+      const fixed = [...header.children]
+        .filter(element=>element!==nav && element.id!=='burger')
+        .reduce((width,element)=>width+element.getBoundingClientRect().width,0);
+      const navItems = [...nav.children];
+      const navWidth = navItems.reduce((width,element)=>width+element.getBoundingClientRect().width,0) +
+        Math.max(0,navItems.length-1)*parseFloat(navStyle.gap||0);
+      const outerItems = navItems.length ? 5 : 4;
+      const required = fixed + navWidth +
+        (outerItems-1)*parseFloat(headerStyle.gap||0) +
+        parseFloat(headerStyle.paddingLeft||0) + parseFloat(headerStyle.paddingRight||0);
+      const overflow = required > header.clientWidth + 1;
       document.body.classList.toggle('nav-overflow', overflow || innerWidth <= 760);
     }
 

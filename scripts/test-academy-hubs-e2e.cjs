@@ -46,6 +46,10 @@ async function inspect(browser,base,route,name,viewport){
   assert.ok(metrics.firstRow.top<viewport.height, `${name} first row must begin in first viewport`);
   assert.ok(metrics.blurred, `${name} cards must blur their backdrop`);
   assert.deepEqual(errors,[]);
+  if(viewport.width===1440){
+    assert.equal(metrics.burger,'none',`${name} desktop navigation should fit at 1440`);
+    assert.notEqual(metrics.nav,'none',`${name} desktop navigation must remain visible at 1440`);
+  }
   if(viewport.width===760){
     assert.notEqual(metrics.burger,'none',`${name} burger must appear when nav does not fit`);
     assert.equal(metrics.nav,'none',`${name} desktop nav must collapse`);
