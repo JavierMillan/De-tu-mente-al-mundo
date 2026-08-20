@@ -508,7 +508,7 @@ a.item:focus-visible{outline:2px solid var(--sesame);outline-offset:3px}
   .deck-card{flex-basis:min(86vw,340px);min-height:230px}
   .all-constellations{display:none}
 }
-@media(max-width:420px){
+@media(max-width:480px){
   .academy-brand span{max-width:8.5rem;white-space:normal;line-height:1.25}
   .shell-divider,.constellation-context{display:none}
 }

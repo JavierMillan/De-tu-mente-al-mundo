@@ -68,10 +68,12 @@ async function inspect(browser,base,route,name,viewport){
 }
 
 async function inspectResources(browser,base){
-  const context = await browser.newContext({viewport:{width:760,height:900}});
+  const context = await browser.newContext({viewport:{width:430,height:844}});
   const page = await context.newPage();
   await page.goto(base+'/ingles/recursos.html',{waitUntil:'networkidle'});
   await page.locator('#items .item').first().waitFor();
+  assert.equal(await page.evaluate(()=>document.querySelector('#academyHeader').scrollWidth),430,
+    'english resources shell must fit the mobile viewport');
   assert.equal(await page.locator('#academyHeader').count(),1,
     'english resources must use the academy shell');
   assert.notEqual(await page.locator('#burger').evaluate(el=>getComputedStyle(el).display),'none',
@@ -95,7 +97,7 @@ async function inspectResources(browser,base){
   try{
     for(const [route,name] of [['/presentacion/','dtmm'],['/ingles/','ingles']]){
       for(const viewport of [{width:1440,height:900},{width:1024,height:768},
-        {width:760,height:900},{width:390,height:844}]){
+        {width:760,height:900},{width:430,height:844},{width:390,height:844}]){
         await inspect(browser,base,route,name,viewport);
       }
     }
