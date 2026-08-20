@@ -79,17 +79,31 @@
     '</section>';
   }
 
+  function figuraLyra(){
+    return '<svg viewBox="0 0 180 135" aria-hidden="true">'+
+      '<path d="M38 18L78 43L110 75L92 116L58 96L78 43"/>'+
+      '<circle class="core" cx="38" cy="18" r="4.3"/>'+
+      '<circle cx="78" cy="43" r="2"/><circle cx="110" cy="75" r="2"/>'+
+      '<circle cx="92" cy="116" r="1.8"/><circle cx="58" cy="96" r="1.8"/>'+
+    '</svg>';
+  }
+
   function destacado(d){
     if(!d) return '';
-    return '<section class="hero" id="top">'+
-      '<div class="halo"></div>'+
-      '<div class="hero-in">'+
-        '<div class="tagline"><span class="badge">'+esc(d.etiqueta)+'</span>'+
-        '<span>'+esc(d.estado)+'</span></div>'+
-        '<h1>'+d.titulo+'</h1>'+
-        '<p>'+esc(d.resumen)+'</p>'+
-        '<a class="cta" href="'+esc(d.deck)+'">Abrir presentación <span class="arw">→</span></a>'+
+    return '<section class="hub-hero" id="top">'+
+      '<div class="constellation-motif motif-dtmm" aria-hidden="true"></div>'+
+      '<div class="hub-identity">'+
+        '<div class="constellation-avatar">'+figuraLyra()+'</div>'+
+        '<span class="constellation-name">Lyra · La creación</span>'+
+        '<h1>De tu Mente<br>al Mundo</h1>'+
+        '<p>Ideas, contenido e inteligencia artificial convertidos en algo que puedas construir.</p>'+
       '</div>'+
+      '<a class="featured-class" href="'+esc(d.deck)+'">'+
+        '<span class="featured-label">Clase destacada · '+esc(d.estado)+'</span>'+
+        '<h2>'+d.titulo.replace(/<br\s*\/?>/gi,' ').replace(/<[^>]+>/g,'')+'</h2>'+
+        '<p>'+esc(d.resumen)+'</p>'+
+        '<span class="featured-go">Abrir presentación →</span>'+
+      '</a>'+
     '</section>';
   }
 
