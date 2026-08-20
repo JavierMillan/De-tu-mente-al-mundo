@@ -1,4 +1,12 @@
 :root{
+  --academy-void:#0d0b16;
+  --academy-surface:#161423;
+  --academy-gold:#e4cd85;
+  --academy-line:rgba(228,205,133,.18);
+  --academy-warm:#f9f4e3;
+  --hub-panel-rgb:36,29,22;
+  --accent-text:var(--sesame);
+  --accent-surface:var(--sesame);
   --char:#19140f; --char-soft:#241d16;
   --paper:#f3ead7; --paper-soft:#ece0c6;
   --sesame:#e8a13c; --sesame-hi:#f6c06a; --ketchup:#c8442e; --lettuce:#7c9a3e;
@@ -7,6 +15,36 @@
   --glow:rgba(232,161,60,0.5);
   --ease:cubic-bezier(0.22,1,0.36,1);
 }
+
+/* ===== Academia mother shell ===== */
+.academy-shell{
+  position:sticky;top:0;z-index:120;min-height:64px;
+  display:flex;align-items:center;gap:clamp(.65rem,1.4vw,1.2rem);
+  padding:.65rem clamp(1rem,3vw,2.6rem);
+  background:rgba(13,11,22,.92);backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--academy-line);
+}
+.academy-brand{display:inline-flex;align-items:center;gap:.75rem;flex:0 0 auto;
+  color:var(--academy-gold);text-decoration:none;font-family:'Martian Mono',monospace;
+  font-size:.66rem;letter-spacing:.16em;text-transform:uppercase;white-space:nowrap}
+.academy-brand img{width:34px;height:34px;object-fit:contain}
+.shell-divider{color:rgba(249,244,227,.3)}
+.constellation-context{color:var(--accent-text);font-family:'Martian Mono',monospace;
+  font-size:.64rem;letter-spacing:.15em;text-transform:uppercase;white-space:nowrap}
+.academy-shell .nav-desktop{margin-left:auto;display:flex;align-items:center;align-self:stretch;
+  gap:clamp(.25rem,.8vw,.75rem);min-width:0}
+.academy-shell .navgroup,.academy-shell .navgroup>.trigger,
+.academy-shell .nav-desktop>a.solo{align-self:center}
+.academy-shell .navgroup>.trigger,.academy-shell .nav-desktop>a.solo{
+  min-height:44px;display:inline-flex;align-items:center}
+.all-constellations{min-height:44px;display:inline-flex;align-items:center;flex:0 0 auto;
+  border:1px solid color-mix(in srgb,var(--accent-surface) 34%,var(--academy-line));
+  border-radius:8px;padding:0 .8rem;color:var(--accent-text);text-decoration:none;
+  font:500 .6rem 'Martian Mono',monospace;letter-spacing:.12em;text-transform:uppercase}
+.academy-shell .burger{margin-left:auto}
+body.nav-overflow .nav-desktop,body.nav-overflow .all-constellations{display:none}
+body.nav-overflow .burger{display:flex}
+.hub-footer{padding-block:0 2.5rem}
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
 body{min-height:100%;background:var(--char);color:var(--on-char);
