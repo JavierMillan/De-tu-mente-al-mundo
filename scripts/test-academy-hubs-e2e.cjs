@@ -67,6 +67,26 @@ async function inspect(browser,base,route,name,viewport){
   await context.close();
 }
 
+async function inspectResources(browser,base){
+  const context = await browser.newContext({viewport:{width:760,height:900}});
+  const page = await context.newPage();
+  await page.goto(base+'/ingles/recursos.html',{waitUntil:'networkidle'});
+  await page.locator('#items .item').first().waitFor();
+  assert.equal(await page.locator('#academyHeader').count(),1,
+    'english resources must use the academy shell');
+  assert.notEqual(await page.locator('#burger').evaluate(el=>getComputedStyle(el).display),'none',
+    'english resources must expose the burger when navigation does not fit');
+  await page.locator('#burger').click();
+  await page.locator('#navDrawer[aria-hidden="false"]').waitFor();
+  assert.equal(await page.locator('#navDrawer a[href="index.html"]').count(),1,
+    'resources drawer must link back to classes');
+  assert.equal(await page.locator('#navDrawer a[href="https://academia.lareddeluz.com/"]').count(),1,
+    'resources drawer must link back to academy');
+  await page.keyboard.press('Escape');
+  assert.equal(await page.locator('#burger').getAttribute('aria-expanded'),'false');
+  await context.close();
+}
+
 (async()=>{
   fs.mkdirSync(results,{recursive:true});
   const httpServer=await server();
@@ -79,6 +99,7 @@ async function inspect(browser,base,route,name,viewport){
         await inspect(browser,base,route,name,viewport);
       }
     }
+    await inspectResources(browser,base);
     console.log('academy hubs browser layout: PASS');
   }finally{
     await browser.close();
