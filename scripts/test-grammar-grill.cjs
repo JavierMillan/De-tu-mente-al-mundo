@@ -6,7 +6,8 @@ const {
   calculateTotal,
   normalizeOrder,
   compareOrders,
-  createRandomOrder
+  createRandomOrder,
+  phraseOptionsFor
 } = model;
 
 assert.equal(CATALOG.length, 13);
@@ -81,6 +82,37 @@ for (let i = 0; i < 100; i += 1) {
     assert.ok(line.quantity === 1 || line.quantity === 2);
     assert.equal(item.requiresSize, line.size !== null);
   });
+}
+
+// phraseOptionsFor: la capa de idioma real del kiosco. El texto correcto
+// debe ser estable (mismo item/size → misma frase), y siempre debe
+// aparecer entre las opciones barajadas, junto a exactamente 3 distractores.
+const bigMacItem = CATALOG.find((item) => item.id === 'big-mac');
+const friesItem = CATALOG.find((item) => item.id === 'fries');
+const comboItem = CATALOG.find((item) => item.id === 'big-mac-combo');
+
+const simplePhrase = phraseOptionsFor(bigMacItem, null, () => 0.5);
+assert.equal(simplePhrase.correct, "I'd like a big mac, please.");
+assert.equal(simplePhrase.options.length, 4);
+assert.ok(simplePhrase.options.includes(simplePhrase.correct));
+
+const sizedPhrase = phraseOptionsFor(friesItem, 'medium', () => 0.5);
+assert.equal(sizedPhrase.correct, 'Can I get a medium fries?');
+assert.equal(sizedPhrase.options.length, 4);
+assert.ok(sizedPhrase.options.includes(sizedPhrase.correct));
+
+const comboPhrase = phraseOptionsFor(comboItem, 'small', () => 0.5);
+assert.equal(comboPhrase.correct, 'Can I have that as a combo?');
+assert.equal(comboPhrase.options.length, 4);
+
+// con random() constante en 0, el orden de barajado es determinista —
+// solo confirma que no truena y que sigue conteniendo la correcta
+for (let i = 0; i < 20; i += 1) {
+  const random = () => (i % 7) / 7;
+  const { correct, options } = phraseOptionsFor(bigMacItem, null, random);
+  assert.equal(options.length, 4);
+  assert.ok(options.includes(correct));
+  assert.equal(new Set(options).size, 4, 'options should have no duplicates');
 }
 
 console.log('grammar-grill model: PASS');

@@ -14,7 +14,9 @@
     target: null,
     ticketNumber: null,
     feedback: [],
-    success: false
+    success: false,
+    phraseCheck: null,   // { productId, size, options, correct, wrongPick }
+    phraseScore: { correct: 0, attempts: 0 }
   };
 
   function money(value) {
@@ -42,7 +44,9 @@
       target: null,
       ticketNumber: null,
       feedback: [],
-      success: false
+      success: false,
+      phraseCheck: null,
+      phraseScore: { correct: 0, attempts: 0 }
     });
     render(true);
   }
@@ -53,6 +57,8 @@
     state.cart = { items: [] };
     state.feedback = [];
     state.success = false;
+    state.phraseCheck = null;
+    state.phraseScore = { correct: 0, attempts: 0 };
     state.target = role === 'delivery'
       ? model.createRandomOrder(model.CATALOG, Math.random)
       : null;
@@ -85,15 +91,16 @@
     });
   }
 
+  // arte placeholder por categoría — hasta tener fotos reales del menú,
+  // un emoji grande basta y no distrae de la parte que importa (la frase)
+  const FOOD_EMOJI = {
+    hamburger:'🍔', cheeseburger:'🍔', 'big-mac':'🍔', 'quarter-pounder':'🍔', mcchicken:'🍗',
+    fries:'🍟', 'apple-slices':'🍎', soda:'🥤', coffee:'☕', 'bottled-water':'💧',
+    'big-mac-combo':'🍔', 'quarter-pounder-combo':'🍔', 'mcchicken-combo':'🍗'
+  };
   function foodArt(item) {
-    if (item.id === 'fries') return '<span class="fries-art" aria-hidden="true"></span>';
-    if (item.id === 'apple-slices') return '<span class="apple-art" aria-hidden="true"></span>';
-    if (item.id === 'soda') return '<span class="cup-art" aria-hidden="true"></span>';
-    if (item.id === 'coffee') return '<span class="coffee-art" aria-hidden="true"></span>';
-    if (item.id === 'bottled-water') return '<span class="water-art" aria-hidden="true"></span>';
-    return '<span class="burger-stack" aria-hidden="true">' +
-      '<i class="bun-top"></i><i class="lettuce"></i><i class="cheese"></i><i class="patty"></i><i class="bun-bottom"></i>' +
-      '</span>';
+    const emoji = FOOD_EMOJI[item.id] || '🍽️';
+    return '<span class="food-emoji" aria-hidden="true">' + emoji + '</span>';
   }
 
   function priceFor(item, size) {
@@ -101,14 +108,18 @@
   }
 
   function renderProduct(item) {
+    // los botones ya no agregan directo — abren primero el reto de
+    // la frase (data-order en vez de data-add). "ADD" sin decir nada
+    // en inglés no enseña nada; esto convierte cada click en una
+    // producción de lenguaje real, tomada del vocabulario del deck.
     const actions = item.requiresSize
       ? sizes.map((size) =>
-          '<button class="size-button" type="button" data-add="' + item.id + '" data-size="' + size + '" ' +
-          'aria-label="Add ' + titleCase(size) + ' ' + item.name + '">' +
+          '<button class="size-button" type="button" data-order="' + item.id + '" data-size="' + size + '" ' +
+          'aria-label="Order ' + titleCase(size) + ' ' + item.name + '">' +
           size[0].toUpperCase() + ' · ' + money(item.prices[size]) + '</button>'
         ).join('')
-      : '<button class="primary" type="button" data-add="' + item.id + '" data-size="" ' +
-        'aria-label="Add ' + item.name + '">ADD · ' + money(item.prices.default) + '</button>';
+      : '<button class="primary" type="button" data-order="' + item.id + '" data-size="" ' +
+        'aria-label="Order ' + item.name + '">ORDER IT · ' + money(item.prices.default) + '</button>';
 
     return '<article class="product-card">' +
       (item.featured ? '<span class="featured">★ MOST ORDERED</span>' : '') +
@@ -116,6 +127,39 @@
       '<h3>' + item.name + '</h3><p>' + item.description + '</p>' +
       '<div class="product-actions">' + actions + '</div>' +
       '</article>';
+  }
+
+  // paso 1: antes de agregar, el jugador debe elegir la frase correcta
+  // para pedir ese producto — mismo vocabulario que el diálogo modelo
+  // de Sesión 5 ("I'd like a...", "Can I get a...", "as a combo?")
+  function openPhraseCheck(productId, size) {
+    const item = model.CATALOG.find((entry) => entry.id === productId);
+    const cleanSize = item.requiresSize ? size : null;
+    const { correct, options } = model.phraseOptionsFor(item, cleanSize, Math.random);
+    state.phraseCheck = { productId, size: cleanSize, item, correct, options, wrongPick: null };
+    render(false);
+  }
+
+  function closePhraseCheck() {
+    state.phraseCheck = null;
+    render(false);
+  }
+
+  function resolvePhrase(picked) {
+    const check = state.phraseCheck;
+    if (!check) return;
+    state.phraseScore.attempts += 1;
+    if (picked === check.correct) {
+      state.phraseScore.correct += 1;
+      addLine(check.productId, check.size);
+      state.phraseCheck = null;
+      announce('Correct! Added ' + (check.size ? titleCase(check.size) + ' ' : '') + check.item.name);
+      render(false);
+    } else {
+      check.wrongPick = picked;
+      announce('Not quite — try again.');
+      render(false);
+    }
   }
 
   function addLine(productId, size) {
@@ -127,8 +171,6 @@
     if (existing) existing.quantity += 1;
     else state.cart.items.push({ productId, size: cleanSize, quantity: 1 });
     state.feedback = [];
-    announce('Added ' + (cleanSize ? titleCase(cleanSize) + ' ' : '') + item.name);
-    render(false);
   }
 
   function changeQuantity(productId, size, delta) {
@@ -199,6 +241,45 @@
     if (state.success) launchConfetti();
   }
 
+  // el reto de frase, como overlay: se ve la tarjeta del producto
+  // detrás para que quede claro qué se está pidiendo, y las opciones
+  // dan feedback inmediato (verde/rojo) sin perder el progreso
+  function renderPhraseModal() {
+    const check = state.phraseCheck;
+    if (!check) return '';
+
+    const optionsHtml = check.options.map((text) => {
+      let cls = 'phrase-option';
+      if (check.wrongPick) {
+        if (text === check.correct) cls += ' right';
+        else if (text === check.wrongPick) cls += ' wrong';
+      }
+      return '<button type="button" class="' + cls + '" data-phrase="' + encodeURIComponent(text) + '">' +
+        text + '</button>';
+    }).join('');
+
+    return '<div class="phrase-overlay" role="dialog" aria-modal="true" aria-labelledby="phrase-title">' +
+      '<div class="phrase-card">' +
+        '<p class="eyebrow">SAY IT TO ORDER</p>' +
+        '<h2 id="phrase-title">How do you ask for ' +
+          (check.size ? 'a ' + titleCase(check.size) + ' ' : 'a ') + check.item.name + '?</h2>' +
+        '<div class="phrase-options">' + optionsHtml + '</div>' +
+        (check.wrongPick ? '<p class="phrase-hint">Not quite — listen to the pattern and try the right one.</p>' : '') +
+        '<button type="button" class="phrase-cancel" id="phrase-cancel">‹ Back to menu</button>' +
+      '</div>' +
+    '</div>';
+  }
+
+  function wirePhraseModal() {
+    const overlay = document.querySelector('.phrase-overlay');
+    if (!overlay) return;
+    overlay.querySelectorAll('[data-phrase]').forEach((button) => {
+      button.addEventListener('click', () => resolvePhrase(decodeURIComponent(button.dataset.phrase)));
+    });
+    const cancel = document.getElementById('phrase-cancel');
+    if (cancel) cancel.addEventListener('click', closePhraseCheck);
+  }
+
   function renderKiosk() {
     const tabs = categories.map((category) =>
       '<button class="tab' + (state.category === category ? ' active' : '') + '" type="button" ' +
@@ -216,13 +297,17 @@
         state.feedback.map((message) => '<li>' + message + '</li>').join('') + '</ul>'
       : '';
 
+    const scorePill = '<span class="score-pill" title="Phrases you got right on the first try">' +
+      '<i></i>' + state.phraseScore.correct + '/' + state.phraseScore.attempts + ' PHRASES' +
+      '</span>';
+
     app.innerHTML =
       '<section class="kiosk" aria-labelledby="kiosk-title">' +
         '<div class="kiosk-head"><div><p class="eyebrow">' +
           (state.role === 'customer' ? 'CUSTOMER MODE' : 'DELIVERY CREW MODE') +
           '</p><h1 id="kiosk-title">' +
           (state.role === 'customer' ? 'Create your order' : 'Prepare the ticket') +
-          '</h1></div><span class="mode-pill"><i></i>KIOSK OPEN</span></div>' +
+          '</h1></div><span class="mode-pill"><i></i>KIOSK OPEN</span>' + scorePill + '</div>' +
         '<div class="kiosk-grid">' +
           '<div class="catalog"><nav class="tabs" aria-label="Menu categories">' + tabs + '</nav>' +
             '<div class="products">' + products + '</div></div>' +
@@ -238,7 +323,8 @@
             '</section>' +
           '</aside>' +
         '</div>' +
-      '</section>';
+      '</section>' +
+      renderPhraseModal();
 
     app.querySelectorAll('[data-category]').forEach((button) => {
       button.addEventListener('click', () => {
@@ -246,11 +332,12 @@
         render(false);
       });
     });
-    app.querySelectorAll('[data-add]').forEach((button) => {
+    app.querySelectorAll('[data-order]').forEach((button) => {
       button.addEventListener('click', () => {
-        addLine(button.dataset.add, button.dataset.size || null);
+        openPhraseCheck(button.dataset.order, button.dataset.size || null);
       });
     });
+    wirePhraseModal();
     app.querySelectorAll('[data-change]').forEach((button) => {
       button.addEventListener('click', () => {
         changeQuantity(

@@ -21,6 +21,70 @@
     { id:'mcchicken-combo', category:'combos', name:'McChicken Combo', description:'McChicken, fries and soda.', prices:{small:85,medium:95,large:105}, requiresSize:true, comboContents:['mcchicken','fries','soda'] }
   ];
 
+  /* ============================================================
+     Frases para pedir (Sesión 5 · McDonald's role-play)
+     ------------------------------------------------------------
+     Antes de poder agregar un producto al carrito, el jugador
+     elige la frase correcta para pedirlo — mismo vocabulario que
+     el diálogo modelo del deck. Sin esto, Grammar Grill era solo
+     matching de productos, cero inglés real.
+     ============================================================ */
+  const ORDER_PHRASES = {
+    // producto sin tamaño (burgers, sides sin size, drinks sin size)
+    simple: {
+      correct: (name) => 'I\'d like a ' + name.toLowerCase() + ', please.',
+      distractors: (name) => [
+        'I like a ' + name.toLowerCase() + '.',
+        'I want ' + name.toLowerCase() + ' please have.',
+        'Give me the ' + name.toLowerCase() + ' now.'
+      ]
+    },
+    // producto con tamaño (fries, soda)
+    sized: {
+      correct: (name, size) => 'Can I get a ' + size + ' ' + name.toLowerCase() + '?',
+      distractors: (name, size) => [
+        'Can I get ' + size + ' ' + name.toLowerCase() + ' a?',
+        'I ' + size + ' like a ' + name.toLowerCase() + '.',
+        'A ' + name.toLowerCase() + ' of ' + size + ', can I?'
+      ]
+    },
+    // combo
+    combo: {
+      correct: () => 'Can I have that as a combo?',
+      distractors: () => [
+        'Can I have a combo that as?',
+        'I have that combo, can?',
+        'That combo please have I can?'
+      ]
+    }
+  };
+
+  function phraseKindFor(item) {
+    if (item.category === 'combos') return 'combo';
+    if (item.requiresSize) return 'sized';
+    return 'simple';
+  }
+
+  // baraja con Fisher-Yates para no delatar siempre la misma posición
+  function shuffle(list, random) {
+    const arr = list.slice();
+    for (let i = arr.length - 1; i > 0; i--) {
+      const j = Math.floor(random() * (i + 1));
+      [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+    return arr;
+  }
+
+  // genera las opciones (1 correcta + distractores) para pedir un producto
+  function phraseOptionsFor(item, size, random = Math.random) {
+    const kind = phraseKindFor(item);
+    const bank = ORDER_PHRASES[kind];
+    const correct = bank.correct(item.name, size);
+    const distractors = bank.distractors(item.name, size);
+    const options = shuffle([correct, ...distractors], random);
+    return { correct, options };
+  }
+
   function lineKey(line) {
     return line.productId + '::' + (line.size || '');
   }
@@ -145,6 +209,7 @@
     calculateTotal,
     compareOrders,
     createRandomOrder,
-    labelLine
+    labelLine,
+    phraseOptionsFor
   };
 }));

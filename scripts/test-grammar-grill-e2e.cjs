@@ -43,6 +43,25 @@ async function blockExternal(page, origin) {
   });
 }
 
+// resuelve el reto de frase que se abre tras dar click en "order":
+// GrammarGrillModel.phraseOptionsFor es determinístico en el texto
+// correcto (solo el ORDEN de las opciones se aleatoriza), así que
+// basta con volver a calcularlo con el mismo item/size para saber
+// qué botón clickear — sin adivinar ni probar a ciegas.
+async function answerPhraseCheck(page, item, size) {
+  await page.locator('.phrase-overlay').waitFor();
+  const correctText = await page.evaluate(
+    ({ itemId, size }) => {
+      const catalog = window.GrammarGrillModel.CATALOG;
+      const catalogItem = catalog.find((entry) => entry.id === itemId);
+      return window.GrammarGrillModel.phraseOptionsFor(catalogItem, size, Math.random).correct;
+    },
+    { itemId: item.id, size }
+  );
+  await page.locator('.phrase-overlay [data-phrase="' + encodeURIComponent(correctText) + '"]').click();
+  await page.locator('.phrase-overlay').waitFor({ state: 'detached' });
+}
+
 async function addTicketItems(page) {
   const ticketLines = await page.locator('.ticket-lines li').allTextContents();
   const catalog = await page.evaluate(() => window.GrammarGrillModel.CATALOG);
@@ -56,9 +75,11 @@ async function addTicketItems(page) {
     assert.ok(item, 'Ticket item should exist in the catalog: ' + ticketLine);
     const size = ['Small', 'Medium', 'Large'].find((candidate) => ticketLine.includes(candidate + ' '));
     await page.getByRole('button', { name: item.category.toUpperCase(), exact: true }).click();
-    const addName = 'Add ' + (size ? size + ' ' : '') + item.name;
+    const orderName = 'Order ' + (size ? size + ' ' : '') + item.name;
+    const sizeKey = size ? size.toLowerCase() : null;
     for (let count = 0; count < quantity; count += 1) {
-      await page.getByRole('button', { name: addName, exact: true }).click();
+      await page.getByRole('button', { name: orderName, exact: true }).click();
+      await answerPhraseCheck(page, item, sizeKey);
     }
   }
 }
@@ -80,12 +101,21 @@ async function addTicketItems(page) {
     await page.goto(url, { waitUntil: 'domcontentloaded' });
 
     await page.getByRole('button', { name: /I'm ordering food/i }).click();
-    await page.getByRole('button', { name: 'Add Big Mac', exact: true }).click();
+    const catalog = await page.evaluate(() => window.GrammarGrillModel.CATALOG);
+    const bigMac = catalog.find((entry) => entry.id === 'big-mac');
+    const fries = catalog.find((entry) => entry.id === 'fries');
+    const soda = catalog.find((entry) => entry.id === 'soda');
+
+    await page.getByRole('button', { name: 'Order Big Mac', exact: true }).click();
+    await answerPhraseCheck(page, bigMac, null);
     await page.getByRole('button', { name: 'SIDES', exact: true }).click();
-    await page.getByRole('button', { name: 'Add Medium Fries', exact: true }).click();
+    await page.getByRole('button', { name: 'Order Medium Fries', exact: true }).click();
+    await answerPhraseCheck(page, fries, 'medium');
     await page.getByRole('button', { name: 'DRINKS', exact: true }).click();
-    await page.getByRole('button', { name: 'Add Small Soda', exact: true }).click();
-    await page.getByRole('button', { name: 'Add Small Soda', exact: true }).click();
+    await page.getByRole('button', { name: 'Order Small Soda', exact: true }).click();
+    await answerPhraseCheck(page, soda, 'small');
+    await page.getByRole('button', { name: 'Order Small Soda', exact: true }).click();
+    await answerPhraseCheck(page, soda, 'small');
     assert.equal(await page.locator('.cart-total b').textContent(), '$165');
     await page.getByRole('button', { name: 'CREATE ORDER', exact: true }).click();
     await page.getByRole('heading', { name: 'ORDER CREATED!' }).waitFor();
@@ -127,7 +157,10 @@ async function addTicketItems(page) {
     await blockExternal(reducedPage, origin);
     await reducedPage.goto(url, { waitUntil: 'domcontentloaded' });
     await reducedPage.getByRole('button', { name: /I'm ordering food/i }).click();
-    await reducedPage.getByRole('button', { name: 'Add Big Mac', exact: true }).click();
+    const reducedCatalog = await reducedPage.evaluate(() => window.GrammarGrillModel.CATALOG);
+    const reducedBigMac = reducedCatalog.find((entry) => entry.id === 'big-mac');
+    await reducedPage.getByRole('button', { name: 'Order Big Mac', exact: true }).click();
+    await answerPhraseCheck(reducedPage, reducedBigMac, null);
     await reducedPage.getByRole('button', { name: 'CREATE ORDER', exact: true }).click();
     await reducedPage.getByRole('heading', { name: 'ORDER CREATED!' }).waitFor();
     assert.equal(await reducedPage.locator('#confetti i').count(), 0);
