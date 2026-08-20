@@ -9,6 +9,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Archivo+Black&family=Spline+Sans:wght@300;400;500;600&family=Martian+Mono:wght@400;500;600&display=swap');
 
 :root{
+  --accent-text:#ea4a63;
+  --accent-surface:#c8102e;
+  --hub-panel-rgb:22,20,20;
   /* --- tema Constelación (sustituye el bloque de tema de deck.css) --- */
   --char:#0a0a0a; --char-soft:#161414;
   --paper:#0a0a0a; --paper-soft:#161414;      /* sin modo "paper" claro: la marca es siempre negra */
@@ -38,6 +41,24 @@
   --h1:clamp(1.7rem,4.6vw,3.8rem);
   --lead:clamp(1.05rem,1.7vw,1.5rem);
 }
+
+/* ===== Academia hub theme ===== */
+.theme-english{background:#0a0a0a;font-family:'Spline Sans',system-ui,sans-serif}
+.theme-english .hub-identity h1{font-family:'Archivo Black',system-ui,sans-serif;
+  text-transform:uppercase;font-size:clamp(2.8rem,6vw,6.2rem);line-height:.88;letter-spacing:.005em}
+.theme-english .featured-class h2,.theme-english .row-head h3,
+.theme-english .deck-card h4{font-family:'Archivo Black',system-ui,sans-serif;
+  text-transform:uppercase;letter-spacing:-.01em}
+.motif-english{position:absolute;inset:0;z-index:-1;background:
+  radial-gradient(circle at 78% 18%,rgba(200,16,46,.22),transparent 30%),
+  linear-gradient(rgba(242,240,236,.02) 1px,transparent 1px),
+  linear-gradient(90deg,rgba(242,240,236,.02) 1px,transparent 1px);
+  background-size:auto,34px 34px,34px 34px}
+.motif-english::before,.motif-english::after{content:"";position:absolute;left:-10%;
+  width:120%;height:42%;border:1px solid rgba(200,16,46,.42);border-radius:50%}
+.motif-english::before{top:18%;transform:rotate(5deg)}
+.motif-english::after{top:34%;border-color:rgba(242,240,236,.1);transform:rotate(-3deg)}
+.theme-english .constellation-avatar{color:var(--accent-text)}
 
 /* Archivo Black es más ancha que Unbounded (para la que --mega fue calibrado
    en deck.css); en móvil necesita un piso más bajo para no desbordar */

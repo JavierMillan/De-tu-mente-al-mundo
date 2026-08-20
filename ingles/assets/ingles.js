@@ -16,6 +16,43 @@
       {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   }
 
+  function primeraDisponible(data){
+    return data.filas.flatMap(fila=>fila.clases).find(clase=>clase.deck) || null;
+  }
+
+  function figuraGemini(){
+    return '<svg viewBox="0 0 180 135" aria-hidden="true">'+
+      '<path d="M42 19L60 43L66 73L54 108"/><path d="M66 73L34 88"/>'+
+      '<path d="M60 43L102 48L116 79L123 111"/><path d="M116 79L146 93"/>'+
+      '<path d="M102 48L127 29"/><path d="M102 48L87 20"/>'+
+      '<circle class="core" cx="42" cy="19" r="3.7"/><circle cx="60" cy="43" r="2"/>'+
+      '<circle cx="66" cy="73" r="1.8"/><circle cx="54" cy="108" r="1.5"/>'+
+      '<circle cx="34" cy="88" r="1.2"/><circle class="core" cx="102" cy="48" r="3.3"/>'+
+      '<circle cx="116" cy="79" r="1.8"/><circle cx="123" cy="111" r="1.5"/>'+
+      '<circle cx="146" cy="93" r="1.2"/><circle cx="127" cy="29" r="1.5"/>'+
+      '<circle cx="87" cy="20" r="1.3"/>'+
+    '</svg>';
+  }
+
+  function destacado(data){
+    const clase = primeraDisponible(data);
+    if(!clase) return '';
+    return '<section class="hub-hero" id="top">'+
+      '<div class="constellation-motif motif-english" aria-hidden="true"></div>'+
+      '<div class="hub-identity">'+
+        '<div class="constellation-avatar">'+figuraGemini()+'</div>'+
+        '<span class="constellation-name">Gemini · Dos voces</span>'+
+        '<h1>¡Hablemos<br>Inglés!</h1>'+
+        '<p>Práctica didáctica y conversación para ganar confianza hablando en comunidad.</p>'+
+      '</div>'+
+      '<a class="featured-class" href="'+esc(clase.deck)+'">'+
+        '<span class="featured-label">Sesión destacada · Sesiones en comunidad</span>'+
+        '<h2>'+esc(clase.titulo)+'</h2><p>'+esc(clase.resumen)+'</p>'+
+        '<span class="featured-go">Abrir sesión →</span>'+
+      '</a>'+
+    '</section>';
+  }
+
   function tarjeta(clase, etiqueta){
     const soon = !clase.deck;
     const tag = soon ? 'span' : 'a';
@@ -131,9 +168,11 @@
     .then(r=>{ if(!r.ok) throw new Error('HTTP '+r.status); return r.json(); })
     .then(data=>{
       const rows     = document.getElementById('rows');
+      const heroSlot = document.getElementById('heroSlot');
       const navMain  = document.getElementById('navMain');
       const navDraw  = document.getElementById('navDrawer');
 
+      if(heroSlot) heroSlot.innerHTML = destacado(data);
       if(rows) rows.innerHTML = data.filas.map(fila).join('');
 
       const navLinks = data.filas.map(r=>'<a href="#'+esc(r.id)+'" class="solo">'+esc(r.titulo)+'</a>').join('');
