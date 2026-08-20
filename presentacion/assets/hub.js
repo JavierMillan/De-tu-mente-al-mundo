@@ -270,7 +270,7 @@
 
   /* ---- resalta el grupo cuya fila se está viendo ---- */
   function activarFilaActiva(){
-    const secciones = [...document.querySelectorAll('.hero[id], .row-sec[id]')];
+    const secciones = [...document.querySelectorAll('.hub-hero[id], .row-sec[id]')];
     const nav = document.getElementById('navMain');
     if(!secciones.length || !nav) return;
 
@@ -292,6 +292,25 @@
       entries.forEach(e=>{ if(e.isIntersecting) marcar(e.target.id); });
     },{rootMargin:'-45% 0px -45% 0px'});
     secciones.forEach(s=>io.observe(s));
+  }
+
+  function activarNavAjustable(){
+    const header = document.getElementById('academyHeader');
+    const nav = document.getElementById('navMain');
+    if(!header || !nav) return;
+
+    function medir(){
+      document.body.classList.remove('nav-overflow');
+      const overflow = header.scrollWidth > header.clientWidth + 1 ||
+        nav.scrollWidth > nav.clientWidth + 1;
+      document.body.classList.toggle('nav-overflow', overflow || innerWidth <= 760);
+    }
+
+    const observer = new ResizeObserver(medir);
+    observer.observe(header);
+    observer.observe(nav);
+    requestAnimationFrame(medir);
+    window.addEventListener('load', medir, {once:true});
   }
 
   /* ---- menú móvil ----
@@ -349,6 +368,7 @@
       if(navMain) navMain.insertAdjacentHTML('afterbegin',navEscritorio(data,grupos));
       if(navDraw) navDraw.insertAdjacentHTML('afterbegin',navMovil(data,grupos));
       activarRieles(document);
+      activarNavAjustable();
       activarMenu();
       activarDesplegables();
       activarFilaActiva();

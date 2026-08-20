@@ -159,6 +159,25 @@
     });
   }
 
+  function activarNavAjustable(){
+    const header = document.getElementById('academyHeader');
+    const nav = document.getElementById('navMain');
+    if(!header || !nav) return;
+
+    function medir(){
+      document.body.classList.remove('nav-overflow');
+      const overflow = header.scrollWidth > header.clientWidth + 1 ||
+        nav.scrollWidth > nav.clientWidth + 1;
+      document.body.classList.toggle('nav-overflow', overflow || innerWidth <= 760);
+    }
+
+    const observer = new ResizeObserver(medir);
+    observer.observe(header);
+    observer.observe(nav);
+    requestAnimationFrame(medir);
+    window.addEventListener('load', medir, {once:true});
+  }
+
   function error(msg){
     const rows = document.getElementById('rows');
     if(rows) rows.innerHTML = '<p class="loaderr">'+esc(msg)+'</p>';
@@ -180,6 +199,7 @@
       if(navDraw) navDraw.insertAdjacentHTML('afterbegin', navLinks);
 
       activarRieles(document);
+      activarNavAjustable();
       activarMenu();
     })
     .catch(e=>{
