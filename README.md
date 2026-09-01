@@ -20,3 +20,10 @@ de leads vía WhatsApp.
 
 ## Notas
 - El número de WhatsApp se configura en `scripts/script.js` (`WHATSAPP_NUMBER`).
+
+## Academia
+
+Este repositorio contiene la landing comercial de De tu Mente al Mundo.
+Las clases, decks y recursos académicos viven en
+`JavierMillan/academia-lareddeluz`, carpeta `cursos/dtmm/`, y se publican en
+https://academia.lareddeluz.com/dtmm/.
