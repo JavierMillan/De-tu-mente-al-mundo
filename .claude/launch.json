@@ -3,9 +3,9 @@
   "configurations": [
     {
       "name": "dtmm",
-      "runtimeExecutable": "npx",
-      "runtimeArgs": ["--yes", "http-server", ".", "-p", "4173", "-c-1"],
-      "port": 4173
+      "runtimeExecutable": "python",
+      "runtimeArgs": ["-m", "http.server", "8123"],
+      "port": 8123
     }
   ]
 }

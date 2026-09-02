@@ -1,0 +1,1168 @@
+/* =====================================================================
+   SISTEMA — landing de la rama de servicio ("Antes de WhatsApp")
+   Hereda tokens y componentes de styles.css. Aquí SOLO lo nuevo:
+   calculadora de dolor, comparativa, escalera de precios, garantía,
+   formulario de precalificación.
+   Marco: Hormozi — el valor se construye ANTES de que aparezca el precio.
+   ===================================================================== */
+
+/* ---------- Cifra grande (el número que duele) ---------- */
+.figure {
+    font-family: 'Unbounded', sans-serif;
+    font-weight: 700;
+    font-size: clamp(2.6rem, 9vw, 5.4rem);
+    line-height: 0.95;
+    letter-spacing: -0.03em;
+    color: var(--sesame);
+    font-feature-settings: "tnum" 1;
+}
+.figure-sm {
+    font-family: 'Unbounded', sans-serif;
+    font-weight: 700;
+    font-size: clamp(1.8rem, 4.4vw, 2.8rem);
+    line-height: 1;
+    letter-spacing: -0.02em;
+    font-feature-settings: "tnum" 1;
+}
+.figure-cap {
+    font-family: 'Martian Mono', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--on-char-mute);
+    margin-top: 0.7rem;
+    line-height: 1.5;
+}
+.on-light .figure-cap { color: var(--on-paper-mute); }
+
+/* ---------- Rejilla de datos (evidencia) ---------- */
+.stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.6rem;
+    margin-top: 2.6rem;
+}
+.stat {
+    padding-top: 1.2rem;
+    border-top: 1px solid var(--char-line-2);
+}
+.on-light .stat { border-top-color: var(--paper-line-2); }
+.stat-n {
+    font-family: 'Unbounded', sans-serif;
+    font-weight: 700;
+    font-size: clamp(1.7rem, 4vw, 2.4rem);
+    letter-spacing: -0.02em;
+    line-height: 1;
+    color: var(--sesame);
+    font-feature-settings: "tnum" 1;
+}
+.on-light .stat-n { color: var(--ketchup); }
+.stat-d {
+    font-size: 0.93rem;
+    line-height: 1.45;
+    color: var(--on-char-soft);
+    margin-top: 0.7rem;
+}
+.on-light .stat-d { color: var(--on-paper-soft); }
+.stat-src {
+    font-family: 'Martian Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--on-char-mute);
+    margin-top: 0.6rem;
+}
+.on-light .stat-src { color: var(--on-paper-mute); }
+
+/* ---------- Calculadora del dolor ---------- */
+.calc {
+    border: 1px solid var(--char-line-2);
+    border-radius: var(--radius);
+    background: rgba(243,234,215,0.03);
+    padding: clamp(1.5rem, 4vw, 2.4rem);
+    margin-top: 2.6rem;
+}
+.calc-rows { display: grid; gap: 1.5rem; }
+@media (min-width: 720px) { .calc-rows { grid-template-columns: 1fr 1fr; gap: 2rem; } }
+.calc-field { display: flex; flex-direction: column; gap: 0.7rem; }
+.calc-label {
+    font-family: 'Martian Mono', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--on-char-soft);
+    line-height: 1.5;
+}
+.calc-input {
+    width: 100%;
+    background: rgba(25,20,15,0.5);
+    border: 1px solid var(--char-line-2);
+    border-radius: var(--radius-sm);
+    color: var(--on-char);
+    font-family: 'Martian Mono', monospace;
+    font-size: 1.05rem;
+    padding: 0.85rem 1rem;
+    transition: border-color 0.3s var(--ease), background 0.3s var(--ease);
+}
+.calc-input:focus {
+    outline: none;
+    border-color: var(--sesame);
+    background: rgba(25,20,15,0.75);
+}
+.calc-out {
+    margin-top: 2rem;
+    padding-top: 1.8rem;
+    border-top: 1px dashed var(--char-line-2);
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.6rem 1.4rem;
+}
+.calc-out-label {
+    font-family: 'Martian Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--on-char-mute);
+}
+.calc-note {
+    font-size: 0.9rem;
+    color: var(--on-char-soft);
+    margin-top: 1.2rem;
+    line-height: 1.55;
+    max-width: 54ch;
+}
+
+/* ---------- Comparativa ---------- */
+.compare-scroll {
+    overflow-x: auto;
+    border: 1px solid var(--char-line-2);
+    border-radius: var(--radius);
+    margin-top: 2.4rem;
+    -webkit-overflow-scrolling: touch;
+}
+.on-light .compare-scroll { border-color: var(--paper-line-2); }
+.compare {
+    width: 100%;
+    min-width: 640px;
+    border-collapse: collapse;
+    font-feature-settings: "tnum" 1;
+}
+.compare th, .compare td {
+    padding: 1rem 1.15rem;
+    text-align: left;
+    border-bottom: 1px solid var(--char-line);
+    font-size: 0.94rem;
+    vertical-align: top;
+}
+.on-light .compare th, .on-light .compare td { border-bottom-color: var(--paper-line); }
+.compare thead th {
+    font-family: 'Martian Mono', monospace;
+    font-size: 0.63rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--on-char-mute);
+    background: rgba(243,234,215,0.03);
+    white-space: nowrap;
+}
+.on-light .compare thead th { color: var(--on-paper-mute); background: rgba(25,20,15,0.03); }
+.compare tbody tr:last-child td { border-bottom: none; }
+.compare .c-who { font-weight: 600; color: var(--on-char); white-space: nowrap; }
+.on-light .compare .c-who { color: var(--on-paper); }
+.compare .c-price {
+    font-family: 'Martian Mono', monospace;
+    font-size: 0.88rem;
+    white-space: nowrap;
+    color: var(--on-char-soft);
+}
+.on-light .compare .c-price { color: var(--on-paper-soft); }
+.compare .c-why { color: var(--on-char-soft); }
+.on-light .compare .c-why { color: var(--on-paper-soft); }
+.compare .row-us td {
+    background: rgba(232,161,60,0.1);
+    border-top: 1px solid var(--sesame);
+    border-bottom: 1px solid var(--sesame);
+}
+.compare .row-us .c-who,
+.compare .row-us .c-price { color: var(--sesame); }
+.compare .row-us .c-why { color: var(--on-char); }
+.on-light .compare .row-us .c-why { color: var(--on-paper); }
+
+/* ---------- Recorrido (los 5 pasos) ---------- */
+.flow {
+    display: grid;
+    gap: 0;
+    margin-top: 2.6rem;
+    counter-reset: flowstep;
+}
+.flow-step {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 1.3rem;
+    padding: 1.5rem 0;
+    border-bottom: 1px solid var(--char-line);
+    align-items: start;
+}
+.on-light .flow-step { border-bottom-color: var(--paper-line); }
+.flow-step:last-child { border-bottom: none; }
+.flow-n {
+    font-family: 'Martian Mono', monospace;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    color: var(--sesame);
+    padding-top: 0.3rem;
+    min-width: 2.4rem;
+}
+.on-light .flow-n { color: var(--ketchup); }
+.flow-t {
+    font-family: 'Unbounded', sans-serif;
+    font-weight: 600;
+    font-size: 1.06rem;
+    letter-spacing: -0.01em;
+    line-height: 1.25;
+}
+.flow-d {
+    font-size: 0.96rem;
+    line-height: 1.55;
+    color: var(--on-char-soft);
+    margin-top: 0.5rem;
+    max-width: 58ch;
+}
+.on-light .flow-d { color: var(--on-paper-soft); }
+
+/* ---------- Garantía ---------- */
+.guarantee {
+    border: 1px solid var(--sesame);
+    border-radius: var(--radius);
+    padding: clamp(1.6rem, 4vw, 2.6rem);
+    background: rgba(232,161,60,0.07);
+    box-shadow: 0 24px 60px -30px var(--glow);
+    max-width: 720px;
+}
+.guarantee-tag {
+    display: inline-block;
+    font-family: 'Martian Mono', monospace;
+    font-size: 0.62rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: #1a1103;
+    background: var(--sesame);
+    border-radius: 999px;
+    padding: 0.32rem 0.75rem;
+}
+.guarantee-t {
+    font-family: 'Unbounded', sans-serif;
+    font-weight: 700;
+    font-size: clamp(1.3rem, 3.2vw, 1.9rem);
+    letter-spacing: -0.02em;
+    line-height: 1.15;
+    margin-top: 1.2rem;
+    text-wrap: balance;
+}
+.guarantee-d {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: var(--on-char-soft);
+    margin-top: 1rem;
+    max-width: 56ch;
+}
+
+/* ---------- Objeciones ---------- */
+.objections { display: grid; gap: 0.9rem; margin-top: 2.4rem; }
+.obj {
+    border: 1px solid var(--char-line-2);
+    border-radius: var(--radius-sm);
+    background: rgba(243,234,215,0.02);
+    overflow: hidden;
+}
+.on-light .obj { border-color: var(--paper-line-2); background: rgba(25,20,15,0.02); }
+.obj summary {
+    cursor: pointer;
+    list-style: none;
+    padding: 1.15rem 1.3rem;
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 1.06rem;
+    line-height: 1.35;
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    transition: color 0.3s var(--ease);
+}
+.obj summary::-webkit-details-marker { display: none; }
+.obj summary::after {
+    content: "+";
+    margin-left: auto;
+    font-family: 'Martian Mono', monospace;
+    font-style: normal;
+    font-size: 1.1rem;
+    color: var(--sesame);
+    flex-shrink: 0;
+    transition: transform 0.3s var(--ease);
+}
+.obj[open] summary::after { transform: rotate(45deg); }
+.obj summary:hover { color: var(--sesame); }
+.on-light .obj summary:hover { color: var(--ketchup); }
+.obj-a {
+    padding: 0 1.3rem 1.3rem;
+    font-size: 0.97rem;
+    line-height: 1.6;
+    color: var(--on-char-soft);
+    max-width: 62ch;
+}
+.on-light .obj-a { color: var(--on-paper-soft); }
+
+/* ---------- Formulario de precalificación ---------- */
+.form-shell {
+    border: 1px solid var(--char-line-2);
+    border-radius: var(--radius);
+    background: rgba(243,234,215,0.03);
+    padding: clamp(1.5rem, 4.5vw, 2.8rem);
+    margin-top: 2.6rem;
+}
+.form-progress {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    font-family: 'Martian Mono', monospace;
+    font-size: 0.66rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--on-char-mute);
+    margin-bottom: 1.8rem;
+}
+.form-bar {
+    flex: 1;
+    height: 2px;
+    background: var(--char-line-2);
+    border-radius: 2px;
+    overflow: hidden;
+}
+.form-bar i {
+    display: block;
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, var(--ketchup), var(--sesame));
+    transition: width 0.5s var(--ease);
+}
+.q { display: none; }
+.q.active { display: block; animation: qIn 0.45s var(--ease); }
+@keyframes qIn {
+    from { opacity: 0; transform: translateY(14px); }
+    to { opacity: 1; transform: none; }
+}
+.q-label {
+    font-family: 'Unbounded', sans-serif;
+    font-weight: 600;
+    font-size: clamp(1.15rem, 2.8vw, 1.5rem);
+    letter-spacing: -0.015em;
+    line-height: 1.25;
+    text-wrap: balance;
+}
+.q-help {
+    font-size: 0.92rem;
+    color: var(--on-char-mute);
+    margin-top: 0.7rem;
+    line-height: 1.5;
+    max-width: 52ch;
+}
+.q-input, .q-textarea {
+    width: 100%;
+    margin-top: 1.3rem;
+    background: rgba(25,20,15,0.5);
+    border: 1px solid var(--char-line-2);
+    border-radius: var(--radius-sm);
+    color: var(--on-char);
+    font-family: 'Spline Sans', sans-serif;
+    font-size: 1rem;
+    line-height: 1.55;
+    padding: 0.9rem 1.05rem;
+    transition: border-color 0.3s var(--ease), background 0.3s var(--ease);
+    resize: vertical;
+}
+.q-textarea { min-height: 110px; }
+.q-input:focus, .q-textarea:focus {
+    outline: none;
+    border-color: var(--sesame);
+    background: rgba(25,20,15,0.75);
+}
+.q-input::placeholder, .q-textarea::placeholder { color: var(--on-char-mute); opacity: 0.7; }
+.q-nav {
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+    margin-top: 1.8rem;
+    flex-wrap: wrap;
+}
+.q-back {
+    background: transparent;
+    border: none;
+    color: var(--on-char-mute);
+    font-family: 'Martian Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.5rem 0;
+    transition: color 0.3s var(--ease);
+}
+.q-back:hover { color: var(--on-char); }
+.q-err {
+    color: var(--ketchup);
+    font-size: 0.86rem;
+    margin-top: 0.8rem;
+    display: none;
+}
+.q-err.show { display: block; }
+
+/* Cierre del formulario: la demostración */
+.form-done { display: none; text-align: left; }
+.form-done.show { display: block; animation: qIn 0.5s var(--ease); }
+.done-mark {
+    width: 46px; height: 46px; border-radius: 50%;
+    background: var(--sesame); color: #1a1103;
+    display: inline-flex; align-items: center; justify-content: center;
+    font-size: 1.4rem; font-weight: 700;
+}
+.done-t {
+    font-family: 'Unbounded', sans-serif;
+    font-weight: 700;
+    font-size: clamp(1.4rem, 3.6vw, 2.1rem);
+    letter-spacing: -0.02em;
+    line-height: 1.15;
+    margin-top: 1.3rem;
+    text-wrap: balance;
+}
+.done-d {
+    font-size: 1.02rem;
+    line-height: 1.6;
+    color: var(--on-char-soft);
+    margin-top: 1.1rem;
+    max-width: 54ch;
+}
+.done-d strong { color: var(--sesame); font-weight: 600; }
+
+/* ---------- Casos ---------- */
+.cases { display: grid; gap: 1.2rem; margin-top: 2.6rem; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); }
+.case {
+    border: 1px solid var(--paper-line-2);
+    border-radius: var(--radius);
+    padding: 1.4rem 1.5rem 1.6rem;
+    display: flex; flex-direction: column; gap: 0.8rem;
+    background: rgba(25,20,15,0.02);
+}
+.on-dark .case { border-color: var(--char-line-2); background: rgba(243,234,215,0.02); }
+.case-role {
+    font-family: 'Martian Mono', monospace;
+    font-size: 0.6rem; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--ketchup);
+}
+.on-dark .case-role { color: var(--sesame); }
+.case-name { font-family: 'Unbounded', sans-serif; font-weight: 600; font-size: 1.08rem; letter-spacing: -0.01em; }
+.case-d { font-size: 0.93rem; line-height: 1.55; color: var(--on-paper-soft); }
+.on-dark .case-d { color: var(--on-char-soft); }
+
+/* ---------- Nota de mercado ---------- */
+.market-note {
+    font-family: 'Martian Mono', monospace;
+    font-size: 0.66rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--on-char-mute);
+    margin-top: 1.4rem;
+    line-height: 1.6;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 640px) {
+    .flow-step { grid-template-columns: 1fr; gap: 0.5rem; }
+    .flow-n { padding-top: 0; }
+    .calc-out { flex-direction: column; align-items: flex-start; gap: 0.4rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .q.active, .form-done.show { animation: none; }
+    .form-bar i { transition: none; }
+}
+
+/* =====================================================================
+   AÑADIDOS v2 — stacking cerrado, casos enlazados, tickets en claro
+   ===================================================================== */
+
+/* ---------- El stacking: dolor y precio en la misma pantalla ---------- */
+.stack-close {
+    margin-top: 2.4rem;
+    border: 1px solid var(--ketchup);
+    border-radius: var(--radius);
+    background: rgba(200, 68, 46, 0.06);
+    padding: clamp(1.3rem, 3.5vw, 2rem);
+    max-width: 620px;
+}
+.sc-row {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+    padding: 0.75rem 0;
+    border-bottom: 1px dashed var(--paper-line-2);
+}
+.sc-row:last-of-type { border-bottom: none; }
+.sc-k {
+    font-family: 'Martian Mono', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--on-paper-mute);
+}
+.sc-v {
+    font-family: 'Unbounded', sans-serif;
+    font-weight: 600;
+    font-size: clamp(1.05rem, 2.6vw, 1.4rem);
+    letter-spacing: -0.02em;
+    color: var(--on-paper);
+    font-feature-settings: "tnum" 1;
+    text-align: right;
+}
+.sc-total { padding-top: 1.1rem; margin-top: 0.4rem; border-top: 1px solid var(--ketchup); }
+.sc-total .sc-k { color: var(--ketchup); }
+.sc-total .sc-v { color: var(--ketchup); font-weight: 700; font-size: clamp(1.2rem, 3.2vw, 1.7rem); }
+.sc-note {
+    font-size: 0.92rem;
+    line-height: 1.55;
+    color: var(--on-paper-soft);
+    margin-top: 1.1rem;
+}
+
+/* ---------- Casos como enlaces reales (evidencia verificable) ---------- */
+a.case {
+    text-decoration: none;
+    color: inherit;
+    transition: border-color 0.3s var(--ease), transform 0.3s var(--ease), background 0.3s var(--ease);
+}
+a.case:hover {
+    border-color: var(--sesame);
+    transform: translateY(-3px);
+    background: rgba(232, 161, 60, 0.06);
+}
+.on-light a.case:hover { border-color: var(--ketchup); background: rgba(200, 68, 46, 0.05); }
+.case-go {
+    display: inline-block;
+    font-family: 'Martian Mono', monospace;
+    font-size: 0.8rem;
+    color: var(--sesame);
+    margin-left: 0.35rem;
+    transition: transform 0.3s var(--ease);
+}
+.on-light .case-go { color: var(--ketchup); }
+a.case:hover .case-go { transform: translate(2px, -2px); }
+
+/* ---------- Tickets sobre fondo claro ---------- */
+
+/* =====================================================================
+   AÑADIDOS v3 — oferta explícita, CTA repetible, formulario visible
+   ===================================================================== */
+
+/* ---------- Barra de CTA fija (siempre a un toque del formulario) ---------- */
+.cta-bar {
+    position: fixed;
+    left: 0; right: 0; bottom: 0;
+    z-index: 70;
+    background: rgba(25, 20, 15, 0.94);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-top: 1px solid var(--char-line-2);
+    padding: 0.7rem clamp(1rem, 4vw, 2rem);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    transform: translateY(110%);
+    transition: transform 0.45s var(--ease);
+}
+.cta-bar.show { transform: translateY(0); }
+.cta-bar-txt {
+    font-size: 0.88rem;
+    line-height: 1.35;
+    color: var(--on-char-soft);
+    min-width: 0;
+}
+.cta-bar-txt b { color: var(--on-char); font-weight: 600; }
+.cta-bar .btn { flex-shrink: 0; --pad-y: 0.7rem; --pad-x: 1.2rem; font-size: 0.86rem; }
+@media (max-width: 620px) {
+    .cta-bar { padding: 0.65rem 0.9rem; }
+    .cta-bar-txt { font-size: 0.78rem; }
+    /* 44px de alto mínimo: objetivo táctil cómodo en móvil */
+    .cta-bar .btn { --pad-y: 0.8rem; --pad-x: 0.95rem; font-size: 0.8rem; min-height: 44px; }
+}
+@media (prefers-reduced-motion: reduce) {
+    .cta-bar { transition: none; }
+}
+
+/* ---------- La oferta, en una tarjeta explícita ---------- */
+.offer {
+    margin-top: 2.4rem;
+    border: 1px solid var(--char-line-2);
+    border-radius: var(--radius);
+    background: rgba(243, 234, 215, 0.03);
+    overflow: hidden;
+}
+.on-light .offer { border-color: var(--paper-line-2); background: rgba(25, 20, 15, 0.025); }
+.offer-head {
+    padding: 1.3rem clamp(1.2rem, 3.5vw, 1.8rem);
+    border-bottom: 1px solid var(--char-line-2);
+    background: rgba(232, 161, 60, 0.08);
+}
+.on-light .offer-head { border-bottom-color: var(--paper-line-2); background: rgba(200, 68, 46, 0.06); }
+.offer-what {
+    font-family: 'Unbounded', sans-serif;
+    font-weight: 700;
+    font-size: clamp(1.15rem, 3vw, 1.6rem);
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+    text-wrap: balance;
+}
+.offer-grid { display: grid; }
+@media (min-width: 700px) { .offer-grid { grid-template-columns: 1fr 1fr; } }
+.offer-col { padding: 1.3rem clamp(1.2rem, 3.5vw, 1.8rem); }
+.offer-col + .offer-col { border-top: 1px solid var(--char-line-2); }
+.on-light .offer-col + .offer-col { border-top-color: var(--paper-line-2); }
+@media (min-width: 700px) {
+    .offer-col + .offer-col { border-top: none; border-left: 1px solid var(--char-line-2); }
+    .on-light .offer-col + .offer-col { border-left-color: var(--paper-line-2); }
+}
+.offer-k {
+    font-family: 'Martian Mono', monospace;
+    font-size: 0.62rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--on-char-mute);
+    margin-bottom: 0.9rem;
+}
+.on-light .offer-k { color: var(--on-paper-mute); }
+.offer-list { list-style: none; padding: 0; margin: 0; display: grid; gap: 0.6rem; }
+.offer-list li {
+    position: relative;
+    padding-left: 1.4rem;
+    font-size: 0.95rem;
+    line-height: 1.45;
+    color: var(--on-char-soft);
+}
+.on-light .offer-list li { color: var(--on-paper-soft); }
+.offer-list li::before {
+    content: "";
+    position: absolute;
+    left: 0; top: 0.5em;
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: var(--sesame);
+}
+.on-light .offer-list li::before { background: var(--ketchup); }
+.offer-list.gone li::before {
+    background: none;
+    content: "×";
+    top: 0; left: 0.1rem;
+    width: auto; height: auto;
+    color: var(--on-char-mute);
+    font-size: 1rem;
+    line-height: 1.45;
+}
+.on-light .offer-list.gone li::before { color: var(--on-paper-mute); }
+.offer-foot {
+    padding: 1.05rem clamp(1.2rem, 3.5vw, 1.8rem);
+    border-top: 1px solid var(--char-line-2);
+    font-family: 'Martian Mono', monospace;
+    font-size: 0.66rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--on-char-mute);
+    line-height: 1.6;
+}
+.on-light .offer-foot { border-top-color: var(--paper-line-2); color: var(--on-paper-mute); }
+
+/* ---------- Formulario asomándose antes de su sección ---------- */
+.peek {
+    margin-top: 2.4rem;
+    border: 1px solid var(--sesame);
+    border-radius: var(--radius);
+    background: rgba(232, 161, 60, 0.07);
+    padding: clamp(1.3rem, 3.5vw, 2rem);
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.2rem;
+}
+.on-light .peek { border-color: var(--ketchup); background: rgba(200, 68, 46, 0.06); }
+.peek-t {
+    font-family: 'Unbounded', sans-serif;
+    font-weight: 600;
+    font-size: clamp(1.05rem, 2.6vw, 1.3rem);
+    letter-spacing: -0.015em;
+    line-height: 1.25;
+    text-wrap: balance;
+    max-width: 30ch;
+}
+.peek-d {
+    font-size: 0.9rem;
+    color: var(--on-char-soft);
+    margin-top: 0.5rem;
+    max-width: 42ch;
+    line-height: 1.5;
+}
+.on-light .peek-d { color: var(--on-paper-soft); }
+
+/* =====================================================================
+   LAYOUT v2 — el número tiene que verse cambiar
+   Patrón de Zendesk/TravelPerk: entradas de un lado, resultado del otro,
+   los dos en pantalla al mismo tiempo. Si el resultado queda abajo, el
+   cliente mueve el input y no ve pasar nada.
+   ===================================================================== */
+@media (min-width: 900px) {
+    .calc {
+        display: grid;
+        grid-template-columns: minmax(0, 0.85fr) minmax(0, 1fr);
+        gap: clamp(2rem, 4vw, 3.4rem);
+        align-items: start;
+    }
+    .calc-rows {
+        grid-template-columns: 1fr;
+        gap: 1.4rem;
+    }
+    /* El resultado deja de ser una fila de abajo y pasa a ser la columna
+       derecha; ocupa las dos filas para quedar junto a los inputs. */
+    .calc-out {
+        grid-column: 2;
+        grid-row: 1 / span 2;
+        margin-top: 0;
+        padding-top: 0;
+        border-top: 0;
+        border-left: 1px dashed var(--paper-line-2);
+        padding-left: clamp(1.6rem, 3vw, 2.6rem);
+        display: grid;
+        gap: 1.5rem;
+        align-content: start;
+    }
+    .calc-note {
+        grid-column: 1;
+        grid-row: 2;
+        margin-top: 0.4rem;
+        align-self: start;
+    }
+}
+
+/* Jerarquía del resultado: el número que cierra la venta es el del AÑO,
+   no el del mes. El del mes suena manejable; el del año duele. Así que el
+   del año manda y los otros dos lo acompañan. */
+@media (min-width: 900px) {
+    .calc-out > div:nth-child(2) .figure-sm {
+        font-size: clamp(3rem, 5vw, 4.2rem);
+        line-height: 1.02;
+    }
+    .calc-out > div:nth-child(1) .figure,
+    .calc-out > div:nth-child(3) .figure-sm {
+        font-size: clamp(1.5rem, 2.2vw, 1.9rem);
+        line-height: 1.15;
+    }
+}
+
+/* ---------- Formulario: una pregunta, toda la atención ----------
+   Seed, Duolingo y Hers dan la pantalla completa a cada pregunta. Aquí
+   no se puede tanto (vive dentro de la página), pero sí se le puede dar
+   aire y una tipografía que no parezca un campo de trámite. */
+.form-shell { padding: clamp(1.6rem, 4vw, 2.6rem); }
+
+@media (min-width: 720px) {
+    .q-label { font-size: clamp(1.6rem, 2.4vw, 2.1rem); line-height: 1.22; }
+    .q-help { font-size: 0.98rem; }
+    .q { min-height: 260px; }
+    .q-textarea { min-height: 130px; }
+}
+
+/* Progreso segmentado: 7 rayitas, no un porcentaje abstracto. Se ve de
+   un vistazo cuánto falta, que es justo lo que frena a la gente. */
+.form-steps {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: 1fr;
+    gap: 0.35rem;
+    margin-bottom: 1.6rem;
+}
+.form-steps i {
+    height: 3px;
+    border-radius: 2px;
+    background: var(--paper-line-2);
+    transition: background 0.4s var(--ease);
+}
+.form-steps i.done { background: var(--ketchup); }
+.form-steps i.now { background: var(--ketchup); opacity: 0.55; }
+
+/* El botón de menú venía en 42px: por debajo del mínimo táctil de 44.
+   Se corrige solo aquí para no mover el resto del sitio. */
+@media (max-width: 860px) {
+    .menu-btn { min-height: 44px; min-width: 44px; }
+}
+
+/* Los tres paquetes son una comparación: o se ven los tres juntos, o se
+   ven de uno en uno. En dos columnas la tercera queda huérfana abajo y
+   parece que sobra, justo la que más margen deja.
+   auto-fit no sirve aquí porque mete las que quepan sin importar el
+   balance, así que se fija a mano. */
+.packages { grid-template-columns: 1fr; }
+@media (min-width: 1000px) {
+    .packages { grid-template-columns: repeat(3, 1fr); }
+}
+
+/* =====================================================================
+   HERO EN MÓVIL — respirar
+   El eyebrow se metía debajo del nav fijo y los cuatro bloques (etiqueta,
+   título, bajada, botones) competían por el mismo aire. Se le da espacio
+   arriba y se aprieta el interlineado del título, que a 4 líneas se veía
+   amontonado.
+   ===================================================================== */
+@media (max-width: 620px) {
+    .hero { padding-top: 5.5rem; }
+    .hero .eyebrow { line-height: 1.7; }
+    .hero-title { margin-top: 1.1rem !important; }
+    /* El titular es una escena, no una etiqueta: necesita entrar en pocas
+       líneas o se pierde el golpe. balance reparte el corte donde la frase
+       lo aguanta en vez de dejar huérfanas. */
+    .hero-mega { line-height: 1.04; font-size: clamp(1.9rem, 8.5vw, 2.2rem); text-wrap: balance; }
+    .hero-sub { margin-top: 1.4rem !important; font-size: 1rem; }
+    /* Los dos botones apilados con el mismo ancho leen mejor que dos
+       pastillas de tamaños distintos. */
+    .hero .btn { width: 100%; justify-content: center; }
+    .hero .magnetic { width: 100%; }
+    .hero .market-note { margin-top: 1.8rem !important; }
+    /* Quedaban ~59px de hueco muerto entre la bajada y los botones. */
+    .hero-sub + .reveal { margin-top: 1.6rem !important; }
+}
+
+/* El titular pasó de una etiqueta corta a una escena. Con más caracteres, el
+   clamp del sistema (hasta 6.2rem) lo parte en cinco líneas: se pierde el
+   golpe. Se baja el techo solo en esta página y se deja que balance elija
+   dónde cortar. El hero también necesita aire bajo el nav fijo. */
+.hero { padding-top: 6rem; padding-bottom: 3rem; }
+.hero-mega { font-size: clamp(2rem, 5.2vw, 4rem); text-wrap: balance; }
+
+/* =====================================================================
+   VALUE STACK — el producto desglosado
+   Distinto de la calculadora: aquella dice cuánto TIEMPO gana, esta dice
+   cuánto VALE lo que recibe. Cada cifra es el piso de un rango de mercado
+   con fuente, nunca un número puesto a ojo.
+   ===================================================================== */
+.vstack {
+    margin-top: 2.4rem;
+    border: 1px solid var(--paper-line-2);
+    border-radius: var(--radius);
+    overflow: hidden;
+}
+.vstack-head {
+    padding: 1.4rem clamp(1.2rem, 3.5vw, 1.9rem);
+    border-bottom: 1px solid var(--paper-line-2);
+    background: rgba(25, 20, 15, 0.025);
+}
+.vstack-t {
+    font-family: 'Unbounded', sans-serif;
+    font-weight: 700;
+    font-size: clamp(1.05rem, 2.4vw, 1.35rem);
+    letter-spacing: -0.02em;
+    line-height: 1.3;
+    color: var(--on-paper);
+    text-wrap: balance;
+}
+.vstack-d {
+    margin-top: 0.6rem;
+    font-size: 0.92rem;
+    line-height: 1.55;
+    color: var(--on-paper-soft);
+    max-width: 60ch;
+}
+
+.vstack-list { list-style: none; margin: 0; padding: 0; }
+.vstack-item {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1.2rem;
+    padding: 1rem clamp(1.2rem, 3.5vw, 1.9rem);
+    border-bottom: 1px dashed var(--paper-line-2);
+}
+.vstack-k { display: flex; flex-direction: column; gap: 0.25rem; min-width: 0; }
+.vstack-n {
+    font-weight: 600;
+    font-size: 0.98rem;
+    line-height: 1.35;
+    color: var(--on-paper);
+}
+.vstack-w {
+    font-size: 0.84rem;
+    line-height: 1.45;
+    color: var(--on-paper-mute);
+}
+/* Las cifras alineadas a la derecha y con cifras tabulares: una columna de
+   números que no cuadra se lee como descuidada. */
+.vstack-v {
+    font-family: 'Martian Mono', monospace;
+    font-size: 0.95rem;
+    color: var(--on-paper-soft);
+    white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+}
+
+.vstack-suma { padding: 1.2rem clamp(1.2rem, 3.5vw, 1.9rem) 1.4rem; background: rgba(200, 68, 46, 0.05); }
+.vstack-fila {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.45rem 0;
+}
+.vstack-sk { font-size: 0.92rem; color: var(--on-paper-soft); }
+.vstack-sv {
+    font-family: 'Martian Mono', monospace;
+    font-size: 1rem;
+    color: var(--on-paper-soft);
+    white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+}
+.vstack-sv.tachado { text-decoration: line-through; text-decoration-thickness: 1px; color: var(--on-paper-mute); }
+.vstack-final { padding-top: 0.8rem; margin-top: 0.3rem; border-top: 1px solid var(--paper-line-2); }
+.vstack-final .vstack-sk { color: var(--on-paper); font-weight: 600; }
+.vstack-final .vstack-sv {
+    font-family: 'Unbounded', sans-serif;
+    font-weight: 700;
+    font-size: clamp(1.05rem, 2.6vw, 1.45rem);
+    color: var(--ketchup);
+    letter-spacing: -0.02em;
+}
+.vstack-nota {
+    margin-top: 0.9rem;
+    font-size: 0.86rem;
+    line-height: 1.55;
+    color: var(--on-paper-soft);
+    max-width: 62ch;
+}
+
+@media (max-width: 560px) {
+    /* En móvil la fila de dos columnas aprieta el nombre contra el precio. */
+    .vstack-item { flex-direction: column; align-items: flex-start; gap: 0.4rem; }
+    .vstack-v { font-size: 0.9rem; }
+}
+
+/* Selector de mercado. Es temporal: existe para que el equipo compare las dos
+   versiones antes de decidir si van dos landings o una con detección de país. */
+.mkt { display: inline-flex; gap: 2px; padding: 3px; margin-bottom: 1rem;
+    border: 1px solid var(--paper-line-2); border-radius: 999px; background: rgba(25,20,15,0.03); }
+.mkt-b {
+    font-family: 'Martian Mono', monospace;
+    font-size: 0.64rem; letter-spacing: 0.06em;
+    padding: 0.5rem 0.9rem; min-height: 32px;
+    border: 0; border-radius: 999px; background: transparent;
+    color: var(--on-paper-mute); cursor: pointer;
+    transition: background 0.25s var(--ease), color 0.25s var(--ease);
+}
+.mkt-b:hover { color: var(--on-paper); }
+.mkt-b.is-on { background: var(--ketchup); color: #fff; }
+.mkt-b:focus-visible { outline: 2px solid var(--ketchup); outline-offset: 2px; }
+@media (max-width: 420px) { .mkt { width: 100%; } .mkt-b { flex: 1; padding: 0.5rem 0.4rem; } }
+
+/* En móvil la fila de cierre metía la etiqueta y el precio en dos columnas y
+   el precio se cortaba ("$1,497 USD una sola..."). Apilados entran completos
+   y el número queda con su propio renglón, que es donde debe estar. */
+@media (max-width: 560px) {
+    .vstack-fila { flex-direction: column; align-items: flex-start; gap: 0.2rem; }
+    .vstack-final .vstack-sv { white-space: normal; line-height: 1.2; }
+    .vstack-sv { white-space: normal; }
+}
+/* Los botones del selector quedaban en 33px, bajo el mínimo táctil de 44. */
+.mkt-b { min-height: 44px; }
+
+/* =====================================================================
+   ALTERNATIVAS — las dos salidas para quien no encaja en el sistema
+   Antes eran tres tarjetas del mismo peso y ninguna destacaba. El sistema
+   ya tiene su value stack arriba; estas van deliberadamente más discretas
+   para que se lean como desvíos, no como opciones a comparar.
+   ===================================================================== */
+.alts { margin-top: 2.8rem; }
+.alts-t {
+    font-family: 'Martian Mono', monospace;
+    font-size: 0.68rem; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--on-paper-mute); margin-bottom: 1.1rem;
+}
+.alts-grid { display: grid; gap: 1rem; }
+@media (min-width: 780px) { .alts-grid { grid-template-columns: 1fr 1fr; } }
+
+.alt {
+    display: flex; flex-direction: column; gap: 0.5rem;
+    padding: 1.3rem clamp(1.1rem, 3vw, 1.6rem);
+    border: 1px solid var(--paper-line-2);
+    border-radius: var(--radius);
+    text-decoration: none;
+    transition: border-color 0.3s var(--ease), background 0.3s var(--ease), transform 0.3s var(--ease);
+}
+.alt:hover {
+    border-color: var(--ketchup);
+    background: rgba(200, 68, 46, 0.03);
+    transform: translateY(-2px);
+}
+.alt:focus-visible { outline: 2px solid var(--ketchup); outline-offset: 3px; }
+
+/* La cita del cliente va primero: se reconoce antes de leer la propuesta. */
+.alt-q {
+    font-style: italic;
+    font-size: 0.95rem;
+    line-height: 1.45;
+    color: var(--on-paper);
+}
+.alt-n {
+    font-family: 'Unbounded', sans-serif;
+    font-weight: 600; font-size: 0.98rem;
+    letter-spacing: -0.01em;
+    color: var(--ketchup);
+}
+.alt-d { font-size: 0.88rem; line-height: 1.55; color: var(--on-paper-soft); }
+.alt-p {
+    margin-top: 0.35rem; padding-top: 0.7rem;
+    border-top: 1px dashed var(--paper-line-2);
+    font-family: 'Martian Mono', monospace;
+    font-size: 0.8rem; color: var(--on-paper);
+}
+.alt-p em {
+    display: block; margin-top: 0.3rem;
+    font-family: inherit; font-style: normal;
+    font-size: 0.72rem; line-height: 1.5;
+    color: var(--on-paper-mute);
+}
+
+/* El selector vive en el navbar porque es un control global, no de una
+   sección. Hay dos instancias (escritorio y menú móvil) y el JS las
+   mantiene sincronizadas: cambiar en una marca la otra. */
+.mkt-nav { margin-bottom: 0; margin-right: 0.4rem; padding: 2px; }
+.mkt-nav .mkt-b {
+    min-height: 34px;
+    padding: 0.35rem 0.7rem;
+    font-size: 0.6rem;
+    letter-spacing: 0.08em;
+}
+/* En el nav el control es secundario: no debe competir con el CTA. */
+.mkt-nav .mkt-b.is-on { background: rgba(232, 161, 60, 0.16); color: var(--sesame); }
+
+/* El navbar se aprieta antes de romper a móvil: ahí el selector se va al menú. */
+@media (max-width: 1080px) { .mkt-nav { display: none; } }
+
+.mkt-movil { margin-top: 1.4rem; width: 100%; }
+.mkt-movil .mkt-b { flex: 1; }
+
+/* =====================================================================
+   MINIATURAS DE LOS CASOS
+   La página no tenía una sola imagen: era 100% texto. Estas miniaturas
+   usan los colores y la tipografía REALES de cada sitio (leídos de sus
+   propias hojas de estilo) para que el visitante vea que son cuatro
+   negocios distintos, no cuatro links iguales.
+   Van en CSS puro: sin archivos que cargar y sin romperse si el cliente
+   cambia una foto.
+   ===================================================================== */
+.case-mini {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 0.15rem;
+    height: 88px;
+    margin-bottom: 1rem;
+    padding: 0 1rem;
+    border-radius: calc(var(--radius) - 4px);
+    overflow: hidden;
+}
+.mini-n {
+    font-family: 'Unbounded', sans-serif;
+    font-weight: 700;
+    font-size: 0.98rem;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+}
+.mini-d {
+    font-family: 'Martian Mono', monospace;
+    font-size: 0.56rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    opacity: 0.75;
+}
+
+/* Chuyitas Prime: carbón cálido y rojo, tipografía condensada */
+.m-chuyitas { background: #1a1512; }
+.m-chuyitas .mini-n { color: #f0e6d8; }
+.m-chuyitas .mini-d { color: #d94f3d; }
+
+/* Inter Node: azul noche y naranja */
+.m-inode { background: #0b1730; }
+.m-inode .mini-n { color: #f2f6fd; }
+.m-inode .mini-d { color: #f5821f; }
+
+/* Lúmiku: crema y café, el único claro de los cuatro */
+.m-lumiku { background: #faf6f1; border: 1px solid rgba(45,35,24,0.1); }
+.m-lumiku .mini-n { color: #2d2318; font-family: 'Fraunces', Georgia, serif; font-weight: 600; }
+.m-lumiku .mini-d { color: #8a7a63; }
+
+/* Burger House: negro y coral */
+.m-burger { background: #17130f; }
+.m-burger .mini-n { color: #f2ebe0; }
+.m-burger .mini-d { color: #f0705f; }
+
+/* La miniatura reacciona con la tarjeta: da la sensación de que se abre. */
+.case:hover .case-mini { transform: scale(1.015); }
+.case-mini { transition: transform 0.35s var(--ease); }
+@media (prefers-reduced-motion: reduce) { .case-mini { transition: none; } }
+
+/* =====================================================================
+   ENCAJE — "es para ti si / no es para ti si"
+   Precalifica antes de que gaste su tiempo y el nuestro. Decir en voz alta
+   a quién NO le sirve genera más confianza que cualquier argumento, y esta
+   idea estaba enterrada en una objeción al 85% del scroll.
+   ===================================================================== */
+.fit { margin-top: 2.6rem; }
+.fit-t {
+    font-family: 'Martian Mono', monospace;
+    font-size: 0.66rem; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--on-paper-mute); margin-bottom: 1.1rem;
+}
+.fit-grid { display: grid; gap: 1rem; }
+@media (min-width: 720px) { .fit-grid { grid-template-columns: 1fr 1fr; } }
+
+.fit-col {
+    padding: 1.3rem clamp(1.1rem, 3vw, 1.6rem);
+    border: 1px solid var(--paper-line-2);
+    border-radius: var(--radius);
+}
+/* El lado que sí encaja se marca; el otro se queda neutro. Si los dos
+   pesaran igual, el "no" competiría con el "sí" y confundiría. */
+.fit-si { border-color: rgba(200, 68, 46, 0.35); background: rgba(200, 68, 46, 0.04); }
+
+.fit-k {
+    font-family: 'Unbounded', sans-serif;
+    font-weight: 600; font-size: 0.95rem;
+    letter-spacing: -0.01em; margin-bottom: 0.8rem;
+}
+.fit-si .fit-k { color: var(--ketchup); }
+.fit-no .fit-k { color: var(--on-paper-mute); }
+
+.fit-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.65rem; }
+.fit-list li {
+    position: relative; padding-left: 1.5rem;
+    font-size: 0.92rem; line-height: 1.5;
+    color: var(--on-paper-soft);
+}
+.fit-si .fit-list li::before {
+    content: "✓"; position: absolute; left: 0; top: 0;
+    color: var(--ketchup); font-weight: 700;
+}
+.fit-no .fit-list li::before {
+    content: "×"; position: absolute; left: 0.15rem; top: 0;
+    color: var(--on-paper-mute); font-size: 1.05rem; line-height: 1.4;
+}
+.fit-nota {
+    margin-top: 1rem;
+    font-size: 0.88rem; line-height: 1.55;
+    color: var(--on-paper-mute); max-width: 62ch;
+}

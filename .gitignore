@@ -1,1 +1,9 @@
 .worktrees/
+
+# Herramientas locales, no van al sitio
+.vscode/
+.superpowers/
+test-results/
+
+# Documentos internos: modelo de negocio y precios, el repo es publico
+docs/

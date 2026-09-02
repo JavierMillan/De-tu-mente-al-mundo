@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Son las diez de la noche y sigues contestando lo mismo</title>
+    <meta name="description" content="Contestas lo mismo todo el día, anotas pedidos en una libreta, agendas citas por chat. Ya existe una herramienta que hace todo eso sola, y lo más seguro es que nadie te la enseñó.">
+    <meta name="theme-color" content="#19140f">
+
+    <meta property="og:title" content="Son las diez de la noche y sigues contestando lo mismo.">
+    <meta property="og:description" content="Y no es que trabajes mal. Es que nadie te enseñó que eso ya lo puede hacer una herramienta.">
+    <meta property="og:type" content="website">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;600;700;800&family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..500&family=Spline+Sans:wght@300;400;500;600&family=Martian+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/sistema.css">
+</head>
+<body class="grain">
+
+    <!-- ============ NAVBAR ============ -->
+    <header class="nav" id="nav">
+        <div class="wrap nav-inner">
+            <a href="index.html" class="nav-logo">De tu mente <span>al mundo</span></a>
+            <nav class="nav-links">
+                <a href="#cuenta" class="nav-link">Haz la cuenta</a>
+                <a href="#como" class="nav-link">Cómo funciona</a>
+                <a href="#precio" class="nav-link">Inversión</a>
+                <div class="mkt mkt-nav" role="group" aria-label="Elegir mercado">
+                    <button type="button" class="mkt-b is-on" data-mkt="mx">MXN</button>
+                    <button type="button" class="mkt-b" data-mkt="us">USD</button>
+                </div>
+                <span class="magnetic"><a href="#diagnostico" class="btn btn-primary" style="--pad-y:0.55rem;--pad-x:1.15rem;font-size:0.82rem;">Las 7 preguntas</a></span>
+            </nav>
+            <button class="menu-btn" id="menu-btn" aria-label="Abrir menú" aria-expanded="false" aria-controls="mobile-menu">
+                <svg class="burger-icon" width="26" height="26" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                    <line class="bi-bun" x1="4" y1="7"  x2="20" y2="7"  stroke-linecap="round"/>
+                    <line class="bi-fill" x1="4" y1="12" x2="20" y2="12" stroke-linecap="round"/>
+                    <line class="bi-bun" x1="4" y1="17" x2="20" y2="17" stroke-linecap="round"/>
+                </svg>
+            </button>
+        </div>
+    </header>
+    <nav class="mobile-menu" id="mobile-menu" aria-label="Menú móvil">
+        <a href="#cuenta">Haz la cuenta</a>
+        <a href="#como">Cómo funciona</a>
+        <a href="#precio">Inversión</a>
+        <a href="#diagnostico">Las 7 preguntas</a>
+        <div class="mkt mkt-movil" role="group" aria-label="Elegir mercado">
+            <button type="button" class="mkt-b is-on" data-mkt="mx">México y LATAM</button>
+            <button type="button" class="mkt-b" data-mkt="us">Estados Unidos</button>
+        </div>
+    </nav>
+
+    <main>
+
+        <!-- ============ 01 · HERO — el eslabón roto ============ -->
+        <section class="hero on-dark" id="inicio">
+            <div class="glow"></div>
+            <div class="wrap" style="z-index:2;">
+                <p class="eyebrow">Para negocios que ya venden</p>
+
+                <h1 class="hero-title" style="margin-top:1.5rem;">
+                    <span class="line-mask"><span class="line-inner hero-mega">Son las diez de la noche</span></span>
+                    <span class="line-mask"><span class="line-inner hero-mega accent">y sigues contestando lo mismo.</span></span>
+                </h1>
+
+                <p class="hero-sub pretty" style="margin-top:2rem; max-width:54ch;">
+                    El precio, el horario, si hacen envíos. Y luego pedir el nombre y la dirección
+                    de uno por uno. Nada de eso lo tienes que hacer tú: en
+                    <strong style="color:var(--sesame);">72 horas</strong> puedes tener una página que lo haga sola.
+                </p>
+
+                <div class="reveal" style="display:flex; flex-wrap:wrap; gap:0.9rem; margin-top:2.4rem;">
+                    <span class="magnetic">
+                        <a href="#cuenta" class="btn btn-primary">Ver cuánto tiempo se te va
+                            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.7" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+                    </span>
+                    <a href="#diagnostico" class="btn btn-ghost">Contestar las 7 preguntas</a>
+                </div>
+
+                <p class="market-note" style="margin-top:2.4rem;">
+                    Guadalajara y Guaymas, MX
+                </p>
+            </div>
+        </section>
+
+        <!-- ============ 02 · LA CUENTA — el momento de conversión, arriba ============ -->
+        <section class="block on-light" id="cuenta">
+            <div class="wrap">
+                <p class="eyebrow">Saca la cuenta</p>
+                <h2 class="display reveal balance" style="font-size:clamp(1.8rem,4.8vw,2.9rem); margin-top:1.2rem; max-width:22ch;">
+                    Haz la cuenta con tus propios números.
+                </h2>
+                <p class="pretty" style="font-size:1.08rem; color:var(--on-paper-soft); max-width:54ch; margin-top:1.5rem;">
+                    Cuántos te escriben al mes. Cuánto te lleva cada uno. Nada más.
+                </p>
+
+                <div class="calc reveal" style="border-color:var(--paper-line-2); background:rgba(25,20,15,0.03);">
+                    <div class="calc-rows">
+                        <div class="calc-field">
+                            <label class="calc-label" for="c-msgs" style="color:var(--on-paper-soft);">Mensajes o llamadas que reciben al mes</label>
+                            <input class="calc-input" type="number" id="c-msgs" value="80" min="0" max="10000" inputmode="numeric" style="background:#fff; border-color:var(--paper-line-2); color:var(--on-paper);">
+                        </div>
+                        <div class="calc-field">
+                            <label class="calc-label" for="c-mins" style="color:var(--on-paper-soft);">Minutos que se van en cada uno</label>
+                            <input class="calc-input" type="number" id="c-mins" value="12" min="0" max="240" inputmode="numeric" style="background:#fff; border-color:var(--paper-line-2); color:var(--on-paper);">
+                        </div>
+                    </div>
+
+                    <div class="calc-out" style="border-top-color:var(--paper-line-2);">
+                        <div class="calc-paso">
+                            <p class="calc-out-label" style="color:var(--on-paper-mute);">Contestar te ocupa</p>
+                            <p class="figure-sm" id="c-hours" style="color:var(--ketchup);">16 horas al mes</p>
+                            <p class="calc-paso-d">Que al año son <span id="c-year">192 horas</span>, o <span id="c-weeks">4.8 semanas</span> seguidas sin hacer otra cosa.</p>
+                        </div>
+
+                        <div class="calc-paso calc-money">
+                            <p class="calc-out-label" style="color:var(--on-paper-mute);">De eso, el sistema puede encargarse de</p>
+                            <p class="figure" id="c-libre" style="color:var(--ketchup);">0 horas</p>
+                            <p class="calc-paso-d">Son <span id="c-dias">0 días</span> completos de trabajo que te regresan al año.</p>
+                            <p class="calc-fuente">No todo: lo repetitivo. Las preguntas de siempre, los datos que pides
+                            en cada plática, el filtro de quién va en serio. Lo que sí te toca a ti se queda contigo.</p>
+                        </div>
+                    </div>
+
+                    <p class="calc-note" id="c-verdict" style="color:var(--on-paper-soft);">
+                        Casi cinco semanas laborales al año contestando lo que se pudo haber contestado antes.
+                    </p>
+                </div>
+
+                <div class="peek reveal">
+                    <div>
+                        <p class="peek-t" style="color:var(--on-paper);">Eso es lo que te cuesta seguir igual.</p>
+                        <p class="peek-d">Una página que conteste, pregunte y filtre por ti cuesta
+                        <strong style="color:var(--on-paper);" data-mx="$9,500 MXN una sola vez" data-us="$1,497 USD una sola vez">$9,500 MXN una sola vez</strong> y la tienes en 72 horas.
+                        Abajo está el detalle completo, pero si ya con esto te late, son 7 preguntas y cinco minutos.</p>
+                    </div>
+                    <a href="#diagnostico" class="btn btn-primary">Contestar las 7 preguntas</a>
+                </div>
+
+                <div class="reveal pretty" style="font-size:1.05rem; color:var(--on-paper-soft); max-width:56ch; margin-top:2.4rem; display:grid; gap:1rem;">
+                    <p>Y ese ni es el número que duele. El que duele es <strong style="color:var(--on-paper);">cuánta de esa gente nunca te iba a comprar</strong>, y aun así les diste veinte minutos a cada uno.</p>
+                    <p>A ti te ha pasado: le escribes a un negocio y te contestan dos días después, cuando ya le compraste a otro. Pues eso mismo está pasando del otro lado de tu chat ahorita.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============ 03 · LA MÁSCARA — de dónde sabemos esto ============ -->
+        <section class="block on-dark">
+            <div class="glow" style="width:520px;height:520px;top:-140px;left:-160px;"></div>
+            <div class="wrap" style="z-index:2;">
+                <div style="max-width:600px;">
+                    <p class="eyebrow">Por qué te estamos hablando de esto</p>
+
+                    <h2 class="reveal balance" style="font-family:'Fraunces',serif; font-style:italic; font-weight:380; font-size:clamp(1.4rem,3.4vw,2.1rem); line-height:1.3; letter-spacing:-0.01em; color:var(--on-char); margin-top:1.4rem;">
+                        Sabemos lo que es contestar cien veces la misma pregunta, y darte cuenta tarde de que eso ya lo podía hacer una herramienta.
+                    </h2>
+
+                    <div class="reveal pretty" style="color:var(--on-char-soft); font-size:1.05rem; margin-top:1.8rem; display:grid; gap:1.1rem;">
+                        <p>Y sabemos lo que se siente ver que la mitad de esas pláticas no iban para ningún lado. Pero ya les diste tu tiempo, una por una, empezando de cero cada vez.</p>
+                        <p>Y no es que trabajes mal, para nada. Es que estás haciendo a mano algo que ya se puede hacer solo, y <strong style="color:var(--on-char);">nadie te lo había enseñado</strong>. Al que te vende una página casi nunca le da por preguntarte cómo trabajas.</p>
+                        <p>De tu mente al mundo nació enseñando a dueños de negocio a comunicar lo que hacen. Y después de acompañar a un buen, ya no puedes no verlo: casi todos se atoran en el mismo punto.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============ 04 · CÓMO FUNCIONA + LAS DOS CATEGORÍAS (fusionadas) ============ -->
+        <section class="block on-light" id="como">
+            <div class="wrap">
+                <p class="eyebrow">Lo que pasa mientras tú duermes</p>
+                <h2 class="click-line reveal balance" style="margin-top:1.2rem;">
+                    Hay páginas que informan. <span class="mark">Y páginas que trabajan.</span>
+                </h2>
+
+                <div class="reveal pretty" style="font-size:1.06rem; color:var(--on-paper-soft); max-width:56ch; margin-top:1.6rem; display:grid; gap:1rem;">
+                    <p>La primera dice tu horario y tu teléfono. La segunda te manda el pedido ya armado, con nombre, dirección y lo que pidió. A las once de la noche, mientras tú duermes.</p>
+                    <p>No todos van a pasar por ahí, y está bien: los casos raros los sigues atendiendo tú. Pero al que sí mandas a la página <strong style="color:var(--on-paper);">le llega un negocio que se ve tan ordenado como en realidad trabajas.</strong></p>
+                </div>
+
+                <div class="flow reveal">
+                    <div class="flow-step">
+                        <span class="flow-n">01</span>
+                        <div>
+                            <p class="flow-t">Llega a tu página</p>
+                            <p class="flow-d">Por donde sea: recomendación, redes, tu tarjeta, un anuncio. Da igual. De aquí en adelante el trabajo deja de ser tuyo.</p>
+                        </div>
+                    </div>
+                    <div class="flow-step">
+                        <span class="flow-n">02</span>
+                        <div>
+                            <p class="flow-t">Contesta lo de siempre</p>
+                            <p class="flow-d">Cuánto cuesta, si hacen envíos, a qué hora abren, si aceptan tarjeta. Lo escribes una vez y deja de tocarte a ti.</p>
+                        </div>
+                    </div>
+                    <div class="flow-step">
+                        <span class="flow-n">03</span>
+                        <div>
+                            <p class="flow-t">Pregunta lo que tú preguntarías</p>
+                            <p class="flow-d">Lo que ocupas saber antes de decidir si le entras. Y al que no le acomoda se da cuenta solo, sin que se lo tengas que decir tú.</p>
+                        </div>
+                    </div>
+                    <div class="flow-step">
+                        <span class="flow-n">04</span>
+                        <div>
+                            <p class="flow-t">Te llega ordenado</p>
+                            <p class="flow-d">A tu WhatsApp, a tu hoja de cálculo, a donde lo ocupes. No treinta mensajes sueltos que hay que volver a leer para entender qué quería.</p>
+                        </div>
+                    </div>
+                    <div class="flow-step">
+                        <span class="flow-n">05</span>
+                        <div>
+                            <p class="flow-t">Entras tú</p>
+                            <p class="flow-d">Ya sabiendo quién es y qué quiere. Ya nomás es cerrarlo.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <p class="" style="margin-top:2.4rem; font-family:'Fraunces',serif; font-style:italic; font-size:clamp(1.15rem,2.6vw,1.5rem); color:var(--ketchup); max-width:36ch; line-height:1.35;">
+                    Que la herramienta se encargue de lo repetitivo, pues, y tú de lo demás.
+                </p>
+            </div>
+        </section>
+
+        <!-- ============ 05 · LOS CASOS — evidencia verificable ============ -->
+        <section class="block on-dark">
+            <div class="wrap">
+                <p class="eyebrow">Cuatro que ya están trabajando</p>
+                <h2 class="display reveal balance" style="font-size:clamp(1.7rem,4.2vw,2.6rem); margin-top:1.2rem; max-width:24ch;">
+                    Ábrelas en otra pestaña.
+                </h2>
+                <p class="pretty" style="color:var(--on-char-soft); max-width:56ch; margin-top:1.4rem;">
+                    Antes de cada una había alguien tomando pedidos por chat, copiando datos a una libreta
+                    o preguntando lo mismo antes de cada cita. Ya no.
+                </p>
+
+                <div class="cases reveal">
+                    <a class="case" href="https://burgerhousegyms.com/" target="_blank" rel="noopener">
+                        <span class="case-mini m-burger" aria-hidden="true"><span class="mini-n">Burger House</span><span class="mini-d">Guaymas</span></span>
+                        <p class="case-role">Antes: el pedido se dictaba por teléfono</p>
+                        <p class="case-name">Burger House <span class="case-go">↗</span></p>
+                        <p class="case-d">Ahora el cliente arma su hamburguesa, le quita lo que no quiere y la orden entra con folio. A la cocina le llega como la cocina la lee: sin cebolla en mayúsculas y todo agrupado.</p>
+                    </a>
+
+                    <a class="case" href="https://internode.mx/" target="_blank" rel="noopener">
+                        <span class="case-mini m-inode" aria-hidden="true"><span class="mini-n">Inter Node</span><span class="mini-d">Internet en 24 h</span></span>
+                        <p class="case-role">Antes: los datos se anotaban a mano</p>
+                        <p class="case-name">Internode <span class="case-go">↗</span></p>
+                        <p class="case-d">Ahora el interesado se registra solo y sus datos caen en Google Sheets, con su ubicación en Maps y aviso por WhatsApp. Nadie transcribe nada.</p>
+                    </a>
+
+                    <a class="case" href="https://lumikupsicoinfantil.com/" target="_blank" rel="noopener">
+                        <span class="case-mini m-lumiku" aria-hidden="true"><span class="mini-n">LÚMIKU</span><span class="mini-d">Tejiendo infancias</span></span>
+                        <p class="case-role">Antes: cada cita se agendaba por chat</p>
+                        <p class="case-name">Lumiku Psicoinfantil <span class="case-go">↗</span></p>
+                        <p class="case-d">Ahora la página pregunta lo necesario antes del primer contacto. Menos citas con quien todavía no está listo, y menos ida y vuelta para agendarlas.</p>
+                    </a>
+
+                    <a class="case" href="https://www.chuyitasprime.com/" target="_blank" rel="noopener">
+                        <span class="case-mini m-chuyitas" aria-hidden="true"><span class="mini-n">Chuyitas Prime</span><span class="mini-d">Tacos & Burros</span></span>
+                        <p class="case-role">Antes: el pedido se armaba por chat</p>
+                        <p class="case-name">Chuyitas Prime <span class="case-go">↗</span></p>
+                        <p class="case-d">Ahora el cliente escoge del menú y la orden llega completa a WhatsApp. Nadie del negocio vuelve a preguntar «¿con todo?» ni a sumar el total a mano.</p>
+                    </a>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- ============ 06 · LA INVERSIÓN + STACKING CERRADO ============ -->
+        <section class="block on-light" id="precio">
+            <div class="wrap">
+                <p class="eyebrow">La inversión</p>
+                <h2 class="display reveal balance" style="font-size:clamp(1.8rem,4.6vw,2.9rem); margin-top:1.2rem; max-width:22ch;">
+                    Arreglamos primero lo que más te duele.
+                </h2>
+
+                <!-- EL STACKING: el número del dolor y el precio, juntos -->
+                <div class="fit reveal">
+                    <p class="fit-t">Antes de que sigas leyendo</p>
+
+                    <div class="fit-grid">
+                        <div class="fit-col fit-si">
+                            <p class="fit-k">Esto es para ti si</p>
+                            <ul class="fit-list">
+                                <li>Ya te llegan clientes y el problema pasó a ser atenderlos</li>
+                                <li>Contestas lo mismo varias veces al día</li>
+                                <li>Pides los mismos datos por chat, uno por uno</li>
+                            </ul>
+                        </div>
+
+                        <div class="fit-col fit-no">
+                            <p class="fit-k">No es para ti si</p>
+                            <ul class="fit-list">
+                                <li>Te llegan cinco mensajes a la semana: ocupas más clientes, no un sistema</li>
+                                <li>Buscas quien te lleve las redes o te maneje la pauta</li>
+                                <li>Quieres la página más barata que encuentres</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <p class="fit-nota">Mejor que lo sepas ahorita y no después de tres pláticas. Y si tienes duda,
+                    para eso está el mapa: sale en 48 horas.</p>
+                </div>
+
+                <div class="vstack reveal">
+                    <div class="vstack-head">
+                        <p class="vstack-t">Lo que recibes, y lo que cuesta cada parte por separado</p>
+                        <p class="vstack-d">Si lo mandaras a hacer por piezas, con distintas personas, esto es lo
+                        que te cobrarían. Son precios de mercado, no inventados por nosotros.</p>
+                    </div>
+
+                    <ul class="vstack-list">
+                        <li class="vstack-item">
+                            <div class="vstack-k">
+                                <span class="vstack-n">La página, armada para tu negocio</span>
+                                <span class="vstack-w">Código propio, no una plantilla que se ve como las demás</span>
+                            </div>
+                            <span class="vstack-v" data-mx="$15,000" data-us="$1,500">$15,000</span>
+                        </li>
+                        <li class="vstack-item">
+                            <div class="vstack-k">
+                                <span class="vstack-n">Con tu marca, no con la nuestra</span>
+                                <span class="vstack-w">Si ya tienes identidad nos ajustamos a ella; si no, te armamos una base</span>
+                            </div>
+                            <span class="vstack-v" data-mx="$8,000" data-us="$800">$8,000</span>
+                        </li>
+                        <li class="vstack-item">
+                            <div class="vstack-k">
+                                <span class="vstack-n">El formulario que pregunta y filtra</span>
+                                <span class="vstack-w">Lo que tú preguntarías, en el orden en que lo preguntarías</span>
+                            </div>
+                            <span class="vstack-v" data-mx="$3,000" data-us="$400">$3,000</span>
+                        </li>
+                        <li class="vstack-item">
+                            <div class="vstack-k">
+                                <span class="vstack-n">Todo llegando ordenado a tu WhatsApp</span>
+                                <span class="vstack-w">Un mensaje que se lee de un vistazo, no treinta sueltos</span>
+                            </div>
+                            <span class="vstack-v" data-mx="$2,500" data-us="$300">$2,500</span>
+                        </li>
+                        <li class="vstack-item">
+                            <div class="vstack-k">
+                                <span class="vstack-n">Los textos que hacen que se entienda</span>
+                                <span class="vstack-w">Tus preguntas de siempre ya contestadas ahí</span>
+                            </div>
+                            <span class="vstack-v" data-mx="$2,000" data-us="$500">$2,000</span>
+                        </li>
+                    </ul>
+
+                    <div class="vstack-suma">
+                        <div class="vstack-fila">
+                            <span class="vstack-sk">Por piezas, en el mercado</span>
+                            <span class="vstack-sv tachado" data-mx="$30,500" data-us="$3,500">$30,500</span>
+                        </div>
+                        <div class="vstack-fila vstack-final">
+                            <span class="vstack-sk">Contigo, todo junto y funcionando</span>
+                            <span class="vstack-sv" data-mx="$9,500 MXN una sola vez" data-us="$1,497 USD una sola vez">$9,500 MXN una sola vez</span>
+                        </div>
+                        <p class="vstack-nota">Sale más barato porque lo hacemos completo, no por partes: no hay
+                        tres personas cobrando por entenderse entre ellas. Y sale en 72 horas por lo mismo.</p>
+                    </div>
+                </div>
+
+                <div class="alts reveal">
+                    <p class="alts-t">¿Y si tu caso no es ese?</p>
+
+                    <div class="alts-grid">
+                        <a href="#diagnostico" class="alt">
+                            <span class="alt-q">“Ni siquiera sé bien por dónde se me está yendo.”</span>
+                            <span class="alt-n">Empieza por el mapa</span>
+                            <span class="alt-d">Te dibujamos tu proceso con los hoyos marcados y contados en horas,
+                            más un boceto de cómo se vería tu página. En 48 horas, sin junta.</span>
+                            <span class="alt-p"><span data-mx="$2,500 MXN" data-us="$197 USD">$2,500 MXN</span>
+                            <em>y se te descuentan completos si luego lo armas con nosotros</em></span>
+                        </a>
+
+                        <a href="#diagnostico" class="alt">
+                            <span class="alt-q">“Lo mío está más enredado que eso.”</span>
+                            <span class="alt-n">Cuéntanos qué necesitas</span>
+                            <span class="alt-d">Cuando dos sistemas se tienen que entender, cuando hay menú de pedidos
+                            o cobro en línea, o cuando todo depende de que una persona esté disponible.</span>
+                            <span class="alt-p">Se cotiza aparte <em>sobre lo que ya viste, sin volver a empezar</em></span>
+                        </a>
+                    </div>
+                </div>
+
+                
+            </div>
+        </section>
+
+        <!-- ============ 07 · GARANTÍA + OBJECIONES ============ -->
+        <section class="block on-dark">
+            <div class="wrap">
+                <div class="guarantee reveal">
+                    <span class="guarantee-tag">Si no funciona</span>
+                    <h2 class="guarantee-t">Si a los 60 días sigues haciendo a mano lo que el sistema debía filtrar, lo seguimos trabajando sin cobrarte.</h2>
+                    <p class="guarantee-d">
+                        No te vamos a prometer que vas a vender el triple. Eso depende de tu producto, de tu precio y de tu mercado,
+                        y prometértelo sería mentirte. Lo que sí está en nuestras manos es que el sistema haga su parte. Si no la hace, lo arreglamos.
+                    </p>
+                    <p class="guarantee-d" style="margin-top:0.9rem;">
+                        Nosotros ya sabemos que funciona. Tú todavía no. Así que ese riesgo lo cargamos nosotros.
+                    </p>
+                </div>
+
+                <p class="eyebrow" style="margin-top:3.4rem;">Lo que no nos preguntas por educación</p>
+
+                <div class="objections reveal">
+                    <details class="obj">
+                        <summary>“Me han cobrado $4,000 por una página. ¿Por qué esto cuesta más?”</summary>
+                        <p class="obj-a">Si lo que ocupas es que te encuentren y que te veas serio, con una de $4,000 la haces y no gastes más, en serio. Esto es para cuando ya te llegan y el problema pasó a ser atenderlos.</p>
+                    </details>
+                    <details class="obj">
+                        <summary>“Ya tengo página y no me sirvió de nada.”</summary>
+                        <p class="obj-a">Nos lo dicen seguido, y casi siempre por lo mismo: ahí está, pero no pregunta, no filtra, no manda la información a ningún lado. Es un folleto con internet, pues.</p>
+                    </details>
+                    <details class="obj">
+                        <summary>“No tengo tiempo para meterme en otro proyecto.”</summary>
+                        <p class="obj-a">Por eso no hay junta de arranque. Contestas el formulario una vez, como cinco minutos, y te buscamos hasta que ya tengamos algo que enseñarte.</p>
+                    </details>
+                    <details class="obj">
+                        <summary>“¿Y si después necesito cambios?”</summary>
+                        <p class="obj-a">El primer mes los cambios chiquitos van sin costo. Y el código es tuyo: si mañana te lates trabajar con alguien más, te llevas todo.</p>
+                    </details>
+                    <details class="obj">
+                        <summary>“¿Esto no lo hace una IA gratis?”</summary>
+                        <p class="obj-a">Sí, una IA te arma una página en veinte minutos. Pero no te dice qué tiene que preguntar tu formulario ni por qué tu proceso se traba justo ahí. Hacerla ya no es lo caro; lo caro es saber qué hacer.</p>
+                    </details>
+                    <details class="obj">
+                        <summary>“¿Y si no soy el tipo de negocio que necesita esto?”</summary>
+                        <p class="obj-a">Puede ser, y mejor te lo decimos desde ahorita. Si te llegan cinco mensajes a la semana no ocupas un sistema, ocupas más clientes: ese es otro problema y otra plática.</p>
+                    </details>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============ 08 · EL FORMULARIO — la demostración ============ -->
+        <section class="block on-light" id="diagnostico">
+            <div class="wrap">
+                <p class="eyebrow">Siete preguntas</p>
+                <h2 class="display reveal balance" style="font-size:clamp(1.9rem,5vw,3.1rem); margin-top:1.2rem; max-width:20ch;">
+                    ¿Qué haces tú que podría hacerse solo?
+                </h2>
+                <p class="pretty" style="color:var(--on-paper-soft); max-width:56ch; margin-top:1.4rem; font-size:1.05rem;">
+                    Cinco minutos. Sin llamada, sin agendar nada. Al final vas a entender
+                    por qué te preguntamos justo esto.
+                </p>
+
+                <div class="form-shell reveal" style="background:rgba(25,20,15,0.03); border-color:var(--paper-line-2);">
+
+                    <div class="form-steps" id="fsteps" aria-hidden="true">
+                        <i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+                    </div>
+
+                    <div class="form-progress" id="fprog" style="color:var(--on-paper-mute);">
+                        <span id="fstep">Pregunta 1 de 7</span>
+                        <span class="form-bar" style="background:var(--paper-line-2);"><i id="fbar"></i></span>
+                    </div>
+
+                    <form id="qform" novalidate>
+                        <div class="q active" data-q="0">
+                            <p class="q-label" style="color:var(--on-paper);">¿A qué se dedica tu negocio?</p>
+                            <p class="q-help" style="color:var(--on-paper-mute);">En tus palabras, como se lo contarías a un amigo.</p>
+                            <textarea class="q-textarea" data-name="giro" placeholder="Ej. Tenemos una taquería con servicio a domicilio…" style="background:#fff; border-color:var(--paper-line-2); color:var(--on-paper);"></textarea>
+                            <p class="q-err">Cuéntanos aunque sea una línea para poder seguir.</p>
+                        </div>
+
+                        <div class="q" data-q="1">
+                            <p class="q-label" style="color:var(--on-paper);">¿Cómo te llegan hoy los clientes?</p>
+                            <p class="q-help" style="color:var(--on-paper-mute);">WhatsApp, anuncios, recomendación, redes, en persona… lo que aplique.</p>
+                            <textarea class="q-textarea" data-name="canal" placeholder="Ej. La mayoría por WhatsApp, algunos por anuncios de Facebook…" style="background:#fff; border-color:var(--paper-line-2); color:var(--on-paper);"></textarea>
+                            <p class="q-err">Necesitamos saber por dónde te llegan para entender el flujo.</p>
+                        </div>
+
+                        <div class="q" data-q="2">
+                            <p class="q-label" style="color:var(--on-paper);">¿Qué pasa desde que alguien pregunta hasta que compra?</p>
+                            <p class="q-help" style="color:var(--on-paper-mute);">Cuéntalo como si le explicaras a alguien que va a cubrirte mañana.</p>
+                            <textarea class="q-textarea" data-name="proceso" placeholder="Ej. Preguntan precio, mando el menú, escogen, confirmo dirección…" style="background:#fff; border-color:var(--paper-line-2); color:var(--on-paper);"></textarea>
+                            <p class="q-err">Este es el paso que más nos sirve. Descríbelo aunque sea por encimita.</p>
+                        </div>
+
+                        <div class="q" data-q="3">
+                            <p class="q-label" style="color:var(--on-paper);">¿Qué parte de eso haces tú, a mano, cada vez?</p>
+                            <p class="q-help" style="color:var(--on-paper-mute);">Lo que repites tanto que ya lo haces en automático.</p>
+                            <textarea class="q-textarea" data-name="manual" placeholder="Ej. Copio y pego el menú, anoto en una libreta, confirmo dirección…" style="background:#fff; border-color:var(--paper-line-2); color:var(--on-paper);"></textarea>
+                            <p class="q-err">Aquí es donde suele estar el cuello de botella. Cuéntanos.</p>
+                        </div>
+
+                        <div class="q" data-q="4">
+                            <p class="q-label" style="color:var(--on-paper);">¿Qué preguntas te hacen una y otra vez?</p>
+                            <p class="q-help" style="color:var(--on-paper-mute);">Las que ya podrías contestar dormido.</p>
+                            <textarea class="q-textarea" data-name="repetidas" placeholder="Ej. ¿Cuánto cuesta? ¿Hacen envíos? ¿A qué hora abren?" style="background:#fff; border-color:var(--paper-line-2); color:var(--on-paper);"></textarea>
+                            <p class="q-err">Escribe al menos una. Suelen ser las que más nos dicen.</p>
+                        </div>
+
+                        <div class="q" data-q="5">
+                            <p class="q-label" style="color:var(--on-paper);">¿Cuántos mensajes o pedidos te llegan por semana?</p>
+                            <p class="q-help" style="color:var(--on-paper-mute);">Un aproximado nos sirve. No necesitamos el dato exacto.</p>
+                            <input class="q-input" type="text" data-name="volumen" placeholder="Ej. Unos 60 o 70 entre semana, más los fines" style="background:#fff; border-color:var(--paper-line-2); color:var(--on-paper);">
+                            <p class="q-err">Un número aproximado nos ayuda a dimensionarlo.</p>
+                        </div>
+
+                        <div class="q" data-q="6">
+                            <p class="q-label" style="color:var(--on-paper);">¿Cómo te buscamos?</p>
+                            <p class="q-help" style="color:var(--on-paper-mute);">Tu nombre y tu WhatsApp. Te escribimos cuando tengamos algo que enseñarte.</p>
+                            <input class="q-input" type="text" data-name="nombre" placeholder="Tu nombre" style="background:#fff; border-color:var(--paper-line-2); color:var(--on-paper);">
+                            <input class="q-input" type="tel" data-name="tel" placeholder="Tu WhatsApp con clave del país" style="background:#fff; border-color:var(--paper-line-2); color:var(--on-paper); margin-top:0.8rem;">
+                            <p class="q-err">Necesitamos tu nombre y un número para poder escribirte.</p>
+                        </div>
+
+                        <div class="q-nav">
+                            <button type="button" class="btn btn-primary" id="qnext">
+                                Siguiente
+                                <svg width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M13 6l6 6-6 6"/></svg>
+                            </button>
+                            <button type="button" class="q-back" id="qback" hidden style="color:var(--on-paper-mute);">Atrás</button>
+                        </div>
+                    </form>
+
+                    <div class="form-done" id="fdone">
+                        <span class="done-mark">✓</span>
+                        <p class="done-t" style="color:var(--on-paper);">Eso que acabas de hacer es lo que vendemos.</p>
+                        <p class="done-d" style="color:var(--on-paper-soft);">
+                            Siete preguntas y ya sabemos cómo trabajas. Sin llamada, sin agendar nada, sin que ninguno
+                            de los dos perdiera media hora averiguando lo básico.
+                        </p>
+                        <p class="done-d" style="color:var(--on-paper-soft);">
+                            <strong style="color:var(--ketchup);">Eso mismo es lo que hacemos para ti.</strong>
+                            Tus clientes contestan, a ti te llega ordenado, y la conversación empieza donde debe empezar.
+                        </p>
+                        <div style="margin-top:1.8rem; display:flex; flex-wrap:wrap; gap:0.9rem;">
+                            <a href="#" class="btn btn-wa" id="wa-send" target="_blank" rel="noopener">
+                                Avisarles por WhatsApp
+                                <svg width="17" height="17" fill="currentColor" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163a11.867 11.867 0 0 1-1.587-5.946C.16 5.335 5.495 0 12.05 0a11.817 11.817 0 0 1 8.413 3.488 11.824 11.824 0 0 1 3.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 0 1-5.688-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884a9.86 9.86 0 0 0 1.51 5.26l-.999 3.648 3.488-.916z"/></svg>
+                            </a>
+                        </div>
+                        <p class="market-note" style="color:var(--on-paper-mute); margin-top:1.4rem;">
+                            Tus respuestas ya quedaron guardadas · El WhatsApp es solo para avisarnos · Te contestamos en menos de 24 horas hábiles
+                        </p>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ============ FOOTER ============ -->
+    <footer class="footer on-dark">
+        <div class="wrap">
+            <div style="display:grid; grid-template-columns: 1fr; gap:1.8rem;">
+                <div>
+                    <a href="index.html" class="nav-logo">De tu mente <span>al mundo</span></a>
+                    <p style="color:var(--on-char-mute); font-size:0.9rem; margin-top:0.6rem; max-width:40ch;">Lo repetitivo que lo haga la máquina. Lo demás, tú.</p>
+                </div>
+                <nav style="display:flex; gap:1.4rem; flex-wrap:wrap;" aria-label="Enlaces del sitio">
+                    <a href="#cuenta" class="nav-link">Haz la cuenta</a>
+                    <a href="#como" class="nav-link">Cómo funciona</a>
+                    <a href="#precio" class="nav-link">Inversión</a>
+                    <a href="index.html" class="nav-link">La comunidad</a>
+                </nav>
+                <div style="display:flex; gap:0.8rem; align-items:center; justify-content:space-between; flex-wrap:wrap;">
+                    <div style="display:flex; gap:0.8rem;">
+                        <a href="https://wa.me/526221424577" target="_blank" rel="noopener" class="social-link" aria-label="WhatsApp">
+                            <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163a11.867 11.867 0 0 1-1.587-5.946C.16 5.335 5.495 0 12.05 0a11.817 11.817 0 0 1 8.413 3.488 11.824 11.824 0 0 1 3.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 0 1-5.688-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884a9.86 9.86 0 0 0 1.51 5.26l-.999 3.648 3.488-.916zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
+                        </a>
+                    </div>
+                    <p style="color:var(--on-char-mute); font-size:0.82rem; text-align:right;">© <span id="year">2026</span> De tu mente al mundo<br>Una iniciativa de La Red de Luz.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ============ BARRA DE CTA (aparece al bajar) ============ -->
+    <div class="cta-bar" id="cta-bar">
+        <p class="cta-bar-txt"><b>7 preguntas, 5 minutos.</b> Te decimos qué parte de tu trabajo se puede hacer sola.</p>
+        <a href="#diagnostico" class="btn btn-primary">Las 7 preguntas</a>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+    <script src="scripts/script.js"></script>
+    <script src="scripts/sistema.js"></script>
+</body>
+</html>
