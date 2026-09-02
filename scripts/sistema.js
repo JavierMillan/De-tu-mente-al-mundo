@@ -10,7 +10,7 @@
 
     // URL del despliegue de Google Apps Script (ver apps-script/Code.gs).
     // Mientras esté vacío no se guarda nada en Drive: el WhatsApp sigue igual.
-    var APPS_SCRIPT_URL = '';
+    var APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxgbthSlAW4dm33eJ-djoexecT5Xfjg-Dwvl4ElYYZ4NTIciUhqY5DwKSDBJKxSnAGo/exec';
 
     // Lo que la calculadora midió, para que el formulario lo mande a la hoja.
     var horasMedidas = { mes: 0, anio: 0 };

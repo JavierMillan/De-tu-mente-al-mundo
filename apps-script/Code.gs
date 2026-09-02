@@ -49,7 +49,7 @@ function doPost(e) {
     hoja.appendRow([
       new Date(),
       String(d.nombre || ''),
-      String(d.tel || ''),
+      d.tel ? "'" + String(d.tel) : '',
       String(d.giro || ''),
       String(d.canal || ''),
       String(d.proceso || ''),
