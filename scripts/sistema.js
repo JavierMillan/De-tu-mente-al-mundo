@@ -1,375 +1,264 @@
-/* =====================================================================
-   SISTEMA — lógica de la landing de servicio
-   1) Calculadora del dolor: que el número lo diga el cliente, no nosotros.
-   2) Formulario de precalificación por pasos → resumen a WhatsApp.
-   ===================================================================== */
+/* US landing controller: language, illustrative animation and explicit request handoff. */
 (function () {
-    'use strict';
-
-    var WA_NUMBER = '526221424577';
-
-    // URL del despliegue de Google Apps Script (ver apps-script/Code.gs).
-    // Mientras esté vacío no se guarda nada en Drive: el WhatsApp sigue igual.
-    var APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxgbthSlAW4dm33eJ-djoexecT5Xfjg-Dwvl4ElYYZ4NTIciUhqY5DwKSDBJKxSnAGo/exec';
-
-    // Lo que la calculadora midió, para que el formulario lo mande a la hoja.
-    var horasMedidas = { mes: 0, anio: 0 };
-
-    /* ---------------------------------------------------------------
-       1 · CALCULADORA DEL DOLOR
-       --------------------------------------------------------------- */
-    var elMsgs = document.getElementById('c-msgs');
-    var elMins = document.getElementById('c-mins');
-
-    if (elMsgs && elMins) {
-        var elHours = document.getElementById('c-hours');
-        var elYear = document.getElementById('c-year');
-        var elWeeks = document.getElementById('c-weeks');
-        var elLibre = document.getElementById('c-libre');
-        var elDias = document.getElementById('c-dias');
-        var elVerdict = document.getElementById('c-verdict');
-
-        var fmt = function (n, decimals) {
-            return n.toLocaleString('es-MX', {
-                minimumFractionDigits: decimals || 0,
-                maximumFractionDigits: decimals || 0
-            });
-        };
-
-        var clamp = function (v, min, max) {
-            if (isNaN(v)) return min;
-            return Math.min(Math.max(v, min), max);
-        };
-
-        // Lo usa el selector de mercado para mantener coherentes los precios
-        // que se muestran en el HTML.
-        // Lo fija el selector de mercado (bloque 4). Si no hay selector, MXN.
-        var PRECIO_SISTEMA = 9500;
-        window.dtmmPrecio = function (n) { PRECIO_SISTEMA = n; recalc(); };
-
-        // Cuánto de lo repetitivo puede absorber el sistema. No es todo: las
-        // preguntas de siempre y la captura de datos sí, la plática real no.
-        var ABSORBE = 0.8;
-
-        // El veredicto habla de lo que gana, no de lo que pierde: el tiempo
-        // libre es el producto, la fuga es solo el síntoma.
-        var verdictFor = function (horasLibresAnio) {
-            if (horasLibresAnio <= 0) {
-                return 'Pon tus números arriba y te decimos cuánto de tu semana se puede hacer solo.';
-            }
-            if (horasLibresAnio < 40) {
-                return 'Con ese volumen todavía no se justifica, y preferimos decírtelo. Cuando te llegue más movimiento, esta es la primera pieza que conviene ordenar.';
-            }
-            if (horasLibresAnio < 150) {
-                return 'Es tiempo real. Alcanza para atender mejor a los que ya te compran, o para no llevarte el trabajo a la casa el fin de semana.';
-            }
-            if (horasLibresAnio < 500) {
-                return 'Eso ya son semanas completas al año. Tiempo para vender, para entrenar a alguien, o simplemente para no estar pegado al teléfono.';
-            }
-            return 'A ese volumen ya no es cuestión de organizarte mejor. O el negocio deja de depender de que tú contestes, o deja de crecer.';
-        };
-
-
-        var recalc = function () {
-            var msgs = clamp(parseFloat(elMsgs.value), 0, 10000);
-            var mins = clamp(parseFloat(elMins.value), 0, 240);
-
-            var monthHours = (msgs * mins) / 60;
-            var yearHours = monthHours * 12;
-            var weeks = yearHours / 40;
-
-            elHours.textContent = fmt(monthHours, monthHours < 10 ? 1 : 0) + (monthHours === 1 ? ' hora al mes' : ' horas al mes');
-            elYear.textContent = fmt(yearHours) + ' horas';
-            elWeeks.textContent = fmt(weeks, 1) + (weeks === 1 ? ' semana' : ' semanas');
-            // El tiempo que el sistema puede absorber, dicho en unidades que se
-            // sienten: días completos de trabajo y horas por semana. Un número de
-            // horas al año no le dice nada a nadie; "12 días" sí.
-            var libresMes = monthHours * ABSORBE;
-            var libresAnio = yearHours * ABSORBE;
-            var dias = libresAnio / 8;
-
-            if (elLibre) elLibre.textContent = fmt(libresMes, libresMes < 10 ? 1 : 0) + (libresMes === 1 ? ' hora al mes' : ' horas al mes');
-            if (elDias) elDias.textContent = fmt(dias, dias < 10 ? 1 : 0) + (dias === 1 ? ' día' : ' días');
-
-            elVerdict.textContent = verdictFor(libresAnio);
-
-            horasMedidas.mes = Math.round(monthHours);
-            horasMedidas.anio = Math.round(yearHours);
-        };
-
-        window.dtmmRecalc = recalc;
-        elMsgs.addEventListener('input', recalc);
-        elMins.addEventListener('input', recalc);
-        recalc();
+  'use strict';
+  const core = window.DTMMSystem;
+  const WA_NUMBER = '526221424577';
+  const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxgbthSlAW4dm33eJ-djoexecT5Xfjg-Dwvl4ElYYZ4NTIciUhqY5DwKSDBJKxSnAGo/exec';
+  const dialog = document.getElementById('request-dialog');
+  const form = document.getElementById('request-form');
+  const formView = document.getElementById('form-view');
+  const previewView = document.getElementById('preview-view');
+  const summary = document.getElementById('request-summary');
+  const sendLink = document.getElementById('send-request');
+  const status = document.getElementById('send-status');
+  const error = document.getElementById('form-error');
+  const steps = [...form.querySelectorAll('[data-step]')];
+  const language = document.querySelectorAll('[data-lang]');
+  const translations = [...document.querySelectorAll('[data-es]')];
+  const labels = [...document.querySelectorAll('[data-label-es]')];
+  const placeholders = [...document.querySelectorAll('[data-placeholder-es]')];
+  const dialogStage = document.getElementById('dialog-stage');
+  translations.forEach(el => { el.dataset.en = el.innerHTML; });
+  labels.forEach(el => { el.dataset.labelEn = el.getAttribute('aria-label'); });
+  placeholders.forEach(el => { el.dataset.placeholderEn = el.placeholder; });
+  let lang = new URLSearchParams(location.search).get('lang') === 'es' ? 'es' : 'en';
+  let step = 0;
+  let opener;
+  let submissionState = '';
+  let submittedKey = '';
+  const stageCopy = {
+    en: ['First, we find where the process gets stuck.', 'Then we map where inquiries come from.', 'Then we identify what your team keeps asking.', 'Finally, we show you the message your team would receive.'],
+    es: ['Primero ubicamos dónde se atasca el proceso.', 'Después ubicamos de dónde llegan las consultas.', 'Luego identificamos qué pregunta tu equipo una y otra vez.', 'Al final te mostramos el mensaje que recibiría tu equipo.']
+  };
+  let animationTimer;
+  const copy = {
+    en: {
+      next: 'Continue →', preview: 'Preview my request →', step: n => `Step ${n} of 4`,
+      error: 'Please complete the highlighted fields. Use a valid email address.',
+      fit: 'These answers describe your workflow. We’ll confirm which rules and connections fit the US$2,500 founding scope.',
+      low: 'With fewer than 10 inquiries a week, this may not be your next investment. We can review the fit before you commit.',
+      sending: 'Opening WhatsApp and attempting to save your request…',
+      attempted: 'Finish by tapping Send in WhatsApp. Your full request is included in the message.',
+      failed: 'We couldn’t save the form. Your complete request is still in the WhatsApp message—tap Send there, or copy the summary.',
+      copied: 'Summary copied.', copyFailed: 'Copy wasn’t available. Select the summary above to copy it manually.',
+      title: 'Stop repeating the same questions | De tu mente al mundo',
+      description: 'Stop repeating the same questions. A custom page collects the details your team needs and hands each inquiry off in context. US$2,500 founding offer, one time, for 5 businesses.',
+      social: 'Stop repeating the same questions.'
+    },
+    es: {
+      next: 'Continuar →', preview: 'Ver mi solicitud →', step: n => `Paso ${n} de 4`,
+      error: 'Completa los campos marcados. Usa un email válido.',
+      fit: 'Estas respuestas describen tu proceso. Confirmaremos qué reglas y conexiones encajan en la oferta fundadora de US$2,500.',
+      low: 'Con menos de 10 consultas por semana, quizá esta no sea tu siguiente inversión. Podemos revisar el encaje antes de contratar.',
+      sending: 'Abriendo WhatsApp e intentando guardar tu solicitud…',
+      attempted: 'Termina pulsando Enviar en WhatsApp. El mensaje incluye tu solicitud completa.',
+      failed: 'No pudimos guardar el formulario. Tu solicitud completa sigue en el mensaje de WhatsApp: pulsa Enviar ahí o copia el resumen.',
+      copied: 'Resumen copiado.', copyFailed: 'No fue posible copiar. Selecciona el resumen de arriba para copiarlo manualmente.',
+      title: 'Deja de repetir las mismas preguntas | De tu mente al mundo',
+      description: 'Deja de repetir las mismas preguntas. Una página recoge los datos que tu equipo necesita y entrega cada solicitud con contexto. Oferta fundadora de US$2,500, pago único, para 5 negocios.',
+      social: 'Deja de repetir las mismas preguntas.'
     }
-
-    /* ---------------------------------------------------------------
-       2 · FORMULARIO DE PRECALIFICACIÓN
-       --------------------------------------------------------------- */
-    var form = document.getElementById('qform');
-    if (!form) return;
-
-    var steps = Array.prototype.slice.call(form.querySelectorAll('.q'));
-    var btnNext = document.getElementById('qnext');
-    var btnBack = document.getElementById('qback');
-    var bar = document.getElementById('fbar');
-    var pasos = document.getElementById('fsteps');
-    var label = document.getElementById('fstep');
-    var done = document.getElementById('fdone');
-    var waLink = document.getElementById('wa-send');
-    var nav = form.querySelector('.q-nav');
-
-    var current = 0;
-    var total = steps.length;
-
-    var render = function () {
-        steps.forEach(function (s, i) {
-            s.classList.toggle('active', i === current);
-        });
-
-        var pct = ((current) / total) * 100;
-        bar.style.width = pct + '%';
-
-        // Rayitas: llenas las contestadas, tenue la actual.
-        if (pasos) {
-            Array.prototype.slice.call(pasos.children).forEach(function (r, i) {
-                r.classList.toggle('done', i < current);
-                r.classList.toggle('now', i === current);
-            });
-        }
-        label.textContent = 'Pregunta ' + (current + 1) + ' de ' + total;
-
-        btnBack.hidden = current === 0;
-        btnNext.firstChild.nodeValue = current === total - 1 ? 'Terminar ' : 'Siguiente ';
-
-        var field = steps[current].querySelector('.q-textarea, .q-input');
-        if (field) {
-            // Enfocar sin robar el scroll en móvil al entrar a la sección.
-            window.setTimeout(function () { field.focus({ preventScroll: true }); }, 120);
-        }
-    };
-
-    var valuesOf = function (step) {
-        return Array.prototype.slice.call(step.querySelectorAll('[data-name]')).map(function (f) {
-            return { name: f.getAttribute('data-name'), value: (f.value || '').trim() };
-        });
-    };
-
-    var validate = function () {
-        var step = steps[current];
-        var err = step.querySelector('.q-err');
-        var fields = valuesOf(step);
-        var ok = fields.every(function (f) { return f.value.length > 0; });
-
-        err.classList.toggle('show', !ok);
-        if (!ok) {
-            var first = step.querySelector('[data-name]');
-            if (first && !first.value.trim()) first.focus();
-        }
-        return ok;
-    };
-
-    var collect = function () {
-        var out = {};
-        steps.forEach(function (s) {
-            valuesOf(s).forEach(function (f) { out[f.name] = f.value; });
-        });
-        return out;
-    };
-
-    // El mensaje es un aviso, no un expediente: las respuestas completas quedan
-    // en la hoja de Drive. Aquí solo va lo necesario para abrir la conversación
-    // sin tener que leer nada.
-    var recorta = function (texto, max) {
-        var t = (texto || '').replace(/\s+/g, ' ').trim();
-        return t.length > max ? t.slice(0, max - 1).trim() + '\u2026' : t;
-    };
-
-    var buildMessage = function (data) {
-        var lines = ['Hola, ya llené las 7 preguntas en la página.', ''];
-
-        lines.push('*Soy:* ' + (data.nombre || ''));
-        if (data.giro) lines.push('*Mi negocio:* ' + recorta(data.giro, 90));
-        if (data.manual) lines.push('*Lo que hago a mano:* ' + recorta(data.manual, 110));
-        if (data.volumen) lines.push('*Volumen:* ' + recorta(data.volumen, 60));
-
-        if (horasMedidas.anio > 0) {
-            lines.push('*Según la calculadora:* ' + horasMedidas.anio + ' horas al año');
-        }
-
-        lines.push('');
-        lines.push('Lo demás ya se los mandé completo desde la página.');
-        return lines.join('\n');
-    };
-
-    // Respaldo en Drive. Va en no-cors: no podemos leer la respuesta, pero
-    // tampoco necesitamos bloquear al cliente esperándola.
-    var guardarEnDrive = function (data) {
-        if (!APPS_SCRIPT_URL) return;
-        try {
-            window.fetch(APPS_SCRIPT_URL, {
-                method: 'POST',
-                mode: 'no-cors',
-                headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-                body: JSON.stringify({
-                    nombre: data.nombre || '',
-                    tel: data.tel || '',
-                    giro: data.giro || '',
-                    canal: data.canal || '',
-                    proceso: data.proceso || '',
-                    manual: data.manual || '',
-                    repetidas: data.repetidas || '',
-                    volumen: data.volumen || '',
-                    horasMes: horasMedidas.mes || '',
-                    horasAnio: horasMedidas.anio || '',
-                    origen: 'sistema.html'
-                })
-            }).catch(function () { /* sin conexión: el WhatsApp sigue funcionando */ });
-        } catch (e) { /* fetch bloqueado: no rompemos el flujo */ }
-    };
-
-    var finish = function () {
-        var data = collect();
-        var msg = buildMessage(data);
-
-        waLink.setAttribute('href', 'https://wa.me/' + WA_NUMBER + '?text=' + encodeURIComponent(msg));
-
-        // Las respuestas completas se van a la hoja; el WhatsApp solo avisa.
-        guardarEnDrive(data);
-
-        form.style.display = 'none';
-        document.getElementById('fprog').style.display = 'none';
-        done.classList.add('show');
-        bar.style.width = '100%';
-
-        // Guardar localmente por si cierra WhatsApp sin enviar.
-        try {
-            window.localStorage.setItem('dtmm_diag', JSON.stringify({ at: Date.now(), data: data }));
-        } catch (e) { /* modo privado o storage bloqueado: seguimos igual */ }
-    };
-
-    btnNext.addEventListener('click', function () {
-        if (!validate()) return;
-        if (current === total - 1) { finish(); return; }
-        current += 1;
-        render();
+  };
+  // Anonymous lifecycle hook only. No tracking service or contact data is sent here.
+  function track(name) {
+    window.dispatchEvent(new CustomEvent('dtmm:analytics', {detail: {event: name, language: lang, step: step + 1}}));
+  }
+  function values(display = false) {
+    return Object.fromEntries([...form.querySelectorAll('[name]')].map(field => [field.name,
+      display && field.tagName === 'SELECT' && field.value ? field.selectedOptions[0].textContent.trim() : field.value.trim()
+    ]));
+  }
+  function resetFormScroll() {
+    dialog.scrollTop = 0;
+    document.querySelector('.phone-page').scrollTop = 0;
+  }
+  function renderStep(focus) {
+    steps.forEach((el, index) => { el.hidden = index !== step; });
+    document.getElementById('step-label').textContent = copy[lang].step(step + 1);
+    document.getElementById('progress-fill').style.width = `${((step + 1) / 4) * 100}%`;
+    document.getElementById('form-back').hidden = step === 0;
+    document.getElementById('form-next').textContent = step === 3 ? copy[lang].preview : copy[lang].next;
+    if (dialogStage) dialogStage.textContent = stageCopy[lang][step];
+    if (focus) {
+      steps[step].querySelector('input, select, textarea').focus({preventScroll: true});
+      resetFormScroll();
+    }
+  }
+  function renderPreview() {
+    const message = core.buildMessage(values(true), lang);
+    summary.textContent = `${message}\n\n2:43 p. m.  ✓✓`;
+    sendLink.href = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(message)}`;
+    document.getElementById('fit-note').textContent = values().volume === 'Fewer than 10' ? copy[lang].low : copy[lang].fit;
+    status.textContent = submissionState ? copy[lang][submissionState] : '';
+  }
+  function setLanguage(next, changeUrl) {
+    lang = next === 'es' ? 'es' : 'en';
+    document.documentElement.lang = lang;
+    translations.forEach(el => {
+      if (lang === 'en') el.innerHTML = el.dataset.en;
+      else el.textContent = el.dataset.es;
     });
+    labels.forEach(el => el.setAttribute('aria-label', el.dataset[lang === 'es' ? 'labelEs' : 'labelEn']));
+    placeholders.forEach(el => { el.placeholder = el.dataset[lang === 'es' ? 'placeholderEs' : 'placeholderEn']; });
+    language.forEach(button => button.setAttribute('aria-pressed', String(button.dataset.lang === lang)));
+    document.title = copy[lang].title;
+    document.querySelector('meta[name="description"]').content = copy[lang].description;
+    document.querySelector('meta[property="og:title"]').content = copy[lang].social;
+    document.querySelector('meta[property="og:description"]').content = copy[lang].description;
+    if (changeUrl) {
+      const url = new URL(location.href);
+      url.searchParams.set('lang', lang);
+      history.replaceState(null, '', url);
+    }
+    renderStep(false);
+    if (!error.hidden) error.textContent = copy[lang].error;
+    if (!previewView.hidden) renderPreview();
+    document.getElementById('copy-status').textContent = '';
+  }
+  language.forEach(button => button.addEventListener('click', () => setLanguage(button.dataset.lang, true)));
+  setLanguage(lang, false);
 
-    btnBack.addEventListener('click', function () {
-        if (current === 0) return;
-        current -= 1;
-        render();
+  document.querySelectorAll('[data-open]').forEach(button => button.addEventListener('click', () => {
+    opener = button;
+    dialog.showModal();
+    if (previewView.hidden) renderStep(true);
+    else {
+      previewView.querySelector('h3').focus({preventScroll: true});
+      resetFormScroll();
+    }
+    track('form_open');
+  }));
+  document.querySelector('.dialog-close').addEventListener('click', () => dialog.close());
+  dialog.addEventListener('close', () => { if (opener) opener.focus({preventScroll: true}); });
+  dialog.addEventListener('keydown', event => {
+    if (event.key !== 'Tab') return;
+    const focusable = [...dialog.querySelectorAll('a[href]:not([tabindex="-1"]), button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled])')]
+      .filter(el => el.getClientRects().length > 0);
+    const first = focusable[0];
+    const last = focusable[focusable.length - 1];
+    if (event.shiftKey && (document.activeElement === first || !focusable.includes(document.activeElement))) {
+      event.preventDefault();
+      last.focus();
+    } else if (!event.shiftKey && document.activeElement === last) {
+      event.preventDefault();
+      first.focus();
+    }
+  });
+  dialog.addEventListener('click', event => {
+    if (event.target !== dialog) return;
+    const box = dialog.getBoundingClientRect();
+    if (event.clientX < box.left || event.clientX > box.right || event.clientY < box.top || event.clientY > box.bottom) dialog.close();
+  });
+  document.getElementById('form-back').addEventListener('click', () => {
+    if (step > 0) step--;
+    error.hidden = true;
+    renderStep(true);
+  });
+  form.addEventListener('input', event => {
+    event.target.removeAttribute('aria-invalid');
+    event.target.removeAttribute('aria-describedby');
+    error.hidden = true;
+    submissionState = '';
+  });
+  form.addEventListener('submit', event => {
+    event.preventDefault();
+    const invalid = core.validateStep(step, values());
+    steps[step].querySelectorAll('[name]').forEach(field => {
+      field.removeAttribute('aria-invalid');
+      field.removeAttribute('aria-describedby');
     });
+    if (invalid.length) {
+      error.hidden = false;
+      error.textContent = copy[lang].error;
+      invalid.forEach(name => {
+        form.elements[name].setAttribute('aria-invalid', 'true');
+        form.elements[name].setAttribute('aria-describedby', 'form-error');
+      });
+      form.elements[invalid[0]].focus();
+      return;
+    }
+    error.hidden = true;
+    if (step < 3) { step++; renderStep(true); track('form_step'); return; }
+    formView.hidden = true;
+    previewView.hidden = false;
+    renderPreview();
+    const heading = previewView.querySelector('h3');
+    heading.tabIndex = -1;
+    heading.focus({preventScroll: true});
+    resetFormScroll();
+    track('request_preview');
+  });
+  document.getElementById('edit-request').addEventListener('click', () => {
+    previewView.hidden = true;
+    formView.hidden = false;
+    step = 0;
+    renderStep(true);
+  });
+  sendLink.addEventListener('click', () => {
+    // Default link action opens WhatsApp during the user's gesture. No automatic send.
+    track('whatsapp_click');
+    const payload = core.buildPayload(values(true), lang, location.search);
+    const key = JSON.stringify(payload);
+    if (key === submittedKey) return;
+    submittedKey = key;
+    submissionState = 'sending';
+    status.textContent = copy[lang].sending;
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 12000);
+    window.fetch(APPS_SCRIPT_URL, {
+      method: 'POST', mode: 'no-cors', credentials: 'omit',
+      headers: {'Content-Type': 'text/plain;charset=utf-8'},
+      body: key, signal: controller.signal, keepalive: true
+    }).then(() => {
+      if (submittedKey !== key) return;
+      submissionState = 'attempted';
+      status.textContent = copy[lang].attempted;
+      track('request_delivery_attempted');
+    }).catch(() => {
+      if (submittedKey !== key) return;
+      submittedKey = '';
+      submissionState = 'failed';
+      status.textContent = copy[lang].failed;
+      track('request_delivery_failed');
+    }).finally(() => clearTimeout(timeout));
+  });
+  document.getElementById('copy-request').addEventListener('click', async () => {
+    try {
+      await navigator.clipboard.writeText(summary.textContent);
+      document.getElementById('copy-status').textContent = copy[lang].copied;
+    } catch (_) {
+      document.getElementById('copy-status').textContent = copy[lang].copyFailed;
+    }
+  });
 
-    // Enter avanza en campos de una línea; en textarea deja escribir saltos.
-    form.addEventListener('keydown', function (e) {
-        if (e.key !== 'Enter') return;
-        if (e.target.tagName === 'TEXTAREA' && !e.metaKey && !e.ctrlKey) return;
-        e.preventDefault();
-        btnNext.click();
-    });
-
-    // Limpiar el error en cuanto empieza a escribir.
-    form.addEventListener('input', function (e) {
-        if (!e.target.matches('[data-name]')) return;
-        var err = steps[current].querySelector('.q-err');
-        if (err) err.classList.remove('show');
-    });
-
-    render();
-})();
-
-/* =====================================================================
-   3 · BARRA DE CTA — aparece al pasar el hero, se esconde al llegar al
-   formulario. Se actualiza por rAF mientras la pestaña está visible, y
-   además con listeners de scroll/resize: el navegador congela rAF en
-   pestañas de fondo, y con Lenis el evento 'scroll' no siempre dispara.
-   Entre los dos, siempre queda uno vivo.
-   ===================================================================== */
-(function () {
-    'use strict';
-
-    var bar = document.getElementById('cta-bar');
-    var form = document.getElementById('diagnostico');
-    var hero = document.querySelector('.hero');
-    if (!bar || !form || !hero) return;
-
-    var visible = null;
-    var looping = false;
-
-    var update = function () {
-        var pasoElHero = hero.getBoundingClientRect().bottom < 0;
-        var formALaVista = form.getBoundingClientRect().top < window.innerHeight - 120;
-        var deberiaVerse = pasoElHero && !formALaVista;
-
-        if (deberiaVerse !== visible) {
-            visible = deberiaVerse;
-            bar.classList.toggle('show', deberiaVerse);
-        }
-    };
-
-    var loop = function () {
-        update();
-        if (looping) window.requestAnimationFrame(loop);
-    };
-
-    var startLoop = function () {
-        if (looping || document.hidden) return;
-        looping = true;
-        window.requestAnimationFrame(loop);
-    };
-
-    var stopLoop = function () { looping = false; };
-
-    document.addEventListener('visibilitychange', function () {
-        if (document.hidden) { stopLoop(); } else { startLoop(); }
-        update();
-    });
-
-    window.addEventListener('scroll', update, { passive: true });
-    window.addEventListener('resize', update, { passive: true });
-
-    startLoop();
-    update();
-})();
-
-/* =====================================================================
-   4 · CAMBIO DE MERCADO (temporal)
-   Mientras se decide si van dos landings separadas o una sola con
-   detección de país, este botón deja al equipo ver ambas versiones.
-   Los precios viven en data-mx / data-us, no aquí: así se corrigen en el
-   HTML sin tocar lógica.
-   ===================================================================== */
-(function () {
-    'use strict';
-
-    var botones = Array.prototype.slice.call(document.querySelectorAll('.mkt-b'));
-    if (!botones.length) return;
-
-    var aplicar = function (mkt) {
-        var attr = 'data-' + mkt;
-        document.querySelectorAll('[data-mx][data-us]').forEach(function (el) {
-            var v = el.getAttribute(attr);
-            if (v) el.textContent = v;
-        });
-        botones.forEach(function (b) {
-            var on = b.getAttribute('data-mkt') === mkt;
-            b.classList.toggle('is-on', on);
-            b.setAttribute('aria-pressed', on ? 'true' : 'false');
-        });
-        // La calculadora divide el precio entre los días recuperados: si no se
-        // entera del cambio, mostraría dólares divididos entre un precio en pesos.
-        if (window.dtmmPrecio) window.dtmmPrecio(mkt === 'us' ? 1497 : 9500);
-
-        try { window.localStorage.setItem('dtmm_mkt', mkt); } catch (e) { /* storage bloqueado */ }
-    };
-
-    botones.forEach(function (b) {
-        b.addEventListener('click', function () { aplicar(b.getAttribute('data-mkt')); });
-    });
-
-    // Recordar la elección entre recargas mientras el equipo lo revisa.
-    var guardado = null;
-    try { guardado = window.localStorage.getItem('dtmm_mkt'); } catch (e) { /* sin storage */ }
-    aplicar(guardado === 'us' ? 'us' : 'mx');
+  const demo = document.getElementById('demo');
+  const motion = matchMedia('(prefers-reduced-motion: reduce)');
+  const stageButtons = [...document.querySelectorAll('[data-demo-stage]')];
+  stageButtons.forEach(button => button.addEventListener('click', () => {
+    const panel = demo.children[Number(button.dataset.demoStage)];
+    const left = demo.scrollLeft + panel.getBoundingClientRect().left - demo.getBoundingClientRect().left;
+    demo.scrollTo({left, behavior: motion.matches ? 'instant' : 'smooth'});
+  }));
+  demo.addEventListener('scroll', () => {
+    const left = demo.getBoundingClientRect().left;
+    const distances = [...demo.children].map(panel => Math.abs(panel.getBoundingClientRect().left - left));
+    const index = distances.indexOf(Math.min(...distances));
+    stageButtons.forEach((button, i) => button.setAttribute('aria-pressed', String(i === index)));
+  }, {passive: true});
+  function play() {
+    clearTimeout(animationTimer);
+    demo.classList.remove('playing');
+    if (motion.matches) return;
+    void demo.offsetWidth;
+    demo.classList.add('playing');
+    animationTimer = setTimeout(() => demo.classList.remove('playing'), 4400);
+  }
+  document.getElementById('replay').addEventListener('click', play);
+  motion.addEventListener('change', () => { if (motion.matches) { clearTimeout(animationTimer); demo.classList.remove('playing'); } });
+  if ('IntersectionObserver' in window) {
+    const observer = new IntersectionObserver(entries => {
+      if (entries.some(entry => entry.isIntersecting)) { play(); observer.disconnect(); }
+    }, {threshold: .15});
+    observer.observe(demo);
+  }
 })();
