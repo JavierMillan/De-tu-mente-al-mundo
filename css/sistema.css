@@ -2025,3 +2025,11 @@ dialog::backdrop {
 .demo-section { border-top:1px solid rgba(25,20,15,.2); padding-top:clamp(88px,11vw,150px); }
 .demo-section::before { content:""; position:absolute; top:-1px; left:0; width:clamp(110px,14vw,190px); height:1px; transform:none; background:var(--sesame); }
 .demo-section::after { display:none; }
+
+.sms-alternative { display:block; width:fit-content; margin:12px auto; font:inherit; font-size:13px; color:inherit; text-underline-offset:4px; }
+.sms-alternative:focus-visible { outline:2px solid var(--sesame); outline-offset:4px; }
+
+#sms-qr-panel { margin-block:16px; font-size:13px; }
+#sms-qr { width:min(100%,320px); margin:12px auto; background:white; padding:12px; }
+#sms-qr svg { display:block; width:100%; height:auto; }
+#sms-qr-panel[hidden], #sms-qr-error[hidden] { display:none; }

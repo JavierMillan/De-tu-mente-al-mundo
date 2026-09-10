@@ -10,6 +10,9 @@
   const previewView = document.getElementById('preview-view');
   const summary = document.getElementById('request-summary');
   const sendLink = document.getElementById('send-request');
+  const smsLink = document.getElementById('send-sms');
+  const isPhone = navigator.userAgentData ? navigator.userAgentData.mobile : /iPhone|Android.*Mobile/i.test(navigator.userAgent);
+  smsLink.setAttribute('aria-controls', 'sms-qr-panel');
   const status = document.getElementById('send-status');
   const error = document.getElementById('form-error');
   const steps = [...form.querySelectorAll('[data-step]')];
@@ -37,9 +40,9 @@
       error: 'Please complete the highlighted fields. Use a valid email address.',
       fit: 'These answers describe your workflow. We’ll confirm which rules and connections fit the US$2,500 founding scope.',
       low: 'With fewer than 10 inquiries a week, this may not be your next investment. We can review the fit before you commit.',
-      sending: 'Opening WhatsApp and attempting to save your request…',
-      attempted: 'Finish by tapping Send in WhatsApp. Your full request is included in the message.',
-      failed: 'We couldn’t save the form. Your complete request is still in the WhatsApp message—tap Send there, or copy the summary.',
+      sending: 'Opening your messaging app and attempting to save your request…',
+      attempted: 'Finish by tapping Send in your messaging app. Your full request is included in the message.',
+      failed: 'We couldn’t save the form. Your complete request is still in the prepared message—tap Send there, or copy the summary.',
       copied: 'Summary copied.', copyFailed: 'Copy wasn’t available. Select the summary above to copy it manually.',
       title: 'Stop repeating the same questions | De tu mente al mundo',
       description: 'Stop repeating the same questions. A custom page collects the details your team needs and hands each inquiry off in context. US$2,500 founding offer, one time, for 5 businesses.',
@@ -50,9 +53,9 @@
       error: 'Completa los campos marcados. Usa un email válido.',
       fit: 'Estas respuestas describen tu proceso. Confirmaremos qué reglas y conexiones encajan en la oferta fundadora de US$2,500.',
       low: 'Con menos de 10 consultas por semana, quizá esta no sea tu siguiente inversión. Podemos revisar el encaje antes de contratar.',
-      sending: 'Abriendo WhatsApp e intentando guardar tu solicitud…',
-      attempted: 'Termina pulsando Enviar en WhatsApp. El mensaje incluye tu solicitud completa.',
-      failed: 'No pudimos guardar el formulario. Tu solicitud completa sigue en el mensaje de WhatsApp: pulsa Enviar ahí o copia el resumen.',
+      sending: 'Abriendo tu app de mensajes e intentando guardar tu solicitud…',
+      attempted: 'Termina pulsando Enviar en tu app de mensajes. El mensaje incluye tu solicitud completa.',
+      failed: 'No pudimos guardar el formulario. Tu solicitud completa sigue en el mensaje preparado: pulsa Enviar ahí o copia el resumen.',
       copied: 'Resumen copiado.', copyFailed: 'No fue posible copiar. Selecciona el resumen de arriba para copiarlo manualmente.',
       title: 'Deja de repetir las mismas preguntas | De tu mente al mundo',
       description: 'Deja de repetir las mismas preguntas. Una página recoge los datos que tu equipo necesita y entrega cada solicitud con contexto. Oferta fundadora de US$2,500, pago único, para 5 negocios.',
@@ -85,9 +88,12 @@
     }
   }
   function renderPreview() {
+    document.getElementById('sms-qr-panel').hidden = true;
+    smsLink.setAttribute('aria-expanded', 'false');
     const message = core.buildMessage(values(true), lang);
-    summary.textContent = `${message}\n\n2:43 p. m.  ✓✓`;
+    summary.textContent = message;
     sendLink.href = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(message)}`;
+    smsLink.href = `sms:+${WA_NUMBER}${/iPad|iPhone|iPod/.test(navigator.userAgent) ? '&' : '?'}body=${encodeURIComponent(message)}`;
     document.getElementById('fit-note').textContent = values().volume === 'Fewer than 10' ? copy[lang].low : copy[lang].fit;
     status.textContent = submissionState ? copy[lang][submissionState] : '';
   }
@@ -194,9 +200,26 @@
     step = 0;
     renderStep(true);
   });
-  sendLink.addEventListener('click', () => {
+  [sendLink, smsLink].forEach(link => link.addEventListener('click', event => {
+    if (link === smsLink && !isPhone) {
+      event.preventDefault();
+      const panel = document.getElementById('sms-qr-panel');
+      panel.hidden = false;
+      smsLink.setAttribute('aria-expanded', 'true');
+      const target = document.getElementById('sms-qr');
+      target.replaceChildren();
+      try {
+        const qr = qrcode(0, 'L');
+        qr.addData(smsLink.href);
+        qr.make();
+        target.innerHTML = qr.createSvgTag({cellSize: 4, margin: 4, scalable: true});
+        document.getElementById('sms-qr-error').hidden = true;
+      } catch (_) {
+        document.getElementById('sms-qr-error').hidden = false;
+      }
+    }
     // Default link action opens WhatsApp during the user's gesture. No automatic send.
-    track('whatsapp_click');
+    track(link === smsLink ? 'sms_click' : 'whatsapp_click');
     const payload = core.buildPayload(values(true), lang, location.search);
     const key = JSON.stringify(payload);
     if (key === submittedKey) return;
@@ -221,7 +244,7 @@
       status.textContent = copy[lang].failed;
       track('request_delivery_failed');
     }).finally(() => clearTimeout(timeout));
-  });
+  }));
   document.getElementById('copy-request').addEventListener('click', async () => {
     try {
       await navigator.clipboard.writeText(summary.textContent);

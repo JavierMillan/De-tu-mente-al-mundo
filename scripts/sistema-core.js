@@ -20,7 +20,7 @@
             ? ['Mi negocio', 'Solicitudes', 'Canal', 'Volumen semanal', 'Datos necesarios', 'Criterios de encaje', 'Nombre', 'Email', 'Teléfono']
             : ['My business', 'Requests', 'Channel', 'Weekly volume', 'Details needed', 'Fit criteria', 'Name', 'Email', 'Phone'];
         return [es ? 'Hola, me interesa una página para mi negocio en Estados Unidos.' : 'Hi, I’m interested in a page for my US business.', '',
-            es ? 'Inversión de referencia: US$3,000, pago único. Alcance por confirmar.' : 'Reference investment: US$3,000 one time. Scope to be confirmed.', '',
+            es ? 'Inversión de referencia: US$2,500, pago único. Alcance por confirmar.' : 'Reference investment: US$2,500 one time. Scope to be confirmed.', '',
             ...fields.filter(function (key) { return clean(data[key]); }).map(function (key) {
                 return labels[fields.indexOf(key)] + ': ' + clean(data[key]);
             })].join('\n');

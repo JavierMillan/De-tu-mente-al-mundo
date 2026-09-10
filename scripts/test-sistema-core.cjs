@@ -12,7 +12,7 @@ test('validates the step and rejects empty answers or invalid email', () => {
 test('WhatsApp handoff contains ALL answers even if Sheets delivery fails', () => {
   const message = core.buildMessage(sample, 'en');
   for (const value of Object.values(sample)) assert.ok(message.includes(value.trim()), value);
-  assert.ok(message.includes('US$3,000'));
+  assert.ok(message.includes('US$2,500'));
   assert.ok(!message.includes('already received'));
   assert.ok(core.buildMessage(sample, 'es').includes('Mi negocio'));
 });
