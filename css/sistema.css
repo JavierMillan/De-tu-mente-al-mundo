@@ -2033,3 +2033,22 @@ dialog::backdrop {
 #sms-qr { width:min(100%,320px); margin:12px auto; background:white; padding:12px; }
 #sms-qr svg { display:block; width:100%; height:auto; }
 #sms-qr-panel[hidden], #sms-qr-error[hidden] { display:none; }
+
+/* Language is a visible utility; the dialog owns vertical scrolling. */
+.language { gap:4px; padding:4px 8px; border:1px solid #8b795e; border-radius:10px; }
+.language-globe { flex:none; margin-right:4px; color:var(--paper); }
+.language button { min-width:40px; min-height:40px; }
+.language button[aria-pressed=true] { background:var(--paper); color:var(--ink); border-radius:6px; }
+#request-dialog { overflow-y:auto; overflow-x:hidden; -webkit-overflow-scrolling:touch; }
+@media(max-width:780px) {
+  #request-dialog { height:100dvh; max-height:100dvh; overscroll-behavior-y:contain; }
+  #request-dialog .dialog-layout { display:block; height:auto; min-height:0; overflow:visible; padding-bottom:calc(32px + env(safe-area-inset-bottom, 0px)); }
+  #request-dialog .phone-shell { display:block; height:auto; max-height:none; overflow:visible; }
+  #request-dialog .phone-page { height:auto; max-height:none; overflow:visible; }
+  #request-dialog .dialog-close { position:sticky; top:8px; float:right; margin:8px 10px -42px 0; z-index:5; }
+}
+
+/* Leave a clear closing pause after the hero action on smaller screens. */
+@media (max-width:780px) {
+  .hero { padding-bottom:clamp(64px,10vw,88px); }
+}
