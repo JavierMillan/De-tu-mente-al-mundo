@@ -36,7 +36,7 @@ https://academia.lareddeluz.com/dtmm/.
 - `scripts/sistema-core.js`: validación, resumen de WhatsApp y adaptación al receptor de Sheets.
 - `scripts/sistema.js`: idioma, animación, modal y envío explícito.
 - Inglés por defecto; `sistema.html?lang=es` abre en español. El selector conserva parámetros UTM.
-- Precio de prueba: **US$3,000**, un proceso, pago único. Entrega en 72 horas con alcance y materiales aprobados.
+- Precio fundador: **US$2,500** (de US$3,500), un proceso, pago único. Cinco lugares hasta el 31 de octubre. Entrega en 72 horas con alcance y materiales aprobados.
 
 ### Verificación local
 

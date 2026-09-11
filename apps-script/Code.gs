@@ -1,34 +1,31 @@
 /**
- * De tu mente al mundo — Receptor del diagnóstico de 7 preguntas
+ * De tu mente al mundo — Receptor de leads de sistema.html
  * (Google Apps Script Web App)
  *
- * INSTALACIÓN (una sola vez, la haces tú con tu cuenta de Google):
+ * Hoja destino: "DTMM — Leads USA Web Acquisition", en la carpeta de Drive
+ * de la constelación De Tu Mente al Mundo.
  *
- * 1. Crea una Google Sheet nueva. Ponle de nombre "DTMM — Diagnósticos".
- *    En la fila 1 pon estos encabezados, en este orden exacto:
+ * INSTALACIÓN (con tu cuenta de Google):
  *
- *    Fecha | Nombre | WhatsApp | Giro | Cómo le llegan clientes | Proceso actual |
- *    Trabajo manual | Preguntas repetidas | Volumen semanal | Horas/mes calculadas |
- *    Horas/año calculadas | Origen
+ * 1. Abre la hoja. Extensiones > Apps Script. Borra lo que haya y pega esto.
+ *    Los encabezados se escriben solos la primera vez que llega un lead.
+ * 2. Implementar > Administrar implementaciones > (lápiz) > Nueva versión.
+ *      - Ejecutar como: Yo
+ *      - Quién tiene acceso: Cualquier usuario   <- si dice "solo yo", da 403
+ *    Editando la implementación existente, la URL NO cambia.
+ * 3. Si creas una implementación nueva, copia la URL /exec y ponla en
+ *    scripts/sistema.js (APPS_SCRIPT_URL).
  *
- * 2. En la Sheet: Extensiones > Apps Script. Borra lo que haya y pega este archivo.
- * 3. Implementar > Nueva implementación > tipo "Aplicación web":
- *      - Ejecutar como: Yo (tu cuenta)
- *      - Quién tiene acceso: Cualquier usuario
- *    Google te va a pedir autorizar. Acepta.
- * 4. Copia la URL que termina en /exec y pégala en scripts/sistema.js,
- *    en la constante APPS_SCRIPT_URL (arriba del todo).
+ * El teléfono se guarda con apóstrofo: sin él, Sheets lee "+52..." como
+ * fórmula y escribe #ERROR! justo en el dato que sirve para contestar.
  *
- * Mientras APPS_SCRIPT_URL esté vacío, la landing sigue funcionando igual:
- * solo manda el WhatsApp y no guarda nada. No se rompe nada.
- *
- * LockService evita que dos envíos al mismo tiempo se pisen la misma fila.
+ * LockService evita que dos envíos simultáneos se pisen la misma fila.
  */
 
 var ENCABEZADOS = [
-  'Fecha', 'Nombre', 'WhatsApp', 'Giro', 'Cómo le llegan clientes',
-  'Proceso actual', 'Trabajo manual', 'Preguntas repetidas', 'Volumen semanal',
-  'Horas/mes calculadas', 'Horas/año calculadas', 'Origen'
+  'Fecha', 'Nombre', 'Email', 'Teléfono', 'Negocio', 'Giro',
+  'Qué solicitudes recibe', 'Canal', 'Volumen semanal',
+  'Datos que pide', 'Criterio de buen cliente', 'Idioma', 'Origen'
 ];
 
 function doPost(e) {
@@ -49,15 +46,17 @@ function doPost(e) {
     hoja.appendRow([
       new Date(),
       String(d.nombre || ''),
+      String(d.email || ''),
+      // El teléfono entra como texto: Sheets lee "+52..." como fórmula.
       d.tel ? "'" + String(d.tel) : '',
-      String(d.giro || ''),
+      String(d.negocio || ''),
+      String(d.industria || ''),
+      String(d.solicitudes || ''),
       String(d.canal || ''),
-      String(d.proceso || ''),
-      String(d.manual || ''),
-      String(d.repetidas || ''),
       String(d.volumen || ''),
-      String(d.horasMes || ''),
-      String(d.horasAnio || ''),
+      String(d.datos || ''),
+      String(d.criterio || ''),
+      String(d.idioma || ''),
       String(d.origen || 'sistema.html')
     ]);
 
@@ -80,15 +79,16 @@ function testDoPost() {
     postData: {
       contents: JSON.stringify({
         nombre: 'Prueba DTMM',
-        tel: '+52 622 142 4577',
-        giro: 'Taquería con servicio a domicilio',
-        canal: 'WhatsApp y anuncios de Facebook',
-        proceso: 'Preguntan precio, mando el menú, escogen, confirmo dirección',
-        manual: 'Copio y pego el menú, anoto en una libreta',
-        repetidas: '¿Cuánto cuesta? ¿Hacen envíos? ¿A qué hora abren?',
-        volumen: 'Unos 60 o 70 entre semana',
-        horasMes: '25',
-        horasAnio: '300',
+        email: 'prueba@ejemplo.com',
+        tel: '+1 555 0100',
+        negocio: 'Roofing company in Phoenix',
+        industria: 'Roofing',
+        solicitudes: 'Quote requests',
+        canal: 'Google Ads y referidos',
+        volumen: '30-60',
+        datos: 'Zona, fecha, alcance',
+        criterio: 'Presupuesto arriba de 5k',
+        idioma: 'en',
         origen: 'prueba manual'
       })
     }

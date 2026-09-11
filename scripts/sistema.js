@@ -101,8 +101,12 @@
     lang = next === 'es' ? 'es' : 'en';
     document.documentElement.lang = lang;
     translations.forEach(el => {
-      if (lang === 'en') el.innerHTML = el.dataset.en;
-      else el.textContent = el.dataset.es;
+      const text = lang === 'en' ? el.dataset.en : el.dataset.es;
+      el.innerHTML = text
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/&lt;br&gt;/g, '<br>');
     });
     labels.forEach(el => el.setAttribute('aria-label', el.dataset[lang === 'es' ? 'labelEs' : 'labelEn']));
     placeholders.forEach(el => { el.placeholder = el.dataset[lang === 'es' ? 'placeholderEs' : 'placeholderEn']; });

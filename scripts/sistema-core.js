@@ -5,7 +5,7 @@
 })(typeof globalThis !== 'undefined' ? globalThis : this, function () {
     'use strict';
     var clean = function (value) { return String(value || '').trim(); };
-    var fields = ['business', 'request', 'channel', 'volume', 'details', 'criteria', 'name', 'email', 'phone'];
+    var fields = ['business', 'industry', 'request', 'channel', 'volume', 'details', 'criteria', 'name', 'email', 'phone'];
     var required = [['business', 'request'], ['channel', 'volume'], ['details', 'criteria'], ['name', 'email']];
     function validateStep(step, data) {
         return required[step].filter(function (key) {
@@ -17,8 +17,8 @@
     function buildMessage(data, lang) {
         var es = lang === 'es';
         var labels = es
-            ? ['Mi negocio', 'Solicitudes', 'Canal', 'Volumen semanal', 'Datos necesarios', 'Criterios de encaje', 'Nombre', 'Email', 'Teléfono']
-            : ['My business', 'Requests', 'Channel', 'Weekly volume', 'Details needed', 'Fit criteria', 'Name', 'Email', 'Phone'];
+            ? ['Mi negocio', 'Giro', 'Solicitudes', 'Canal', 'Volumen semanal', 'Datos necesarios', 'Criterios de encaje', 'Nombre', 'Email', 'Teléfono']
+            : ['My business', 'Industry', 'Requests', 'Channel', 'Weekly volume', 'Details needed', 'Fit criteria', 'Name', 'Email', 'Phone'];
         return [es ? 'Hola, me interesa una página para mi negocio en Estados Unidos.' : 'Hi, I’m interested in a page for my US business.', '',
             es ? 'Inversión de referencia: US$2,500, pago único. Alcance por confirmar.' : 'Reference investment: US$2,500 one time. Scope to be confirmed.', '',
             ...fields.filter(function (key) { return clean(data[key]); }).map(function (key) {
@@ -36,11 +36,12 @@
             if (params.has(key)) attribution.set(key, params.get(key).slice(0, 160));
         });
         var payload = {
-            nombre: clean(data.name), tel: clean(data.phone), giro: clean(data.business),
-            canal: clean(data.channel),
-            proceso: 'Request: ' + clean(data.request) + '\nFit criteria: ' + clean(data.criteria) + '\nEmail: ' + clean(data.email),
-            manual: clean(data.details), repetidas: clean(data.criteria), volumen: clean(data.volume),
-            horasMes: '', horasAnio: '', origen: 'sistema.html?' + attribution.toString()
+            nombre: clean(data.name), email: clean(data.email), tel: clean(data.phone),
+            negocio: clean(data.business), industria: clean(data.industry),
+            solicitudes: clean(data.request), canal: clean(data.channel),
+            volumen: clean(data.volume), datos: clean(data.details),
+            criterio: clean(data.criteria), idioma: lang === 'es' ? 'es' : 'en',
+            origen: 'sistema.html?' + attribution.toString()
         };
         Object.keys(payload).forEach(function (key) {
             if (key !== 'tel') payload[key] = sheetSafe(payload[key]);

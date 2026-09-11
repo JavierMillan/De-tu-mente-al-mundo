@@ -18,16 +18,28 @@ test('WhatsApp handoff contains ALL answers even if Sheets delivery fails', () =
 });
 test('maps the contact and screening data to the deployed Sheets contract', () => {
   const payload = core.buildPayload(sample, 'es', '?utm_source=meta&utm_campaign=us-test');
-  assert.equal(payload.giro, 'Pine Studio');
+  assert.equal(payload.negocio, 'Pine Studio');
   assert.equal(payload.tel, '+1 555 0100');
-  assert.ok(payload.proceso.includes('alex@example.com'));
-  assert.ok(payload.proceso.includes('Austin only'));
+  assert.equal(payload.email, 'alex@example.com');
+  assert.equal(payload.criterio, 'Austin only');
+  assert.equal(payload.idioma, 'es');
   assert.ok(payload.origen.includes('lang=es'));
   assert.ok(payload.origen.includes('utm_campaign=us-test'));
 });
 test('attribution excludes arbitrary query parameters and formula prefixes are escaped for Sheets', () => {
   const payload = core.buildPayload({...sample, business: '=IMPORTXML("x")'}, 'en', '?email=private&token=secret&utm_source=meta');
-  assert.ok(payload.giro.startsWith("'="));
+  assert.ok(payload.negocio.startsWith("'="));
   assert.ok(!payload.origen.includes('private'));
   assert.ok(!payload.origen.includes('secret'));
+});
+
+test('industry is optional: it never blocks a step and travels when present', () => {
+  // Sin giro el formulario debe dejar avanzar igual.
+  assert.deepEqual(core.validateStep(0, {business: 'Pine Studio', request: 'Quote requests'}), []);
+  const sinGiro = core.buildPayload({business: 'Pine Studio'}, 'en', '');
+  assert.equal(sinGiro.industria, '');
+  // Con giro, viaja a la hoja y al mensaje.
+  const conGiro = {...sample, industry: 'Roofing'};
+  assert.equal(core.buildPayload(conGiro, 'en', '').industria, 'Roofing');
+  assert.ok(core.buildMessage(conGiro, 'en').includes('Industry: Roofing'));
 });
