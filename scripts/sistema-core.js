@@ -23,14 +23,14 @@
             saludo: 'Hola, quiero una página para mi negocio en Estados Unidos.',
             contacto: 'CONTACTO', negocio: 'EL NEGOCIO', detalle: 'LO QUE NECESITA',
             nombre: 'Nombre', tel: 'Teléfono', email: 'Email', giro: 'Giro',
-            queHace: 'Qué hace', solicitudes: 'Solicitudes', canal: 'Le llegan por',
+            queHace: 'Qué hace', solicitudes: 'Tarea manual', canal: 'Le llegan por',
             volumen: 'Volumen semanal', datos: 'Datos que pide', criterio: 'Buen cliente para él',
             cierre: 'Inversión de referencia: US$2,500, pago único. Alcance por confirmar.'
         } : {
             saludo: 'Hi, I’m interested in a page for my US business.',
             contacto: 'CONTACT', negocio: 'THE BUSINESS', detalle: 'WHAT THEY NEED',
             nombre: 'Name', tel: 'Phone', email: 'Email', giro: 'Industry',
-            queHace: 'What they do', solicitudes: 'Requests', canal: 'They arrive via',
+            queHace: 'What they do', solicitudes: 'Manual task', canal: 'They arrive via',
             volumen: 'Weekly volume', datos: 'Details they ask for', criterio: 'Good client for them',
             cierre: 'Reference investment: US$2,500 one time. Scope to be confirmed.'
         };

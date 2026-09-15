@@ -24,7 +24,7 @@
 
 var ENCABEZADOS = [
   'Fecha', 'Nombre', 'Email', 'Teléfono', 'Negocio', 'Giro',
-  'Qué solicitudes recibe', 'Canal', 'Volumen semanal',
+  'Tarea manual que le quita tiempo', 'Canal', 'Volumen semanal',
   'Datos que pide', 'Criterio de buen cliente', 'Idioma', 'Origen'
 ];
 
@@ -83,7 +83,7 @@ function testDoPost() {
         tel: '+1 555 0100',
         negocio: 'Roofing company in Phoenix',
         industria: 'Roofing',
-        solicitudes: 'Quote requests',
+        solicitudes: 'Typing prospect details into a spreadsheet',
         canal: 'Google Ads y referidos',
         volumen: '30-60',
         datos: 'Zona, fecha, alcance',
