@@ -2219,3 +2219,35 @@ dialog::backdrop {
   .faq-aside { max-width:none; margin-top:16px; }
   .faq-cta { width:100%; margin-top:18px; }
 }
+
+/* Fila de resumen tipo order summary (Rivian, Xbox): etiqueta y cifra en
+   una sola linea, el total separado por una regla y con mas peso. */
+.included li {
+  display:flex;
+  align-items:baseline;
+  gap:16px;
+  padding:11px 0;
+  font-size:15px;
+}
+.included li > span:first-child {
+  flex:1;
+  min-width:0;
+  /* La regla vieja pintaba de mostaza el span de la palomita; ya no hay
+     palomita, asi que la etiqueta se pinta explicitamente. */
+  color:var(--paper);
+}
+.included .piece-price { color:var(--muted); }
+.included-total > span:first-child { color:var(--paper); }
+.included-total {
+  border-top:1px solid var(--paper-line);
+  margin-top:8px;
+  padding-top:16px !important;
+  font-weight:500;
+}
+.included-source {
+  margin-top:14px;
+  color:var(--muted);
+  font-size:12px;
+  line-height:1.6;
+  max-width:420px;
+}
