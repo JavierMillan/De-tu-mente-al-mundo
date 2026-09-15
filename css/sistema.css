@@ -2609,3 +2609,54 @@ dialog::backdrop {
 .calc-money input::-webkit-inner-spin-button { appearance:none; margin:0; }
 .calc-money input[type=number] { appearance:textfield; }
 .calc-unit { flex:none; color:#6a5a45; font-size:13px; white-space:nowrap; }
+
+/* Patron tomado del ROI de Zendesk: el panel de resultado nunca queda
+   vacio, anuncia lo que va a mostrar. Antes la tarjeta tenia los campos
+   arriba y medio carton en blanco abajo. */
+.calc-empty {
+  margin-top:26px;
+  padding-top:24px;
+  border-top:1px solid var(--paper-line);
+}
+.calc-empty .roi-label { color:#5f523f; }
+.calc-empty-amount {
+  margin:6px 0 10px;
+  font:500 clamp(1.9rem,3vw,2.4rem)/1 var(--display);
+  letter-spacing:-.03em;
+  color:#c3b69f;
+  user-select:none;
+}
+.calc-hint {
+  margin:0;
+  padding:0;
+  border:0;
+  color:#6a5a45;
+  font-size:13px;
+  line-height:1.6;
+  max-width:340px;
+}
+.calc-box:has(#calc-out:not([hidden])) .calc-empty { display:none; }
+
+/* Transiciones. El resultado entra desde abajo en vez de aparecer de
+   golpe, y los campos responden al foco. */
+.calc-box .roi {
+  animation:calc-in .38s cubic-bezier(.22,.9,.32,1) both;
+}
+@keyframes calc-in {
+  from { opacity:0; transform:translateY(10px); }
+  to { opacity:1; transform:none; }
+}
+.calc-money {
+  transition:border-color .2s ease, background .2s ease, box-shadow .2s ease;
+}
+.calc-money:focus-within {
+  border-color:var(--sesame);
+  box-shadow:0 0 0 3px rgba(232,161,60,.16);
+}
+.calc-money:hover { border-color:#c9b896; }
+/* La cifra cambia de valor mientras se escribe: un pulso corto avisa. */
+.calc-box .roi-amount { transition:color .2s ease; }
+@media (prefers-reduced-motion:reduce) {
+  .calc-box .roi { animation:none; }
+  .calc-money { transition:none; }
+}
