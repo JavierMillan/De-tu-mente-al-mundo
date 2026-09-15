@@ -324,8 +324,11 @@
   const core = window.DTMMSystem;
   if (!core || !core.estimateLoss) return;
 
+  // Con type=text hay que filtrar lo que no sea digito.
+  const soloDigitos = el => { const limpio = el.value.replace(/[^0-9]/g, ''); if (limpio !== el.value) el.value = limpio; return limpio; };
+
   function render() {
-    const est = core.estimateLoss(ticket.value, volumen.value);
+    const est = core.estimateLoss(soloDigitos(ticket), soloDigitos(volumen));
     if (!est || est.mes < 1) { box.hidden = true; return; }
     const lang = document.documentElement.lang === 'es' ? 'es' : 'en';
     const money = n => '$' + Number(n).toLocaleString('en-US');

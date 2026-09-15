@@ -2582,9 +2582,11 @@ dialog::backdrop {
 /* Sin resultado la seccion medía 390px y con resultado 666: saltaba 276px
    y vacia se veia como un rectangulito aplastado. Se reserva la altura
    para que el bloque no cambie de tamano al calcular. */
-.calc-section { min-height:clamp(620px, 68vh, 760px); align-content:center; }
-.calc-box { min-height:516px; display:flex; flex-direction:column; }
-.calc-box .roi { margin-top:auto; }
+.calc-section { align-content:center; }
+/* Sin min-height: era la unica seccion que lo tenia y la inflaba de
+   mas. La estabilidad la da la tarjeta, que ya reserva su altura. */
+.calc-box { min-height:475px; display:flex; flex-direction:column; }
+.calc-box .roi { margin-top:26px; }
 @media (max-width:780px) {
   .calc-section { min-height:0; }
   .calc-box { min-height:0; }
@@ -2593,10 +2595,17 @@ dialog::backdrop {
 /* Mientras no hay datos, la altura reservada se llena con la instruccion
    en vez de un hueco vacio. */
 .calc-hint {
-  margin-top:auto;
+  margin-top:26px;
   padding-top:22px;
   border-top:1px solid var(--paper-line);
   color:#6a5a45;
   font-size:13px;
 }
 .calc-box:has(#calc-out:not([hidden])) .calc-hint { display:none; }
+/* El spinner nativo de type=number se encimaba con "per week" y se veia
+   feo. Con type=text + inputmode numeric desaparece, el teclado del movil
+   sigue siendo numerico y el scroll del mouse ya no cambia el valor. */
+.calc-money input::-webkit-outer-spin-button,
+.calc-money input::-webkit-inner-spin-button { appearance:none; margin:0; }
+.calc-money input[type=number] { appearance:textfield; }
+.calc-unit { flex:none; color:#6a5a45; font-size:13px; white-space:nowrap; }
