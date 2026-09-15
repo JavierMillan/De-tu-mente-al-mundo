@@ -318,3 +318,14 @@
     observer.observe(demo);
   }
 })();
+
+// El boton flotante aparece cuando el CTA del hero ya salio de pantalla.
+(function () {
+  const floating = document.querySelector('.global-cta');
+  const heroCta = document.querySelector('.hero-actions .button.primary');
+  if (!floating || !heroCta) return;
+  if (!('IntersectionObserver' in window)) { floating.classList.add('is-visible'); return; }
+  new IntersectionObserver(entries => {
+    entries.forEach(entry => floating.classList.toggle('is-visible', !entry.isIntersecting));
+  }, {threshold: 0}).observe(heroCta);
+})();

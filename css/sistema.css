@@ -167,8 +167,6 @@ input:focus-visible,select:focus-visible,textarea:focus-visible {
 @media(max-width:780px) { .hero h1 { font-size:clamp(2.7rem,12vw,4.8rem); } }
 .demo-section { position:relative; overflow:hidden; }
 .demo-section:before { content:none; }
-.global-cta { display:none; }
-@media(max-width:780px) { .global-cta { display:inline-flex; } }
 .hero { grid-template-columns:minmax(0,1.18fr) minmax(260px,.82fr); grid-template-rows:1fr; min-height:calc(100svh - 94px); align-items:center; gap:clamp(32px,6vw,88px); padding-block:clamp(30px,5vh,64px) 0; }
 .hero-copy { max-width:760px; }
 .hero h1 { max-width:760px; font-size:clamp(3rem,5.1vw,5.25rem); line-height:1.01; letter-spacing:-.06em; }
@@ -232,26 +230,33 @@ input:focus-visible,select:focus-visible,textarea:focus-visible {
 .header-cta {
   display:inline-flex;
   align-items:center;
-  gap:8px;
-  border:1px solid var(--paper);
-  background:var(--paper);
-  color:var(--ink);
-  border-radius:8px;
-  padding:9px 13px;
+  gap:6px;
+  border:0;
+  background:none;
+  color:var(--sesame);
+  padding:9px 2px;
   font:500 11px var(--mono);
   letter-spacing:.02em;
-  transition:background .2s ease,color .2s ease,transform .2s ease
+  text-underline-offset:4px;
+  transition:color .2s ease
 }
 .header-cta:hover {
-  background:var(--sesame);
-  border-color:var(--sesame);
-  transform:translateY(-1px)
+  color:var(--paper);
+  text-decoration:underline
+}
+.header-cta:focus-visible {
+  outline:2px solid var(--sesame);
+  outline-offset:3px
 }
 .global-cta {
   position:fixed;
   z-index:20;
   right:24px;
   bottom:24px;
+  opacity:0;
+  visibility:hidden;
+  transform:translateY(12px);
+  pointer-events:none;
   display:inline-flex;
   align-items:center;
   gap:12px;
@@ -262,11 +267,22 @@ input:focus-visible,select:focus-visible,textarea:focus-visible {
   padding:14px 17px;
   font:500 11px var(--mono);
   box-shadow:0 8px 24px rgba(0,0,0,.22);
-  transition:transform .2s ease,background .2s ease
+  transition:opacity .3s ease,visibility .3s ease,transform .3s ease,background .2s ease
+}
+.global-cta.is-visible {
+  opacity:1;
+  visibility:visible;
+  transform:none;
+  pointer-events:auto
 }
 .global-cta:hover {
-  background:var(--paper);
+  background:var(--paper)
+}
+.global-cta.is-visible:hover {
   transform:translateY(-2px)
+}
+@media (prefers-reduced-motion:reduce) {
+  .global-cta { transform:none; transition:opacity .2s ease,visibility .2s ease }
 }
 .nav-link {
   font-size:13px;
