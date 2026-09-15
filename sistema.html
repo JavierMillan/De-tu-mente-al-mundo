@@ -16,10 +16,10 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Spline+Sans:wght@400;500;600;700&family=Martian+Mono:wght@400;500&family=Unbounded:wght@500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/sistema.css?v=20260916d">
-  <script src="scripts/sistema-core.js?v=20260916d" defer></script>
+  <link rel="stylesheet" href="css/sistema.css?v=20260916e">
+  <script src="scripts/sistema-core.js?v=20260916e" defer></script>
   <script src="scripts/qrcode.js" defer></script>
-  <script src="scripts/sistema.js?v=20260916d" defer></script>
+  <script src="scripts/sistema.js?v=20260916e" defer></script>
 </head>
 <body>
 <a class="skip-link" href="#main" data-es="Ir al contenido">Skip to content</a>
@@ -37,21 +37,14 @@
 <main id="main">
   <section class="hero wrap" id="inicio">
     <div class="hero-copy">
-      <p class="eyebrow"><span class="signal" aria-hidden="true"></span><span data-es="Para negocios con mucho movimiento y un solo teléfono">For busy businesses with one phone and too many messages</span></p>
+      
       <h1><span data-es="Cien mensajes al día.">A hundred messages a day.</span><br><em data-es="Y tú preguntando lo mismo cien veces.">And you asking the same thing a hundred times.</em></h1>
       <p class="hero-description" data-es="Vengan de un anuncio, de una recomendación o de Google, todos preguntan igual: ¿qué necesitas?, ¿dónde estás?, ¿para cuándo? Y después de veinte minutos, descubres que ni siquiera estaba listo para comprar.">Whether they come from an ad, a referral or Google, they all ask the same way: what do you need, where are you, when do you need it? Then, twenty minutes later, you find out they were never ready to buy.</p>
-      <p class="fit-line" data-es="Haz que los prospectos serios lleguen con respuestas, no con más preguntas.">Let serious prospects arrive with answers, not more questions.</p>
+      
       <div class="hero-actions"><button class="button primary" type="button" data-open><span data-es="Ver cómo funcionaría en mi negocio">Show me how this could work for my business</span><span aria-hidden="true">↗</span></button></div>
       <div class="mobile-offer" hidden></div>
     </div>
-    <aside class="hero-workflow" aria-label="How the workflow changes" data-label-es="Cómo cambia el proceso" hidden>
-      <div class="workflow-head"><span class="mono" data-es="LO QUE RECIBE TU EQUIPO">WHAT YOUR TEAM RECEIVES</span><span class="workflow-live"><i></i> READY</span></div>
-      <div class="workflow-line"><span class="workflow-index">01</span><div><strong data-es="Llega la consulta">Inquiry arrives</strong><small data-es="“¿Me pueden cotizar?”">“Can I get a quote?”</small></div></div>
-      <div class="workflow-line is-friction"><span class="workflow-index">02</span><div><strong data-es="Tu equipo vuelve a preguntar">Your team asks again</strong><small data-es="Zona · fecha · alcance · presupuesto">Area · date · scope · budget</small></div><span class="workflow-mark">↻</span></div>
-      <div class="workflow-cut"><span data-es="AQUÍ ENTRA LA PÁGINA">THE PAGE STEPS IN HERE</span></div>
-      <div class="workflow-line is-handoff"><span class="workflow-index">03</span><div><strong data-es="Llega con contexto">It arrives with context</strong><small data-es="Una solicitud lista para revisar">A request ready to review</small></div><span class="workflow-mark">↗</span></div>
-      <p class="workflow-foot" data-es="Hasta 10 preguntas. La siguiente depende de la anterior.">Up to 10 questions. The next one depends on the one before it.</p>
-    </aside>
+    
     <div class="hero-footer"><span class="mono" data-es="COTIZACIONES · REGISTRO · PEDIDOS · RESERVAS">QUOTES · INTAKE · ORDERS · BOOKINGS</span><span data-es="Hecho en México. Trabajamos en inglés y español.">Built in Mexico. Working in English & Spanish.</span></div>
   </section>
 
@@ -72,7 +65,7 @@
   <section class="demo-section" id="como">
     <div class="wrap">
       <div class="section-heading"><div><p class="eyebrow" data-es="EL SISTEMA EN ACCIÓN">THE SYSTEM IN ACTION</p><h2 data-es="El prospecto responde primero. Tu equipo continúa desde contexto.">They answer first.<br>Your team follows up with context.</h2></div><p class="section-description" data-es="Mira el puente: una consulta de limpieza se convierte en una solicitud que tu equipo puede revisar.">Watch the bridge: a cleaning inquiry becomes a request your team can review.</p></div>
-      <div class="demo-controls"><span class="example-label" data-es="Ejemplo ilustrativo · Servicio de limpieza">Illustrative example · Cleaning service</span><button id="replay" class="text-link" type="button"><span aria-hidden="true">↻</span> <span data-es="Repetir animación">Replay animation</span></button></div>
+      <div class="demo-controls"><button id="replay" class="text-link" type="button"><span aria-hidden="true">↻</span> <span data-es="Repetir animación">Replay animation</span></button></div>
       <div class="demo-stage-controls" role="group" aria-label="Follow the example" data-label-es="Recorre el ejemplo"><button type="button" data-demo-stage="0" aria-pressed="true" data-es="Antes">Before</button><button type="button" data-demo-stage="1" aria-pressed="false" data-es="Tu página">Your page</button><button type="button" data-demo-stage="2" aria-pressed="false" data-es="Después">After</button></div>
       <div class="demo-grid" id="demo">
         <article class="demo-panel before-panel">
@@ -126,7 +119,7 @@
         <p class="roi-label" data-es="LO QUE HOY SE ENFRÍA">WHAT GOES COLD TODAY</p>
         <p class="roi-amount"><span id="calc-amount"></span> <span class="roi-period" data-es="al mes">per month</span></p>
         <p class="roi-note" id="calc-note"></p>
-        <p class="roi-source" data-es="De cada 20 consultas asumimos recuperar 1, y en volúmenes muy altos frenamos la cuenta a propósito. Es conservador: el estudio de MIT e InsideSales (15,000 leads) midió que calificar a alguien contestando a los 5 minutos en vez de a los 30 es 21 veces más probable, y Harvard Business Review auditó 2,241 empresas y encontró 42 horas de respuesta promedio, con 23% que nunca contesta.">We assume recovering 1 in every 20 inquiries, and at very high volumes we deliberately stop the math. It is conservative: the MIT/InsideSales study (15,000 leads) found you are 21 times more likely to qualify someone answering in 5 minutes instead of 30, and Harvard Business Review audited 2,241 companies and found a 42-hour average response time, with 23% who never reply.</p>
+        <p class="roi-source" data-es="Asumimos recuperar 1 de cada 20. Es conservador: MIT e InsideSales (15,000 leads) midieron 21 veces más probabilidad de calificar contestando a los 5 minutos que a los 30.">We assume recovering 1 in every 20. Conservative: MIT/InsideSales (15,000 leads) measured 21x higher odds of qualifying when answering in 5 minutes versus 30.</p>
       </output>
     </div>
   </section>
