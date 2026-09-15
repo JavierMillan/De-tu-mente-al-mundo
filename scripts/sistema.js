@@ -132,7 +132,9 @@
         .replace(/&lt;br&gt;/g, '<br>')
         // Unica etiqueta con atributo permitida: el (opcional) de las labels.
         .replace(/&lt;span class=['"]optional['"]&gt;/g, '<span class="optional">')
-        .replace(/&lt;\/span&gt;/g, '</span>');
+        .replace(/&lt;\/span&gt;/g, '</span>')
+        .replace(/&lt;strong&gt;/g, '<strong>')
+        .replace(/&lt;\/strong&gt;/g, '</strong>');
     });
     labels.forEach(el => el.setAttribute('aria-label', el.dataset[lang === 'es' ? 'labelEs' : 'labelEn']));
     placeholders.forEach(el => { el.placeholder = el.dataset[lang === 'es' ? 'placeholderEs' : 'placeholderEn']; });

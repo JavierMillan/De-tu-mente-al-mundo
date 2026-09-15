@@ -2251,3 +2251,42 @@ dialog::backdrop {
   line-height:1.6;
   max-width:420px;
 }
+
+/* La columna de la oferta tenia tres problemas medidos:
+   1. El deadline se renderizaba a 15px y competia con el precio. La regla
+      que ganaba es .offer-copy>p:not(.eyebrow):not(.small-note): cada :not()
+      cuenta como clase, asi que vale (0,3,1). Para ganarle hay que igualar
+      o subir, no basta con ir despues en el archivo.
+   2. El boton quedaba pegado al parrafo de arriba (gap real: 0px).
+   3. Parrafo, deadline y garantia pesaban casi igual: sin jerarquia. */
+.offer-copy > p.offer-deadline:not(.eyebrow):not(.small-note) {
+  font-size:11px;
+  line-height:1.6;
+  margin-top:14px;
+  max-width:330px;
+}
+.offer-copy .button.primary {
+  margin-top:26px;
+}
+.offer-copy .small-note.guarantee {
+  margin-top:16px;
+  font-size:12px;
+  line-height:1.65;
+  color:var(--muted);
+}
+/* El precio manda: mas aire arriba para separarlo del texto que describe. */
+.offer-amount { margin-top:34px; }
+
+/* Recognition: el parrafo largo no tenia ni un punto de fijacion, que es
+   el disparador del F-pattern segun NN/g. Un solo enfasis, en la frase
+   que responde las dos objeciones de precio. */
+.recognition-copy strong {
+  color:var(--ink);
+  font-weight:600;
+}
+
+/* Oferta: layer-cake necesita capas distinguibles. Antes parrafo (15),
+   deadline (15) y garantia (12) pesaban casi igual y el ojo no tenia
+   donde aterrizar. Tres niveles claros: precio > etiqueta > nota. */
+.offer-copy .included li { font-size:14px; }
+.offer-copy .eyebrow { margin-bottom:4px; }
