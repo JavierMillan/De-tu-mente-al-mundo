@@ -2435,38 +2435,168 @@ dialog::backdrop {
 .calc-money:focus-within { border-color:var(--sesame); }
 .calc-fields .calc-money { margin-bottom:18px; }
 
-/* Ritmo alternado de fondos. Antes: oscuro, crema, crema, oscuro, oscuro,
-   oscuro. La pagina se leia como dos bloques en vez de seis pasos.
-   El FAQ pasa a crema para cerrar alternando y separar visualmente la
-   oferta de las preguntas. El demo se queda en crema porque 63 reglas de
-   sus componentes internos (telefono, mini-web, paneles) dependen de ese
-   fondo. */
+/* Alternado real: oscuro / crema / oscuro / crema / oscuro / crema.
+   El demo se invierte a oscuro. Sus 29 componentes internos (telefono,
+   mini-web, burbujas de chat) ya traen fondo propio porque son maquetas
+   de pantallas, asi que no dependen del fondo de la seccion: lo unico
+   que hay que reasignar es el texto que rodea a la maqueta. */
+.demo-section {
+  background:var(--char);
+  color:var(--paper);
+  color-scheme:dark;
+}
+.demo-section .eyebrow { color:var(--sesame); }
+.demo-section h2 { color:var(--paper); }
+.demo-section .section-description,
+.demo-section .example-label,
+.demo-section .demo-separator { color:var(--muted); }
+.demo-section .demo-separator strong { color:var(--paper); }
+.demo-section .demo-separator i { background:rgba(243,234,215,.16); }
+.demo-section #replay { color:var(--paper); border-color:rgba(243,234,215,.22); }
+.demo-section #replay:hover { background:var(--sesame); border-color:var(--sesame); color:var(--ink); }
+.demo-section .demo-foot,
+.demo-section .demo-note { color:var(--muted); }
+
+/* El FAQ regresa a oscuro para cerrar el alternado. */
+
+/* Transicion entre secciones: en vez del corte recto, cada seccion clara
+   funde sus bordes hacia el carbon de la que sigue. El degradado va en
+   pseudo-elementos para no tocar el fondo del contenido. */
+.recognition-section,
+.calc-section {
+  position:relative;
+  isolation:isolate;
+}
+.recognition-section::before,
+.recognition-section::after,
+.calc-section::before,
+.calc-section::after {
+  content:'';
+  position:absolute;
+  left:0;
+  right:0;
+  height:clamp(40px,6vw,88px);
+  pointer-events:none;
+  z-index:-1;
+}
+.recognition-section::before,
+.calc-section::before {
+  top:0;
+  background:linear-gradient(to bottom, var(--char), transparent);
+  opacity:.14;
+}
+.recognition-section::after,
+.calc-section::after {
+  bottom:0;
+  background:linear-gradient(to top, var(--char), transparent);
+  opacity:.14;
+}
+/* Una linea fina de acento marca el cambio sin gritar. */
+.recognition-section,
+.demo-section,
+.calc-section,
+.offer-section,
+.faq-section {
+  border-top:1px solid transparent;
+  border-image:linear-gradient(to right, transparent, rgba(232,161,60,.28), transparent) 1;
+}
+@media (prefers-reduced-motion:reduce) {
+  .recognition-section::before, .recognition-section::after,
+  .calc-section::before, .calc-section::after { display:none; }
+}
+
+/* Cierre del alternado: oscuro / crema / oscuro / crema / oscuro / crema. */
+.calc-section,
 .faq-section {
   background:var(--paper);
   color:var(--ink);
-  border-top:0;
   max-width:none;
   width:100%;
   padding-inline:max(24px, calc((100% - 1240px) / 2));
 }
+.calc-section .eyebrow,
 .faq-section .eyebrow { color:#6a5a45; }
+.calc-head > p:not(.eyebrow),
 .faq-aside { color:#584634; }
-.faq-cta {
+.calc-box {
+  background:var(--paper-soft);
   border-color:var(--paper-line);
-  color:var(--ink);
 }
-.faq-cta:hover {
-  background:var(--ink);
-  border-color:var(--ink);
-  color:var(--paper);
-}
+.calc-fields label { color:#6a5a45; }
+.calc-money { background:var(--paper); border-color:var(--paper-line); }
+.calc-money input { color:var(--ink); }
+.calc-money span { color:#6a5a45; }
+.calc-box .roi { border-top-color:var(--paper-line); }
+.calc-box .roi-label { color:#6a5a45; }
+.calc-box .roi-note { color:var(--ink); }
+.calc-box .roi-source { color:#6f6250; }
 .faq-section .faq details,
 .faq-section .faq details:first-of-type { border-color:var(--paper-line); }
 .faq-section .faq summary { color:var(--ink); }
 .faq-section .faq details p { color:#584634; }
-/* En crema el ghost heredaba un gris con texto oscuro encima: ilegible. */
 .faq-section .faq-cta {
   background:transparent;
   border-color:var(--ink);
   color:var(--ink);
 }
+.faq-section .faq-cta:hover {
+  background:var(--ink);
+  border-color:var(--ink);
+  color:var(--paper);
+}
+
+/* Las maquetas son pantallas claras: su texto NO debe heredar el crema
+   de la seccion oscura. Al invertir el demo, 16 elementos quedaron crema
+   sobre crema (los mensajes del chat, invisibles). El color se reancla
+   en cada contenedor con fondo propio. */
+.demo-section .phone-shell,
+.demo-section .phone-page,
+.demo-section .mini-web,
+.demo-section .before-panel,
+.demo-section .after-panel,
+.demo-section .demo-grid > * {
+  color:var(--ink);
+}
+.demo-section .bubble,
+.demo-section .bubble span,
+.demo-section .chat-name,
+.demo-section .chat-menu,
+.demo-section .phone-page strong,
+.demo-section .phone-page small,
+.demo-section .panel-foot,
+.demo-section .mono { color:var(--ink); }
+.demo-section .bubble small,
+.demo-section .phone-page .time { color:#6f6250; }
+
+/* Contraste en la calculadora: la nota y la fuente quedaban por debajo
+   de AA sobre el crema suave de la tarjeta (1.2:1 y 3.5:1 medidos). */
+.calc-box .roi-note { color:var(--ink); }
+.calc-box .roi-source { color:#5c4f3d; }
+.calc-box .roi-amount { color:#a5331f; }
+/* Texto chico al filo de AA: a 10-13px el minimo se siente corto, asi que
+   se le da margen en vez de quedarse en 4.8. */
+.calc-box .roi-label { color:#4e4232; }
+.calc-box .roi-period { color:#8a2a18; }
+.calc-box .roi-source { color:#514535; }
+
+/* Sin resultado la seccion medía 390px y con resultado 666: saltaba 276px
+   y vacia se veia como un rectangulito aplastado. Se reserva la altura
+   para que el bloque no cambie de tamano al calcular. */
+.calc-section { min-height:clamp(620px, 68vh, 760px); align-content:center; }
+.calc-box { min-height:516px; display:flex; flex-direction:column; }
+.calc-box .roi { margin-top:auto; }
+@media (max-width:780px) {
+  .calc-section { min-height:0; }
+  .calc-box { min-height:0; }
+  .calc-box .roi { margin-top:22px; }
+}
+/* Mientras no hay datos, la altura reservada se llena con la instruccion
+   en vez de un hueco vacio. */
+.calc-hint {
+  margin-top:auto;
+  padding-top:22px;
+  border-top:1px solid var(--paper-line);
+  color:#6a5a45;
+  font-size:13px;
+}
+.calc-box:has(#calc-out:not([hidden])) .calc-hint { display:none; }
