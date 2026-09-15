@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="De tu mente al mundo">
+  <rect width="64" height="64" rx="14" fill="#19140f"/>
+  <!-- El mundo, en mostaza: el acento unico de la marca. -->
+  <circle cx="32" cy="32" r="18" fill="#e8a13c"/>
+  <!-- Ecuador y un meridiano descentrado: se lee como globo girado,
+       no como un circulo partido a la mitad. -->
+  <g fill="none" stroke="#19140f" stroke-width="2.6" stroke-linecap="round">
+    <path d="M14.6 32h34.8"/>
+    <ellipse cx="28" cy="32" rx="7.5" ry="17.6"/>
+  </g>
+</svg>
