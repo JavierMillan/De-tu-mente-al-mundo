@@ -1912,11 +1912,11 @@ dialog::backdrop {
 @media(max-width:780px) { .demo-separator { justify-content:flex-start; margin-top:20px; } }
 /* Refero-informed demo hierarchy: two states, one dominant bridge. */
 .demo-separator { display:none !important; }
-.demo-grid { grid-template-columns:.72fr 1.56fr .72fr; gap:18px; align-items:center; }
+.demo-grid { grid-template-columns:.82fr 1.34fr .82fr; gap:clamp(30px,3.2vw,48px); align-items:center; }
 .demo-grid .before-panel, .demo-grid .after-panel { opacity:.82; transform:scale(.96); }
 .demo-grid .web-panel { transform:none; border-color:#9b6a1e; box-shadow:0 22px 45px rgba(34,26,18,.16); }
 .demo-grid .web-panel .panel-label { background:var(--sesame); color:var(--ink); }
-@media(max-width:780px) { .demo-grid { grid-template-columns:1fr 1.2fr 1fr; gap:10px; } .demo-grid .before-panel, .demo-grid .after-panel { transform:none; opacity:1; } }
+@media(max-width:780px) { .demo-grid { grid-template-columns:1fr 1.2fr 1fr; gap:14px; } .demo-grid .before-panel, .demo-grid .after-panel { transform:none; opacity:1; } }
 
 /* Quiet brand texture: the pattern supports recognition without becoming content. */
 .recognition-section { position:relative; isolation:isolate; overflow:hidden; }
