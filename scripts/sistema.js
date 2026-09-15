@@ -140,6 +140,7 @@
     placeholders.forEach(el => { el.placeholder = el.dataset[lang === 'es' ? 'placeholderEs' : 'placeholderEn']; });
     language.forEach(button => button.setAttribute('aria-pressed', String(button.dataset.lang === lang)));
     document.title = copy[lang].title;
+    document.dispatchEvent(new CustomEvent('dtmm:lang', {detail: lang}));
     renderRoi();
     document.querySelector('meta[name="description"]').content = copy[lang].description;
     document.querySelector('meta[property="og:title"]').content = copy[lang].social;
@@ -333,4 +334,43 @@
   new IntersectionObserver(entries => {
     entries.forEach(entry => floating.classList.toggle('is-visible', !entry.isIntersecting));
   }, {threshold: 0}).observe(heroCta);
+})();
+
+// Calculadora publica: la misma logica del formulario, pero a la vista.
+// Dentro del formulario quedaba escondida tras dos respuestas y no la veia
+// nadie, asi que el trabajo no se podia cobrar ni usar como argumento.
+(function () {
+  const box = document.getElementById('calc-out');
+  const selIndustry = document.getElementById('calc-industry');
+  const selVolume = document.getElementById('calc-volume');
+  if (!box || !selIndustry || !selVolume) return;
+  const core = window.DTMMSystem;
+  if (!core || !core.estimateLoss) return;
+
+  const SEMANAL = {'Fewer than 10': 6, '10–30': 20, '31–100': 60, 'More than 100': 120};
+
+  // Clonamos las opciones del formulario para no mantener dos listas.
+  const clone = (from, to) => {
+    if (!from) return;
+    to.innerHTML = '';
+    [...from.options].forEach(o => to.appendChild(o.cloneNode(true)));
+  };
+  clone(document.getElementById('industry'), selIndustry);
+  clone(document.getElementById('volume'), selVolume);
+
+  function render() {
+    const semanales = SEMANAL[selVolume.value];
+    const est = semanales ? core.estimateLoss(selIndustry.value || '', semanales) : null;
+    if (!est || est.mes < 500) { box.hidden = true; return; }
+    const lang = document.documentElement.lang === 'es' ? 'es' : 'en';
+    const money = n => '$' + Number(n).toLocaleString('en-US');
+    document.getElementById('calc-amount').textContent = money(est.mes);
+    document.getElementById('calc-note').textContent = lang === 'es'
+      ? 'Son ' + est.trabajosMes + ' trabajos al mes a ' + money(est.ticket) + ' cada uno.'
+      : 'That is ' + est.trabajosMes + ' jobs a month at ' + money(est.ticket) + ' each.';
+    box.hidden = false;
+  }
+  selIndustry.addEventListener('change', render);
+  selVolume.addEventListener('change', render);
+  document.addEventListener('dtmm:lang', render);
 })();

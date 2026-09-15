@@ -16,10 +16,10 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Spline+Sans:wght@400;500;600;700&family=Martian+Mono:wght@400;500&family=Unbounded:wght@500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/sistema.css?v=20260915d">
-  <script src="scripts/sistema-core.js?v=20260915d" defer></script>
+  <link rel="stylesheet" href="css/sistema.css?v=20260915f">
+  <script src="scripts/sistema-core.js?v=20260915f" defer></script>
   <script src="scripts/qrcode.js" defer></script>
-  <script src="scripts/sistema.js?v=20260915d" defer></script>
+  <script src="scripts/sistema.js?v=20260915f" defer></script>
 </head>
 <body>
 <a class="skip-link" href="#main" data-es="Ir al contenido">Skip to content</a>
@@ -104,9 +104,30 @@
     </div>
   </section>
 
+  <section class="calc-section wrap" aria-labelledby="calc-title">
+    <div class="calc-head">
+      <p class="eyebrow" data-es="HAZ LA CUENTA">RUN THE NUMBERS</p>
+      <h2 id="calc-title" data-es="¿Cuánto se te enfría cada mes?">How much goes cold every month?</h2>
+      <p data-es="Dos datos y te decimos lo que hoy se te escapa por contestar tarde. Es tu propio número, no un promedio.">Two answers and we show what slips away today from answering late. Your own number, not an average.</p>
+    </div>
+    <div class="calc-box">
+      <div class="calc-fields">
+        <label for="calc-industry" data-es="¿En qué giro estás?">What industry are you in?</label>
+        <select id="calc-industry"></select>
+        <label for="calc-volume" data-es="¿Cuántas consultas recibes por semana?">How many inquiries per week?</label>
+        <select id="calc-volume"></select>
+      </div>
+      <output id="calc-out" class="roi" hidden aria-live="polite">
+        <p class="roi-label" data-es="LO QUE HOY SE ENFRÍA">WHAT GOES COLD TODAY</p>
+        <p class="roi-amount"><span id="calc-amount"></span> <span class="roi-period" data-es="al mes">per month</span></p>
+        <p class="roi-note" id="calc-note"></p>
+      </output>
+    </div>
+  </section>
+
   <section class="offer-section wrap" id="precio">
     <div class="offer-head"><p class="eyebrow" data-es="LA OFERTA">THE OFFER</p><h2 data-es="Esto es lo que recibes.">Here is what you get.</h2><p data-es="Listo en 72 horas desde que aprobamos el alcance. Un solo pago, sin mensualidad obligatoria.">Ready in 72 hours from the moment we agree on scope. One payment, no required monthly fee.</p></div>
-    <div class="offer-card"><ul class="included"><li><span data-es="La página armada a la medida">The page, built for you</span><span class="piece-price">US$1,500</span></li><li><span data-es="Con tu marca, no la nuestra">Your brand, not ours</span><span class="piece-price">US$800</span></li><li><span data-es="Hasta 10 preguntas que se adaptan">Up to 10 questions that adapt</span><span class="piece-price">US$400</span></li><li><span data-es="Un handoff conectado">One connected handoff</span><span class="piece-price">US$300</span></li><li><span data-es="Los textos, en inglés y español">The words, in English and Spanish</span><span class="piece-price">US$500</span></li><li class="included-total"><span data-es="Si lo compraras por piezas">If you bought it piece by piece</span><span class="piece-price total">US$3,500</span></li></ul><p class="included-source" data-es="Cada cifra es el piso de lo que cobra el mercado en EE.UU. por esa pieza sola.">Each figure is the floor of what the US market charges for that piece on its own.</p>
+    <div class="offer-card"><ul class="included"><li><span data-es="La página, diseñada y responsive">The page, designed and responsive</span><span class="piece-price">US$3,500</span></li><li><span data-es="El formulario que filtra, hasta 10 preguntas">The form that filters, up to 10 questions</span><span class="piece-price">US$875</span></li><li><span data-es="En inglés y español">In English and Spanish</span><span class="piece-price">US$750</span></li><li><span data-es="Accesible y probada">Accessible and tested</span><span class="piece-price">US$525</span></li><li><span data-es="El handoff a WhatsApp y a tu hoja">Handoff to WhatsApp and to your sheet</span><span class="piece-price">US$450</span></li><li><span data-es="La calculadora de lo que se enfría">The calculator of what goes cold</span><span class="piece-price">US$400</span></li><li class="included-total"><span data-es="Si lo compraras por piezas">If you bought it piece by piece</span><span class="piece-price total">US$6,500</span></li></ul><p class="included-source" data-es="Precios de mercado 2026: una página responsive de 5 a 8 secciones va de US$2,500 a US$4,500; la lógica condicional de un formulario suma entre 20% y 40%; la accesibilidad, entre 10% y 20%; la localización cuesta hasta US$150 por página. Tomamos la mitad de cada rango, no el tope.">2026 market pricing: a responsive 5 to 8 section page runs US$2,500 to US$4,500; a form’s conditional logic adds 20% to 40%; accessibility adds 10% to 20%; localization runs up to US$150 per page. We took the middle of each range, not the top.</p>
       <div class="offer-close"><div class="offer-amount">US$2,500 <span data-es="USD · pago único">USD · one time</span></div><p class="small-note guarantee" data-es="30 días de garantía: si no te llega una sola solicitud filtrada, te devolvemos todo.">30-day guarantee: if not a single filtered request arrives, you get it all back.</p><button class="button primary" type="button" data-open><span data-es="Ver si encaja en mi negocio">See if it fits my business</span><span aria-hidden="true">↗</span></button><p class="offer-deadline" data-es="Cinco negocios pueden tomar este precio fundador hasta el 31 de octubre.">Five businesses can claim this founding price through October 31.</p></div>
     </div>
   </section>
