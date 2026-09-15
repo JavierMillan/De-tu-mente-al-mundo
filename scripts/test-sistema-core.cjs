@@ -46,3 +46,16 @@ test('industry is optional: it never blocks a step and travels when present', ()
   assert.equal(core.buildPayload(conGiro, 'en', '').industria, 'Roofing');
   assert.ok(core.buildMessage(conGiro, 'en').includes('Industry: Roofing'));
 });
+
+test('the loss estimate stays believable: it never promises more than 4 jobs a month', () => {
+  // Un numero inflado tumba la credibilidad del resto de la pagina.
+  const alto = core.estimateLoss('Roofing', 200);
+  assert.ok(alto.trabajosMes <= 4, 'jobs capped: ' + alto.trabajosMes);
+  // Con poco volumen, la cifra baja en proporcion.
+  const bajo = core.estimateLoss('Roofing', 6);
+  assert.ok(bajo.mes < alto.mes);
+  // Sin volumen no hay nada que mostrar.
+  assert.equal(core.estimateLoss('Roofing', 0), null);
+  // Un giro desconocido usa el ticket por defecto en vez de romperse.
+  assert.ok(core.estimateLoss('Something else', 20).mes > 0);
+});

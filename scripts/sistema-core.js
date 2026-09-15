@@ -59,6 +59,38 @@
         partes.push(t.cierre);
         return partes.join('\n');
     }
+    /* El costo de no hacer nada. Deliberadamente conservador: el estudio de
+       Blazeo (2026) mide 73% de citas agendadas contestando en menos de un
+       minuto contra 4% pasados 30, y aqui solo asumimos recuperar el 15% de
+       los leads que hoy se enfrian. Si el numero se siente inflado, el
+       cliente deja de creer el resto de la pagina. */
+    var TICKETS = {
+        'Roofing': 2000, 'HVAC / Plumbing': 800, 'Remodeling / Construction': 3000,
+        'Landscaping': 600, 'Pest control': 400, 'Painting': 1200,
+        'Health & beauty': 300, 'Dental / Medical': 500, 'Real estate': 3000,
+        'Professional services': 800, 'Other trades': 800, 'Other': 600, '': 600
+    };
+    var RECUPERA = 0.05;
+    var TOPE_TRABAJOS = 4;
+    var PRECIO = 2500;
+
+    function estimateLoss(industry, leadsPerWeek) {
+        var ticket = TICKETS[industry] || TICKETS[''];
+        var semanales = Number(leadsPerWeek) || 0;
+        if (semanales <= 0) return null;
+        var mensuales = semanales * 4.33;
+        var trabajos = Math.min(mensuales * RECUPERA, TOPE_TRABAJOS);
+        var mes = Math.round(trabajos * ticket);
+        return {
+            ticket: ticket,
+            trabajosMes: Math.round(trabajos * 10) / 10,
+            mes: mes,
+            anio: mes * 12,
+            // Cuantos meses tarda en pagarse el sistema con lo que hoy se pierde.
+            mesesParaPagarse: mes > 0 ? Math.round((PRECIO / mes) * 10) / 10 : null
+        };
+    }
+
     function sheetSafe(value) {
         var text = clean(value);
         return /^[=+@-]/.test(text) ? "'" + text : text;
@@ -82,5 +114,5 @@
         });
         return payload;
     }
-    return { validateStep: validateStep, buildMessage: buildMessage, buildPayload: buildPayload };
+    return { validateStep: validateStep, buildMessage: buildMessage, buildPayload: buildPayload, estimateLoss: estimateLoss };
 });
