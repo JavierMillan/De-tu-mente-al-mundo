@@ -2608,3 +2608,31 @@ dialog::backdrop {
   .calc-box .roi { animation:none; }
   .calc-money { transition:none; }
 }
+
+/* Jerarquia tipografica. Los h2 iban en 4.4 / 2.9 / 2.9 / 2.7rem sin
+   criterio: recognition casi alcanzaba al hero (5.5) y los demas pesaban
+   todos igual. Prism pide un solo foco por pantalla, asi que la escala
+   queda en tres niveles con distancia real entre ellos.
+
+   Nivel 1  hero        5.5rem   el unico mega
+   Nivel 2  recognition 3.4rem   el giro emocional
+   Nivel 3  resto       2.5rem   secciones de trabajo */
+.recognition-section h2 {
+  font-size:clamp(2rem,3.8vw,3.4rem);
+}
+.demo-section h2,
+.calc-head h2,
+.offer-head h2,
+.faq-head h2 {
+  font-size:clamp(1.75rem,2.8vw,2.5rem);
+}
+/* Sin eyebrow, el titulo abre la seccion y necesita su propio aire. */
+.recognition-section h2,
+.calc-head h2,
+.faq-head h2 { margin-top:0; }
+/* El salto titulo->subtitulo era de 1.8-2.0x en las secciones interiores
+   contra 2.7x del hero: por eso el subtitulo peleaba con el titulo. Se
+   baja el cuerpo para que la distancia sea comparable. */
+.recognition-copy { font-size:15px; }
+.calc-head > p:not(.eyebrow) { font-size:14px; }
+.offer-head > p:not(.eyebrow) { font-size:14px; }
