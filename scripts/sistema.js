@@ -90,25 +90,6 @@
   /* El costo de no hacer nada, calculado con lo que el mismo acaba de decir.
      Se actualiza al vuelo: si el numero aparece cuando ya cerro el paso, no
      lo ve. */
-  const VOLUMEN_SEMANAL = {'Fewer than 10': 6, '10–30': 20, '31–100': 60, 'More than 100': 120};
-  function renderRoi() {
-    const box = document.getElementById('roi');
-    if (!box) return;
-    const industria = (document.getElementById('industry') || {}).value || '';
-    const volumen = (document.getElementById('volume') || {}).value || '';
-    const semanales = VOLUMEN_SEMANAL[volumen];
-    const est = semanales ? core.estimateLoss(industria, semanales) : null;
-    if (!est || est.mes < 500) { box.hidden = true; return; }
-    const money = n => '$' + Number(n).toLocaleString('en-US');
-    document.getElementById('roi-amount').textContent = money(est.mes);
-    const nota = lang === 'es'
-      ? 'Son ' + est.trabajosMes + ' trabajos al mes a ' + money(est.ticket) + ' cada uno. El sistema se paga con '
-        + (est.mesesParaPagarse < 1 ? 'menos de un mes' : est.mesesParaPagarse + ' meses') + ' de eso.'
-      : 'That is ' + est.trabajosMes + ' jobs a month at ' + money(est.ticket) + ' each. The system pays for itself with '
-        + (est.mesesParaPagarse < 1 ? 'less than one month' : est.mesesParaPagarse + ' months') + ' of that.';
-    document.getElementById('roi-note').textContent = nota;
-    box.hidden = false;
-  }
 
   function renderPreview() {
     document.getElementById('sms-qr-panel').hidden = true;
@@ -141,7 +122,6 @@
     language.forEach(button => button.setAttribute('aria-pressed', String(button.dataset.lang === lang)));
     document.title = copy[lang].title;
     document.dispatchEvent(new CustomEvent('dtmm:lang', {detail: lang}));
-    renderRoi();
     document.querySelector('meta[name="description"]').content = copy[lang].description;
     document.querySelector('meta[property="og:title"]').content = copy[lang].social;
     document.querySelector('meta[property="og:description"]').content = copy[lang].description;
@@ -157,7 +137,6 @@
   }
   language.forEach(button => button.addEventListener('click', () => setLanguage(button.dataset.lang, true)));
   setLanguage(lang, false);
-  renderRoi();
 
   document.querySelectorAll('[data-open]').forEach(button => button.addEventListener('click', () => {
     opener = button;
@@ -200,10 +179,8 @@
     event.target.removeAttribute('aria-describedby');
     error.hidden = true;
     submissionState = '';
-    if (event.target.id === 'industry' || event.target.id === 'volume') renderRoi();
   });
   form.addEventListener('change', event => {
-    if (event.target.id === 'industry' || event.target.id === 'volume') renderRoi();
   });
   form.addEventListener('submit', event => {
     event.preventDefault();
@@ -341,27 +318,24 @@
 // nadie, asi que el trabajo no se podia cobrar ni usar como argumento.
 (function () {
   const box = document.getElementById('calc-out');
-  const selIndustry = document.getElementById('calc-industry');
+  const ticket = document.getElementById('calc-ticket');
   const selVolume = document.getElementById('calc-volume');
-  if (!box || !selIndustry || !selVolume) return;
+  if (!box || !ticket || !selVolume) return;
   const core = window.DTMMSystem;
   if (!core || !core.estimateLoss) return;
 
   const SEMANAL = {'Fewer than 10': 6, '10–30': 20, '31–100': 60, 'More than 100': 120};
 
-  // Clonamos las opciones del formulario para no mantener dos listas.
-  const clone = (from, to) => {
-    if (!from) return;
-    to.innerHTML = '';
-    [...from.options].forEach(o => to.appendChild(o.cloneNode(true)));
-  };
-  clone(document.getElementById('industry'), selIndustry);
-  clone(document.getElementById('volume'), selVolume);
+  const from = document.getElementById('volume');
+  if (from) {
+    selVolume.innerHTML = '';
+    [...from.options].forEach(o => selVolume.appendChild(o.cloneNode(true)));
+  }
 
   function render() {
     const semanales = SEMANAL[selVolume.value];
-    const est = semanales ? core.estimateLoss(selIndustry.value || '', semanales) : null;
-    if (!est || est.mes < 500) { box.hidden = true; return; }
+    const est = semanales ? core.estimateLoss(ticket.value, semanales) : null;
+    if (!est || est.mes < 1) { box.hidden = true; return; }
     const lang = document.documentElement.lang === 'es' ? 'es' : 'en';
     const money = n => '$' + Number(n).toLocaleString('en-US');
     document.getElementById('calc-amount').textContent = money(est.mes);
@@ -370,7 +344,7 @@
       : 'That is ' + est.trabajosMes + ' jobs a month at ' + money(est.ticket) + ' each.';
     box.hidden = false;
   }
-  selIndustry.addEventListener('change', render);
+  ticket.addEventListener('input', render);
   selVolume.addEventListener('change', render);
   document.addEventListener('dtmm:lang', render);
 })();

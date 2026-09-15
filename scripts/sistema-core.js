@@ -64,20 +64,27 @@
        minuto contra 4% pasados 30, y aqui solo asumimos recuperar el 15% de
        los leads que hoy se enfrian. Si el numero se siente inflado, el
        cliente deja de creer el resto de la pagina. */
-    var TICKETS = {
-        'Roofing': 2000, 'HVAC / Plumbing': 800, 'Remodeling / Construction': 3000,
-        'Landscaping': 600, 'Pest control': 400, 'Painting': 1200,
-        'Health & beauty': 300, 'Dental / Medical': 500, 'Real estate': 3000,
-        'Professional services': 800, 'Other trades': 800, 'Other': 600, '': 600
-    };
+    /* El ticket ya no lo estimamos nosotros: lo pone el prospecto. Los
+       promedios por industria eran invencion nuestra y un dentista con
+       ticket de $180 veia "$500" y dejaba de creer el resto de la pagina.
+
+       El 5% recuperable si tiene respaldo. El estudio MIT/InsideSales
+       (Oldroyd, 6 empresas, 15,000+ leads) midio que calificar un lead
+       contestando a los 5 minutos contra 30 es 21 veces mas probable, y
+       HBR (2011, 2,241 empresas auditadas) encontro 42 horas de respuesta
+       promedio y 23% que nunca contestan. Recuperar 1 de cada 20 es muy
+       por debajo de lo que sugieren esas cifras.
+
+       El tope de 4 trabajos no es un dato: es un freno de credibilidad.
+       Sin el, 100 consultas semanales daban cifras absurdas. */
     var RECUPERA = 0.05;
     var TOPE_TRABAJOS = 4;
     var PRECIO = 2500;
 
-    function estimateLoss(industry, leadsPerWeek) {
-        var ticket = TICKETS[industry] || TICKETS[''];
+    function estimateLoss(ticketPromedio, leadsPerWeek) {
+        var ticket = Number(ticketPromedio) || 0;
         var semanales = Number(leadsPerWeek) || 0;
-        if (semanales <= 0) return null;
+        if (ticket <= 0 || semanales <= 0) return null;
         var mensuales = semanales * 4.33;
         var trabajos = Math.min(mensuales * RECUPERA, TOPE_TRABAJOS);
         var mes = Math.round(trabajos * ticket);
@@ -86,7 +93,6 @@
             trabajosMes: Math.round(trabajos * 10) / 10,
             mes: mes,
             anio: mes * 12,
-            // Cuantos meses tarda en pagarse el sistema con lo que hoy se pierde.
             mesesParaPagarse: mes > 0 ? Math.round((PRECIO / mes) * 10) / 10 : null
         };
     }

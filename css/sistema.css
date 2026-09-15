@@ -2396,3 +2396,41 @@ dialog::backdrop {
   .calc-section { grid-template-columns:1fr; gap:24px; padding-block:52px; }
   .calc-box { padding:20px; }
 }
+
+/* Cada cifra carga su propia fuente debajo. El parrafo que las juntaba
+   todas al final quedaba apelotonado y no se leia. */
+.piece-label { flex:1; min-width:0; display:block; }
+.piece-label small {
+  display:block;
+  margin-top:3px;
+  color:var(--muted);
+  font-size:11.5px;
+  line-height:1.5;
+}
+.included li { align-items:flex-start; }
+.included .piece-price { padding-top:1px; }
+
+/* El ticket lo escribe el prospecto: el simbolo vive fuera del input
+   para que el numero quede alineado con los selects de arriba. */
+.calc-money {
+  display:flex;
+  align-items:center;
+  gap:8px;
+  border:1px solid var(--line);
+  border-radius:8px;
+  background:var(--char-soft);
+  padding:0 14px;
+}
+.calc-money span { color:var(--muted); font-size:14px; }
+.calc-money input {
+  flex:1;
+  min-width:0;
+  border:0;
+  background:none;
+  color:var(--paper);
+  font-size:14px;
+  padding:13px 0;
+}
+.calc-money input:focus { outline:none; }
+.calc-money:focus-within { border-color:var(--sesame); }
+.calc-fields .calc-money { margin-bottom:18px; }
