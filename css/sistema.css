@@ -2434,3 +2434,39 @@ dialog::backdrop {
 .calc-money input:focus { outline:none; }
 .calc-money:focus-within { border-color:var(--sesame); }
 .calc-fields .calc-money { margin-bottom:18px; }
+
+/* Ritmo alternado de fondos. Antes: oscuro, crema, crema, oscuro, oscuro,
+   oscuro. La pagina se leia como dos bloques en vez de seis pasos.
+   El FAQ pasa a crema para cerrar alternando y separar visualmente la
+   oferta de las preguntas. El demo se queda en crema porque 63 reglas de
+   sus componentes internos (telefono, mini-web, paneles) dependen de ese
+   fondo. */
+.faq-section {
+  background:var(--paper);
+  color:var(--ink);
+  border-top:0;
+  max-width:none;
+  width:100%;
+  padding-inline:max(24px, calc((100% - 1240px) / 2));
+}
+.faq-section .eyebrow { color:#6a5a45; }
+.faq-aside { color:#584634; }
+.faq-cta {
+  border-color:var(--paper-line);
+  color:var(--ink);
+}
+.faq-cta:hover {
+  background:var(--ink);
+  border-color:var(--ink);
+  color:var(--paper);
+}
+.faq-section .faq details,
+.faq-section .faq details:first-of-type { border-color:var(--paper-line); }
+.faq-section .faq summary { color:var(--ink); }
+.faq-section .faq details p { color:#584634; }
+/* En crema el ghost heredaba un gris con texto oscuro encima: ilegible. */
+.faq-section .faq-cta {
+  background:transparent;
+  border-color:var(--ink);
+  color:var(--ink);
+}
