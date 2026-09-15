@@ -2636,3 +2636,19 @@ dialog::backdrop {
 .recognition-copy { font-size:15px; }
 .calc-head > p:not(.eyebrow) { font-size:14px; }
 .offer-head > p:not(.eyebrow) { font-size:14px; }
+
+/* Navbar mas compacto. Median 107px de alto: 28+28 de padding, el
+   selector de idioma en 50px con botones de 40, y el wordmark partido en
+   dos lineas ocupando 44.
+
+   En escritorio los 40x40 no hacen falta (son para el dedo, no para el
+   mouse): bajan a 30 de alto y el area tactil se conserva intacta en
+   movil, donde si importa. */
+@media (min-width:781px) {
+  .site-header { padding-block:18px; }
+  .language { padding:3px 7px; gap:2px; }
+  .language button { min-width:34px; min-height:30px; }
+  .language-globe { width:17px; height:17px; margin-right:2px; }
+  .header-cta { padding:7px 2px; }
+  .wordmark { font-size:19px; }
+}
