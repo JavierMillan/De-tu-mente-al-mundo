@@ -2163,3 +2163,31 @@ dialog::backdrop {
   .piece-price { margin-left:36px; padding-left:0; }
   .included-total .piece-price { margin-left:auto; }
 }
+
+/* El FAQ salio de la columna del desglose, donde competia con los precios.
+   Ahora es su propia seccion, con el mismo patron de rejilla del resto. */
+.faq-section {
+  display:grid;
+  grid-template-columns:minmax(0,1.05fr) minmax(280px,.95fr);
+  gap:clamp(40px,9vw,140px);
+  align-items:start;
+  padding-block:clamp(64px,9vh,110px);
+  border-top:1px solid var(--line);
+}
+.faq-head h2 {
+  margin-top:18px;
+  max-width:520px;
+  font:600 clamp(2rem,3.6vw,3.4rem)/1.05 var(--display);
+  letter-spacing:-.05em;
+}
+.faq-section .faq {
+  margin-top:0;
+  border-top:0;
+}
+.faq-section .faq summary { font-size:14px; padding:20px 0; }
+.faq-section .faq details p { font-size:13px; padding-bottom:22px; }
+.faq-section .faq details:first-of-type { border-top:1px solid var(--line); }
+@media (max-width:780px) {
+  .faq-section { grid-template-columns:1fr; gap:24px; padding-block:56px; }
+  .faq-head h2 { margin-top:12px; }
+}
