@@ -2,7 +2,7 @@
 (function () {
   'use strict';
   const core = window.DTMMSystem;
-  const WA_NUMBER = '526221424577';
+  const WA_NUMBER = '16232399551';
   const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxgbthSlAW4dm33eJ-djoexecT5Xfjg-Dwvl4ElYYZ4NTIciUhqY5DwKSDBJKxSnAGo/exec';
   const dialog = document.getElementById('request-dialog');
   const form = document.getElementById('request-form');

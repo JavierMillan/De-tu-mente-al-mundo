@@ -14,7 +14,10 @@ test('WhatsApp handoff contains ALL answers even if Sheets delivery fails', () =
   for (const value of Object.values(sample)) assert.ok(message.includes(value.trim()), value);
   assert.ok(message.includes('US$2,500'));
   assert.ok(!message.includes('already received'));
-  assert.ok(core.buildMessage(sample, 'es').includes('Mi negocio'));
+  const es = core.buildMessage(sample, 'es');
+  assert.ok(es.includes('CONTACTO') && es.includes('EL NEGOCIO'));
+  // El telefono va arriba: quien contesta no deberia leer todo para responder.
+  assert.ok(es.indexOf(sample.phone) < es.indexOf(sample.criteria));
 });
 test('maps the contact and screening data to the deployed Sheets contract', () => {
   const payload = core.buildPayload(sample, 'es', '?utm_source=meta&utm_campaign=us-test');
