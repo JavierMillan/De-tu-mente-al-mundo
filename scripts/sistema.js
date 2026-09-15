@@ -319,32 +319,29 @@
 (function () {
   const box = document.getElementById('calc-out');
   const ticket = document.getElementById('calc-ticket');
-  const selVolume = document.getElementById('calc-volume');
-  if (!box || !ticket || !selVolume) return;
+  const volumen = document.getElementById('calc-volume');
+  if (!box || !ticket || !volumen) return;
   const core = window.DTMMSystem;
   if (!core || !core.estimateLoss) return;
 
-  const SEMANAL = {'Fewer than 10': 6, '10–30': 20, '31–100': 60, 'More than 100': 120};
-
-  const from = document.getElementById('volume');
-  if (from) {
-    selVolume.innerHTML = '';
-    [...from.options].forEach(o => selVolume.appendChild(o.cloneNode(true)));
-  }
-
   function render() {
-    const semanales = SEMANAL[selVolume.value];
-    const est = semanales ? core.estimateLoss(ticket.value, semanales) : null;
+    const est = core.estimateLoss(ticket.value, volumen.value);
     if (!est || est.mes < 1) { box.hidden = true; return; }
     const lang = document.documentElement.lang === 'es' ? 'es' : 'en';
     const money = n => '$' + Number(n).toLocaleString('en-US');
     document.getElementById('calc-amount').textContent = money(est.mes);
-    document.getElementById('calc-note').textContent = lang === 'es'
+    const base = lang === 'es'
       ? 'Son ' + est.trabajosMes + ' trabajos al mes a ' + money(est.ticket) + ' cada uno.'
       : 'That is ' + est.trabajosMes + ' jobs a month at ' + money(est.ticket) + ' each.';
+    // Con volumenes muy altos la cifra se frena a proposito: preferimos
+    // quedarnos cortos antes que soltar un numero que nadie cree.
+    const tope = lang === 'es'
+      ? ' Dejamos la cuenta hasta aquí a propósito.'
+      : ' We deliberately stop the math here.';
+    document.getElementById('calc-note').textContent = base + (est.topado ? tope : '');
     box.hidden = false;
   }
   ticket.addEventListener('input', render);
-  selVolume.addEventListener('change', render);
+  volumen.addEventListener('input', render);
   document.addEventListener('dtmm:lang', render);
 })();

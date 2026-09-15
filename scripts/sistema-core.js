@@ -64,35 +64,40 @@
        minuto contra 4% pasados 30, y aqui solo asumimos recuperar el 15% de
        los leads que hoy se enfrian. Si el numero se siente inflado, el
        cliente deja de creer el resto de la pagina. */
-    /* El ticket ya no lo estimamos nosotros: lo pone el prospecto. Los
-       promedios por industria eran invencion nuestra y un dentista con
-       ticket de $180 veia "$500" y dejaba de creer el resto de la pagina.
+    /* Ni el ticket ni el volumen los suponemos nosotros: los escribe el
+       prospecto. Los promedios por industria eran invencion nuestra, y
+       "mas de 100" no se puede calcular porque es un rango abierto.
 
        El 5% recuperable si tiene respaldo. El estudio MIT/InsideSales
-       (Oldroyd, 6 empresas, 15,000+ leads) midio que calificar un lead
-       contestando a los 5 minutos contra 30 es 21 veces mas probable, y
-       HBR (2011, 2,241 empresas auditadas) encontro 42 horas de respuesta
-       promedio y 23% que nunca contestan. Recuperar 1 de cada 20 es muy
-       por debajo de lo que sugieren esas cifras.
+       (Oldroyd, 15,000+ leads) midio que calificar un lead contestando a
+       los 5 minutos contra 30 es 21 veces mas probable, y HBR (2011,
+       2,241 empresas auditadas) encontro 42 horas de respuesta promedio
+       y 23% que nunca contestan. Recuperar 1 de cada 20 queda corto.
 
-       El tope de 4 trabajos no es un dato: es un freno de credibilidad.
-       Sin el, 100 consultas semanales daban cifras absurdas. */
+       El tope va contra DINERO, no contra numero de trabajos. Antes eran
+       4 trabajos fijos y eso aplastaba tres de las cuatro opciones del
+       menu: quien recibia 15 consultas veia lo mismo que quien recibia
+       150, y una calculadora que no reacciona se siente falsa. Topar
+       contra 4 veces el precio mensual deja que la cifra escale de
+       verdad y solo frena los casos extremos. */
     var RECUPERA = 0.05;
-    var TOPE_TRABAJOS = 4;
     var PRECIO = 2500;
+    var TOPE_MES = PRECIO * 4;
 
     function estimateLoss(ticketPromedio, leadsPerWeek) {
         var ticket = Number(ticketPromedio) || 0;
         var semanales = Number(leadsPerWeek) || 0;
         if (ticket <= 0 || semanales <= 0) return null;
         var mensuales = semanales * 4.33;
-        var trabajos = Math.min(mensuales * RECUPERA, TOPE_TRABAJOS);
-        var mes = Math.round(trabajos * ticket);
+        var bruto = mensuales * RECUPERA * ticket;
+        var mes = Math.round(Math.min(bruto, TOPE_MES));
+        var trabajos = ticket > 0 ? mes / ticket : 0;
         return {
             ticket: ticket,
             trabajosMes: Math.round(trabajos * 10) / 10,
             mes: mes,
             anio: mes * 12,
+            topado: bruto > TOPE_MES,
             mesesParaPagarse: mes > 0 ? Math.round((PRECIO / mes) * 10) / 10 : null
         };
     }

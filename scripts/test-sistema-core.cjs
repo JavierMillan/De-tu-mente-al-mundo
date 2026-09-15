@@ -47,19 +47,21 @@ test('industry is optional: it never blocks a step and travels when present', ()
   assert.ok(core.buildMessage(conGiro, 'en').includes('Industry: Roofing'));
 });
 
-test('the loss estimate stays believable: it never promises more than 4 jobs a month', () => {
-  // Un numero inflado tumba la credibilidad del resto de la pagina.
-  const alto = core.estimateLoss(2000, 200);
-  assert.ok(alto.trabajosMes <= 4, 'jobs capped: ' + alto.trabajosMes);
-  // Con poco volumen, la cifra baja en proporcion.
-  const bajo = core.estimateLoss(2000, 6);
-  assert.ok(bajo.mes < alto.mes);
-  // Sin volumen no hay nada que mostrar.
-  assert.equal(core.estimateLoss(2000, 0), null);
-  // El ticket lo pone el prospecto: sin ese dato no inventamos una cifra.
+test('the loss estimate scales with volume instead of flattening', () => {
+  // El tope viejo era de 4 trabajos fijos y aplastaba tres de las cuatro
+  // opciones: 20, 60 y 120 consultas daban exactamente lo mismo.
+  const a = core.estimateLoss(500, 15);
+  const b = core.estimateLoss(500, 30);
+  const c = core.estimateLoss(500, 60);
+  assert.ok(a.mes < b.mes, 'mas volumen, mas perdida: ' + a.mes + ' vs ' + b.mes);
+  assert.ok(b.mes < c.mes, 'mas volumen, mas perdida: ' + b.mes + ' vs ' + c.mes);
+  // Pero nunca suelta una cifra que nadie creeria.
+  const extremo = core.estimateLoss(3000, 200);
+  assert.ok(extremo.mes <= 10000, 'capped: ' + extremo.mes);
+  assert.equal(extremo.topado, true);
+  // Sin los datos del prospecto no inventamos nada.
   assert.equal(core.estimateLoss(0, 20), null);
-  assert.equal(core.estimateLoss('', 20), null);
+  assert.equal(core.estimateLoss(500, 0), null);
   // La cuenta usa el ticket recibido, no un promedio nuestro.
-  assert.equal(core.estimateLoss(500, 20).mes, 2000);
-  assert.equal(core.estimateLoss(180, 20).mes, 720);
+  assert.equal(core.estimateLoss(180, 20).mes, 779);
 });
