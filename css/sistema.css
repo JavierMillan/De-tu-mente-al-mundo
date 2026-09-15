@@ -2098,3 +2098,35 @@ dialog::backdrop {
 .roi-period { font-size: 0.8rem; font-weight: 400; opacity: 0.75; }
 .roi-note { font-size: 0.9rem; line-height: 1.5; margin: 0.5rem 0 0; }
 .roi-source { font-size: 0.72rem; line-height: 1.5; opacity: 0.6; margin: 0.6rem 0 0; }
+
+/* Ventana angosta pero alta (tablet vertical, ventana a medias): abajo de
+   780px el dialogo tomaba el camino de celular y se quedaba con una columna
+   de 420px flotando en una caja mucho mas alta. Aqui centramos verticalmente
+   y dejamos que el telefono use el ancho disponible. */
+@media (max-width:780px) and (min-width:560px) and (min-height:700px) {
+  /* Especificidad de ID para ganarle al modo pantalla completa de celular. */
+  #request-dialog {
+    width:min(560px,calc(100% - 40px));
+    height:auto;
+    max-height:calc(100dvh - 48px);
+    /* inset:0 del UA estira la caja verticalmente y por eso sobraba
+       espacio abajo. Soltamos top/bottom y centramos con transform para
+       que la altura la marque el contenido. */
+    top:50%;
+    bottom:auto;
+    transform:translateY(-50%);
+    margin-block:0;
+    margin-inline:auto;
+  }
+  #request-dialog .dialog-layout {
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    height:auto;
+    min-height:0;
+    padding:24px;
+    padding-bottom:24px;
+  }
+  #request-dialog .phone-shell { max-width:480px; width:100%; margin:0; }
+  #request-dialog .phone-page { padding:28px 30px 24px; }
+}
