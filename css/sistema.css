@@ -1162,29 +1162,29 @@ dialog::backdrop {
   font-size:8px
 }
 .phone-page h3 {
-  font:500 30px/1.1 var(--display);
-  letter-spacing:-.6px;
-  margin-top:12px
+  font:500 22px/1.15 var(--display);
+  letter-spacing:-.4px;
+  margin-top:8px
 }
-.preview-explanation {
-  font-size:12px;
-  line-height:1.65;
-  color:#60513d;
-  margin-top:10px
-}
-.fit-note {
+#preview-view .preview-explanation {
   font-size:11px;
-  margin-top:15px;
+  line-height:1.5;
+  color:#60513d;
+  margin-top:6px
+}
+#preview-view .fit-note {
+  font-size:10px;
+  margin-top:10px;
   color:#645237;
   border-left:2px solid #a47326;
-  padding-left:10px;
-  line-height:1.45
+  padding-left:9px;
+  line-height:1.4
 }
-.whatsapp-preview {
+#preview-view .whatsapp-preview {
   background:#17231f;
-  padding:11px;
+  padding:9px;
   border-radius:8px;
-  margin:14px 0 8px;
+  margin:10px 0 6px;
   position:relative;
   overflow:hidden
 }
@@ -1224,27 +1224,27 @@ dialog::backdrop {
   white-space:pre-wrap;
   overflow-wrap:anywhere;
   word-break:break-word;
-  font:11px/1.5 var(--body);
+  font:10px/1.4 var(--body);
   margin:0;
-  padding:12px;
+  padding:10px;
   background:#075e47;
   color:#f5fff8;
   border-radius:0 8px 8px 8px;
-  max-height:none;
-  overflow:visible;
+  max-height:180px;
+  overflow-y:auto;
   position:relative;
   z-index:1;
   box-shadow:0 1px 1px #0004
 }
-.phone-page .consent-note {
-  font-size:9px;
-  line-height:1.45;
+#preview-view .consent-note {
+  font-size:8px;
+  line-height:1.4;
   color:#6a5c48;
-  margin:12px 0 10px
+  margin:8px 0 8px
 }
-.phone-page .button.whatsapp {
+#preview-view .button.whatsapp {
   font-size:12px;
-  padding:14px 12px
+  padding:11px 12px
 }
 .send-status {
   font-size:11px;
@@ -1656,7 +1656,7 @@ dialog::backdrop {
     font-size:11px
   }
   .whatsapp-preview pre {
-    max-height:270px
+    max-height:190px
   }
   .phone-page .button.whatsapp {
     min-height:52px
