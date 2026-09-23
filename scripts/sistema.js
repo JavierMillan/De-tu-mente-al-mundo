@@ -3,7 +3,7 @@
   'use strict';
   const core = window.DTMMSystem;
   const WA_NUMBER = '523351254577';
-  const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxgbthSlAW4dm33eJ-djoexecT5Xfjg-Dwvl4ElYYZ4NTIciUhqY5DwKSDBJKxSnAGo/exec';
+  const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxtrh1LNzjBDjgFZgGBfWhQSh9B1N1I4nMToh7tpR7VhS5lu70HT26g4KLjnLpCAUUT/exec';
   const dialog = document.getElementById('request-dialog');
   const form = document.getElementById('request-form');
   const formView = document.getElementById('form-view');
