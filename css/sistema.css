@@ -1166,12 +1166,6 @@ dialog::backdrop {
   letter-spacing:-.4px;
   margin-top:8px
 }
-#preview-view .preview-explanation {
-  font-size:11px;
-  line-height:1.5;
-  color:#60513d;
-  margin-top:6px
-}
 #preview-view .fit-note {
   font-size:10px;
   margin-top:10px;
@@ -1248,9 +1242,10 @@ dialog::backdrop {
 }
 .send-status {
   font-size:11px;
-  line-height:1.6;
-  margin-top:12px;
-  color:#62513b
+  line-height:1.5;
+  margin-top:8px;
+  color:#3d6b4a;
+  font-weight:500
 }
 .send-status:empty {
   display:none
