@@ -1019,22 +1019,6 @@ dialog::backdrop {
   box-shadow:0 0 0 1px #4b4135;
   min-width:0
 }
-.phone-camera {
-  height:25px;
-  background:#f4eddf;
-  position:relative
-}
-.phone-camera:before {
-  content:'';
-  position:absolute;
-  left:50%;
-  transform:translateX(-50%);
-  top:6px;
-  width:70px;
-  height:12px;
-  border-radius:20px;
-  background:#100e0b
-}
 .phone-browser {
   display:flex;
   justify-content:center;
@@ -1240,15 +1224,66 @@ dialog::backdrop {
   font-size:12px;
   padding:11px 12px
 }
-.send-status {
-  font-size:11px;
-  line-height:1.5;
-  margin-top:8px;
-  color:#3d6b4a;
-  font-weight:500
+#preview-view .send-status-wrap {
+  position:relative;
+  display:flex;
+  align-items:flex-start;
+  gap:9px;
+  margin:4px 0 16px;
+  padding:11px 13px;
+  border-radius:8px;
+  background:#e3ecdc;
+  border:1px solid #b9cfb0;
+  color:#2f5a3b
+}
+#preview-view .send-status-wrap:has(.send-status:empty) {
+  display:none
+}
+.send-status-icon {
+  display:block;
+  flex:none;
+  margin-top:1px;
+  color:#2f5a3b
+}
+.send-status-icon[hidden] {
+  display:none
+}
+#preview-view .send-status {
+  font-size:12px;
+  line-height:1.45;
+  color:inherit;
+  font-weight:500;
+  margin:0
 }
 .send-status:empty {
   display:none
+}
+.confetti {
+  position:absolute;
+  left:22px;
+  top:18px;
+  width:0;
+  height:0;
+  pointer-events:none;
+  z-index:3
+}
+.confetti-piece {
+  position:absolute;
+  left:0;
+  top:0;
+  width:7px;
+  height:10px;
+  border-radius:1px;
+  opacity:0;
+  animation:confetti-burst 1250ms cubic-bezier(.15,.7,.35,1) forwards
+}
+@keyframes confetti-burst {
+  0% { opacity:1; transform:translate(0,0) rotate(0) scale(.6); }
+  70% { opacity:1; }
+  100% { opacity:0; transform:translate(var(--dx),var(--dy)) rotate(var(--spin)) scale(1); }
+}
+@media (prefers-reduced-motion:reduce) {
+  .confetti-piece { display:none }
 }
 .phone-page #copy-request {
   margin-top:10px;
@@ -1259,7 +1294,8 @@ dialog::backdrop {
   font-size:10px
 }
 .phone-page #edit-request {
-  font-size:11px
+  font-size:11px;
+  margin-bottom:14px
 }
 @media(min-width:1550px) {
   .hero {
@@ -1625,9 +1661,6 @@ dialog::backdrop {
     box-shadow:none;
     max-width:none
   }
-  .phone-camera {
-    display:none
-  }
   .phone-browser {
     font-size:10px
   }
@@ -1829,7 +1862,7 @@ dialog::backdrop {
     display:flex;
     flex-direction:column
   }
-  .phone-camera,.phone-browser {
+  .phone-browser {
     flex-shrink:0
   }
   .phone-page {
@@ -1850,13 +1883,7 @@ dialog::backdrop {
   }
 }
 @media(max-width:480px) {
-  .dialog-close {
-    position:sticky;
-    top:9px;
-    float:right;
-    margin:9px 10px -43px 0
-  }
-  .dialog-layout {
+.dialog-layout {
     clear:none
   }
   .phone-shell {
@@ -2005,7 +2032,7 @@ dialog::backdrop {
   #request-dialog .dialog-layout { display:block; height:auto; min-height:0; overflow:visible; padding-bottom:calc(32px + env(safe-area-inset-bottom, 0px)); }
   #request-dialog .phone-shell { display:block; height:auto; max-height:none; overflow:visible; }
   #request-dialog .phone-page { height:auto; max-height:none; overflow:visible; }
-  #request-dialog .dialog-close { position:sticky; top:8px; float:right; margin:8px 10px -42px 0; z-index:5; }
+  #request-dialog .dialog-close { position:fixed; top:calc(6px + env(safe-area-inset-top, 0px)); right:12px; margin:0; float:none; width:34px; height:34px; display:grid; place-items:center; padding:0; background:var(--char); color:var(--paper); font-size:22px; line-height:1; z-index:5; box-shadow:0 2px 8px #19140f33; }
 }
 
 /* Leave a clear closing pause after the hero action on smaller screens. */
@@ -2073,6 +2100,8 @@ dialog::backdrop {
   }
   #request-dialog .phone-shell { max-width:480px; width:100%; margin:0; }
   #request-dialog .phone-page { padding:28px 30px 24px; }
+  #request-dialog .dialog-layout { padding-top:54px; }
+  #request-dialog .dialog-close { top:10px; right:10px; }
 }
 
 /* Desglose por pieza: cada linea muestra lo que vale por separado y la
@@ -2646,4 +2675,10 @@ dialog::backdrop {
   .language-globe { width:17px; height:17px; margin-right:2px; }
   .header-cta { padding:7px 2px; }
   .wordmark { font-size:19px; }
+}
+
+/* Desktop: the close control sits in the dialog corner, clear of the phone frame. */
+@media (min-width:781px) {
+  #request-dialog .dialog-layout { padding-top:54px; padding-bottom:6px; }
+  #request-dialog .dialog-close { top:12px; right:12px; }
 }

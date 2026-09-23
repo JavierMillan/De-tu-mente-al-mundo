@@ -15,6 +15,28 @@
   smsLink.setAttribute('aria-controls', 'sms-qr-panel');
   const status = document.getElementById('send-status');
   const error = document.getElementById('form-error');
+  const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)');
+  function fireConfetti() {
+    if (reduceMotion.matches) return;
+    const holder = document.getElementById('confetti');
+    if (!holder) return;
+    const colors = ['#e8a13c', '#3d6b4a', '#25d366', '#a47326', '#19140f'];
+    holder.replaceChildren();
+    for (let i = 0; i < 28; i++) {
+      const piece = document.createElement('span');
+      const angle = Math.random() * Math.PI * 2;
+      const distance = 50 + Math.random() * 90;
+      piece.className = 'confetti-piece';
+      piece.style.background = colors[i % colors.length];
+      piece.style.setProperty('--dx', `${Math.cos(angle) * distance}px`);
+      piece.style.setProperty('--dy', `${Math.sin(angle) * distance * 0.7 + 30}px`);
+      piece.style.setProperty('--spin', `${(Math.random() - 0.5) * 720}deg`);
+      piece.style.animationDelay = `${Math.random() * 90}ms`;
+      if (i % 3 === 0) piece.style.borderRadius = '50%';
+      holder.appendChild(piece);
+    }
+    setTimeout(() => holder.replaceChildren(), 1500);
+  }
   const steps = [...form.querySelectorAll('[data-step]')];
   const language = document.querySelectorAll('[data-lang]');
   const translations = [...document.querySelectorAll('[data-es]')];
@@ -36,26 +58,24 @@
   let animationTimer;
   const copy = {
     en: {
-      next: 'Continue →', preview: 'Preview my request →', step: n => `Step ${n} of 4`,
+      next: 'Continue →', preview: 'Send my request →', step: n => `Step ${n} of 4`,
       error: 'Please complete the highlighted fields. Use a valid email address.',
       fit: 'These answers describe your workflow. We’ll confirm which rules and connections fit the US$2,500 founding scope.',
       low: 'With fewer than 10 inquiries a week, this may not be your next investment. We can review the fit before you commit.',
-      sending: 'Opening your messaging app and attempting to save your request…',
-      attempted: 'Saved. We have your request even if you don’t send the message — but WhatsApp gets you the fastest reply.',
-      failed: 'We couldn’t save the form. Your complete request is still in the prepared message—tap Send there, or copy the summary.',
+      attempted: 'Request received. We already have your details — WhatsApp is optional, it just gets you a faster reply.',
+      failed: 'We couldn’t save your request. Send it on WhatsApp below — the full request is already in the message.',
       copied: 'Summary copied.', copyFailed: 'Copy wasn’t available. Select the summary above to copy it manually.',
       title: 'Stop repeating the same questions | De tu mente al mundo',
       description: 'Stop repeating the same questions. A custom page collects the details your team needs and hands each inquiry off in context. US$2,500 founding offer, one time, for 5 businesses.',
       social: 'Stop repeating the same questions.'
     },
     es: {
-      next: 'Continuar →', preview: 'Ver mi solicitud →', step: n => `Paso ${n} de 4`,
+      next: 'Continuar →', preview: 'Enviar mi solicitud →', step: n => `Paso ${n} de 4`,
       error: 'Completa los campos marcados. Usa un email válido.',
       fit: 'Estas respuestas describen tu proceso. Confirmaremos qué reglas y conexiones encajan en la oferta fundadora de US$2,500.',
       low: 'Con menos de 10 consultas por semana, quizá esta no sea tu siguiente inversión. Podemos revisar el encaje antes de contratar.',
-      sending: 'Abriendo tu app de mensajes e intentando guardar tu solicitud…',
-      attempted: 'Guardado. Ya tenemos tu solicitud aunque no mandes el mensaje — pero WhatsApp te da la respuesta más rápida.',
-      failed: 'No pudimos guardar el formulario. Tu solicitud completa sigue en el mensaje preparado: pulsa Enviar ahí o copia el resumen.',
+      attempted: 'Solicitud recibida. Ya tenemos tus datos — el WhatsApp es opcional, solo te da una respuesta más rápida.',
+      failed: 'No pudimos guardar tu solicitud. Mándala por WhatsApp abajo: el mensaje ya la incluye completa.',
       copied: 'Resumen copiado.', copyFailed: 'No fue posible copiar. Selecciona el resumen de arriba para copiarlo manualmente.',
       title: 'Deja de repetir las mismas preguntas | De tu mente al mundo',
       description: 'Deja de repetir las mismas preguntas. Una página recoge los datos que tu equipo necesita y entrega cada solicitud con contexto. Oferta fundadora de US$2,500, pago único, para 5 negocios.',
@@ -100,6 +120,7 @@
     smsLink.href = `sms:+${WA_NUMBER}${/iPad|iPhone|iPod/.test(navigator.userAgent) ? '&' : '?'}body=${encodeURIComponent(message)}`;
     document.getElementById('fit-note').textContent = values().volume === 'Fewer than 10' ? copy[lang].low : copy[lang].fit;
     status.textContent = submissionState ? copy[lang][submissionState] : '';
+    document.getElementById('send-status-icon').toggleAttribute('hidden', submissionState !== 'attempted');
   }
   function setLanguage(next, changeUrl) {
     lang = next === 'es' ? 'es' : 'en';
@@ -209,7 +230,34 @@
     heading.focus({preventScroll: true});
     resetFormScroll();
     track('request_preview');
+    submitRequest();
   });
+  function submitRequest() {
+    const payload = core.buildPayload(values(true), lang, location.search);
+    const key = JSON.stringify(payload);
+    if (key === submittedKey && submissionState !== 'failed') return;
+    submittedKey = key;
+    // no-cors never exposes the server's answer, so success is shown on send and rolled back only on a network failure.
+    submissionState = 'attempted';
+    status.textContent = copy[lang].attempted;
+    document.getElementById('send-status-icon').removeAttribute('hidden');
+    fireConfetti();
+    track('request_delivery_attempted');
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 12000);
+    window.fetch(APPS_SCRIPT_URL, {
+      method: 'POST', mode: 'no-cors', credentials: 'omit',
+      headers: {'Content-Type': 'text/plain;charset=utf-8'},
+      body: key, signal: controller.signal, keepalive: true
+    }).catch(() => {
+      if (submittedKey !== key) return;
+      submittedKey = '';
+      submissionState = 'failed';
+      status.textContent = copy[lang].failed;
+      document.getElementById('send-status-icon').setAttribute('hidden', '');
+      track('request_delivery_failed');
+    }).finally(() => clearTimeout(timeout));
+  }
   document.getElementById('edit-request').addEventListener('click', () => {
     previewView.hidden = true;
     formView.hidden = false;
@@ -234,32 +282,9 @@
         document.getElementById('sms-qr-error').hidden = false;
       }
     }
-    // Default link action opens WhatsApp during the user's gesture. No automatic send.
+    // The request was already saved on arrival; only retry here if that save failed.
     track(link === smsLink ? 'sms_click' : 'whatsapp_click');
-    const payload = core.buildPayload(values(true), lang, location.search);
-    const key = JSON.stringify(payload);
-    if (key === submittedKey) return;
-    submittedKey = key;
-    submissionState = 'sending';
-    status.textContent = copy[lang].sending;
-    const controller = new AbortController();
-    const timeout = setTimeout(() => controller.abort(), 12000);
-    window.fetch(APPS_SCRIPT_URL, {
-      method: 'POST', mode: 'no-cors', credentials: 'omit',
-      headers: {'Content-Type': 'text/plain;charset=utf-8'},
-      body: key, signal: controller.signal, keepalive: true
-    }).then(() => {
-      if (submittedKey !== key) return;
-      submissionState = 'attempted';
-      status.textContent = copy[lang].attempted;
-      track('request_delivery_attempted');
-    }).catch(() => {
-      if (submittedKey !== key) return;
-      submittedKey = '';
-      submissionState = 'failed';
-      status.textContent = copy[lang].failed;
-      track('request_delivery_failed');
-    }).finally(() => clearTimeout(timeout));
+    if (submissionState === 'failed') submitRequest();
   }));
   document.getElementById('copy-request').addEventListener('click', async () => {
     try {
