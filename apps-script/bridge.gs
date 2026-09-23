@@ -5,8 +5,26 @@ const DTMM = Object.freeze({
   leads: '9b4d9ce1-7bd8-4667-8c56-c665821e519c',
   project: '3d792ae6-5536-81dc-b170-db5c4ecff806',
   campaign: '3d792ae6-5536-81fa-b50d-e09a2d8700d1',
-  headers: ['Fecha','Nombre','WhatsApp','Email','Giro','Cómo le llegan clientes','Request','Fit criteria','Trabajo manual','Preguntas repetidas','Volumen semanal','Origen','Notion Sync','Notion Page ID','Notion Sync Error','Negocio','Idioma','Datos que pide']
+  headers: ['Fecha','Nombre','Email','WhatsApp','Negocio','Giro','Cómo le llegan clientes','Trabajo manual','Volumen semanal','Datos que pide','Fit criteria','Idioma','Origen','Notion Sync','Notion Page ID','Notion Sync Error'],
+  obsoleteTab: 'Leads — USA Web'
 });
+
+/** Ejecutar una sola vez: borra las filas de prueba, deja los encabezados limpios y quita la pestaña obsoleta. */
+function resetDtmmSheet() {
+  const ss = SpreadsheetApp.openById(DTMM.spreadsheet);
+  const sheet = ss.getSheetByName(DTMM.sheet);
+  if (!sheet) throw new Error('No existe la pestaña ' + DTMM.sheet);
+  const obsolete = ss.getSheetByName(DTMM.obsoleteTab);
+  if (obsolete) ss.deleteSheet(obsolete);
+  sheet.clear();
+  sheet.clearNotes();
+  const extra = sheet.getMaxColumns() - DTMM.headers.length;
+  if (extra > 0) sheet.deleteColumns(DTMM.headers.length + 1, extra);
+  sheet.getRange(1, 1, 1, DTMM.headers.length).setValues([DTMM.headers]).setFontWeight('bold');
+  sheet.setFrozenRows(1);
+  PropertiesService.getScriptProperties().setProperty('DTMM_CURSOR', '2');
+  console.log('Prospecto quedó limpia con ' + DTMM.headers.length + ' columnas.');
+}
 
 function dtmmSheet_() {
   const sheet = SpreadsheetApp.openById(DTMM.spreadsheet).getSheetByName(DTMM.sheet);
