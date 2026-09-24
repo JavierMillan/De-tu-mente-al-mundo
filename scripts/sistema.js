@@ -2,7 +2,8 @@
 (function () {
   'use strict';
   const core = window.DTMMSystem;
-  const WA_NUMBER = '523351254577';
+  const WA_NUMBER = '16232399551';
+  const SMS_NUMBER = '523351254577';
   const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycby_T-ZcDaD-PXA1mMv-4OK1I34vRVaDreSzkHQIKLf-W-mieRWCjYLVb7UpiQaJjBSL/exec';
   const dialog = document.getElementById('request-dialog');
   const form = document.getElementById('request-form');
@@ -117,7 +118,7 @@
     const message = core.buildMessage(values(true), lang);
     summary.textContent = message;
     sendLink.href = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(message)}`;
-    smsLink.href = `sms:+${WA_NUMBER}${/iPad|iPhone|iPod/.test(navigator.userAgent) ? '&' : '?'}body=${encodeURIComponent(message)}`;
+    smsLink.href = `sms:+${SMS_NUMBER}${/iPad|iPhone|iPod/.test(navigator.userAgent) ? '&' : '?'}body=${encodeURIComponent(message)}`;
     document.getElementById('fit-note').textContent = values().volume === 'Fewer than 10' ? copy[lang].low : copy[lang].fit;
     status.textContent = submissionState ? copy[lang][submissionState] : '';
     document.getElementById('send-status-icon').toggleAttribute('hidden', submissionState !== 'attempted');
