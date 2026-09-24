@@ -3,6 +3,7 @@ const DTMM = Object.freeze({
   spreadsheet: '1Q-stvgP2eD2yXIgddfWk5oP1BbCX8_gH7h3srCO2UNQ',
   sheet: 'Prospecto',
   leads: '9b4d9ce1-7bd8-4667-8c56-c665821e519c',
+  checklists: '7750485e-d6e6-4d3d-b6c8-3786c0ea41ea',
   project: '3d792ae6-5536-81dc-b170-db5c4ecff806',
   campaign: '3d792ae6-5536-81fa-b50d-e09a2d8700d1',
   headers: ['Fecha','Nombre','Email','WhatsApp','Negocio','Giro','Cómo le llegan clientes','Trabajo manual','Volumen semanal','Datos que pide','Fit criteria','Idioma','Origen','Notion Sync','Notion Page ID','Notion Sync Error'],
@@ -55,6 +56,11 @@ function validateDtmmSetup() {
     if (page.archived || page.in_trash || page.parent.data_source_id !== schema[p].relation.data_source_id)
       throw new Error('Destino incorrecto/inaccesible para '+p);
   });
+  const checklistSchema=dtmmNotion_('get','/data_sources/'+DTMM.checklists).properties;
+  if (!checklistSchema.Checklist || checklistSchema.Checklist.type!=='title' ||
+      !checklistSchema.Lead || checklistSchema.Lead.type!=='relation' ||
+      checklistSchema.Lead.relation.data_source_id!==DTMM.leads)
+    throw new Error('Revisar base Onboarding checklists y su relación Lead.');
   console.log('Configuración válida. No se crearon leads.');
 }
 
@@ -111,6 +117,7 @@ function dtmmSyncRow_(sheet,cols,row,data) {
   const finish = id=>{
     sheet.getRange(row,cols['Notion Page ID']).setValue(id);
     SpreadsheetApp.flush();
+    dtmmEnsureChecklist_(id,data['Nombre']);
     statusCell.setValue('Yes');
     errorCell.clearContent();
   };
@@ -136,6 +143,17 @@ function dtmmSyncRow_(sheet,cols,row,data) {
       throw new Error('Más de un lead con la misma clave. Resolver duplicados manualmente.');
     }
     if (found.results.length===1) { finish(found.results[0].id); return; }
+    const existing=dtmmFindContact_(data);
+    if (existing) {
+      const previous=(existing.properties.Notes.rich_text||[]).map(x=>x.plain_text||x.text.content).join('');
+      if (!previous.includes(key)) {
+        const incoming=dtmmPayload_(data,key).properties.Notes.rich_text.map(x=>x.text.content).join('');
+        const properties={Notes:{rich_text:dtmmText_(previous+'\n\n--- Nuevo formulario recibido ---\n\n'+incoming)}};
+        statusCell.setValue('Pending'); errorCell.clearContent(); SpreadsheetApp.flush(); uncertain=true;
+        dtmmNotion_('patch','/pages/'+existing.id,{properties});
+      }
+      finish(existing.id); return;
+    }
     if (uncertain) throw new Error('Resultado de creación incierto. Se seguirá buscando; no se recreará automáticamente.');
     const payload=dtmmPayload_(data,key);
     statusCell.setValue('Pending');
@@ -151,6 +169,28 @@ function dtmmSyncRow_(sheet,cols,row,data) {
     statusCell.setValue(uncertain?'Review':'Error');
     errorCell.setValue(new Date().toISOString()+' | '+String(e.message).slice(0,700));
   }
+}
+
+function dtmmFindContact_(data) {
+  const email=String(data['Email']||'').trim().toLowerCase();
+  const phone=String(data['WhatsApp']||'').replace(/\D/g,'');
+  if (!email && !phone) return null;
+  let cursor=null, matches=[];
+  do {
+    const query={filter:{property:'Campaign',relation:{contains:DTMM.campaign}},page_size:100};
+    if (cursor) query.start_cursor=cursor;
+    const response=dtmmNotion_('post','/data_sources/'+DTMM.leads+'/query',query);
+    response.results.forEach(page=>{
+      if (page.archived || page.in_trash) return;
+      const p=page.properties;
+      const theirEmail=String(p.Email.email||'').trim().toLowerCase();
+      const theirPhone=String(p.Phone.phone_number||'').replace(/\D/g,'');
+      if ((email && theirEmail===email) || (phone && theirPhone===phone)) matches.push(page);
+    });
+    cursor=response.has_more?response.next_cursor:null;
+  } while (cursor);
+  matches.sort((a,b)=>Date.parse(a.created_time)-Date.parse(b.created_time));
+  return matches[0]||null;
 }
 
 function dtmmPayload_(data,key) {
@@ -171,6 +211,22 @@ function dtmmPayload_(data,key) {
   const payload={parent:{type:'data_source_id',data_source_id:DTMM.leads},properties};
   if (Utilities.newBlob(JSON.stringify(payload)).getBytes().length>450000) throw new Error('Diagnóstico demasiado largo; reducir o dividir manualmente.');
   return payload;
+}
+
+function dtmmEnsureChecklist_(leadId,name) {
+  const found=dtmmNotion_('post','/data_sources/'+DTMM.checklists+'/query',{
+    filter:{property:'Lead',relation:{contains:leadId}},page_size:2
+  });
+  if (found.results.length>1) throw new Error('Más de un checklist para este Lead; revisar duplicados manualmente.');
+  if (found.results.length===1) return found.results[0].id;
+  const payload={parent:{type:'data_source_id',data_source_id:DTMM.checklists},properties:{
+    Checklist:{title:dtmmText_('Onboarding · '+name)},
+    Lead:{relation:[{id:leadId}]},
+    'Rondas usadas':{number:0}
+  }};
+  const page=dtmmNotion_('post','/pages',payload);
+  if (!page.id) throw new Error('Respuesta sin Page ID del checklist.');
+  return page.id;
 }
 
 function dtmmText_(value) {

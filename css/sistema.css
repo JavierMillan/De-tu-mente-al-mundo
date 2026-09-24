@@ -1124,6 +1124,13 @@ dialog::backdrop {
   gap:18px;
   margin-top:25px
 }
+.form-trap {
+  position:absolute;
+  left:-10000px;
+  width:1px;
+  height:1px;
+  overflow:hidden
+}
 .form-navigation .button {
   margin-left:auto;
   font-size:12px;

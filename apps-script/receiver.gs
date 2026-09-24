@@ -39,6 +39,7 @@ function doPost(e) {
     const raw=e&&e.postData&&e.postData.contents;
     if (!raw || raw.length>80000) throw new Error('Solicitud vacía o demasiado grande.');
     const d=JSON.parse(raw);
+    if (String(d.website||'').trim()) return ContentService.createTextOutput(JSON.stringify({ok:true,queued:false})).setMimeType(ContentService.MimeType.JSON);
     if (!d || typeof d!=='object' || Array.isArray(d)) throw new Error('Formato inválido.');
     const name=String(d.nombre||'').trim(), email=String(d.email||'').trim();
     if (!name || (!email && !d.tel)) throw new Error('Falta nombre o contacto.');
@@ -49,6 +50,20 @@ function doPost(e) {
     lock.waitLock(10000); locked=true;
     const {sheet,cols}=dtmmSheet_();
     const headers=sheet.getRange(1,1,1,sheet.getLastColumn()).getDisplayValues()[0];
+    const recentCount=Math.min(1000,Math.max(0,sheet.getLastRow()-1));
+    if (recentCount) {
+      const recent=sheet.getRange(sheet.getLastRow()-recentCount+1,1,recentCount,sheet.getLastColumn()).getValues();
+      const emailCol=cols['Email']-1, phoneCol=cols['WhatsApp']-1, dateCol=cols['Fecha']-1;
+      const keyEmail=email.toLowerCase(), keyPhone=String(d.tel||'').replace(/\D/g,'');
+      const isRecentDuplicate=recent.some(row=>{
+        const date=row[dateCol] instanceof Date?row[dateCol].getTime():Date.parse(row[dateCol]);
+        if (!Number.isFinite(date) || Date.now()-date>10*60*1000 || date>Date.now()+60*1000) return false;
+        const rowEmail=String(row[emailCol]||'').trim().toLowerCase();
+        const rowPhone=String(row[phoneCol]||'').replace(/\D/g,'');
+        return (keyEmail && keyEmail===rowEmail) || (keyPhone && keyPhone===rowPhone);
+      });
+      if (isRecentDuplicate) return ContentService.createTextOutput(JSON.stringify({ok:true,queued:false,alreadyReceived:true})).setMimeType(ContentService.MimeType.JSON);
+    }
     const source={
       'Fecha':new Date(), 'Nombre':name,'Email':email,'WhatsApp':d.tel||'',
       'Negocio':d.negocio||'', 'Giro':d.industria||d.giro||'',

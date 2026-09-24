@@ -235,6 +235,7 @@
   });
   function submitRequest() {
     const payload = core.buildPayload(values(true), lang, location.search);
+    payload.website = values().website;
     const key = JSON.stringify(payload);
     if (key === submittedKey && submissionState !== 'failed') return;
     submittedKey = key;
