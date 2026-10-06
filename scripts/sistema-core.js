@@ -81,7 +81,7 @@
        contra 4 veces el precio mensual deja que la cifra escale de
        verdad y solo frena los casos extremos. */
     var RECUPERA = 0.05;
-    var PRECIO = 2500;
+    var PRECIO = (typeof document !== 'undefined' && Number(document.documentElement.dataset.priceNum)) || 2500;
     var TOPE_MES = PRECIO * 4;
 
     function estimateLoss(ticketPromedio, leadsPerWeek) {

@@ -2737,3 +2737,6 @@ dialog::backdrop {
 .next-steps li::before { content:counter(paso,decimal-leading-zero); grid-row:1 / span 2; font:500 11px/1.9 var(--mono); letter-spacing:.08em; color:var(--sesame); }
 .next-steps strong { font-weight:600; font-size:16px; line-height:1.35; }
 .next-steps li span { grid-column:2; color:var(--muted); font-size:14.5px; line-height:1.65; }
+
+/* Paginas de un solo idioma (mercado Mexico): sin selector de idioma. */
+html[data-market="mx"] .language { display:none; }

@@ -47,7 +47,11 @@
   translations.forEach(el => { el.dataset.en = el.innerHTML; });
   labels.forEach(el => { el.dataset.labelEn = el.getAttribute('aria-label'); });
   placeholders.forEach(el => { el.dataset.placeholderEn = el.placeholder; });
-  let lang = new URLSearchParams(location.search).get('lang') === 'es' ? 'es' : 'en';
+  // Cada página de mercado declara su idioma por defecto y su precio en <html data-default-lang data-price>.
+  const market = document.documentElement.dataset;
+  const PRICE = market.price || 'US$2,500';
+  const langParam = new URLSearchParams(location.search).get('lang');
+  let lang = langParam ? (langParam === 'es' ? 'es' : 'en') : (market.defaultLang === 'es' ? 'es' : 'en');
   let step = 0;
   let opener;
   let submissionState = '';
@@ -83,6 +87,9 @@
       social: 'Deja de repetir las mismas preguntas.'
     }
   };
+  if (PRICE !== 'US$2,500') {
+    ['en', 'es'].forEach(l => ['fit', 'description'].forEach(k => { copy[l][k] = copy[l][k].replace('US$2,500', PRICE); }));
+  }
   // Anonymous lifecycle hook only. No tracking service or contact data is sent here.
   function track(name) {
     window.dispatchEvent(new CustomEvent('dtmm:analytics', {detail: {event: name, language: lang, step: step + 1}}));
@@ -115,7 +122,7 @@
   function renderPreview() {
     document.getElementById('sms-qr-panel').hidden = true;
     smsLink.setAttribute('aria-expanded', 'false');
-    const message = core.buildMessage(values(true), lang);
+    const message = core.buildMessage(values(true), lang).replace('US$2,500', PRICE);
     summary.textContent = message;
     sendLink.href = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(message)}`;
     smsLink.href = `sms:+${SMS_NUMBER}${/iPad|iPhone|iPod/.test(navigator.userAgent) ? '&' : '?'}body=${encodeURIComponent(message)}`;
