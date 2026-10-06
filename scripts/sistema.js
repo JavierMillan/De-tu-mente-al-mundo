@@ -376,40 +376,46 @@
   document.addEventListener('dtmm:lang', render);
 })();
 
-/* Sistemas funcionando: el video sigue el idioma de la pagina y solo corre el que esta a la vista. */
+/* Sistemas funcionando: un caso a la vez; el video sigue el idioma y avanza solo al terminar. */
 (() => {
-  const rail = document.getElementById('proof-rail');
-  if (!rail) return;
-  const videos = [...rail.querySelectorAll('video[data-demo]')];
+  const video = document.getElementById('proof-video');
+  if (!video) return;
+  const tabs = [...document.querySelectorAll('.proof-tab')];
+  const visit = document.getElementById('proof-visit');
+  const visitName = document.getElementById('proof-visit-name');
+  const bar = document.getElementById('proof-bar');
   const quieto = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const aLaVista = new Set();
-  const tocar = v => { const p = v.play(); if (p && p.catch) p.catch(() => {}); };
+  let actual = 0;
+  let aLaVista = false;
+  const tocar = () => { const p = video.play(); if (p && p.catch) p.catch(() => {}); };
 
-  function fuentes() {
+  function mostrar(i, reproducir) {
+    actual = (i + tabs.length) % tabs.length;
+    const tab = tabs[actual];
     const lang = document.documentElement.lang === 'es' ? 'es' : 'en';
-    videos.forEach(v => {
-      const base = 'assets/demos/' + v.dataset.demo + '-' + lang;
-      if (v.dataset.base === base) return;
-      v.dataset.base = base;
-      v.poster = base + '.jpg';
-      v.src = base + '.mp4';
-      if (aLaVista.has(v) && !quieto) tocar(v);
-    });
+    const base = 'assets/demos/' + tab.dataset.case + '-' + lang;
+    tabs.forEach((t, n) => t.setAttribute('aria-selected', String(n === actual)));
+    visit.href = tab.dataset.url;
+    visitName.textContent = tab.dataset.name;
+    video.setAttribute('aria-label', tab.dataset.name);
+    if (video.dataset.base !== base) {
+      video.dataset.base = base;
+      video.poster = base + '.jpg';
+      video.src = base + '.mp4';
+      bar.style.width = '0';
+    }
+    if (reproducir) tocar();
   }
+  tabs.forEach((t, n) => t.addEventListener('click', () => mostrar(n, true)));
+  video.addEventListener('click', () => { if (video.paused) tocar(); else video.pause(); });
+  video.addEventListener('timeupdate', () => { if (video.duration) bar.style.width = (video.currentTime / video.duration * 100) + '%'; });
+  video.addEventListener('ended', () => mostrar(actual + 1, aLaVista && !quieto));
   if ('IntersectionObserver' in window) {
-    const io = new IntersectionObserver(entries => entries.forEach(e => {
-      const v = e.target;
-      if (e.isIntersecting) { aLaVista.add(v); if (!quieto) tocar(v); }
-      else { aLaVista.delete(v); v.pause(); }
-    }), {threshold:.6});
-    videos.forEach(v => io.observe(v));
+    new IntersectionObserver(entries => entries.forEach(e => {
+      aLaVista = e.isIntersecting;
+      if (aLaVista && !quieto) tocar(); else video.pause();
+    }), {threshold:.5}).observe(video);
   }
-  videos.forEach(v => v.addEventListener('click', () => { if (v.paused) tocar(v); else v.pause(); }));
-  document.querySelectorAll('[data-proof-nav]').forEach(b => b.addEventListener('click', () => {
-    const card = rail.querySelector('.proof-card');
-    const paso = card ? card.getBoundingClientRect().width + parseFloat(getComputedStyle(rail).columnGap || 0) : rail.clientWidth * .8;
-    rail.scrollBy({left: paso * Number(b.dataset.proofNav), behavior: quieto ? 'auto' : 'smooth'});
-  }));
-  document.addEventListener('dtmm:lang', fuentes);
-  fuentes();
+  document.addEventListener('dtmm:lang', () => mostrar(actual, aLaVista && !quieto));
+  mostrar(0, false);
 })();
