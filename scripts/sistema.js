@@ -122,7 +122,7 @@
   function renderPreview() {
     document.getElementById('sms-qr-panel').hidden = true;
     smsLink.setAttribute('aria-expanded', 'false');
-    const message = core.buildMessage(values(true), lang).replace('US$2,500', PRICE);
+    const message = core.buildMessage(values(true), lang, market.market).replace('US$2,500', PRICE);
     summary.textContent = message;
     sendLink.href = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(message)}`;
     smsLink.href = `sms:+${SMS_NUMBER}${/iPad|iPhone|iPod/.test(navigator.userAgent) ? '&' : '?'}body=${encodeURIComponent(message)}`;

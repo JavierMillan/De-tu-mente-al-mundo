@@ -19,6 +19,12 @@ test('WhatsApp handoff contains ALL answers even if Sheets delivery fails', () =
   // El telefono va arriba: quien contesta no deberia leer todo para responder.
   assert.ok(es.indexOf(sample.phone) < es.indexOf(sample.criteria));
 });
+test('WhatsApp message names the page market in both languages', () => {
+  assert.ok(core.buildMessage(sample, 'es', 'mx').startsWith('Hola, quiero una página para mi negocio en México.'));
+  assert.ok(core.buildMessage(sample, 'en', 'mx').startsWith('Hi, I’m interested in a page for my business in Mexico.'));
+  assert.ok(core.buildMessage(sample, 'es').startsWith('Hola, quiero una página para mi negocio en Estados Unidos.'));
+  assert.ok(core.buildMessage(sample, 'en').startsWith('Hi, I’m interested in a page for my US business.'));
+});
 test('maps the contact and screening data to the deployed Sheets contract', () => {
   const payload = core.buildPayload(sample, 'es', '?utm_source=meta&utm_campaign=us-test');
   assert.equal(payload.negocio, 'Pine Studio');
