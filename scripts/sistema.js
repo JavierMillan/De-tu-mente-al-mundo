@@ -252,6 +252,7 @@
     document.getElementById('send-status-icon').removeAttribute('hidden');
     fireConfetti();
     track('request_delivery_attempted');
+    if (window.fbq) window.fbq('track', 'Lead');
     const controller = new AbortController();
     const timeout = setTimeout(() => controller.abort(), 12000);
     window.fetch(APPS_SCRIPT_URL, {

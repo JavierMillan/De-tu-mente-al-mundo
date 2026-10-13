@@ -12,6 +12,13 @@ from playwright.async_api import async_playwright
 RAIZ = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 PRECIO = "$19,900"
 MITAD = "$9,950"
+# ID del conjunto de datos (píxel) de Meta. Vacío = la página se genera sin píxel.
+PIXEL = "992235463900770"
+
+PIXEL_HTML = """<!-- Meta Pixel -->
+<script>!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init','%s');fbq('track','PageView');</script>
+<noscript><img height="1" width="1" style="display:none" alt="" src="https://www.facebook.com/tr?id=%s&ev=PageView&noscript=1"></noscript>
+"""
 
 HORNEA = """() => {
   document.querySelectorAll('[data-es]').forEach(el => { el.innerHTML = el.dataset.es; });
@@ -72,7 +79,7 @@ def main():
     h = sub(h, r'(<p class="small-note offer-split"[^>]*>).*?</p>', '<p class="small-note offer-split">' + MITAD + " para empezar. " + MITAD + " cuando te lo entregamos funcionando.</p>")
     h = sub(h, r'(<p class="dialog-price")[^>]*>.*?</p>', '<p class="dialog-price">' + PRECIO + " MXN · 50% para empezar · Precio fundador · 5 lugares</p>")
     h = sub(h, r'(<button class="global-cta" type="button" data-open=""><span)[^>]*>.*?</span>', '<button class="global-cta" type="button" data-open=""><span>Ver la oferta de ' + PRECIO + "</span>")
-    h = sub(h, r'(<footer class="site-footer wrap">.*?<p)[^>]*>.*?</p>', '<footer class="site-footer wrap"><a class="wordmark" href="index.html">De tu mente al mundo<span class="brand-dot">.</span></a><p>Una iniciativa de La Red de Luz · Hecho en México</p>')
+    h = sub(h, r'(<footer class="site-footer wrap">.*?<p)[^>]*>.*?</p>', '<footer class="site-footer wrap"><a class="wordmark" href="index.html">De tu mente al mundo<span class="brand-dot">.</span></a><p>Una iniciativa de La Red de Luz · Hecho en México · <a href="privacidad.html">Aviso de privacidad</a></p>')
     # preguntas frecuentes
     h = sub(h, r"<details><summary[^>]*>¿Puedo deducirlo\?.*?</details>", FAQ_IVA)
     h = sub(h, r"<details><summary[^>]*>¿Podemos trabajar en español\?.*?</details>", "")
@@ -80,6 +87,8 @@ def main():
     h = sub(h, r'<select id="industry" name="industry">.*?</select>', GIROS)
     h = cambia(h, "Ej. Limpieza de casas en Austin", "Ej. Instalación de paneles solares en Guadalajara", 2)
     h = sub(h, r'(<p class="small-note")[^>]*>SMS: \+52 33 5125 4577\..*?</p>', '<p class="small-note">SMS: +52 33 5125 4577.</p>')
+    if PIXEL:
+        h = cambia(h, "</head>", PIXEL_HTML % (PIXEL, PIXEL) + "</head>")
     assert "US$" not in h and "Austin" not in h, [m.start() for m in re.finditer(r"US\$|Austin", h)][:5]
     # los data-es ya no hacen falta: el idioma está horneado y el selector queda oculto
     h = re.sub(r' data-(es|label-es|placeholder-es)="[^"]*"', "", h)
