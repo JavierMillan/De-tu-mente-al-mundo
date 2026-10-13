@@ -14,20 +14,20 @@
             return key === 'email' && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
         });
     }
-    function buildMessage(data, lang) {
+    function buildMessage(data, lang, market) {
         var es = lang === 'es';
         var linea = function (etiqueta, valor) {
             return clean(valor) ? etiqueta + ': ' + clean(valor) : '';
         };
         var t = es ? {
-            saludo: 'Hola, quiero una página para mi negocio en Estados Unidos.',
+            saludo: market === 'mx' ? 'Hola, quiero una página para mi negocio en México.' : 'Hola, quiero una página para mi negocio en Estados Unidos.',
             contacto: 'CONTACTO', negocio: 'EL NEGOCIO', detalle: 'LO QUE NECESITA',
             nombre: 'Nombre', tel: 'Teléfono', email: 'Email', giro: 'Giro',
             queHace: 'Qué hace', solicitudes: 'Tarea manual', canal: 'Le llegan por',
             volumen: 'Volumen semanal', datos: 'Datos que pide', criterio: 'Buen cliente para él',
             cierre: 'Inversión de referencia: US$2,500, pago único. Alcance por confirmar.'
         } : {
-            saludo: 'Hi, I’m interested in a page for my US business.',
+            saludo: market === 'mx' ? 'Hi, I’m interested in a page for my business in Mexico.' : 'Hi, I’m interested in a page for my US business.',
             contacto: 'CONTACT', negocio: 'THE BUSINESS', detalle: 'WHAT THEY NEED',
             nombre: 'Name', tel: 'Phone', email: 'Email', giro: 'Industry',
             queHace: 'What they do', solicitudes: 'Manual task', canal: 'They arrive via',
