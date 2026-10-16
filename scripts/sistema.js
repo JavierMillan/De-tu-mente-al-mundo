@@ -90,10 +90,17 @@
   if (PRICE !== 'US$2,500') {
     ['en', 'es'].forEach(l => ['fit', 'description'].forEach(k => { copy[l][k] = copy[l][k].replace('US$2,500', PRICE); }));
   }
-  // Anonymous lifecycle hook only. No tracking service or contact data is sent here.
+  // Lifecycle hook. Where the Meta pixel is installed (Mexico page), each step of the visit is also sent to it,
+  // without contact data, so ads can be judged by how far people get and not only by clicks.
   function track(name) {
     window.dispatchEvent(new CustomEvent('dtmm:analytics', {detail: {event: name, language: lang, step: step + 1}}));
+    if (window.fbq) window.fbq('trackCustom', name, {step: step + 1});
   }
+  const scrollMarks = [50, 90];
+  window.addEventListener('scroll', () => {
+    const seen = (window.scrollY + window.innerHeight) / document.documentElement.scrollHeight * 100;
+    while (scrollMarks.length && seen >= scrollMarks[0]) track('scroll_' + scrollMarks.shift());
+  }, {passive: true});
   function values(display = false) {
     return Object.fromEntries([...form.querySelectorAll('[name]')].map(field => [field.name,
       display && field.tagName === 'SELECT' && field.value ? field.selectedOptions[0].textContent.trim() : field.value.trim()
@@ -275,6 +282,7 @@
     renderStep(true);
   });
   [sendLink, smsLink].forEach(link => link.addEventListener('click', event => {
+    track(link === sendLink ? 'whatsapp_click' : 'sms_click');
     if (link === smsLink && !isPhone) {
       event.preventDefault();
       const panel = document.getElementById('sms-qr-panel');
